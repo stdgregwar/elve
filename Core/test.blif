@@ -1,0 +1,12 @@
+# Benchmark "example" written by ABC on Fri Mar 25 21:20:59 2011
+.model example
+.inputs a b c d
+.outputs f3
+.names a b n5
+10 0
+.names c d n6
+11 0
+.names n5 n6 f3
+01 1
+10 1
+.end
