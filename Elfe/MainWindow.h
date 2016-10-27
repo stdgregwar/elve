@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include "GraphWidget.h"
 #include <ui_mainwindow_test.h>
+#include "PluginManager.h"
 
 class MainWindow : public QMainWindow
 {
@@ -14,9 +15,12 @@ public:
     ~MainWindow();
 private:
     GraphWidget* mViewport;
-    void loadBlif(const QString& filename);
+    PluginManager mPluginManager;
+public slots:
+    void onFileOpen(const QString& file);
+    void on_import_trigerred(GraphLoader* ld);
 private slots:
-    void on_actionBlif_triggered();
+    void on_actionOpen_triggered();
 };
 
 #endif // MAINWINDOW_H

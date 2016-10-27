@@ -20,7 +20,6 @@ unix {
 
 
 SOURCES +=\
-    BlifLoader.cpp \
     Constraint.cpp \
     Damp.cpp \
     EdgeItem.cpp \
@@ -49,7 +48,6 @@ DISTFILES += \
     test.blif
 
 HEADERS += \
-    BlifLoader.h \
     Constraint.h \
     Damp.h \
     EdgeItem.h \
@@ -68,4 +66,4 @@ HEADERS += \
     System.h \
     VerticalConstraint.h \
     Force.h \
-    interfaces/LoaderInterface.h
+    interfaces/GraphLoader.h

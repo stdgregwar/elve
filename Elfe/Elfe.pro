@@ -13,7 +13,8 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp \
-    MainWindow.cpp
+    MainWindow.cpp \
+    PluginManager.cpp
 
 win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../Core/release/ -lCore
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../Core/debug/ -lCore
@@ -23,7 +24,9 @@ INCLUDEPATH += $$PWD/../Core
 DEPENDPATH += $$PWD/../Core
 
 HEADERS += \
-    MainWindow.h
+    MainWindow.h \
+    PluginManager.h \
+    FileLoadAction.h
 
 FORMS += \
     uis/mainwindow_test.ui

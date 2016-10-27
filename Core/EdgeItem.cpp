@@ -16,15 +16,6 @@ void EdgeItem::setHandleState(size_t i, const QVector2D& pos, const QVector2D& s
     doPath();
 }
 
-QVector2D* EdgeItem::updateGlData(QVector2D* data) const
-{
-    for(size_t i = 0; i < mHandles.size(); i++) {
-        data[i] = mHandles[i].pos() + QVector2D(12,12);
-    }
-    return data + mHandles.size();
-}
-
-
 size_t EdgeItem::segments() const
 {
     return mHandles.size()-1;

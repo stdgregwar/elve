@@ -109,23 +109,7 @@ SharedGraph BlifLoader::load(const QString &filepath) {
     return make_shared<Graph>(desc,adj);
 }
 
-/*const Node::Description& BlifLoader::addDescription(const NodeID& id, const Node::Type& type,const Index& ioi) {
-    const auto it = mDescriptions.find(id);
-    if(it == mDescriptions.end()) {
-        return mDescriptions.emplace(id,Node::Description(id,type,ioi)).first.second;
-    } else {
-        return it;
-    }
-}
 
-const Node::Description& BlifLoader::addDescription(const NodeID& id) {
-    const auto it = mDescriptions.find(id);
-    if(it == mDescriptions.end()) {
-        return mDescriptions.emplace(id,Node::Description(id,Node::NODE,0));
-    } else {
-        return it;
-    }
-}*/
 
 #if QT_VERSION < 0x050000
 Q_EXPORT_PLUGIN2(BlifLoaderPlugin, BlifLoader)

@@ -2,21 +2,25 @@
 #define BLIFLOADER_H
 
 #include <QGenericPlugin>
-#include <LoaderInterface.h>
+#include <GraphLoader.h>
 
-class BlifLoader : public QObject, public LoaderInterface
+class BlifLoader : public QObject, public GraphLoader
 {
     Q_OBJECT
 #if QT_VERSION >= 0x050000
     Q_PLUGIN_METADATA(IID "ch.epfl.lap.BlifLoader")
 #endif // QT_VERSION >= 0x050000
-    Q_INTERFACES(LoaderInterface)
+    Q_INTERFACES(GraphLoader)
 public:
     BlifLoader(QObject *parent = 0);
     SharedGraph load(const QString &filepath) override;
+    QString fileFilter() override {
+        return tr("Blif Files (*.blif)");
+    }
+    QString formatName() override {
+        return tr("BLIF");
+    }
 private:
-    //const Node::Description& addDescription(const NodeID& id, const Node::Type& type,const Index& ioi);
-    //const Node::Description& addDescription(const NodeID& id);
     NodeDescriptions mDescriptions;
 
 };

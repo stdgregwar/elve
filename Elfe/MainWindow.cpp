@@ -1,18 +1,22 @@
 #include "MainWindow.h"
-#include "GraphWidget.h"
+
 #include <QApplication>
 #include <QOpenGLContext>
 #include <QDebug>
 #include <QFileDialog>
 #include <QDir>
 #include <QPluginLoader>
-#include "Graph.h"
-#include "BlifLoader.h"
-#include "interfaces/LoaderInterface.h"
+#include <QAction>
 
+#include <interfaces/GraphLoader.h>
+#include <Graph.h>
+
+#include "FileLoadAction.h"
+
+#include <QMessageBox>
 
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent)
+    : QMainWindow(parent), mPluginManager("plugins")
 {
     ui.setupUi(this);
     mViewport = new GraphWidget();
@@ -23,23 +27,11 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui.actionLevelLayout,SIGNAL(triggered()),mViewport,SLOT(setLevelLayout()));
     connect(ui.actionSimpleLayout,SIGNAL(triggered()),mViewport,SLOT(setSimpleLayout()));
 
-    //test loading of loaders plugins
-    qDebug() << "Trying to load";
-    QDir dir("plugins/loaders");
-    for(const QFileInfo& info : dir.entryInfoList(QDir::Files)) {
-        qDebug() << "Trying to load" << info.baseName();
-        QPluginLoader* qpl = new QPluginLoader(info.filePath(),this);
-        if(!qpl->load()) {
-            qDebug() << qpl->errorString() << endl;
-        } else {
-            QObject* obj = qpl->instance();
-            LoaderInterface* interface = qobject_cast<LoaderInterface*>(obj);
-            if(interface) {
-                qDebug() << "plugin is a loader!";
-                SharedGraph g = interface->load("mul5.blif");
-                mViewport->setGraph(g);
-            }
-        }
+    //setup loaders
+    for(auto& l : mPluginManager.loaders()) {
+        FileLoadAction* a = new FileLoadAction(l,l->formatName(),this);
+        connect(a,SIGNAL(triggered(GraphLoader*)),this,SLOT(on_import_trigerred(GraphLoader*)));
+        ui.menuImport->addAction(a);
     }
 }
 
@@ -48,16 +40,24 @@ MainWindow::~MainWindow()
 
 }
 
-void MainWindow::on_actionBlif_triggered()
-{
-    QString fileName = QFileDialog::getOpenFileName(this,
-        tr("Open File"), "$HOME", tr("Blif Files (*.blif)"));
-    loadBlif(fileName);
+void MainWindow::on_import_trigerred(GraphLoader* ld) {
+    QString filename = QFileDialog::getOpenFileName(this,"Open " + ld->formatName(),"",ld->fileFilter());
+    if(filename != "") {
+        SharedGraph g;
+        try {
+           g = ld->load(filename);
+        } catch (std::exception e) {
+            QMessageBox("Error", e.what(),QMessageBox::Critical,0,0,0).exec();
+        }
+        mViewport->setGraph(g);
+    }
 }
 
+void MainWindow::on_actionOpen_triggered()
+{
 
-void MainWindow::loadBlif(const QString& filename) {
-    BlifLoader* bl = new BlifLoader(filename.toStdString());
-    SharedGraph g = bl->load();
-    mViewport->setGraph(g);
+}
+
+void MainWindow::onFileOpen(const QString& file){
+
 }

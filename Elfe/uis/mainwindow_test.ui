@@ -31,7 +31,6 @@
      <property name="title">
       <string>Import</string>
      </property>
-     <addaction name="actionBlif"/>
     </widget>
     <addaction name="actionOpen"/>
     <addaction name="menuImport"/>
@@ -69,6 +68,9 @@
   <action name="actionOpen">
    <property name="text">
     <string>Open</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+O</string>
    </property>
   </action>
   <action name="actionBlif">

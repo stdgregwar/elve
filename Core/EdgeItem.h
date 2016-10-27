@@ -14,7 +14,6 @@ public:
     void setHandleState(size_t i, const QVector2D& pos, const QVector2D& speed = {0,0});
     Movable* getHandle(size_t i);
     size_t segments() const;
-    QVector2D* updateGlData(QVector2D* data) const;
 private:
     class Handle : public Movable {
     public:
