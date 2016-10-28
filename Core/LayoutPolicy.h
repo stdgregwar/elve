@@ -6,7 +6,7 @@
 #include "EdgeItem.h"
 #include "NodeItem.h"
 
-typedef std::unordered_map<NodeID,Mass*> MassesByID;
+typedef std::unordered_map<NodeID,Point*> MassesByID;
 typedef std::unordered_map<NodeID,QVector2D> NodePositions;
 
 class LayoutPolicy
@@ -15,7 +15,6 @@ public:
     LayoutPolicy(QGraphicsScene& scene);
     virtual void setGraph(SharedGraph graph);
     virtual void setGraph(SharedGraph g,const NodePositions& positions) = 0;
-    const MassesByID& massesByID() const;
     const System& system() const;
     virtual void quickSim(size_t ticks);
     virtual void tick(float dt, bool update = true);

@@ -1,5 +1,5 @@
 #include "PointConstraint.h"
-#include "Mass.h"
+#include "Point.h"
 
 
 PointConstraint::PointConstraint(const QVector2D& point) : mPoint(point)
@@ -7,7 +7,7 @@ PointConstraint::PointConstraint(const QVector2D& point) : mPoint(point)
 
 }
 
-void PointConstraint::constrain(Mass& mass)
+void PointConstraint::constrain(Point& mass)
 {
     mass.setPos(mPoint);
     mass.setSpeed({0,0});

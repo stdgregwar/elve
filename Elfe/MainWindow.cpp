@@ -8,7 +8,7 @@
 #include <QPluginLoader>
 #include <QAction>
 
-#include <interfaces/GraphLoader.h>
+#include <interfaces/GraphLoaderPlugin.h>
 #include <Graph.h>
 
 #include "FileLoadAction.h"
@@ -30,7 +30,7 @@ MainWindow::MainWindow(QWidget *parent)
     //setup loaders
     for(auto& l : mPluginManager.loaders()) {
         FileLoadAction* a = new FileLoadAction(l,l->formatName(),this);
-        connect(a,SIGNAL(triggered(GraphLoader*)),this,SLOT(on_import_trigerred(GraphLoader*)));
+        connect(a,SIGNAL(triggered(GraphLoaderPlugin*)),this,SLOT(on_import_trigerred(GraphLoaderPlugin*)));
         ui.menuImport->addAction(a);
     }
 }
@@ -40,7 +40,7 @@ MainWindow::~MainWindow()
 
 }
 
-void MainWindow::on_import_trigerred(GraphLoader* ld) {
+void MainWindow::on_import_trigerred(GraphLoaderPlugin* ld) {
     QString filename = QFileDialog::getOpenFileName(this,"Open " + ld->formatName(),"",ld->fileFilter());
     if(filename != "") {
         SharedGraph g;

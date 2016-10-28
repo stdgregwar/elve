@@ -10,21 +10,21 @@ Gravity::Gravity(qreal k) : mK(k) //mQuadTree(QRectF(-QSIZE,-QSIZE,QSIZE*2,QSIZE
 
 }
 
-QVector2D Gravity::force(const Mass &m) const {
+QVector2D Gravity::force(const Point &m) const {
    return plainOldGravity(m);
    //return quadGravity(m);
 }
 
-void Gravity::addMass(const Mass* m)
+void Gravity::addMass(const Point* m)
 {
     mGalaxy.insert(m);
     //mQuadTree.addMass(m);
 }
 
-QVector2D Gravity::plainOldGravity(const Mass& m) const
+QVector2D Gravity::plainOldGravity(const Point& m) const
 {
     QVector2D f{0,0};
-    for(const Mass* const& ms : mGalaxy) {
+    for(const Point* const& ms : mGalaxy) {
         if(ms != &m) {
             QVector2D r = ms->pos() - m.pos();
             qreal lr = r.lengthSquared();

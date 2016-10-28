@@ -96,13 +96,11 @@ void GraphWidget::mouseMoveEvent(QMouseEvent *event)
 
 void GraphWidget::group(const NodeNames &names, const NodeID &groupName) {
     NodeID trueName = mCurrentGraph->uniqueID(groupName);
-
-    const MassesByID& masses = mLayout->massesByID();
     NodePositions positions = mLayout->nodesPositions();
 
     QVector2D groupCenter;
     for(const NodeID& id : names) {
-        groupCenter += masses.at(id)->pos();
+        groupCenter += positions.at(id);
     }
     groupCenter /= names.size();
 

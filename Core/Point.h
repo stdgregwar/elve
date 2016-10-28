@@ -4,16 +4,15 @@
 #include <QVector2D>
 #include <QObject>
 #include <set>
-#include "Force.h"
-#include "Movable.h"
-#include "Constraint.h"
+#include <Force.h>
+#include <Movable.h>
+#include <Constraint.h>
+#include <Node.h>
 
-class Spring;
-
-class Mass
+class Point
 {
 public:
-    Mass(qreal mass, Movable* m = nullptr);
+    Point(qreal mass,const NodeID& id);
     bool moved() const;
     const QVector2D& pos() const;
     const QVector2D& speed() const;
@@ -29,6 +28,7 @@ public:
     void tick(float dt, bool update = true);
     void* containerData() const;
     void setContainerData(void* data) const;
+    const NodeID& boundID() const;
 private:
     QVector2D mPos;
     QVector2D mSpeed;

@@ -35,7 +35,7 @@ void System::tick(float dt, bool update)
         f.get();
     }
 
-    for(Mass* m : mMasses) {
+    for(Point* m : mMasses) {
         m->tick(dt,update);
     }
 }
@@ -48,9 +48,9 @@ void System::computeForces(size_t from,size_t until)
     }
 }
 
-Mass* System::addMass(qreal mass, Movable* m, QVector2D pos, qreal damp, GravityMode g)
+Point* System::addPoint(qreal mass, Movable* m, QVector2D pos, qreal damp, GravityMode g)
 {
-    Mass* nm = new Mass(mass,m);
+    Point* nm = new Point(mass,m);
     mMasses.push_back(nm);
     nm->setPos(pos);
     m->setMass(nm);
@@ -67,12 +67,12 @@ Mass* System::addMass(qreal mass, Movable* m, QVector2D pos, qreal damp, Gravity
 
 void System::addSpring(unsigned i, unsigned j, qreal k, qreal l0)
 {
-    Mass* mi = mMasses.at(i);
-    Mass* mj = mMasses.at(j);
+    Point* mi = mMasses.at(i);
+    Point* mj = mMasses.at(j);
     addSpring(mi,mj,k,l0);
 }
 
-void System::addSpring(Mass* mi, Mass* mj, qreal k, qreal l0)
+void System::addSpring(Point* mi, Point* mj, qreal k, qreal l0)
 {
     Spring* force = new Spring(*mi,*mj,l0,k);
     mi->addForce(force);
@@ -81,7 +81,7 @@ void System::addSpring(Mass* mi, Mass* mj, qreal k, qreal l0)
 }
 void System::clear()
 {
-    for(Mass* m : mMasses) {
+    for(Point* m : mMasses) {
         delete m;
     }
 
@@ -93,11 +93,11 @@ void System::clear()
     mGravity = Gravity(7e4);
 }
 
-const Mass* System::nearest(const QVector2D& p) const
+const Point* System::nearest(const QVector2D& p) const
 {
     qreal dist = std::numeric_limits<qreal>::infinity();
-    const Mass* ml = mMasses.back();
-    for(const Mass* m : mMasses) {
+    const Point* ml = mMasses.back();
+    for(const Point* m : mMasses) {
         qreal r = (m->pos() - p).lengthSquared();
         if(r < dist) {
             dist = r;
@@ -107,14 +107,14 @@ const Mass* System::nearest(const QVector2D& p) const
     return ml;
 }
 
-void System::addVConstraint(Mass* m, qreal height)
+void System::addVConstraint(Point* m, qreal height)
 {
     Constraint* vc = new VerticalConstraint(height);
     m->addConstraint(vc);
     mConstraints.push_back(vc);
 }
 
-void System::addPConstrain(Mass* m, const QVector2D& p)
+void System::addPConstrain(Point* m, const QVector2D& p)
 {
     Constraint* pc = new PointConstraint(p);
     m->addConstraint(pc);

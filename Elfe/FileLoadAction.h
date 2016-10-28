@@ -2,24 +2,24 @@
 #define FILELOADACTION_H
 
 #include <QAction>
-#include <interfaces/GraphLoader.h>
+#include <interfaces/GraphLoaderPlugin.h>
 
 class FileLoadAction : public QAction
 {
     Q_OBJECT
 public:
-    FileLoadAction(GraphLoader* data, const QString& text,QObject* parent = nullptr) : QAction(text,parent),mData(data)
+    FileLoadAction(GraphLoaderPlugin* data, const QString& text,QObject* parent = nullptr) : QAction(text,parent),mData(data)
     {
         connect(this,SIGNAL(triggered()),this,SLOT(onTriggered()));
     }
 signals:
-    void triggered(GraphLoader*);
+    void triggered(GraphLoaderPlugin*);
 public slots:
     void onTriggered() {
         emit triggered(mData);
     }
 private:
-    GraphLoader* mData;
+    GraphLoaderPlugin* mData;
 };
 
 #endif // FILELOADACTION_H

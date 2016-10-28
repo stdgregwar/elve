@@ -6,17 +6,17 @@
 #include <QString>
 #include "../Graph.h"
 
-#define GraphLoader_iid "ch.epfl.lap.elfe.LoaderInterface"
+#define GraphLoaderPlugin_iid "ch.epfl.lap.elfe.GraphLoaderPlugin"
 
-class GraphLoader
+class GraphLoaderPlugin
 {
     public:
-        virtual ~GraphLoader(){}
+        virtual ~GraphLoaderPlugin(){}
         virtual SharedGraph load(const QString& filepath) = 0;
         virtual QString fileFilter() = 0;
         virtual QString formatName() = 0;
 };
 
-Q_DECLARE_INTERFACE(GraphLoader,GraphLoader_iid)
+Q_DECLARE_INTERFACE(GraphLoaderPlugin,GraphLoaderPlugin_iid)
 
 #endif // LOADERINTERFACE_H

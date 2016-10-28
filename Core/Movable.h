@@ -3,17 +3,17 @@
 
 #include <QVector2D>
 
-class Mass;
+class Point;
 
 class Movable
 {
 public:
     virtual void onStateChange(const QVector2D& pos, const QVector2D& speed) = 0;
     void setState(const QVector2D& pos, const QVector2D& speed);
-    void setMass(Mass* m);
-    Mass* mass();
+    void setMass(Point* m);
+    Point* mass();
 private:
-    Mass* mMass;
+    Point* mMass;
 };
 
 #endif // MOVABLE_H

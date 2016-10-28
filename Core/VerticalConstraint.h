@@ -8,7 +8,7 @@ class VerticalConstraint : public Constraint
 {
 public:
     VerticalConstraint(qreal height);
-    void constrain(Mass &mass) override;
+    void constrain(Point &mass) override;
 private:
     qreal mHeight;
 };

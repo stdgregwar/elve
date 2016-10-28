@@ -43,10 +43,6 @@ void LayoutPolicy::setGraph(SharedGraph graph) {
     //mScene.setSceneRect(mScene.itemsBoundingRect());
 }
 
-const MassesByID& LayoutPolicy::massesByID() const {
-    return mMasses;
-}
-
 const System& LayoutPolicy::system() const
 {
     return mSystem;

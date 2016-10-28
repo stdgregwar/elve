@@ -1,6 +1,6 @@
 #include "Movable.h"
 
-#include "Mass.h"
+#include "Point.h"
 
 void Movable::setState(const QVector2D &pos, const QVector2D &speed){
     if(mMass) {
@@ -9,11 +9,11 @@ void Movable::setState(const QVector2D &pos, const QVector2D &speed){
     }
 }
 
-Mass* Movable::mass()
+Point* Movable::mass()
 {
     return mMass;
 }
 
-void Movable::setMass(Mass *m) {
+void Movable::setMass(Point *m) {
     mMass = m;
 }

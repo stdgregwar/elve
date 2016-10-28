@@ -28,7 +28,6 @@ SOURCES +=\
     Gravity.cpp \
     LayoutPolicy.cpp \
     LevelForceLayout.cpp \
-    Mass.cpp \
     Movable.cpp \
     Node.cpp \
     NodeItem.cpp \
@@ -37,7 +36,9 @@ SOURCES +=\
     Spring.cpp \
     System.cpp \
     VerticalConstraint.cpp \
-    Force.cpp
+    Force.cpp \
+    interfaces/LayoutPlugin.cpp \
+    Point.cpp
 
 RESOURCES += \
     resources.qrc
@@ -56,7 +57,6 @@ HEADERS += \
     Gravity.h \
     LayoutPolicy.h \
     LevelForceLayout.h \
-    Mass.h \
     Movable.h \
     Node.h \
     NodeItem.h \
@@ -66,4 +66,6 @@ HEADERS += \
     System.h \
     VerticalConstraint.h \
     Force.h \
-    interfaces/GraphLoader.h
+    interfaces/LayoutPlugin.h \
+    interfaces/GraphLoaderPlugin.h \
+    Point.h

@@ -1,18 +1,12 @@
-#include "SimpleForceLayout.h"
-#include <QDebug>
-#include <cmath>
+#include "LevelLayout.h"
 
-#define SS 1
-
-SimpleForceLayout::SimpleForceLayout(QGraphicsScene &scene) : LayoutPolicy(scene)
+LevelLayout::LevelLayout(QObject *parent) :
+    QObject(parent)
 {
-
 }
 
-void SimpleForceLayout::setGraph(SharedGraph graph,const NodePositions& positions)
+void LevelLayout::setGraph(SharedGraph graph,const NodePositions& positions)
 {
-    qDebug() << "Displaying a" << graph->gateCount() << "entities graph!";
-
     qreal sk = 8;
     qreal l0 = 0;
     qreal damp = 2;
@@ -33,7 +27,10 @@ void SimpleForceLayout::setGraph(SharedGraph graph,const NodePositions& position
             //qDebug() << p.second.id().c_str() << "is output";
             //mSystem.addVConstraint(m,-1024*SS);
             mSystem.addPConstrain(m,{p.second.IOIndex()*192,-1024});
+        } else {
+            mSystem.addVConstraint(m,1024-64*p.second.level());
         }
+
 
         mMasses[p.first] = m;
     }
@@ -57,3 +54,7 @@ void SimpleForceLayout::setGraph(SharedGraph graph,const NodePositions& position
         }
     }
 }
+
+#if QT_VERSION < 0x050000
+Q_EXPORT_PLUGIN2(LevelLayoutPlugin, LevelLayoutPlugin)
+#endif // QT_VERSION < 0x050000

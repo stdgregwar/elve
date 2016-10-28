@@ -1,11 +1,11 @@
 #ifndef PLUGINMANAGER_H
 #define PLUGINMANAGER_H
 
-#include <interfaces/GraphLoader.h>
+#include <interfaces/GraphLoaderPlugin.h>
 #include <QPluginLoader>
 #include <QMap>
 
-typedef QList<GraphLoader*> Loaders;
+typedef QList<GraphLoaderPlugin*> Loaders;
 
 /**
  * @brief Class responsible for collecting and storing all the plugins present in the given folder

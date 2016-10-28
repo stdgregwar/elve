@@ -26,7 +26,7 @@ void PluginManager::loadPlugins(const QString& path)
 
         } else {
             QObject* obj = qpl->instance();
-            GraphLoader* interface = qobject_cast<GraphLoader*>(obj);
+            GraphLoaderPlugin* interface = qobject_cast<GraphLoaderPlugin*>(obj);
             if(interface) {
                 mLoaders.push_back(interface);
             } else {
