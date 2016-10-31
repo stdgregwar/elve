@@ -1,55 +1,56 @@
-#include "Mass.h"
+#include "Point.h"
 #include <QDebug>
 
-Mass::Mass(qreal mass, Movable *m) : mM(mass), mContainerData(nullptr)
+Point::Point(qreal mass, const NodeID &id) : mM(mass), mContainerData(nullptr), mID(id)
 {
-    mMovables.insert(m);
+    //mMovables.insert(id);
 }
 
-bool Mass::moved() const
+bool Point::moved() const
 {
     return true; //mSpeed.lengthSquared() > 1;
 }
 
-const QVector2D& Mass::pos() const
+const QVector2D& Point::pos() const
 {
     return mPos;
 }
 
-void Mass::addMovable(Movable *m)
+void Point::addMovable(Movable *m)
 {
+    m->setPoint(this);
     mMovables.insert(m);
 }
 
-void Mass::removeMovable(Movable *m)
+void Point::removeMovable(Movable *m)
 {
     mMovables.erase(m);
 }
 
-const QVector2D& Mass::speed() const
+const QVector2D& Point::speed() const
 {
     return mSpeed;
 }
 
-const qreal& Mass::mass() const {
+const qreal& Point::mass() const {
     return mM;
 }
 
-void Mass::addForce(Force *force) {
+void Point::addForce(Force *force) {
     mForces.insert(force);
 }
 
-void Mass::addConstraint(Constraint* c)
+void Point::addConstraint(Constraint* c)
 {
     mConstraints.insert(c);
 }
 
-void Mass::resetForce()
+void Point::resetForce()
 {
     mForce = QVector2D(0,0);
 }
 
-void Mass::computeForce()
+void Point::computeForce()
 {
     for(const Force* j : mForces) {
         QVector2D force = j->force(*this);
@@ -59,17 +60,21 @@ void Mass::computeForce()
     }
 }
 
-void Mass::setPos(const QVector2D& pos)
+const NodeID& Point::boundID() const {
+    return mID;
+}
+
+void Point::setPos(const QVector2D& pos)
 {
     mPos = pos;
 }
 
-void Mass::setSpeed(const QVector2D& speed)
+void Point::setSpeed(const QVector2D& speed)
 {
     mSpeed = speed;
 }
 
-void Mass::tick(float dt, bool update)
+void Point::tick(float dt, bool update)
 {
     QVector2D a = mForce / mM;
 
@@ -87,11 +92,11 @@ void Mass::tick(float dt, bool update)
     }
 }
 
-void* Mass::containerData() const
+void* Point::containerData() const
 {
     return mContainerData;
 }
-void Mass::setContainerData(void* data) const
+void Point::setContainerData(void* data) const
 {
     mContainerData = data;
 }

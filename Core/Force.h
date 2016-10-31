@@ -3,12 +3,12 @@
 
 #include <QVector2D>
 
-class Mass;
+class Point;
 
 class Force
 {
 public:
-    virtual QVector2D force(const Mass& m) const = 0;
+    virtual QVector2D force(const Point& m) const = 0;
     virtual ~Force(){}
 };
 

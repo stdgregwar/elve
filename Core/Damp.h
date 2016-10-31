@@ -8,7 +8,7 @@ class Damp : public Force
 {
 public:
     Damp(qreal b);
-    QVector2D force(const Mass &m) const override;
+    QVector2D force(const Point &m) const override;
 private:
     qreal mB;
 };

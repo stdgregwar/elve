@@ -8,7 +8,7 @@ class PointConstraint : public Constraint
 {
 public:
     PointConstraint(const QVector2D& point);
-    void constrain(Mass& mass) override;
+    void constrain(Point& mass) override;
 private:
     QVector2D mPoint;
 };

@@ -3,4 +3,7 @@ TEMPLATE = subdirs
 SUBDIRS += \
     Core \
     BlifLoaderPlugin \
-    Elfe
+    LevelLayoutPlugin \
+    SimpleLayoutPlugin \
+    Elfe \
+

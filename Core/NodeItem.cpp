@@ -12,6 +12,7 @@ using namespace std;
 
 NodeItem::NodeItem(const NodeID &id, const Node::Type &type, QGraphicsItem *parent) : QGraphicsPixmapItem(parent), mDraged(false), mId(id)
 {
+    setToolTip(QString(id.c_str()));
     static unordered_map<Node::Type,QString> pixmaps{{Node::CLUSTER,":/resources/cluster.svg"},{Node::NODE,":/resources/node.svg"},{Node::INPUT,":/resources/input.svg"},{Node::OUTPUT,":/resources/output.svg"}};
 
     setZValue(1);
