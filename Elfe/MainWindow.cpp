@@ -12,6 +12,7 @@
 #include <Graph.h>
 
 #include "FileLoadAction.h"
+#include "LayoutLoadAction.h"
 
 #include <QMessageBox>
 
@@ -33,6 +34,12 @@ MainWindow::MainWindow(QWidget *parent)
         connect(a,SIGNAL(triggered(GraphLoaderPlugin*)),this,SLOT(on_import_trigerred(GraphLoaderPlugin*)));
         ui.menuImport->addAction(a);
     }
+    //setup layouts
+    for(auto& l : mPluginManager.layouts()) {
+        LayoutLoadAction* a = new LayoutLoadAction(l,l->layoutName(),this);
+        connect(a,SIGNAL(triggered(LayoutPlugin*)),this,SLOT(on_layout_trigerred(LayoutPlugin*)));
+        ui.menuLayout->addAction(a);
+    }
 }
 
 MainWindow::~MainWindow()
@@ -51,6 +58,11 @@ void MainWindow::on_import_trigerred(GraphLoaderPlugin* ld) {
         }
         mViewport->setGraph(g);
     }
+}
+
+void MainWindow::on_layout_trigerred(LayoutPlugin* layout) {
+    qDebug() << "Setting layout to " + layout->layoutName();
+    mViewport->setLayout(layout);
 }
 
 void MainWindow::on_actionOpen_triggered()

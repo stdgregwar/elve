@@ -4,5 +4,6 @@ SUBDIRS += \
     Core \
     BlifLoaderPlugin \
     LevelLayoutPlugin \
+    SimpleLayoutPlugin \
     Elfe \
 

@@ -27,12 +27,10 @@ SOURCES +=\
     GraphWidget.cpp \
     Gravity.cpp \
     LayoutPolicy.cpp \
-    LevelForceLayout.cpp \
     Movable.cpp \
     Node.cpp \
     NodeItem.cpp \
     PointConstraint.cpp \
-    SimpleForceLayout.cpp \
     Spring.cpp \
     System.cpp \
     VerticalConstraint.cpp \
@@ -56,12 +54,10 @@ HEADERS += \
     GraphWidget.h \
     Gravity.h \
     LayoutPolicy.h \
-    LevelForceLayout.h \
     Movable.h \
     Node.h \
     NodeItem.h \
     PointConstraint.h \
-    SimpleForceLayout.h \
     Spring.h \
     System.h \
     VerticalConstraint.h \

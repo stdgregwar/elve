@@ -7,7 +7,7 @@
 #include "NodeItem.h"
 #include "EdgeItem.h"
 #include "Graph.h"
-#include "LayoutPolicy.h"
+#include <interfaces/LayoutPlugin.h>
 
 class GraphWidget : public QGraphicsView
 {
@@ -27,12 +27,10 @@ public:
     void mouseMoveEvent(QMouseEvent *event) override;
     void group(const NodeNames& names, const NodeID& groupName = "group");
     void quickSim(unsigned ticks);
-    void setLayout(LayoutPolicy* l);
-
+    void setLayout(LayoutPlugin* l);
+    void reflect(System &sys,SharedGraph g);
 public slots:
     void borderSelect();
-    void setSimpleLayout();
-    void setLevelLayout();
 private:
     class Behaviour
     {
@@ -71,7 +69,7 @@ private:
     QPointF mLastPos;
     SharedGraph mCurrentGraph;
     Behaviour* mBehaviour;
-    LayoutPolicy* mLayout;
+    LayoutPlugin* mLayout;
 };
 
 #endif // GRAPHWIDGET_H

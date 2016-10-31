@@ -1,12 +1,12 @@
-#include "LevelLayout.h"
+#include "SimpleLayout.h"
 #include <cmath>
 
-LevelLayout::LevelLayout(QObject *parent) :
+SimpleLayout::SimpleLayout(QObject *parent) :
     QObject(parent)
 {
 }
 
-void LevelLayout::setGraph(SharedGraph graph,const NodePositions& positions)
+void SimpleLayout::setGraph(SharedGraph graph,const NodePositions& positions)
 {
     clear();
     qreal sk = 8;
@@ -25,7 +25,7 @@ void LevelLayout::setGraph(SharedGraph graph,const NodePositions& positions)
             //mSystem.addVConstraint(m,-1024*SS);
             system().addPConstrain(m,{p.second.IOIndex()*192,-1024});
         } else {
-            system().addVConstraint(m,1024-64*p.second.level());
+            //system().addVConstraint(m,1024-64*p.second.level());
         }
     }
 
@@ -42,16 +42,15 @@ void LevelLayout::setGraph(SharedGraph graph,const NodePositions& positions)
     }
 }
 
-void LevelLayout::tick(float dt, bool fast)
+void SimpleLayout::tick(float dt, bool fast)
 {
     LayoutPlugin::tick(dt,fast);
 }
 
-QString LevelLayout::layoutName()
+QString SimpleLayout::layoutName()
 {
-    return "Level-Force";
+    return "Simple-Force";
 }
-
 #if QT_VERSION < 0x050000
 Q_EXPORT_PLUGIN2(LevelLayoutPlugin, LevelLayoutPlugin)
 #endif // QT_VERSION < 0x050000

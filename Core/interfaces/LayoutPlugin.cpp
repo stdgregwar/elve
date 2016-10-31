@@ -11,7 +11,7 @@ void LayoutPlugin::setGraph(SharedGraph graph) {
     default_random_engine gen;
     std::uniform_int_distribution<int> u(-1024,1024);
     NodePositions randomPos;
-    for(const auto& p : graph->gates()) {
+    for(const auto& p : graph->nodes()) {
         float x = u(gen);
         float y = u(gen);
         randomPos.emplace(p.second.id(),QVector2D{x,y});
@@ -19,6 +19,18 @@ void LayoutPlugin::setGraph(SharedGraph graph) {
 
     setGraph(graph,randomPos);
     quickSim(simticks);
+}
+
+void LayoutPlugin::clear(){
+    mSystem.clear();
+}
+
+System& LayoutPlugin::system() {
+    return mSystem;
+}
+
+void LayoutPlugin::tick(float dt, bool fast) {
+    mSystem.tick(dt,fast);
 }
 
 void LayoutPlugin::quickSim(size_t ticks) {

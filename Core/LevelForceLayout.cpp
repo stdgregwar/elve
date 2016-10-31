@@ -10,7 +10,7 @@ LevelForceLayout::LevelForceLayout(QGraphicsScene& scene) : LayoutPolicy(scene)
 
 void LevelForceLayout::setGraph(SharedGraph graph,const NodePositions& positions)
 {
-    qreal sk = 8;
+    /*qreal sk = 8;
     qreal l0 = 0;
     qreal damp = 2;
     clear();
@@ -50,5 +50,5 @@ void LevelForceLayout::setGraph(SharedGraph graph,const NodePositions& positions
             ms->addMovable(e->getHandle(0));
             me->addMovable(e->getHandle(segments));
         }
-    }
+    }*/
 }

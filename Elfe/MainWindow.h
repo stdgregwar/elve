@@ -19,6 +19,7 @@ private:
 public slots:
     void onFileOpen(const QString& file);
     void on_import_trigerred(GraphLoaderPlugin* ld);
+    void on_layout_trigerred(LayoutPlugin* layout);
 private slots:
     void on_actionOpen_triggered();
 };

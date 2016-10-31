@@ -22,20 +22,20 @@ void System::tick(float dt, bool update)
 
     int nthreads = 8;
     vector<future<void>> futures(nthreads);
-    int splitsize = mMasses.size() / nthreads;
+    int splitsize = mPoints.size() / nthreads;
     size_t end = 0;
 
     for(int i = 0; i < nthreads-1; i++) {
         end = (i+1)*splitsize;
         futures[i] = async(bind(&System::computeForces,this,i*splitsize,end));
     }
-    futures[nthreads-1] = async(bind(&System::computeForces,this,end,mMasses.size()));
+    futures[nthreads-1] = async(bind(&System::computeForces,this,end,mPoints.size()));
 
     for(future<void>& f : futures) {
         f.get();
     }
 
-    for(Point* m : mMasses) {
+    for(Point* m : mPoints) {
         m->tick(dt,update);
     }
 }
@@ -43,17 +43,40 @@ void System::tick(float dt, bool update)
 void System::computeForces(size_t from,size_t until)
 {
     for(size_t i = from; i < until; i++) {
-        mMasses[i]->resetForce();
-        mMasses[i]->computeForce();
+        mPoints[i]->resetForce();
+        mPoints[i]->computeForce();
     }
 }
 
-Point* System::addPoint(qreal mass, Movable* m, QVector2D pos, qreal damp, GravityMode g)
+Point* System::point(const NodeID& id) {
+    auto it = mPointsById.find(id);
+    if(it != mPointsById.end()) {
+        return it->second;
+    } else {
+        return addPoint(1,id,{0,0},3,FULL); //Fallback point, should never happen
+    }
+}
+
+const PointsByID& System::pointsByID() const {
+    return mPointsById;
+}
+
+NodePositions System::positions() const
 {
-    Point* nm = new Point(mass,m);
-    mMasses.push_back(nm);
+    NodePositions poss;
+    for(const Point* p : mPoints) {
+        poss[p->boundID()] = p->pos();
+    }
+    return poss;
+}
+
+Point* System::addPoint(qreal mass, const NodeID &id, QVector2D pos, qreal damp, GravityMode g)
+{
+    Point* nm = new Point(mass,id);
+    mPoints.push_back(nm);
+    mPointsById[id] = nm;
     nm->setPos(pos);
-    m->setMass(nm);
+    //id->setMass(nm);
     if(g != NONE) {
         nm->addForce(&mGravity);
         if(g == FULL) {
@@ -67,8 +90,8 @@ Point* System::addPoint(qreal mass, Movable* m, QVector2D pos, qreal damp, Gravi
 
 void System::addSpring(unsigned i, unsigned j, qreal k, qreal l0)
 {
-    Point* mi = mMasses.at(i);
-    Point* mj = mMasses.at(j);
+    Point* mi = mPoints.at(i);
+    Point* mj = mPoints.at(j);
     addSpring(mi,mj,k,l0);
 }
 
@@ -81,11 +104,11 @@ void System::addSpring(Point* mi, Point* mj, qreal k, qreal l0)
 }
 void System::clear()
 {
-    for(Point* m : mMasses) {
+    for(Point* m : mPoints) {
         delete m;
     }
 
-    mMasses.clear();
+    mPoints.clear();
     for(Force* f : mForces) {
         delete f;
     }
@@ -96,8 +119,8 @@ void System::clear()
 const Point* System::nearest(const QVector2D& p) const
 {
     qreal dist = std::numeric_limits<qreal>::infinity();
-    const Point* ml = mMasses.back();
-    for(const Point* m : mMasses) {
+    const Point* ml = mPoints.back();
+    for(const Point* m : mPoints) {
         qreal r = (m->pos() - p).lengthSquared();
         if(r < dist) {
             dist = r;
@@ -123,7 +146,7 @@ void System::addPConstrain(Point* m, const QVector2D& p)
 
 size_t System::massCount() const
 {
-    return mMasses.size();
+    return mPoints.size();
 }
 
 size_t System::forceCount() const

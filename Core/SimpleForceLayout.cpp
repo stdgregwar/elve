@@ -18,7 +18,7 @@ void SimpleForceLayout::setGraph(SharedGraph graph,const NodePositions& position
     qreal damp = 2;
     clear();
 
-    for(const auto& p : graph->gates()) {
+    for(const auto& p : graph->nodes()) {
         NodeItem* n = newNode(p.second.id(),p.second.type());
         const QVector2D& pos = positions.at(p.second.id());
 
@@ -40,7 +40,7 @@ void SimpleForceLayout::setGraph(SharedGraph graph,const NodePositions& position
 
     int segments = 1;
 
-    for(const auto& p : graph->gates()) {
+    for(const auto& p : graph->nodes()) {
         const Node& g =  p.second;
         Point* ms = mMasses[g.id()];
 

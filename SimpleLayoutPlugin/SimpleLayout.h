@@ -5,7 +5,7 @@
 #include <LayoutPlugin.h>
 #include <System.h>
 
-class LevelLayout : public QObject, public LayoutPlugin
+class SimpleLayout : public QObject, public LayoutPlugin
 {
     Q_OBJECT
 #if QT_VERSION >= 0x050000
@@ -13,7 +13,7 @@ class LevelLayout : public QObject, public LayoutPlugin
 #endif // QT_VERSION >= 0x050000
     Q_INTERFACES(LayoutPlugin)
 public:
-    LevelLayout(QObject *parent = 0);
+    SimpleLayout(QObject *parent = 0);
     //virtual void setGraph(SharedGraph graph);
     virtual void setGraph(SharedGraph g,const NodePositions& positions) override;
     virtual void tick(float dt, bool fast) override;

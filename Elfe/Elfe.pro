@@ -26,7 +26,8 @@ DEPENDPATH += $$PWD/../Core
 HEADERS += \
     MainWindow.h \
     PluginManager.h \
-    FileLoadAction.h
+    FileLoadAction.h \
+    LayoutLoadAction.h
 
 FORMS += \
     uis/mainwindow_test.ui

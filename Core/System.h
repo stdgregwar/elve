@@ -6,7 +6,10 @@
 #include "Force.h"
 #include "Gravity.h"
 #include "Constraint.h"
+#include "Graph.h"
+
 #include <vector>
+#include <unordered_map>
 
 enum GravityMode {
     FULL,
@@ -14,12 +17,16 @@ enum GravityMode {
     NONE
 };
 
+typedef std::unordered_map<NodeID,QVector2D> NodePositions;
+typedef std::unordered_map<NodeID,Point*> PointsByID;
+
 class System
 {
 public:
     System();
     void tick(float dt,bool update = true);
-    Point* addPoint(qreal mass, Movable* m, QVector2D pos, qreal damp, GravityMode g = FULL);
+    Point* addPoint(qreal mass, const NodeID& id, QVector2D pos, qreal damp, GravityMode g = FULL);
+    Point* point(const NodeID& id);
     void addSpring(unsigned i, unsigned j, qreal k, qreal l0);
     void addSpring(Point* mi, Point* mj, qreal k, qreal l0);
     void addVConstraint(Point* m, qreal height);
@@ -28,11 +35,14 @@ public:
     size_t massCount() const;
     size_t forceCount() const;
     const Point* nearest(const QVector2D& p) const;
+    NodePositions positions() const;
+    const PointsByID& pointsByID() const;
     ~System();
 private:
     void computeForces(size_t from,size_t until);
     Gravity mGravity;
-    std::vector<Point*> mMasses;
+    std::vector<Point*> mPoints;
+    PointsByID mPointsById;
     std::vector<Force*> mForces;
     std::vector<Constraint*> mConstraints;
 };

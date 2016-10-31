@@ -8,20 +8,24 @@
 
 #include <EdgeItem.h>
 #include <NodeItem.h>
+#include <System.h>
 
-typedef std::unordered_map<NodeID,QVector2D> NodePositions;
+
 
 #define LayoutPlugin_iid "ch.epfl.lap.elfe.LayoutPlugin"
 
 class LayoutPlugin
 {
 public:
+    void clear();
     virtual void setGraph(SharedGraph graph);
     virtual void setGraph(SharedGraph g,const NodePositions& positions) = 0;
     virtual void quickSim(size_t ticks);
-    virtual void tick(float dt, bool fast) = 0;
+    virtual void tick(float dt, bool fast);
     virtual QString layoutName() = 0;
+    System& system();
 private:
+    System mSystem;
 };
 
 Q_DECLARE_INTERFACE(LayoutPlugin,LayoutPlugin_iid)

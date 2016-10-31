@@ -9,7 +9,7 @@ VerticalConstraint::VerticalConstraint(qreal height) : mHeight(height)
 
 void VerticalConstraint::constrain(Point &mass) {
 
-    float hardn = 0.1;
+    float hardn = 0.2;
     QVector2D p = mass.pos();
     QVector2D speed = mass.speed();
 

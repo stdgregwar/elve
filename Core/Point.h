@@ -30,6 +30,7 @@ public:
     void setContainerData(void* data) const;
     const NodeID& boundID() const;
 private:
+    NodeID mID;
     QVector2D mPos;
     QVector2D mSpeed;
     QVector2D mForce;

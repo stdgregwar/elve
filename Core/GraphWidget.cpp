@@ -17,7 +17,7 @@
 
 using namespace std;
 
-GraphWidget::GraphWidget() : mScene(new QGraphicsScene(-SS,-SS,SS*2,SS*2,this)) , mDrag(false), mScale(1), mBehaviour(new Behaviour(this)), mLayout(new SimpleForceLayout(*mScene))
+GraphWidget::GraphWidget() : mScene(new QGraphicsScene(-SS,-SS,SS*2,SS*2,this)) , mDrag(false), mScale(1), mBehaviour(new Behaviour(this)), mLayout(nullptr)
 {
     setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
     setDragMode(QGraphicsView::ScrollHandDrag);
@@ -42,12 +42,18 @@ void GraphWidget::clear() {
 }
 
 void GraphWidget::setGraph(SharedGraph graph) {
-    mLayout->setGraph(graph);
+    if(mLayout) {
+        mLayout->setGraph(graph);
+        reflect(mLayout->system(),graph);
+    }
     mCurrentGraph = graph;
 }
 
 void GraphWidget::setGraph(SharedGraph graph, const NodePositions& positions) {
-    mLayout->setGraph(graph,positions);
+    if(mLayout) {
+        mLayout->setGraph(graph,positions);
+        reflect(mLayout->system(),graph);
+    }
     mCurrentGraph = graph;
 }
 
@@ -96,7 +102,7 @@ void GraphWidget::mouseMoveEvent(QMouseEvent *event)
 
 void GraphWidget::group(const NodeNames &names, const NodeID &groupName) {
     NodeID trueName = mCurrentGraph->uniqueID(groupName);
-    NodePositions positions = mLayout->nodesPositions();
+    NodePositions positions = mLayout->system().positions();
 
     QVector2D groupCenter;
     for(const NodeID& id : names) {
@@ -110,7 +116,9 @@ void GraphWidget::group(const NodeNames &names, const NodeID &groupName) {
 
 void GraphWidget::tick(float dt, bool update)
 {
-    mLayout->tick(dt,update);
+    if(mLayout) {
+        mLayout->tick(dt,update);
+    }
 }
 
 void GraphWidget::timerEvent(QTimerEvent *e)
@@ -127,22 +135,40 @@ void GraphWidget::setBehaviour(Behaviour* b) {
     mBehaviour = b;
 }
 
-void GraphWidget::setLayout(LayoutPolicy* l) {
+void GraphWidget::setLayout(LayoutPlugin *l) {
     NodePositions old_pos;
     if(mLayout) {
-        old_pos = mLayout->nodesPositions();
-        delete mLayout;
+        old_pos = mLayout->system().positions();
+        //delete mLayout;
+        mLayout = l;
+        if(mCurrentGraph) {
+            setGraph(mCurrentGraph,old_pos);
+        }
+    } else {
+        mLayout = l;
+        if(mCurrentGraph) {
+            setGraph(mCurrentGraph);
+        }
     }
-    l->setGraph(mCurrentGraph,old_pos);
-    mLayout = l;
+
 }
 
-void GraphWidget::setSimpleLayout() {
-    setLayout(new SimpleForceLayout(*mScene));
-}
-
-void GraphWidget::setLevelLayout() {
-    setLayout(new LevelForceLayout(*mScene));
+void GraphWidget::reflect(System &sys,SharedGraph g) {
+    mScene->clear();
+    for(auto& nbi : g->nodes()) {
+        const Node& n = nbi.second;
+        NodeItem* ni = new NodeItem(n.id(),n.type());
+        Point* p = sys.point(n.id());
+        p->addMovable(ni);
+        mScene->addItem(ni);
+        for(const Node* an : n.ancestors()) {
+            EdgeItem* ei = new EdgeItem(1);
+            Point* ep = sys.point(an->id());
+            p->addMovable(ei->getHandle(0));
+            ep->addMovable(ei->getHandle(1));
+            mScene->addItem(ei);
+        }
+    }
 }
 
 /*

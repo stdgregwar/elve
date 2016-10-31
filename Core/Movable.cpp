@@ -9,11 +9,11 @@ void Movable::setState(const QVector2D &pos, const QVector2D &speed){
     }
 }
 
-Point* Movable::mass()
+Point* Movable::point()
 {
     return mMass;
 }
 
-void Movable::setMass(Point *m) {
+void Movable::setPoint(Point *m) {
     mMass = m;
 }

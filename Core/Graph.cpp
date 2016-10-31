@@ -17,7 +17,7 @@ Graph::Graph(const NodeDescriptions &descrs, const AdjacencyList& edges)
     }
 }
 
-const NodesByID& Graph::gates() const
+const NodesByID& Graph::nodes() const
 {
     return mNodes;
 }

@@ -1,7 +1,7 @@
 #include "Point.h"
 #include <QDebug>
 
-Point::Point(qreal mass, const NodeID &id) : mM(mass), mContainerData(nullptr)
+Point::Point(qreal mass, const NodeID &id) : mM(mass), mContainerData(nullptr), mID(id)
 {
     //mMovables.insert(id);
 }
@@ -18,6 +18,7 @@ const QVector2D& Point::pos() const
 
 void Point::addMovable(Movable *m)
 {
+    m->setPoint(this);
     mMovables.insert(m);
 }
 
@@ -57,6 +58,10 @@ void Point::computeForce()
             mForce += force;
         }
     }
+}
+
+const NodeID& Point::boundID() const {
+    return mID;
 }
 
 void Point::setPos(const QVector2D& pos)
