@@ -96,16 +96,18 @@ SharedGraph BlifLoader::load(const QString &filepath) {
                 trim(name);
                 if(name.length() != 0) {
                     names.push_back(name);
+                    desc.emplace(std::piecewise_construct,
+                                 std::forward_as_tuple(name),
+                                 std::forward_as_tuple(name,Node::NODE,0));
                 }
             }
-            desc.emplace(std::piecewise_construct,
-                         std::forward_as_tuple(name),
-                         std::forward_as_tuple(name,Node::NODE,0));
+
             for(size_t i = 0; i < names.size()-1;i++) {
                 adj.push_back({names[i],name});
             }
         }
     }
+    qDebug() <<"file loaded";
     return make_shared<Graph>(desc,adj);
 }
 

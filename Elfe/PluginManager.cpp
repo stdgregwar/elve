@@ -26,7 +26,6 @@ void load(const QString& path, const QString& type, QList<T*>& toFill) {
         if(!qpl->load()) {
             QMessageBox("Warning","Could not load " + info.baseName() + " : \n" + qpl->errorString(),QMessageBox::Warning,0,0,0).exec();
             qDebug() << qpl->errorString() << endl;
-
         } else {
             QObject* obj = qpl->instance();
             T* interface = qobject_cast<T*>(obj);

@@ -36,7 +36,9 @@ SOURCES +=\
     VerticalConstraint.cpp \
     Force.cpp \
     interfaces/LayoutPlugin.cpp \
-    Point.cpp
+    Point.cpp \
+    QuadTree.cpp \
+    QuadTreeNode.cpp
 
 RESOURCES += \
     resources.qrc
@@ -64,4 +66,6 @@ HEADERS += \
     Force.h \
     interfaces/LayoutPlugin.h \
     interfaces/GraphLoaderPlugin.h \
-    Point.h
+    Point.h \
+    QuadTree.h \
+    QuadTreeNode.h

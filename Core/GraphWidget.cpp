@@ -13,7 +13,7 @@
 #include "SimpleForceLayout.h"
 #include "LevelForceLayout.h"
 
-#define SS 4096
+#define SS 32000
 
 using namespace std;
 
@@ -195,7 +195,6 @@ bool GraphWidget::BorderSelect::mousePressEvent(QMouseEvent *event) {
 }
 
 bool GraphWidget::BorderSelect::mouseReleaseEvent(QMouseEvent *event) {
-
     QList<QGraphicsItem*> items = gw.mScene->items(mRectangle->boundingRect());
     NodeNames names;
     for(QGraphicsItem* i : items) {
