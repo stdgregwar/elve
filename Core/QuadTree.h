@@ -18,6 +18,7 @@ public:
     bool addPoint(const Point* m);
     void removePoint(const Point* r);
     void movePoint(const Point* r);
+    void clear();
 
     void reinsertAll();
 

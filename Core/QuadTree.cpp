@@ -174,7 +174,7 @@ void QuadTree::reinsertAll()
         mNodes[i].reset();
     }
 
-    if(count > 200) {
+    if(count) {
         QRectF rect = computeMinRect();
         initNodesPos(computeMinRect());
         count = 0;
@@ -191,6 +191,14 @@ void QuadTree::removePoint(const Point *m)
     if(node) {
         node->remPoint(m,mParams);
     }
+}
+
+void QuadTree::clear()
+{
+    for(long i = QUADTREESIZE; i--;) {
+        mNodes[i].reset();
+    }
+    mPoints.clear();
 }
 
 void QuadTree::movePoint(const Point *m)

@@ -53,5 +53,5 @@ QVector2D Gravity::quadGravity(const Point& m) const
 
 void Gravity::clear() {
     mGalaxy.clear();
-    mQuadTree.reset();
+    mQuadTree.clear();
 }
