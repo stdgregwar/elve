@@ -3,6 +3,7 @@
 #include "Node.h"
 
 #include <algorithm>
+#include <QDebug>
 
 using namespace std;
 
@@ -14,6 +15,7 @@ Graph::Graph()
 Graph::Graph(const NodeDescriptions &descrs, const AdjacencyList& edges)
 {
     for(const auto& p : descrs) {
+        qDebug() << p.second.properties;
         addNode(p.second);
     }
     for(auto p : edges) {
@@ -55,9 +57,9 @@ Node* Graph::addNode(const Node::Description& des) {
     return addNode(des.id,des.type,des.ioi);
 }
 
-void Graph::addEdge(const NodeID& from, const NodeID& to, bool invert)
+void Graph::addEdge(const NodeID& from, const NodeID& to)
 {
-    mNodes.at(from).addChild(&mNodes.at(to),invert);
+    mNodes.at(from).addChild(&mNodes.at(to));
 }
 
 SharedGraph Graph::clusterize(size_t maxLevel) const {

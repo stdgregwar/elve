@@ -6,20 +6,20 @@ Node::Node(const NodeID& id, Type type, Index ioi) : mID(id), mType(type), mIOin
 
 }
 
-void Node::addChild(Node* child,bool inverted)
+void Node::addChild(Node* child)
 {
     child->_addAncestor(this);
-    _addChild(child,inverted);
+    _addChild(child);
 }
 
 
-void Node::addAncestor(Node* anc,bool inverted)
+void Node::addAncestor(Node* anc)
 {
-    anc->_addChild(this,inverted);
+    anc->_addChild(this);
     _addAncestor(anc);
 }
 
-void Node::_addChild(Node* child,bool inverted)
+void Node::_addChild(Node* child)
 {
     mChildren.push_back(child);
 }
@@ -79,6 +79,10 @@ const NodeLevel& Node::level() const { //TODO add special treatment for OUTPUTS
         }))->level() + 1;
     }
     return mLevel;
+}
+
+const QJsonObject& Node::properties() const {
+    return mProperties;
 }
 
 const Node::Children& Node::children() const

@@ -22,7 +22,7 @@ public:
     Graph(const NodeDescriptions& descrs, const AdjacencyList& edges);
     Node *addNode(const NodeID& id, Node::Type type, Index ioi = 0);
     Node *addNode(const Node::Description& des);
-    void addEdge(const NodeID& from, const NodeID& to, bool invert = false);
+    void addEdge(const NodeID& from, const NodeID& to);
     const NodesByID& nodes() const;
     size_t gateCount() const;
     SharedGraph clusterize(size_t maxLevel) const;
