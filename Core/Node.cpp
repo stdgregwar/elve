@@ -21,7 +21,7 @@ void Node::addAncestor(Node* anc,bool inverted)
 
 void Node::_addChild(Node* child,bool inverted)
 {
-    mChildren.push_back({child,inverted});
+    mChildren.push_back(child);
 }
 
 size_t Node::ancestorCount() const {

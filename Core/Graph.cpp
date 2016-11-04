@@ -100,8 +100,8 @@ SharedGraph Graph::group(const NodeNames &toGroup, NodeID groupID) const {
                     newAdj.push_back(Edge{an.id(),groupID});
                 }
             }
-            for(const Node::Child& cc : n.children()) {
-                const Node& cn = *cc.node;
+            for(const Node* pcn : n.children()) {
+                const Node& cn = *pcn;
                 if(toGroup.count(cn.id()) == 0) { //If child is external
                     newAdj.push_back(Edge{groupID,cn.id()});
                 }

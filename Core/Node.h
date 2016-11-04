@@ -37,12 +37,8 @@ public:
         Index ioi;
     };
 
-    struct Child{
-        Node* node;
-        bool inverted;
-    };
 
-    typedef std::vector<Child> Children;
+    typedef std::vector<Node*> Children;
     typedef std::vector<Node*> Ancestors;
 
     Node(const NodeID& id, Type type, Index ioi = 0);

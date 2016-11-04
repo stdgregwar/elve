@@ -48,8 +48,9 @@ void LevelLayout::setGraph(SharedGraph graph,const NodePositions& positions)
 
         float congr = std::pow(g.children().size(),2);
 
-        for(const Node::Child& c : g.children()) {
-            Point* me = system().point(c.node->id());
+
+        for(const Node* n : g.children()) {
+            Point* me = system().point(n->id());
             system().addSpring(ms,me,sk/congr,l0*congr);
         }
     }
