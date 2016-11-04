@@ -176,11 +176,16 @@ void GraphWidget::setLayout(LayoutPlugin *l) {
 
 }
 
-void GraphWidget::reflect(System &sys,SharedGraph g) {
+void GraphWidget::clearScene() {
     mScene->removeItem(mEdgesPath);
     mScene->clear();
     mScene->addItem(mEdgesPath);
+    for_each(mEdges.begin(),mEdges.end(),[](EdgeItem* e){delete e;});
     mEdges.clear();
+}
+
+void GraphWidget::reflect(System &sys,SharedGraph g) {
+    clearScene();
     for(auto& nbi : g->nodes()) {
         const Node& n = nbi.second;
         NodeItem* ni = new NodeItem(n.id(),n.type());
@@ -192,7 +197,6 @@ void GraphWidget::reflect(System &sys,SharedGraph g) {
             Point* ep = sys.point(an->id());
             p->addMovable(ei->getHandle(0));
             ep->addMovable(ei->getHandle(1));
-            //mScene->addItem(ei);
             mEdges.push_back(ei);
         }
     }
