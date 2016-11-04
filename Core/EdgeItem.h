@@ -7,13 +7,14 @@
 #include "Movable.h"
 
 
-class EdgeItem : public QGraphicsPathItem
+class EdgeItem
 {
 public:
     EdgeItem(size_t segments = 3);
     void setHandleState(size_t i, const QVector2D& pos, const QVector2D& speed = {0,0});
     Movable* getHandle(size_t i);
     size_t segments() const;
+    void doPath(QPainterPath& p);
 private:
     class Handle : public Movable {
     public:
@@ -30,8 +31,6 @@ private:
         QVector2D mPos;
         EdgeItem* mE;
     };
-
-    void doPath();
     void handleMoved();
     std::vector<Handle> mHandles;
     unsigned mMoveCount;

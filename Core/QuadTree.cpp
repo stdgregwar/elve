@@ -6,9 +6,9 @@
 #include <limits>
 
 using namespace std;
-#define THRESHOLD 1024
+#define THRESHOLD 4096
 
-QuadTree::QuadTree(const QRectF &bounds) : mParams{THRESHOLD*THRESHOLD,10}
+QuadTree::QuadTree(const QRectF &bounds) : mParams{THRESHOLD*THRESHOLD,6,10}
 {
     mNodes = nullptr;
     init(bounds);
@@ -56,7 +56,7 @@ bool QuadTree::initLite(const QRectF& bounds) {
     float fFull = radius*2.f;
 
     QVector2D vOffset( -radius, -radius);
-    for (unsigned I = 0UL; I < 8UL; ++I ) {
+    for (unsigned I = 0UL; I < mParams.depth; ++I ) {
         mLevels[I] = pqtnThis;
         // For each node at this level.
         for (unsigned Y = (1UL << I); Y--; ) {
@@ -105,7 +105,7 @@ bool QuadTree::initNodesPos(const QRectF& bounds)
     float fFull = radius*2.f;
 
     QVector2D vOffset( -radius, -radius);
-    for (unsigned I = 0UL; I < 8UL; ++I ) {
+    for (unsigned I = 0UL; I < mParams.depth; ++I ) {
         mLevels[I] = pqtnThis;
         // For each node at this level.
         for (unsigned Y = (1UL << I); Y--; ) {
@@ -168,13 +168,14 @@ QRectF QuadTree::computeMinRect()
 
 void QuadTree::reinsertAll()
 {
+    //qDebug() << "Reinserting all";
     static int count = 0;
     count++;
     for(long i = QUADTREESIZE; i--;) {
         mNodes[i].reset();
     }
 
-    if(count) {
+    if(count > 200) {
         QRectF rect = computeMinRect();
         initNodesPos(computeMinRect());
         count = 0;
@@ -183,6 +184,7 @@ void QuadTree::reinsertAll()
     for(const Point* m : mPoints) {
         _addPoint(m);
     }
+    //qDebug() << "Reinserting all end";
 }
 
 void QuadTree::removePoint(const Point *m)
@@ -217,6 +219,10 @@ QuadTreeNode* QuadTree::rootNode() const
     return mNodes;
 }
 
+void QuadTree::debug(QPainter *p) const
+{
+    for_each(mNodes,mNodes+unsigned(pow(4,mParams.depth)),[&p](const QuadTreeNode& n){n.debug(p);});
+}
 
 QVector2D QuadTree::gravityFor(const Point& m) const
 {

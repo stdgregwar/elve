@@ -37,6 +37,7 @@ public:
     const Point* nearest(const QVector2D& p) const;
     NodePositions positions() const;
     const PointsByID& pointsByID() const;
+    void debug(QPainter* p) const;
     ~System();
 private:
     void computeForces(size_t from,size_t until);

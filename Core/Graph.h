@@ -29,6 +29,9 @@ public:
     SharedGraph group(const NodeNames& toGroup, NodeID groupID) const;
     SharedGraph merge(SharedGraph other) const;
     NodeID uniqueID(const NodeID& base) const;
+    NodeLevel highestLevel() const;
+    size_t inputCount() const;
+    size_t outputCount() const;
     const NodePtrs& inputs();
     const NodePtrs& outputs();
     NodeDescriptions descriptions() const;

@@ -17,12 +17,8 @@ System::System() : mGravity(7e4)
 void System::tick(float dt, bool update)
 {
     static int count = 0;
-    qDebug() << "tick" << count++;
+    //qDebug() << "tick" << count++;
     mGravity.updateQuadTree();
-    /*for(Mass* m : mMasses) {
-        m->resetForce();
-        m->computeForce();
-    }*/
 
     int nthreads = 8;
     vector<future<void>> futures(nthreads);
@@ -42,6 +38,10 @@ void System::tick(float dt, bool update)
     for(Point* m : mPoints) {
         m->tick(dt,update);
     }
+}
+
+void System::debug(QPainter* p) const {
+    mGravity.debug(p);
 }
 
 void System::computeForces(size_t from,size_t until)

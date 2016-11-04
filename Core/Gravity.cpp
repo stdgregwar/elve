@@ -3,7 +3,7 @@
 #include <QGraphicsScene>
 
 
-#define QSIZE 8192
+#define QSIZE 32000
 
 Gravity::Gravity(qreal k) : mK(k) ,mQuadTree(QRectF(-QSIZE,-QSIZE,QSIZE*2,QSIZE*2))
 {
@@ -49,6 +49,10 @@ QVector2D Gravity::quadGravity(const Point& m) const
 {
     return mK*mQuadTree.gravityFor(m);
     //return plainOldGravity(m);
+}
+
+void Gravity::debug(QPainter* p) const {
+    mQuadTree.debug(p);
 }
 
 void Gravity::clear() {

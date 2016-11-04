@@ -2,6 +2,10 @@
 #include <string>
 #include "Node.h"
 
+#include <algorithm>
+
+using namespace std;
+
 Graph::Graph()
 {
 
@@ -32,10 +36,18 @@ Node* Graph::addNode(const NodeID& id, Node::Type type, Index ioi)
     if(it != mNodes.end()) {
         return &it->second;
     } else {
+
         auto pi = mNodes.emplace(std::piecewise_construct,
                                  std::forward_as_tuple(id),
                                  std::forward_as_tuple(id, type,ioi));
-        return &pi.first->second;
+
+        Node* n = &pi.first->second;
+        if(type == Node::OUTPUT) {
+            mOutputs.push_back(n);
+        } else if (type == Node::INPUT) {
+            mInputs.push_back(n);
+        }
+        return n;
     }
 }
 
@@ -115,6 +127,25 @@ const NodePtrs& Graph::outputs() {
     return mOutputs;
 }
 
+size_t Graph::inputCount() const
+{
+    return mInputs.size();
+}
+
+size_t Graph::outputCount() const
+{
+    return mOutputs.size();
+}
+
+NodeLevel Graph::highestLevel() const {
+    using pair_type = decltype(mNodes)::value_type;
+
+    return max_element(mNodes.begin(),mNodes.end(),
+        [](const pair_type& a, const pair_type& b)->bool {
+            return a.second.level() < b.second.level();
+        })->second.level();
+}
+
 NodeDescriptions Graph::descriptions() const {
     NodeDescriptions descrs; descrs.reserve(mNodes.size());
     for(const auto& p : mNodes) {
@@ -125,6 +156,6 @@ NodeDescriptions Graph::descriptions() const {
 
 AdjacencyList Graph::adjacencyList() const {
     for(const auto& p : mNodes) {
-
+        //TODO
     }
 }

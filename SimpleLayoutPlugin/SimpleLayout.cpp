@@ -1,5 +1,6 @@
 #include "SimpleLayout.h"
 #include <cmath>
+#include <QDebug>
 
 SimpleLayout::SimpleLayout(QObject *parent) :
     QObject(parent)
@@ -12,6 +13,16 @@ void SimpleLayout::setGraph(SharedGraph graph,const NodePositions& positions)
     qreal sk = 8;
     qreal l0 = 0;
     qreal damp = 2;
+    qreal unit = 64;
+
+    qreal totHeight = graph->highestLevel()*unit;
+    qreal inputHeight = totHeight/2;
+    qreal outputHeight = -totHeight/2;
+
+    qreal ioFactor = (qreal)(graph->outputCount()) / graph->inputCount();
+    qreal ioUnit = totHeight/graph->outputCount();
+
+    qDebug() << ioUnit << ioFactor;
 
     for(const auto& p : graph->nodes()) {
         const QVector2D& pos = positions.at(p.second.id());
@@ -20,10 +31,16 @@ void SimpleLayout::setGraph(SharedGraph graph,const NodePositions& positions)
 
         if(p.second.isInput()) {
             //mSystem.addVConstraint(m,1024*SS);
-            system().addPConstrain(m,{p.second.IOIndex()*192,1024});
+
+            //Interleaving inputs
+            int index = p.second.IOIndex();
+            int index1 = index*2;
+            int index2 = (index-(graph->inputCount()/2))*2+1;
+            int t_index = index > (graph->inputCount()/2) ? index2 : index1;
+            system().addPConstrain(m,{t_index*ioUnit*ioFactor,inputHeight});
         } else if(p.second.isOutput()) {
             //mSystem.addVConstraint(m,-1024*SS);
-            system().addPConstrain(m,{p.second.IOIndex()*192,-1024});
+            system().addPConstrain(m,{p.second.IOIndex()*ioUnit,outputHeight});
         } else {
             //system().addVConstraint(m,1024-64*p.second.level());
         }

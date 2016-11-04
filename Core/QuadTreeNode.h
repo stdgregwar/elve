@@ -12,6 +12,7 @@ typedef std::vector<Point*> Masses;
 
 struct QuadTreeParams {
     qreal gravDistSquare;
+    size_t depth;
     size_t maxMasses;
 };
 
@@ -36,6 +37,7 @@ public:
     const qreal& getRadius() const;
     const qreal& mass() const;
     const bool& downOccupied() const;
+    void debug(QPainter* p) const;
     virtual ~QuadTreeNode();
 private:
     std::vector<const Point *> &givePoints();

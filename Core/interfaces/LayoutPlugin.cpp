@@ -7,7 +7,7 @@
 using namespace std;
 
 void LayoutPlugin::setGraph(SharedGraph graph) {
-    size_t simticks = 800;
+    size_t simticks = 500;
     default_random_engine gen;
     std::uniform_int_distribution<int> u(-1024,1024);
     NodePositions randomPos;

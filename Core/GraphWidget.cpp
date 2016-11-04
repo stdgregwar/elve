@@ -17,7 +17,12 @@
 
 using namespace std;
 
-GraphWidget::GraphWidget() : mScene(new QGraphicsScene(-SS,-SS,SS*2,SS*2,this)) , mDrag(false), mScale(1), mBehaviour(new Behaviour(this)), mLayout(nullptr)
+GraphWidget::GraphWidget() : mScene(new QGraphicsScene(-SS,-SS,SS*2,SS*2,this)),
+    mDrag(false),
+    mScale(1),
+    mBehaviour(new Behaviour(this)),
+    mLayout(nullptr),
+    mEdgesPath(new QGraphicsPathItem())
 {
     setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
     setDragMode(QGraphicsView::ScrollHandDrag);
@@ -25,6 +30,10 @@ GraphWidget::GraphWidget() : mScene(new QGraphicsScene(-SS,-SS,SS*2,SS*2,this)) 
     setScene(mScene);
     setBackgroundBrush(QBrush(QColor(59,58,58), Qt::SolidPattern));
     startTimer(1000/60);
+
+    QPen p(QColor(100,100,100), 1, Qt::SolidLine, Qt::FlatCap, Qt::MiterJoin);
+    p.setCosmetic(true);
+    mEdgesPath->setPen(p);
 }
 
 void GraphWidget::init()
@@ -39,6 +48,7 @@ void GraphWidget::showEvent(QShowEvent *event)
 
 void GraphWidget::clear() {
     mLayout->clear();
+    mEdges.clear();
 }
 
 void GraphWidget::setGraph(SharedGraph graph) {
@@ -60,6 +70,14 @@ void GraphWidget::setGraph(SharedGraph graph, const NodePositions& positions) {
 void GraphWidget::quickSim(unsigned ticks)
 {
     mLayout->quickSim(ticks);
+}
+
+void GraphWidget::drawBackground(QPainter *painter, const QRectF &rect){
+    QGraphicsView::drawBackground(painter,rect);
+    if(mLayout) {
+        mLayout->system().debug(painter);
+    }
+
 }
 
 void GraphWidget::wheelEvent(QWheelEvent *event)
@@ -118,6 +136,11 @@ void GraphWidget::tick(float dt, bool update)
 {
     if(mLayout) {
         mLayout->tick(dt,update);
+        QPainterPath p;
+        std::for_each(mEdges.begin(),mEdges.end(),[&p](EdgeItem*& e){
+            e->doPath(p);
+        });
+        mEdgesPath->setPath(p);
     }
 }
 
@@ -154,7 +177,10 @@ void GraphWidget::setLayout(LayoutPlugin *l) {
 }
 
 void GraphWidget::reflect(System &sys,SharedGraph g) {
+    mScene->removeItem(mEdgesPath);
     mScene->clear();
+    mScene->addItem(mEdgesPath);
+    mEdges.clear();
     for(auto& nbi : g->nodes()) {
         const Node& n = nbi.second;
         NodeItem* ni = new NodeItem(n.id(),n.type());
@@ -166,7 +192,8 @@ void GraphWidget::reflect(System &sys,SharedGraph g) {
             Point* ep = sys.point(an->id());
             p->addMovable(ei->getHandle(0));
             ep->addMovable(ei->getHandle(1));
-            mScene->addItem(ei);
+            //mScene->addItem(ei);
+            mEdges.push_back(ei);
         }
     }
 }

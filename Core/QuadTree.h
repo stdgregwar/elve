@@ -27,6 +27,7 @@ public:
     QuadTreeNode* rootNode() const;
     void reset();
     QRectF bounds() const;
+    void debug(QPainter* p) const;
     ~QuadTree();
 private:
     bool init(const QRectF& bounds);

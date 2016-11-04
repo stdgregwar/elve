@@ -2,6 +2,7 @@
 #include <QDebug>
 
 #include <QPen>
+#include <QPainter>
 
 using namespace std;
 
@@ -18,19 +19,22 @@ void QuadTreeNode::setCenterAndRadius(const QVector2D& pos, float radius)
 {
     mCenter = pos;
     mRadius = radius;
-
-#ifdef DEBUG_QUAD
-    setRect(mCenter.x()-mRadius, //Visible rect
-        mCenter.y()-mRadius,
-        2*mRadius, 2*mRadius);
-#endif
-
 }
 
 void QuadTreeNode::setChild(unsigned index, QuadTreeNode* node)
 {
     node->setParent(this);
     mChildren[index] = node;
+}
+
+void QuadTreeNode::debug(QPainter* p) const
+{
+    if(leaf() && mPoints.size()) {
+        p->drawRect(mCenter.x()-mRadius,mCenter.y()-mRadius,2*mRadius,2*mRadius);
+        QPointF c = CoM().toPointF();
+        p->drawEllipse(c,32,32);
+        p->drawText(c,QString::number(mMass));
+    }
 }
 
 bool QuadTreeNode::addPoint(const Point *m, const QuadTreeParams &params)
@@ -57,9 +61,6 @@ bool QuadTreeNode::addPoint(const Point *m, const QuadTreeParams &params)
         }
         mMC += m->pos()*m->mass();
         mMass += m->mass();
-#ifdef DEBUG_QUAD
-        mGMC->setPos(CoM().toPointF());
-#endif
         return true;
     } else {
         return false;
@@ -133,8 +134,7 @@ QVector2D QuadTreeNode::gravityFor(const Point& m, const QuadTreeParams& params)
     QVector2D f;
     QVector2D r = (CoM() - m.pos());
     qreal lr = r.lengthSquared();
-    if(lr > params.gravDistSquare && mMass > 1e-7) {
-        //qDebug() << "Approx for " << m.pos();
+    if(lr > params.gravDistSquare && mRadius*2 < lr) {
         return r.normalized() * ((mMass*m.mass()) / lr);
     } else {
         if(leaf()) {
@@ -149,7 +149,12 @@ QVector2D QuadTreeNode::gravityFor(const Point& m, const QuadTreeParams& params)
 }
 
 QVector2D QuadTreeNode::CoM() const {
-    return mMC / mMass;
+    if(mMass) {
+        return mMC / mMass;
+    } else {
+        return mCenter;
+    }
+
 }
 
 QVector2D QuadTreeNode::trueGravity(const Point &m) const {

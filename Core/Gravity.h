@@ -15,6 +15,7 @@ public:
     void updateQuadTree();
     void addPoint(const Point* m);
     void clear();
+    void debug(QPainter* p) const;
 private:
     std::set<const Point*> mGalaxy;
     QuadTree mQuadTree;
