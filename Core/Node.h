@@ -68,6 +68,7 @@ private:
     mutable NodeLevel mLevel;
     SharedGraph mGraph; //Intern graph when node is a cluster
 
+
     NodeID mID;
     Ancestors mAncestors;
     Children mChildren;

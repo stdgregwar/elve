@@ -29,6 +29,8 @@ public:
     void quickSim(unsigned ticks);
     void setLayout(LayoutPlugin* l);
     void reflect(System &sys,SharedGraph g);
+
+    void drawBackground(QPainter *painter, const QRectF &rect) override;
 public slots:
     void borderSelect();
 private:
@@ -61,8 +63,8 @@ private:
 
     void setBehaviour(Behaviour* b);
     void clear();
+    void clearScene();
 
-    System mSystem;
     QGraphicsScene* mScene;
     bool mDrag;
     qreal mScale;
@@ -70,6 +72,9 @@ private:
     SharedGraph mCurrentGraph;
     Behaviour* mBehaviour;
     LayoutPlugin* mLayout;
+    //temp
+    std::vector<EdgeItem*> mEdges;
+    QGraphicsPathItem* mEdgesPath;
 };
 
 #endif // GRAPHWIDGET_H

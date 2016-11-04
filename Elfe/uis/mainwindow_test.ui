@@ -34,6 +34,7 @@
     </widget>
     <addaction name="actionOpen"/>
     <addaction name="menuImport"/>
+    <addaction name="actionQuit"/>
    </widget>
    <widget class="QMenu" name="menuWindow">
     <property name="title">
@@ -71,11 +72,6 @@
     <string>Ctrl+O</string>
    </property>
   </action>
-  <action name="actionBlif">
-   <property name="text">
-    <string>Blif</string>
-   </property>
-  </action>
   <action name="actionBorder">
    <property name="text">
     <string>&amp;Border</string>
@@ -84,20 +80,12 @@
     <string>B</string>
    </property>
   </action>
-  <action name="actionSimpleLayout">
+  <action name="actionQuit">
    <property name="text">
-    <string>&amp;SimpleLayout</string>
+    <string>Quit</string>
    </property>
    <property name="shortcut">
-    <string>S</string>
-   </property>
-  </action>
-  <action name="actionLevelLayout">
-   <property name="text">
-    <string>&amp;LevelLayout</string>
-   </property>
-   <property name="shortcut">
-    <string>L</string>
+    <string>Ctrl+Q</string>
    </property>
   </action>
  </widget>

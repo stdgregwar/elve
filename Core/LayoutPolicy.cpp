@@ -66,7 +66,7 @@ void LayoutPolicy::quickSim(size_t ticks) {
 EdgeItem* LayoutPolicy::newEdge(size_t segments)
 {
     EdgeItem* ne = new EdgeItem(segments);
-    mScene.addItem(ne);
+    //mScene.addItem(ne);
     mEdges.push_back(ne);
     return ne;
 }

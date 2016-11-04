@@ -5,6 +5,7 @@
 
 #include <limits>
 #include <future>
+#include <QDebug>
 
 using namespace std;
 
@@ -15,10 +16,9 @@ System::System() : mGravity(7e4)
 
 void System::tick(float dt, bool update)
 {
-    /*for(Mass* m : mMasses) {
-        m->resetForce();
-        m->computeForce();
-    }*/
+    static int count = 0;
+    //qDebug() << "tick" << count++;
+    mGravity.updateQuadTree();
 
     int nthreads = 8;
     vector<future<void>> futures(nthreads);
@@ -38,6 +38,10 @@ void System::tick(float dt, bool update)
     for(Point* m : mPoints) {
         m->tick(dt,update);
     }
+}
+
+void System::debug(QPainter* p) const {
+    mGravity.debug(p);
 }
 
 void System::computeForces(size_t from,size_t until)
@@ -80,7 +84,7 @@ Point* System::addPoint(qreal mass, const NodeID &id, QVector2D pos, qreal damp,
     if(g != NONE) {
         nm->addForce(&mGravity);
         if(g == FULL) {
-            mGravity.addMass(nm);
+            mGravity.addPoint(nm);
         }
     }
     Damp* d = new Damp(damp);
@@ -113,7 +117,7 @@ void System::clear()
         delete f;
     }
     mForces.clear();
-    mGravity = Gravity(7e4);
+    mGravity.clear();
 }
 
 const Point* System::nearest(const QVector2D& p) const

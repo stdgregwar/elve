@@ -10,6 +10,7 @@
 #include <cctype>
 #include <locale>
 
+using namespace std;
 // trim from start
 static inline std::string &ltrim(std::string &s) {
     s.erase(s.begin(), std::find_if(s.begin(), s.end(),
@@ -29,7 +30,26 @@ static inline std::string &trim(std::string &s) {
     return ltrim(rtrim(s));
 }
 
-using namespace std;
+static inline bool getTrueLine(ifstream& file,string& toFill) {
+    toFill = "";
+    string line;
+    if(file.eof())
+    {
+        return false;
+    }
+    while(getline(file,line)) {
+        trim(line);
+        toFill += line;
+        if(line.back() != '\\') {
+            return true;
+        } else {
+            toFill.pop_back(); //Remove the trailing back-slash
+        }
+    }
+    return true;
+}
+
+
 
 BlifLoader::BlifLoader(QObject *parent) :
     QObject(parent)
@@ -51,7 +71,7 @@ SharedGraph BlifLoader::load(const QString &filepath) {
     Index inputI = 0;
     Index outputI = 0;
 
-    while(getline(file,line)) {
+    while(getTrueLine(file,line)) {
         stringstream lss(line);
         string com;
         lss >> com;
@@ -96,16 +116,18 @@ SharedGraph BlifLoader::load(const QString &filepath) {
                 trim(name);
                 if(name.length() != 0) {
                     names.push_back(name);
+                    desc.emplace(std::piecewise_construct,
+                                 std::forward_as_tuple(name),
+                                 std::forward_as_tuple(name,Node::NODE,0));
                 }
             }
-            desc.emplace(std::piecewise_construct,
-                         std::forward_as_tuple(name),
-                         std::forward_as_tuple(name,Node::NODE,0));
+
             for(size_t i = 0; i < names.size()-1;i++) {
                 adj.push_back({names[i],name});
             }
         }
     }
+    qDebug() <<"file loaded";
     return make_shared<Graph>(desc,adj);
 }
 

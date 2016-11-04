@@ -25,8 +25,6 @@ MainWindow::MainWindow(QWidget *parent)
     //loadBlif("mul5.blif");
 
     connect(ui.actionBorder,SIGNAL(triggered()),mViewport,SLOT(borderSelect()));
-    connect(ui.actionLevelLayout,SIGNAL(triggered()),mViewport,SLOT(setLevelLayout()));
-    connect(ui.actionSimpleLayout,SIGNAL(triggered()),mViewport,SLOT(setSimpleLayout()));
 
     //setup loaders
     for(auto& l : mPluginManager.loaders()) {
@@ -51,11 +49,11 @@ void MainWindow::on_import_trigerred(GraphLoaderPlugin* ld) {
     QString filename = QFileDialog::getOpenFileName(this,"Open " + ld->formatName(),"",ld->fileFilter());
     if(filename != "") {
         SharedGraph g;
-        try {
+        //try {
            g = ld->load(filename);
-        } catch (std::exception e) {
-            QMessageBox("Error", e.what(),QMessageBox::Critical,0,0,0).exec();
-        }
+        //} catch (std::exception e) {
+          //  QMessageBox("Error", e.what(),QMessageBox::Critical,0,0,0).exec();
+        //}
         mViewport->setGraph(g);
     }
 }
@@ -72,4 +70,9 @@ void MainWindow::on_actionOpen_triggered()
 
 void MainWindow::onFileOpen(const QString& file){
 
+}
+
+void MainWindow::on_actionQuit_triggered()
+{
+    qApp->quit();
 }

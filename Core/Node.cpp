@@ -1,4 +1,5 @@
 #include "Node.h"
+#include <algorithm>
 
 Node::Node(const NodeID& id, Type type, Index ioi) : mID(id), mType(type), mIOindex(ioi), mLevel(-1)
 {
@@ -72,12 +73,10 @@ const NodeLevel& Node::level() const { //TODO add special treatment for OUTPUTS
         return mLevel = 0;
     }
     if(mLevel == -1) { //Recursive def
-        for(const Node* n : mAncestors) {
-            const NodeLevel& dl = n->level();
-            if(dl + 1 > mLevel) {
-                mLevel = dl + 1;
-            }
-        }
+        mLevel = (*std::max_element(mAncestors.begin(),mAncestors.end(),
+            [](const Node* a,const Node* b) {
+                return a->level() < b->level();
+        }))->level() + 1;
     }
     return mLevel;
 }

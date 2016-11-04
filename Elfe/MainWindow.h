@@ -22,6 +22,7 @@ public slots:
     void on_layout_trigerred(LayoutPlugin* layout);
 private slots:
     void on_actionOpen_triggered();
+    void on_actionQuit_triggered();
 };
 
 #endif // MAINWINDOW_H
