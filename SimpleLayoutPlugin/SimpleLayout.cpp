@@ -10,17 +10,17 @@ SimpleLayout::SimpleLayout(QObject *parent) :
 void SimpleLayout::setGraph(SharedGraph graph,const NodePositions& positions)
 {
     clear();
-    qreal sk = 8;
+    qreal sk = 2;
     qreal l0 = 0;
     qreal damp = 2;
-    qreal unit = 64;
+    qreal unit = std::max(qreal(graph->nodeCount())/20,64.0);
 
     qreal totHeight = graph->highestLevel()*unit;
     qreal inputHeight = totHeight/2;
     qreal outputHeight = -totHeight/2;
 
     qreal ioFactor = (qreal)(graph->outputCount()) / graph->inputCount();
-    qreal ioUnit = totHeight/graph->outputCount();
+    qreal ioUnit = std::max(totHeight/graph->outputCount(),128.0);
 
     qDebug() << ioUnit << ioFactor;
 

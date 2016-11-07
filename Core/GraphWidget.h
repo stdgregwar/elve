@@ -16,15 +16,21 @@ public:
     GraphWidget();
     void setGraph(SharedGraph graph);
     void setGraph(SharedGraph graph, const NodePositions& positions);
-    void timerEvent(QTimerEvent *event) override;
+
     void tick(float dt, bool update = true);
-    void wheelEvent(QWheelEvent *event) override;
+
     //void drawBackground(QPainter *painter, const QRectF &rect);
     void init();
+
+    //Events
+    void timerEvent(QTimerEvent *event) override;
+    void wheelEvent(QWheelEvent *event) override;
     void showEvent(QShowEvent *event);
     void mousePressEvent(QMouseEvent *event) override;
     void mouseReleaseEvent(QMouseEvent *event) override;
     void mouseMoveEvent(QMouseEvent *event) override;
+    void keyPressEvent(QKeyEvent *event) override;
+
     void group(const NodeNames& names, const NodeID& groupName = "group");
     void quickSim(unsigned ticks);
     void setLayout(LayoutPlugin* l);

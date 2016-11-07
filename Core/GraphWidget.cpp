@@ -120,6 +120,15 @@ void GraphWidget::mouseMoveEvent(QMouseEvent *event)
     }
 }
 
+void GraphWidget::keyPressEvent(QKeyEvent *event) {
+    QGraphicsView::keyPressEvent(event);
+    if(event->key() == Qt::Key_Q) {
+        if(mLayout) {
+            mLayout->quickSim(400);
+        }
+    }
+}
+
 void GraphWidget::group(const NodeNames &names, const NodeID &groupName) {
     NodeID trueName = mCurrentGraph->uniqueID(groupName);
     NodePositions positions = mLayout->system().positions();
