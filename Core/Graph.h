@@ -20,11 +20,11 @@ class Graph
 public:
     Graph();
     Graph(const NodeDescriptions& descrs, const AdjacencyList& edges);
-    Node *addNode(const NodeID& id, Node::Type type, Index ioi = 0);
+    void setFilename(const QString& filename);
     Node *addNode(const Node::Description& des);
     void addEdge(const NodeID& from, const NodeID& to);
     const NodesByID& nodes() const;
-    size_t gateCount() const;
+    size_t nodeCount() const;
     SharedGraph clusterize(size_t maxLevel) const;
     SharedGraph group(const NodeNames& toGroup, NodeID groupID) const;
     SharedGraph merge(SharedGraph other) const;
@@ -36,10 +36,13 @@ public:
     const NodePtrs& outputs();
     NodeDescriptions descriptions() const;
     AdjacencyList adjacencyList() const;
+    QJsonObject json() const;
+    static SharedGraph fromJson(const QJsonObject &obj);
 private:
     NodePtrs mInputs;
     NodePtrs mOutputs;
     NodesByID mNodes;
+    QString mFilename;
 };
 
 #endif // GRAPH_H

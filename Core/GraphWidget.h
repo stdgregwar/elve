@@ -31,6 +31,9 @@ public:
     void reflect(System &sys,SharedGraph g);
 
     void drawBackground(QPainter *painter, const QRectF &rect) override;
+    const SharedGraph graph() const;
+    QJsonObject json() const;
+    void fromJson(const QJsonObject& obj);
 public slots:
     void borderSelect();
 private:
