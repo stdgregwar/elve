@@ -19,9 +19,8 @@ public:
     PluginManager(const QString& path);
     const Loaders& loaders() const;
     const Layouts& layouts() const;
+    LayoutPlugin* getLayout(const QString& name) const;
 private:
-
-
     void loadPlugins(const QString& path);
 
     Loaders mLoaders;

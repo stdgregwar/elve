@@ -7,6 +7,8 @@
 #include <QDir>
 #include <QPluginLoader>
 #include <QAction>
+#include <QJsonDocument>
+#include <QMessageBox>
 
 #include <interfaces/GraphLoaderPlugin.h>
 #include <Graph.h>
@@ -14,7 +16,7 @@
 #include "FileLoadAction.h"
 #include "LayoutLoadAction.h"
 
-#include <QMessageBox>
+
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), mPluginManager("plugins")
@@ -49,11 +51,12 @@ void MainWindow::on_import_trigerred(GraphLoaderPlugin* ld) {
     QString filename = QFileDialog::getOpenFileName(this,"Open " + ld->formatName(),"",ld->fileFilter());
     if(filename != "") {
         SharedGraph g;
-        //try {
-           g = ld->load(filename);
-        //} catch (std::exception e) {
-          //  QMessageBox("Error", e.what(),QMessageBox::Critical,0,0,0).exec();
-        //}
+        try {
+            g = ld->load(filename);
+        } catch (std::exception e) {
+            QMessageBox::critical(this,"Error", e.what());
+        }
+        g->setFilename(filename);
         mViewport->setGraph(g);
     }
 }
@@ -65,14 +68,79 @@ void MainWindow::on_layout_trigerred(LayoutPlugin* layout) {
 
 void MainWindow::on_actionOpen_triggered()
 {
-
+    QFileDialog dialog(this,"Save visualization");
+    dialog.setNameFilters({"ELFE files (*.json *.elfe)"});
+    dialog.setAcceptMode(QFileDialog::AcceptOpen);
+    dialog.setFileMode(QFileDialog::ExistingFile);
+    if(dialog.exec()) {
+        QStringList list = dialog.selectedFiles();
+        if(list.length() != 1) {
+            return;
+        }
+        if(QFileInfo(list.last()).isDir()) {
+            return;
+        }
+        onFileOpen(list.first());
+    }
 }
 
-void MainWindow::onFileOpen(const QString& file){
-
+void MainWindow::onFileOpen(const QString& filename){
+    QString ext = filename.split(".").last();
+    QFile file(filename);
+    if(file.open(QFile::ReadOnly)) {
+        QJsonDocument doc;
+        if(ext.toLower() == "elfe") {
+            doc = QJsonDocument::fromBinaryData(file.readAll());
+        } else { //Assume it's json
+            doc = QJsonDocument::fromJson(file.readAll());
+        }
+        mViewport->fromJson(doc.object());
+    } else {
+        throw std::runtime_error("Couldn't open file " + filename.toStdString() + " for reading.");
+    }
 }
 
 void MainWindow::on_actionQuit_triggered()
 {
-    qApp->quit();
+    qApp->quit(); //TODO last chance save
+}
+
+void MainWindow::on_actionSave_triggered()
+{
+    const SharedGraph graph = mViewport->graph();
+    if(graph) {
+        QJsonObject json = mViewport->json();
+        QFileDialog dialog(this,"Save visualization");
+        dialog.setNameFilters({"ELFE json (*.json)","ELFE bin (*.elfe)"});
+        dialog.setAcceptMode(QFileDialog::AcceptSave);
+        dialog.setFileMode(QFileDialog::AnyFile);
+        dialog.exec();
+        QString selectedExt = dialog.selectedNameFilter().split(".").last();
+        selectedExt.remove(")");
+        dialog.setDefaultSuffix(selectedExt);
+        QStringList list = dialog.selectedFiles();
+        if(list.length() != 1) {
+            return;
+        }
+        QString filename = list.first();
+        QString suffix = filename.split(".").last();
+        QJsonDocument doc(json);
+        try {
+            QFile file(filename);
+            if(file.open(QFile::WriteOnly)) {
+                if(suffix == "elfe") {
+                    file.write(doc.toBinaryData());
+                } else {
+                    file.write(doc.toJson());
+                }
+                file.close();
+            } else {
+                throw std::runtime_error("Couldn't write to file " + filename.toStdString());
+            }
+        } catch(std::exception e) {
+            QMessageBox::critical(this,"Error", e.what());
+        }
+    } else {
+        QMessageBox::information(this,"Mhhh...","There is no current graph to save.");
+    }
 }

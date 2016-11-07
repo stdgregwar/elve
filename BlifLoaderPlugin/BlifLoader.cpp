@@ -4,6 +4,7 @@
 #include <cstdio>
 #include <QDebug>
 #include <QFile>
+#include <QJsonObject>
 
 #include <algorithm>
 #include <functional>
@@ -70,6 +71,7 @@ SharedGraph BlifLoader::load(const QString &filepath) {
 
     Index inputI = 0;
     Index outputI = 0;
+    string lastname;
 
     while(getTrueLine(file,line)) {
         stringstream lss(line);
@@ -90,7 +92,7 @@ SharedGraph BlifLoader::load(const QString &filepath) {
                 if(inname != "") {
                     desc.emplace(std::piecewise_construct,
                                  std::forward_as_tuple(inname),
-                                 std::forward_as_tuple(inname,Node::INPUT,inputI++));
+                                 std::forward_as_tuple(inname,Node::INPUT,QJsonObject(),inputI++));
                     //addDescription(inname,Node::INPUT,inputI++);
                 }
                 lss >> std::ws;
@@ -104,7 +106,7 @@ SharedGraph BlifLoader::load(const QString &filepath) {
                     //qDebug() << "out:" << outname.c_str();
                     desc.emplace(std::piecewise_construct,
                                  std::forward_as_tuple(outname),
-                                 std::forward_as_tuple(outname,Node::OUTPUT,outputI++));
+                                 std::forward_as_tuple(outname,Node::OUTPUT,QJsonObject(),outputI++));
                 }
                 lss >> std::ws;
             }
@@ -118,12 +120,25 @@ SharedGraph BlifLoader::load(const QString &filepath) {
                     names.push_back(name);
                     desc.emplace(std::piecewise_construct,
                                  std::forward_as_tuple(name),
-                                 std::forward_as_tuple(name,Node::NODE,0));
+                                 std::forward_as_tuple(name,Node::NODE,QJsonObject(),0));
                 }
             }
-
+            lastname = name;
             for(size_t i = 0; i < names.size()-1;i++) {
                 adj.push_back({names[i],name});
+            }
+        }
+        else if(com[0] == '0' or com[0] == '1' or com[0] == '-') { //Truth tables
+            if(lastname.size()) {
+                string last;
+                lss >> last;
+
+                QJsonObject tt;
+                if(!desc.at(lastname).properties["truthtable"].isUndefined()) {
+                    QJsonObject tt = desc.at(lastname).properties["truthtable"].toObject();
+                }
+                tt[com.c_str()] = last.c_str();
+                desc.at(lastname).properties["truthtable"] = tt;
             }
         }
     }

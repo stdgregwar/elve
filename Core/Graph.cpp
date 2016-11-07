@@ -3,6 +3,8 @@
 #include "Node.h"
 
 #include <algorithm>
+#include <QDebug>
+#include <QJsonArray>
 
 using namespace std;
 
@@ -14,6 +16,7 @@ Graph::Graph()
 Graph::Graph(const NodeDescriptions &descrs, const AdjacencyList& edges)
 {
     for(const auto& p : descrs) {
+        //qDebug() << p.second.properties;
         addNode(p.second);
     }
     for(auto p : edges) {
@@ -21,43 +24,36 @@ Graph::Graph(const NodeDescriptions &descrs, const AdjacencyList& edges)
     }
 }
 
+void Graph::setFilename(const QString& filename) {
+    mFilename = filename;
+}
+
 const NodesByID& Graph::nodes() const
 {
     return mNodes;
 }
 
-size_t Graph::gateCount() const {
+size_t Graph::nodeCount() const {
     return mNodes.size();
 }
 
-Node* Graph::addNode(const NodeID& id, Node::Type type, Index ioi)
-{
-    auto it = mNodes.find(id);
-    if(it != mNodes.end()) {
-        return &it->second;
-    } else {
-
-        auto pi = mNodes.emplace(std::piecewise_construct,
-                                 std::forward_as_tuple(id),
-                                 std::forward_as_tuple(id, type,ioi));
-
-        Node* n = &pi.first->second;
-        if(type == Node::OUTPUT) {
-            mOutputs.push_back(n);
-        } else if (type == Node::INPUT) {
-            mInputs.push_back(n);
-        }
-        return n;
-    }
-}
-
 Node* Graph::addNode(const Node::Description& des) {
-    return addNode(des.id,des.type,des.ioi);
+    auto pi = mNodes.emplace(std::piecewise_construct,
+                             std::forward_as_tuple(des.id),
+                             std::forward_as_tuple(des));
+
+    Node* n = &pi.first->second;
+    if(des.type == Node::OUTPUT) {
+        mOutputs.push_back(n);
+    } else if (des.type == Node::INPUT) {
+        mInputs.push_back(n);
+    }
+    return n;
 }
 
-void Graph::addEdge(const NodeID& from, const NodeID& to, bool invert)
+void Graph::addEdge(const NodeID& from, const NodeID& to)
 {
-    mNodes.at(from).addChild(&mNodes.at(to),invert);
+    mNodes.at(from).addChild(&mNodes.at(to));
 }
 
 SharedGraph Graph::clusterize(size_t maxLevel) const {
@@ -137,8 +133,34 @@ size_t Graph::outputCount() const
     return mOutputs.size();
 }
 
+QJsonObject Graph::json() const
+{
+    QJsonObject main;
+
+
+    //all node json
+    QJsonArray nodeArray;
+
+    //Adjacency list from ancestor to child
+    QJsonObject adj;
+
+    using pair_type = NodesByID::value_type;
+    for(const pair_type& p : mNodes) {
+        nodeArray.append(p.second.json());
+        QJsonArray jancestors;
+        for(const Node* an : p.second.ancestors()) {
+            jancestors.append(QString::fromStdString(an->id()));
+        }
+        adj.insert(QString::fromStdString(p.first),jancestors);
+    }
+    main.insert("node_count",(int)mNodes.size());
+    main.insert("nodes",nodeArray);
+    main.insert("adjacency",adj);
+    return main;
+}
+
 NodeLevel Graph::highestLevel() const {
-    using pair_type = decltype(mNodes)::value_type;
+    using pair_type = NodesByID::value_type;
 
     return max_element(mNodes.begin(),mNodes.end(),
         [](const pair_type& a, const pair_type& b)->bool {
@@ -152,6 +174,33 @@ NodeDescriptions Graph::descriptions() const {
         descrs.emplace(p.first,p.second);
     }
     return descrs;
+}
+
+SharedGraph Graph::fromJson(const QJsonObject& obj)
+{
+    size_t count = obj.value("node_count").toInt();
+    NodeDescriptions descrs; descrs.reserve(obj.value("node_count").toInt());
+    AdjacencyList adjl; adjl.reserve(count*2); //Good guess I think
+
+    QJsonArray nodeArray = obj.value("nodes").toArray();
+    for(const QJsonValue& val : nodeArray) {
+        QJsonObject nObj = val.toObject();
+        descrs.emplace(std::piecewise_construct,
+                       std::forward_as_tuple(nObj.value("id").toString("noname").toStdString()),
+                       std::forward_as_tuple(nObj));
+    }
+    QJsonObject adj = obj.value("adjacency").toObject();
+    for(QJsonObject::const_iterator it = adj.constBegin();
+        it != adj.constEnd(); it++) {
+        NodeID nid = it.key().toStdString();
+        QJsonArray jancestors = it.value().toArray();
+        for(const QJsonValue& v : jancestors) {
+            NodeID aid = v.toString().toStdString();
+            adjl.push_back({aid,nid});
+        }
+    }
+
+    return make_shared<Graph>(descrs,adjl);
 }
 
 AdjacencyList Graph::adjacencyList() const {

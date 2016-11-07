@@ -39,6 +39,11 @@ void load(const QString& path, const QString& type, QList<T*>& toFill) {
     }
 }
 
+LayoutPlugin* PluginManager::getLayout(const QString& name) const
+{
+    return nullptr; //TODO
+}
+
 void PluginManager::loadPlugins(const QString& path)
 {
     //For loaders

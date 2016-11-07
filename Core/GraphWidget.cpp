@@ -5,6 +5,8 @@
 #include <cmath>
 #include <QWheelEvent>
 #include <QOpenGLWidget>
+#include <QJsonObject>
+#include <QJsonArray>
 
 #include <unordered_map>
 #include <random>
@@ -118,6 +120,15 @@ void GraphWidget::mouseMoveEvent(QMouseEvent *event)
     }
 }
 
+void GraphWidget::keyPressEvent(QKeyEvent *event) {
+    QGraphicsView::keyPressEvent(event);
+    if(event->key() == Qt::Key_Q) {
+        if(mLayout) {
+            mLayout->quickSim(400);
+        }
+    }
+}
+
 void GraphWidget::group(const NodeNames &names, const NodeID &groupName) {
     NodeID trueName = mCurrentGraph->uniqueID(groupName);
     NodePositions positions = mLayout->system().positions();
@@ -226,7 +237,7 @@ bool GraphWidget::BorderSelect::mousePressEvent(QMouseEvent *event) {
 }
 
 bool GraphWidget::BorderSelect::mouseReleaseEvent(QMouseEvent *event) {
-    QList<QGraphicsItem*> items = gw.mScene->items(mRectangle->boundingRect());
+    QList<QGraphicsItem*> items = gw.mScene->items(mRectangle->sceneBoundingRect());
     NodeNames names;
     for(QGraphicsItem* i : items) {
         NodeItem* n = dynamic_cast<NodeItem*>(i);
@@ -249,10 +260,60 @@ bool GraphWidget::BorderSelect::mouseMoveEvent(QMouseEvent *event) {
 
     } else {
         QPointF origin = mRectangle->pos();
-        mRectangle->setRect(origin.x(),origin.y(),
+        mRectangle->setRect(0,0,
                             (pos.x()-origin.x()),(pos.y()-origin.y()));
     }
     return true;
+}
+
+QJsonObject GraphWidget::json() const {
+    if(!mCurrentGraph) {
+        return QJsonObject();
+    }
+
+    QJsonObject main;
+    main.insert("graph",mCurrentGraph->json());
+
+    if(mLayout) {
+        QJsonObject layout;
+        QJsonObject  positions;
+
+        layout.insert("name",mLayout->layoutName());
+
+        using pair_type = NodePositions::value_type;
+        for(const pair_type& p : mLayout->system().positions()) {
+            const QVector2D& pos = p.second;
+            positions.insert(QString::fromStdString(p.first),
+                             QJsonArray{pos.x(),pos.y()});
+        }
+        layout.insert("positions",positions);
+        main.insert("layout",layout);
+    }
+    return main;
+}
+
+void GraphWidget::fromJson(const QJsonObject& obj)
+{
+    SharedGraph g = Graph::fromJson(obj.value("graph").toObject());
+    //positions
+    NodePositions positions; positions.reserve(g->nodeCount());
+    QJsonObject jpositions = obj["layout"].toObject()["positions"].toObject();
+    for(QJsonObject::const_iterator it = jpositions.constBegin();
+        it != jpositions.constEnd();
+        it++) {
+
+        QJsonArray jpos = it.value().toArray();
+        positions.emplace(std::piecewise_construct,
+                          std::forward_as_tuple(it.key().toStdString()),
+                          std::forward_as_tuple(jpos.at(0).toDouble(),jpos.at(1).toDouble()));
+    }
+    //TODO load layout type etc....
+    setGraph(g,positions);
+}
+
+const SharedGraph GraphWidget::graph() const
+{
+    return mCurrentGraph;
 }
 
 void GraphWidget::BorderSelect::onEnd() {
