@@ -15,7 +15,7 @@ class LevelLayout : public QObject, public LayoutPlugin
 public:
     LevelLayout(QObject *parent = 0);
     //virtual void setGraph(SharedGraph graph);
-    virtual void setGraph(SharedGraph g,const NodePositions& positions) override;
+    virtual void setGraph(SharedGraph g) override;
     virtual void tick(float dt, bool fast) override;
     virtual QString layoutName() override;
 private:

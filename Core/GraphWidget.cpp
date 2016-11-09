@@ -129,6 +129,29 @@ void GraphWidget::keyPressEvent(QKeyEvent *event) {
     }
 }
 
+void GraphWidget::ungroup(const NodeNames& names) {
+
+    NodePositions positions = mLayout->system().positions();
+    SharedGraph g = mCurrentGraph;
+    for(const NodeID& name : names) {
+        QVector2D base = positions.at(name);
+        SharedGraph cg = g->nodes().at(name).getClusteredGraph();
+        if(cg) {
+            const NodesByID& ugped = cg->nodes();
+            static default_random_engine gen;
+            for(const NodesByID::value_type& p : ugped) {
+                if(!p.second.isInput() && !p.second.isOutput()) {
+                    std::uniform_real_distribution<qreal> x(-32,32);
+                    std::uniform_real_distribution<qreal> y(-32,32);
+                    positions[p.first] = base + QVector2D(x(gen),y(gen));
+                }
+            }
+        }
+        g = g->ungroup(name);
+    }
+    setGraph(g,positions);
+}
+
 void GraphWidget::group(const NodeNames &names, const NodeID &groupName) {
     NodeID trueName = mCurrentGraph->uniqueID(groupName);
     NodePositions positions = mLayout->system().positions();

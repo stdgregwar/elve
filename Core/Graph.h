@@ -15,7 +15,7 @@ typedef std::pair<NodeID,NodeID> Edge;
 typedef std::vector<Edge> AdjacencyList;
 
 
-class Graph
+class Graph : public std::enable_shared_from_this<Graph>
 {
 public:
     Graph();
@@ -26,8 +26,8 @@ public:
     const NodesByID& nodes() const;
     size_t nodeCount() const;
     SharedGraph clusterize(size_t maxLevel) const;
-    SharedGraph group(const NodeNames& toGroup, NodeID groupID) const;
-    SharedGraph merge(SharedGraph other) const;
+    SharedGraph group(const NodeNames& toGroup, const NodeID& groupID);
+    SharedGraph ungroup(const NodeID& cluster);
     NodeID uniqueID(const NodeID& base) const;
     NodeLevel highestLevel() const;
     size_t inputCount() const;

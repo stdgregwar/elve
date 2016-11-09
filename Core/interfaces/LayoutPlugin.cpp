@@ -6,7 +6,7 @@
 
 using namespace std;
 
-void LayoutPlugin::setGraph(SharedGraph graph) {
+/*void LayoutPlugin::setGraph(SharedGraph graph) {
     size_t simticks = 500;
     default_random_engine gen;
     std::uniform_int_distribution<int> u(-1024,1024);
@@ -19,6 +19,27 @@ void LayoutPlugin::setGraph(SharedGraph graph) {
 
     setGraph(graph,randomPos);
     quickSim(simticks);
+}*/
+
+QVector2D LayoutPlugin::startPosition(const NodeID& id,QRectF rect) {
+    static default_random_engine gen;
+
+    auto it = mStartPositions.find(id);
+    if(it != mStartPositions.end()) {
+        return it->second;
+    } else {
+        std::uniform_real_distribution<qreal> x(rect.left(),rect.right());
+        std::uniform_real_distribution<qreal> y(rect.top(),rect.bottom());
+        QVector2D p(x(gen),y(gen));
+        mStartPositions[id] = p;
+        return p;
+    }
+}
+
+void LayoutPlugin::setGraph(SharedGraph g,const NodePositions& positions)
+{
+    mStartPositions = positions;
+    setGraph(g);
 }
 
 void LayoutPlugin::clear(){

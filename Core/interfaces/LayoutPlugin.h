@@ -18,14 +18,16 @@ class LayoutPlugin
 {
 public:
     void clear();
-    virtual void setGraph(SharedGraph graph);
-    virtual void setGraph(SharedGraph g,const NodePositions& positions) = 0;
+    virtual void setGraph(SharedGraph graph) = 0;
+    QVector2D startPosition(const NodeID& id, QRectF rect = QRectF(0,0,1024,1024));
+    void setGraph(SharedGraph g,const NodePositions& positions);
     virtual void quickSim(size_t ticks);
     virtual void tick(float dt, bool fast);
     virtual QString layoutName() = 0;
     System& system();
 private:
     System mSystem;
+    NodePositions mStartPositions;
 };
 
 Q_DECLARE_INTERFACE(LayoutPlugin,LayoutPlugin_iid)

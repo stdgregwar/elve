@@ -7,7 +7,7 @@ SimpleLayout::SimpleLayout(QObject *parent) :
 {
 }
 
-void SimpleLayout::setGraph(SharedGraph graph,const NodePositions& positions)
+void SimpleLayout::setGraph(SharedGraph graph)
 {
     clear();
     qreal sk = 2;
@@ -25,7 +25,7 @@ void SimpleLayout::setGraph(SharedGraph graph,const NodePositions& positions)
     qDebug() << ioUnit << ioFactor;
 
     for(const auto& p : graph->nodes()) {
-        const QVector2D& pos = positions.at(p.second.id());
+        QVector2D pos = startPosition(p.first);
 
         Point* m = system().addPoint(1,p.second.id(),pos,damp,FULL);
 

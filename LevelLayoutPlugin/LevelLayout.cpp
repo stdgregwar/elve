@@ -6,7 +6,7 @@ LevelLayout::LevelLayout(QObject *parent) :
 {
 }
 
-void LevelLayout::setGraph(SharedGraph graph,const NodePositions& positions)
+void LevelLayout::setGraph(SharedGraph graph)
 {
     clear();
     qreal sk = 2;
@@ -22,7 +22,7 @@ void LevelLayout::setGraph(SharedGraph graph,const NodePositions& positions)
     qreal ioUnit = std::max(totHeight/graph->outputCount(),128.0);
 
     for(const auto& p : graph->nodes()) {
-        const QVector2D& pos = positions.at(p.second.id());
+        QVector2D pos = startPosition(p.first);
 
         Point* m = system().addPoint(1,p.second.id(),pos,damp,FULL);
 

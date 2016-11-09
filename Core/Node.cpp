@@ -115,6 +115,16 @@ const NodeLevel& Node::level() const { //TODO add special treatment for OUTPUTS
     return mLevel;
 }
 
+const SharedGraph Node::getClusteredGraph() const
+{
+    return mGraph;
+}
+
+void Node::setClusteredGraph(SharedGraph graph)
+{
+    mGraph = graph;
+}
+
 QJsonObject Node::json() const
 {
     static std::unordered_map<Type,QString> typeToString{{NODE,"node"},

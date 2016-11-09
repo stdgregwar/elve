@@ -74,32 +74,76 @@ NodeID Graph::uniqueID(const NodeID& base) const {
     return current;
 }
 
-SharedGraph Graph::merge(SharedGraph other) const {
 
+SharedGraph Graph::ungroup(const NodeID &cluster) {
+
+    auto it = mNodes.find(cluster);
+    if(it == mNodes.end()) {
+        return shared_from_this();
+    }
+    const Node& cn = it->second;
+    if(!cn.getClusteredGraph()) { //Node is not a cluster
+        return shared_from_this();
+    }
+
+    NodeDescriptions gnodes = descriptions();
+    AdjacencyList gadj = adjacencyList();
+    NodeDescriptions cnodes = cn.getClusteredGraph()->descriptions();
+    AdjacencyList cadj = cn.getClusteredGraph()->adjacencyList();
+
+    gnodes.insert(cnodes.begin(),cnodes.end());
+
+
+    for(const Edge& e : gadj) {
+        if(e.first != cluster && e.second != cluster) {
+            cadj.push_back(e);
+        }
+    }
+    gnodes.erase(cluster);
+    return make_shared<Graph>(gnodes,cadj);
 }
 
-SharedGraph Graph::group(const NodeNames &toGroup, NodeID groupID) const {
+SharedGraph Graph::group(const NodeNames &toGroup, const NodeID &groupID) {
+    if(toGroup.size() < 2) {
+        return shared_from_this();
+    }
+
+    NodeDescriptions clusteredNodes; clusteredNodes.reserve(toGroup.size());
+    AdjacencyList clusteredAdj; clusteredAdj.reserve(clusteredNodes.size()*2);
+
     NodeDescriptions newNodes;
     newNodes.reserve(mNodes.size()-toGroup.size()+1); //Reserve right number of nodes
     newNodes.emplace(groupID,Node::Description(groupID,Node::Type::CLUSTER));
+
     AdjacencyList newAdj;
     newAdj.reserve(newNodes.size()*2); //Reserve average number of nodes
+
+    size_t inputi = 0;
+    size_t outputi = 0;
 
     for(const auto& p : mNodes) {
         const NodeID& nid = p.first;
         const Node& n = p.second;
-        if(toGroup.count(nid) > 0) {
-
+        if(toGroup.count(nid)) {
+            clusteredNodes.emplace(n.id(),n);
             for(const Node* pan : n.ancestors()) {
                 const Node& an = *pan;
-                if(toGroup.count(an.id()) == 0) { //If ancestor is external
-                    newAdj.push_back(Edge{an.id(),groupID});
+                if(!toGroup.count(an.id())) { //If ancestor is external
+                    newAdj.push_back({an.id(),groupID});
+                    //Add external ancestor as input
+                    clusteredNodes.emplace(an.id(),
+                                           Node::Description(an.id(),Node::INPUT,an.properties(),inputi++));
                 }
+                clusteredAdj.push_back({an.id(),nid});
             }
             for(const Node* pcn : n.children()) {
                 const Node& cn = *pcn;
-                if(toGroup.count(cn.id()) == 0) { //If child is external
+                if(!toGroup.count(cn.id())) { //If child is external
                     newAdj.push_back(Edge{groupID,cn.id()});
+                    //Add external ancestor as output
+                    clusteredAdj.push_back({nid,cn.id()}); //Connect child only if in outputs
+                    clusteredNodes.emplace(cn.id(),
+                                           Node::Description(cn.id(),Node::OUTPUT,cn.properties(),outputi++));
                 }
             }
         } else { //If node not in group reinsert it in graph
@@ -107,12 +151,13 @@ SharedGraph Graph::group(const NodeNames &toGroup, NodeID groupID) const {
             for(const Node* pan : n.ancestors()) {
                 const Node& an = *pan;
                 if(toGroup.count(an.id()) == 0) { //If ancestor is also external
-                    newAdj.push_back(Edge{an.id(),nid});
+                    newAdj.push_back({an.id(),nid});
                 }
             }
         }
     }
-    return SharedGraph(new Graph(newNodes,newAdj));
+    newNodes.at(groupID).graph = make_shared<Graph>(clusteredNodes,clusteredAdj);
+    return make_shared<Graph>(newNodes,newAdj);
 }
 
 const NodePtrs& Graph::inputs() {
@@ -204,7 +249,12 @@ SharedGraph Graph::fromJson(const QJsonObject& obj)
 }
 
 AdjacencyList Graph::adjacencyList() const {
+    AdjacencyList l; l.reserve(mNodes.size()*2);
     for(const auto& p : mNodes) {
-        //TODO
+        const Node& n = p.second;
+        for(const Node* an : n.ancestors()) {
+            l.push_back({an->id(),p.first});
+        }
     }
+    return l;
 }
