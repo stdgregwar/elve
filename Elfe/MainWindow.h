@@ -12,6 +12,7 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = 0);
     Ui::MainWindow ui;
+    void newWindowWithFile(SharedGraph g, QString filename);
     ~MainWindow();
 private:
     GraphWidget* mViewport;

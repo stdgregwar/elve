@@ -14,7 +14,8 @@ TEMPLATE = app
 
 SOURCES += main.cpp \
     MainWindow.cpp \
-    PluginManager.cpp
+    PluginManager.cpp \
+    GraphWidget.cpp
 
 win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../Core/release/ -lCore
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../Core/debug/ -lCore
@@ -43,7 +44,8 @@ HEADERS += \
     alice/alice.hpp \
     alice/command.hpp \
     alice/readline.hpp \
-    alice/rules.hpp
+    alice/rules.hpp \
+    GraphWidget.h
 
 FORMS += \
     uis/mainwindow_test.ui

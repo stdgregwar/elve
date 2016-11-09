@@ -12,6 +12,7 @@
 
 #include <interfaces/GraphLoaderPlugin.h>
 #include <Graph.h>
+#include <QMdiSubWindow>
 
 #include "FileLoadAction.h"
 #include "LayoutLoadAction.h"
@@ -22,8 +23,8 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), mPluginManager("plugins")
 {
     ui.setupUi(this);
-    mViewport = new GraphWidget();
-    setCentralWidget(mViewport);
+    //setCentralWidget(mViewport);
+
     //loadBlif("mul5.blif");
 
     connect(ui.actionBorder,SIGNAL(triggered()),mViewport,SLOT(borderSelect()));
@@ -57,7 +58,8 @@ void MainWindow::on_import_trigerred(GraphLoaderPlugin* ld) {
             QMessageBox::critical(this,"Error", e.what());
         }
         g->setFilename(filename);
-        mViewport->setGraph(g);
+        newWindowWithFile(g,filename);
+        //mViewport->setGraph(g);
     }
 }
 
@@ -103,6 +105,14 @@ void MainWindow::onFileOpen(const QString& filename){
 void MainWindow::on_actionQuit_triggered()
 {
     qApp->quit(); //TODO last chance save
+}
+
+void MainWindow::newWindowWithFile(SharedGraph g, QString filename) {
+    GraphWidget* gw = new GraphWidget(this,filename.split("/").last());
+    QMdiSubWindow* w = ui.mdiArea->addSubWindow(gw);
+    w->setWindowState(Qt::WindowMaximized);
+    w->setAttribute(Qt::WA_DeleteOnClose);
+    gw->setGraph(g);
 }
 
 void MainWindow::on_actionSave_triggered()

@@ -9,11 +9,13 @@
 #include "Graph.h"
 #include <interfaces/LayoutPlugin.h>
 
+class MainWindow;
+
 class GraphWidget : public QGraphicsView
 {
     Q_OBJECT;
 public:
-    GraphWidget();
+    GraphWidget(MainWindow* parent,QString filename = "new file");
     void setGraph(SharedGraph graph);
     void setGraph(SharedGraph graph, const NodePositions& positions);
 
@@ -86,6 +88,8 @@ private:
     //temp
     std::vector<EdgeItem*> mEdges;
     QGraphicsPathItem* mEdgesPath;
+    MainWindow* mParent;
+    QString mFilename;
 };
 
 #endif // GRAPHWIDGET_H

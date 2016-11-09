@@ -33,7 +33,7 @@ public:
 
     struct Description {
         Description(const NodeID& aid,Type at,const QJsonObject& props = QJsonObject(),Index ai = 0) : id(aid), type(at), properties(props), ioi(ai) {}
-        Description(const Node& n) : id(n.id()),type(n.type()),ioi(n.IOIndex()),properties(n.mProperties) {}
+        Description(const Node& n) : id(n.id()),type(n.type()),ioi(n.IOIndex()),properties(n.mProperties),graph(n.mGraph) {}
         Description(const QJsonObject& obj);
         QJsonObject properties;
         NodeID id;

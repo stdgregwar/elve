@@ -24,7 +24,6 @@ SOURCES +=\
     Damp.cpp \
     EdgeItem.cpp \
     Graph.cpp \
-    GraphWidget.cpp \
     Gravity.cpp \
     LayoutPolicy.cpp \
     Movable.cpp \
@@ -53,7 +52,6 @@ HEADERS += \
     Damp.h \
     EdgeItem.h \
     Graph.h \
-    GraphWidget.h \
     Gravity.h \
     LayoutPolicy.h \
     Movable.h \

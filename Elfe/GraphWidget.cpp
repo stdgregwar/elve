@@ -12,19 +12,21 @@
 #include <random>
 #include <chrono>
 
-#include "SimpleForceLayout.h"
-#include "LevelForceLayout.h"
+#include "MainWindow.h"
 
-#define SS 32000
+#define SS 320000
 
 using namespace std;
 
-GraphWidget::GraphWidget() : mScene(new QGraphicsScene(-SS,-SS,SS*2,SS*2,this)),
+GraphWidget::GraphWidget(MainWindow *parent, QString filename) : QGraphicsView(parent),
+    mScene(new QGraphicsScene(-SS,-SS,SS*2,SS*2,this)),
     mDrag(false),
     mScale(1),
     mBehaviour(new Behaviour(this)),
     mLayout(nullptr),
-    mEdgesPath(new QGraphicsPathItem())
+    mEdgesPath(new QGraphicsPathItem()),
+    mParent(parent),
+    mFilename(filename)
 {
     setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
     setDragMode(QGraphicsView::ScrollHandDrag);
@@ -180,7 +182,7 @@ void GraphWidget::tick(float dt, bool update)
 
 void GraphWidget::timerEvent(QTimerEvent *e)
 {
-    tick(0.1);
+    tick(0.25);
 }
 
 void GraphWidget::setBehaviour(Behaviour* b) {
@@ -270,7 +272,7 @@ bool GraphWidget::BorderSelect::mouseReleaseEvent(QMouseEvent *event) {
             names.insert(n->id());
         }
     }
-    gw.group(names);
+    gw.ungroup(names);
     gw.setBehaviour(new Behaviour(&gw));
     return true;
 }
