@@ -18,11 +18,15 @@ SOURCES += main.cpp \
     GraphWidget.cpp \
     QConsoleWidget.cpp \
     Redirect.cpp \
-    uis/Tab.cpp
+    uis/Tab.cpp \
+    CommandLine.cpp
 
 win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../Core/release/ -lCore
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../Core/debug/ -lCore
 else:unix: LIBS += -L$$OUT_PWD/../Core/ -lCore
+
+#boost
+LIBS += -lboost_system -lboost_program_options
 
 INCLUDEPATH += $$PWD/../Core
 DEPENDPATH += $$PWD/../Core
@@ -51,7 +55,8 @@ HEADERS += \
     GraphWidget.h \
     QConsoleWidget.h \
     Redirect.h \
-    uis/Tab.h
+    uis/Tab.h \
+    CommandLine.h
 
 FORMS += \
     uis/mainwindow_test.ui \

@@ -4,8 +4,6 @@
 #include <QTextEdit>
 #include <QDir>
 
-#include "Redirect.h"
-
 class QConsoleWidget : public QTextEdit
 {
     Q_OBJECT
@@ -14,16 +12,10 @@ public:
     ~QConsoleWidget();
 private:
     int fixedPosition;
-    CRedirect *redirect;
-
 protected:
     void keyPressEvent (QKeyEvent * event);
 public slots:
-    void OnChildStarted();
     void OnChildStdOutWrite(QString szOutput);
-    void OnChildStdErrWrite(QString szOutput);
-    void OnChildTerminate();
-
     void cursorPositionChanged();
 };
 

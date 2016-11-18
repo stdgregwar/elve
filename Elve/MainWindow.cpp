@@ -67,7 +67,7 @@ void MainWindow::on_import_trigerred(GraphLoaderPlugin* ld) {
         } catch (std::exception e) {
             QMessageBox::critical(this,"Error", e.what());
         }
-        g->setFilename(filename);
+        g->setFilename(filename.toStdString());
         newWindowWithFile(g,filename);
     }
 }

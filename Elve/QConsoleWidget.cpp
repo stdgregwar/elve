@@ -8,29 +8,18 @@ QConsoleWidget::QConsoleWidget(QWidget *parent) : QTextEdit(parent)
 
     //setTextColor(QColor("white"));
 
-    QPalette p = this->palette();
+    /*QPalette p = this->palette();
     p.setColor(QPalette::Base,QColor(59,58,58));
     p.setColor(QPalette::Text,Qt::white);
-    this->setPalette(p);
+    this->setPalette(p);*/
 
     fixedPosition = 0;
-    redirect = new CRedirect();
-    connect(redirect, SIGNAL(OnChildStdOutWrite(QString)), this, SLOT(OnChildStdOutWrite(QString)));
-    connect(redirect, SIGNAL(OnChildStarted()), this, SLOT(OnChildStarted()));
-    connect(redirect, SIGNAL(OnChildStdErrWrite(QString)), this, SLOT(OnChildStdErrWrite(QString)));
-    connect(redirect, SIGNAL(OnChildTerminate()), this, SLOT(OnChildTerminate()));
-
-    redirect->StartChildProcess(false);
 }
 
 QConsoleWidget::~QConsoleWidget()
 {
-    delete redirect;
 }
 
-void QConsoleWidget::OnChildStarted()
-{
-}
 
 void QConsoleWidget::OnChildStdOutWrite(QString szOutput)
 {
@@ -55,17 +44,6 @@ void QConsoleWidget::OnChildStdOutWrite(QString szOutput)
     fixedPosition = textCursor().position();
 }
 
-void QConsoleWidget::OnChildStdErrWrite(QString szOutput)
-{
-    append(szOutput);
-    fixedPosition = textCursor().position();
-}
-
-void QConsoleWidget::OnChildTerminate()
-{
-    //exit(1);
-}
-
 void QConsoleWidget::keyPressEvent(QKeyEvent *event)
 {
     bool accept;
@@ -76,7 +54,8 @@ void QConsoleWidget::keyPressEvent(QKeyEvent *event)
         accept = false;
         int count = toPlainText().count() - fixedPosition;
         QString cmd = toPlainText().right(count);
-        redirect->WriteChildStdIn(cmd + "\n");
+        //Call alice here
+        //redirect->WriteChildStdIn(cmd + "\n");
     } else if (key == Qt::Key_Up) {
         accept = false;
     } else {

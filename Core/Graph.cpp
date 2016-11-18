@@ -24,8 +24,12 @@ Graph::Graph(const NodeDescriptions &descrs, const AdjacencyList& edges)
     }
 }
 
-void Graph::setFilename(const QString& filename) {
+void Graph::setFilename(const string &filename) {
     mFilename = filename;
+}
+
+const std::string& Graph::filename() const {
+    return mFilename;
 }
 
 const NodesByID& Graph::nodes() const

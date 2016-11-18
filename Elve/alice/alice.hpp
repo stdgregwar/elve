@@ -243,6 +243,57 @@ public:
     insert_command( name, std::make_shared<write_io_command<Tag, S...>>( env, label ) );
   }
 
+  /**
+   * Splitting the run method to allow sparse use of the cli
+   *
+   * @brief init
+   * @param argc
+   * @param argv
+   * @return
+   */
+  int init(int argc, char** argv) {
+      po::store( po::command_line_parser( argc, argv ).options( opts ).run(), vm );
+      po::notify( vm );
+
+      if ( vm.count( "help" ) || ( vm.count( "command" ) && vm.count( "file" ) ) )
+      {
+        std::cout << opts << std::endl;
+        return 1;
+      }
+
+      read_aliases();
+
+      if ( vm.count( "log" ) )
+      {
+        env->log = true;
+        env->start_logging( logname );
+      }
+  }
+
+  /**
+   * Run the single provided line
+   *
+   * @brief run_line
+   * @param line
+   */
+  bool run_line(const std::string& line) {
+      execute_line( preprocess_alias( line ) );
+      //rl.add_to_history( line ); //TODO manage
+      return true;
+  }
+
+
+  /**
+   * @brief stop logging in the command line
+   * @return
+   */
+  bool stop() {
+      if ( env->log )
+      {
+        env->stop_logging();
+      }
+  }
+
   int run( int argc, char ** argv )
   {
     po::store( po::command_line_parser( argc, argv ).options( opts ).run(), vm );
