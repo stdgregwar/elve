@@ -59,6 +59,7 @@ void GraphWidget::setGraph(SharedGraph graph) {
     if(mLayout) {
         mLayout->setGraph(graph);
         reflect(mLayout->system(),graph);
+        quickSim(500);
     }
     mCurrentGraph = graph;
 }
@@ -79,7 +80,7 @@ void GraphWidget::quickSim(unsigned ticks)
 void GraphWidget::drawBackground(QPainter *painter, const QRectF &rect){
     QGraphicsView::drawBackground(painter,rect);
     if(mLayout) {
-        mLayout->system().debug(painter);
+        //mLayout->system().debug(painter);
     }
 
 }

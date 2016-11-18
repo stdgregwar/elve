@@ -5,5 +5,5 @@ SUBDIRS += \
     BlifLoaderPlugin \
     LevelLayoutPlugin \
     SimpleLayoutPlugin \
-    Elfe \
+    Elve \
 

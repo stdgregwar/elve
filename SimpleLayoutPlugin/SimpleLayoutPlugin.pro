@@ -10,7 +10,7 @@ TARGET = SimpleLayoutPlugin
 TEMPLATE = lib
 CONFIG += plugin
 
-DESTDIR = ../Elfe/plugins/layouts
+DESTDIR = ../Elve/plugins/layouts
 
 INCLUDEPATH+= ../Core/interfaces
 INCLUDEPATH += ../Core

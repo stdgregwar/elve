@@ -8,14 +8,17 @@ QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = Elfe
+TARGET = Elve
 TEMPLATE = app
 
 
 SOURCES += main.cpp \
     MainWindow.cpp \
     PluginManager.cpp \
-    GraphWidget.cpp
+    GraphWidget.cpp \
+    QConsoleWidget.cpp \
+    Redirect.cpp \
+    uis/Tab.cpp
 
 win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../Core/release/ -lCore
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../Core/debug/ -lCore
@@ -45,7 +48,14 @@ HEADERS += \
     alice/command.hpp \
     alice/readline.hpp \
     alice/rules.hpp \
-    GraphWidget.h
+    GraphWidget.h \
+    QConsoleWidget.h \
+    Redirect.h \
+    uis/Tab.h
 
 FORMS += \
-    uis/mainwindow_test.ui
+    uis/mainwindow_test.ui \
+    uis/tab.ui
+
+RESOURCES += \
+    elveresources.qrc

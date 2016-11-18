@@ -40,7 +40,7 @@ SOURCES +=\
     QuadTreeNode.cpp
 
 RESOURCES += \
-    resources.qrc
+    coreresources.qrc
 
 FORMS +=
 

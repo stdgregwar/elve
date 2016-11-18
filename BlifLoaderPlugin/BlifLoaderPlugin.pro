@@ -10,7 +10,7 @@ TARGET = BlifLoaderPlugin
 TEMPLATE = lib
 CONFIG += plugin
 
-DESTDIR = ../Elfe/plugins/loaders
+DESTDIR = ../Elve/plugins/loaders
 
 SOURCES += BlifLoader.cpp
 

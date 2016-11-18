@@ -8,11 +8,14 @@
 #include <QPluginLoader>
 #include <QAction>
 #include <QJsonDocument>
+#include "QConsoleWidget.h"
 #include <QMessageBox>
 
 #include <interfaces/GraphLoaderPlugin.h>
 #include <Graph.h>
 #include <QMdiSubWindow>
+#include <QMainWindow>
+#include <QDockWidget>
 
 #include "FileLoadAction.h"
 #include "LayoutLoadAction.h"
@@ -22,12 +25,17 @@
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), mPluginManager("plugins")
 {
+    Q_INIT_RESOURCE(coreresources); //Init coremodule resources
+
+    QFile File(":skin/darkorange.stylesheet");
+     File.open(QFile::ReadOnly);
+     QString StyleSheet = QLatin1String(File.readAll());
+
+     qApp->setStyleSheet(StyleSheet);
+
     ui.setupUi(this);
-    //setCentralWidget(mViewport);
 
-    //loadBlif("mul5.blif");
-
-    connect(ui.actionBorder,SIGNAL(triggered()),mViewport,SLOT(borderSelect()));
+    connect(ui.mdiArea,SIGNAL(subWindowActivated(QMdiSubWindow*)),this,SLOT(on_tab_change(QMdiSubWindow*)));
 
     //setup loaders
     for(auto& l : mPluginManager.loaders()) {
@@ -42,6 +50,8 @@ MainWindow::MainWindow(QWidget *parent)
         ui.menuLayout->addAction(a);
     }
 }
+
+
 
 MainWindow::~MainWindow()
 {
@@ -59,13 +69,15 @@ void MainWindow::on_import_trigerred(GraphLoaderPlugin* ld) {
         }
         g->setFilename(filename);
         newWindowWithFile(g,filename);
-        //mViewport->setGraph(g);
     }
 }
 
 void MainWindow::on_layout_trigerred(LayoutPlugin* layout) {
     qDebug() << "Setting layout to " + layout->layoutName();
-    mViewport->setLayout(layout);
+    GraphWidget* vp = viewport();
+    if(vp) {
+        vp->setLayout(layout);
+    }
 }
 
 void MainWindow::on_actionOpen_triggered()
@@ -96,10 +108,35 @@ void MainWindow::onFileOpen(const QString& filename){
         } else { //Assume it's json
             doc = QJsonDocument::fromJson(file.readAll());
         }
-        mViewport->fromJson(doc.object());
+        //mViewport->fromJson(doc.object());
     } else {
         throw std::runtime_error("Couldn't open file " + filename.toStdString() + " for reading.");
     }
+}
+
+void MainWindow::connectTab(QMdiSubWindow* tab) {
+    mCurrentTab = tab;
+    GraphWidget* gw = viewport();
+    if(!gw) {
+        qDebug() << "Could not cast tab to viewport. Exiting";
+        //qApp->quit();
+        return;
+    }
+    connect(ui.actionBorder,SIGNAL(triggered()),gw,SLOT(borderSelect()));
+    mCurrentTab = tab;
+}
+
+void MainWindow::disconnectTab(QMdiSubWindow* tab) {
+    GraphWidget* gw = viewport();
+    if(!gw) {
+        return;
+    }
+    disconnect(ui.actionBorder,SIGNAL(triggered()),gw,SLOT(borderSelect()));
+}
+
+void MainWindow::on_tab_change(QMdiSubWindow* tab) {
+    disconnectTab(mCurrentTab);
+    connectTab(tab);
 }
 
 void MainWindow::on_actionQuit_triggered()
@@ -107,9 +144,26 @@ void MainWindow::on_actionQuit_triggered()
     qApp->quit(); //TODO last chance save
 }
 
+GraphWidget* MainWindow::viewport() {
+    if(mCurrentTab) {
+        QMainWindow* mw = dynamic_cast<QMainWindow*>(mCurrentTab->widget());
+        return dynamic_cast<GraphWidget*>(mw->centralWidget());
+    }
+    return nullptr;
+}
+
 void MainWindow::newWindowWithFile(SharedGraph g, QString filename) {
     GraphWidget* gw = new GraphWidget(this,filename.split("/").last());
-    QMdiSubWindow* w = ui.mdiArea->addSubWindow(gw);
+    QMainWindow* cw = new QMainWindow(ui.mdiArea);
+
+    cw->setCentralWidget(gw);
+    QDockWidget* dw = new QDockWidget("Shell",cw);
+
+    dw->setWidget(new QConsoleWidget(dw));
+    cw->addDockWidget(Qt::BottomDockWidgetArea,dw);
+
+    QMdiSubWindow* w = ui.mdiArea->addSubWindow(cw);
+    w->setWindowTitle(filename);
     w->setWindowState(Qt::WindowMaximized);
     w->setAttribute(Qt::WA_DeleteOnClose);
     gw->setGraph(g);
@@ -117,9 +171,9 @@ void MainWindow::newWindowWithFile(SharedGraph g, QString filename) {
 
 void MainWindow::on_actionSave_triggered()
 {
-    const SharedGraph graph = mViewport->graph();
+    const SharedGraph graph = viewport()->graph();
     if(graph) {
-        QJsonObject json = mViewport->json();
+        QJsonObject json = viewport()->json();
         QFileDialog dialog(this,"Save visualization");
         dialog.setNameFilters({"ELFE json (*.json)","ELFE bin (*.elfe)"});
         dialog.setAcceptMode(QFileDialog::AcceptSave);
