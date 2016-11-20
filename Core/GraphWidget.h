@@ -15,7 +15,7 @@ class GraphWidget : public QGraphicsView
 {
     Q_OBJECT;
 public:
-    GraphWidget(MainWindow* parent,QString filename = "new file");
+    GraphWidget(QWidget *parent, QString filename = "new file");
     void setGraph(SharedGraph graph);
     void setGraph(SharedGraph graph, const NodePositions& positions);
 
@@ -59,6 +59,7 @@ private:
         protected:
             GraphWidget& gw;
     };
+
     class BorderSelect : public Behaviour
     {
     public:
@@ -88,7 +89,6 @@ private:
     //temp
     std::vector<EdgeItem*> mEdges;
     QGraphicsPathItem* mEdgesPath;
-    MainWindow* mParent;
     QString mFilename;
 };
 

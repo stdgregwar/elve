@@ -1,11 +1,13 @@
 #include "CommandLine.h"
+#include <QJsonDocument>
+#include <QFile>
 
 //ALICE ==================================================
 namespace alice {
 
 
 template<>
-struct store_info<SharedGraph>
+struct store_info<SharedEGraph>
 {
     static constexpr const char* key         = "graphs";  /* internal key, must be unique for each store */
     static constexpr const char* option      = "graph";   /* long flag for general commands, e.g., `store --aig` */
@@ -17,14 +19,16 @@ struct store_info<SharedGraph>
 struct io_graph_tag_t {};
 
 template<>
-inline std::string store_entry_to_string<SharedGraph>( SharedGraph const& g )
+inline std::string store_entry_to_string<SharedEGraph>( SharedEGraph const& eg )
 {
-  return boost::str( boost::format( "%s i/o = %d/%d, nodecount = " ) % g->filename() % g->inputCount() % g->outputCount() % g->nodeCount());
+    const SharedGraph& g = eg->graph();
+    return boost::str( boost::format( "%s i/o = %d/%d, nodecount = " ) % g->filename() % g->inputCount() % g->outputCount() % g->nodeCount());
 }
 
 template<>
-inline void print_store_entry_statistics<SharedGraph>( std::ostream& os, SharedGraph const& g)
+inline void print_store_entry_statistics<SharedEGraph>( std::ostream& os, SharedEGraph const& eg)
 {
+    const SharedGraph& g = eg->graph();
     os << "nodecount : " << g->nodeCount()
        << ", inputs : " << g->inputCount()
        << ", outputs :" << g->outputCount()
@@ -32,30 +36,30 @@ inline void print_store_entry_statistics<SharedGraph>( std::ostream& os, SharedG
 }
 
 template<>
-inline bool store_can_read_io_type<SharedGraph, io_graph_tag_t>( command& cmd )
+inline bool store_can_read_io_type<SharedEGraph, io_graph_tag_t>( command& cmd )
 {
   return true;
 }
 
 /* implement `read graph`*/
 template<>
-inline SharedGraph store_read_io_type<SharedGraph, io_graph_tag_t>( const std::string& filename, const command& cmd )
+inline SharedEGraph store_read_io_type<SharedEGraph, io_graph_tag_t>( const std::string& file, const command& cmd )
 {
-  return abc::Gia_AigerRead( (char*)filename.c_str(), 0, 0, 0 );
+    EGraph::fromFile(QString::fromStdString(file));
 }
 
 /* enable `write Graphs`*/
 template<>
-inline bool store_can_write_io_type<SharedGraph, io_graph_tag_t>( command& cmd )
+inline bool store_can_write_io_type<SharedEGraph, io_graph_tag_t>( command& cmd )
 {
   return true;
 }
 
 /* implement `write Graphs */
 template<>
-inline void store_write_io_type<SharedGraph, io_graph_tag_t>( SharedGraph const& aig, const std::string& filename, const command& cmd )
+inline void store_write_io_type<SharedEGraph, io_graph_tag_t>( SharedEGraph const& eg, const std::string& filename, const command& cmd )
 {
-  abc::Gia_AigerWrite( aig, (char*)filename.c_str(), 1, 0 );
+    eg->toFile(QString::fromStdString(filename));
 }
 
 }

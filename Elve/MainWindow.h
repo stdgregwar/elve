@@ -18,7 +18,7 @@ public:
     GraphWidget* viewport();
     ~MainWindow();
 private:
-    PluginManager mPluginManager;
+    //PluginManager mPluginManager;
     QMdiSubWindow* mCurrentTab;
 public slots:
     void onFileOpen(const QString& file);

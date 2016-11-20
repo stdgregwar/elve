@@ -13,6 +13,7 @@
 
 #include <interfaces/GraphLoaderPlugin.h>
 #include <Graph.h>
+#include <EGraph.h>
 #include <QMdiSubWindow>
 #include <QMainWindow>
 #include <QDockWidget>
@@ -23,9 +24,11 @@
 
 
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent), mPluginManager("plugins")
+    : QMainWindow(parent)
 {
     Q_INIT_RESOURCE(coreresources); //Init coremodule resources
+
+    PluginManager::get().load("plugins");
 
     QFile File(":skin/darkorange.stylesheet");
      File.open(QFile::ReadOnly);
@@ -37,14 +40,16 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(ui.mdiArea,SIGNAL(subWindowActivated(QMdiSubWindow*)),this,SLOT(on_tab_change(QMdiSubWindow*)));
 
+    PluginManager& pluginManager = PluginManager::get();
+
     //setup loaders
-    for(auto& l : mPluginManager.loaders()) {
+    for(auto& l : pluginManager.loaders()) {
         FileLoadAction* a = new FileLoadAction(l,l->formatName(),this);
         connect(a,SIGNAL(triggered(GraphLoaderPlugin*)),this,SLOT(on_import_trigerred(GraphLoaderPlugin*)));
         ui.menuImport->addAction(a);
     }
     //setup layouts
-    for(auto& l : mPluginManager.layouts()) {
+    for(auto& l : pluginManager.layouts()) {
         LayoutLoadAction* a = new LayoutLoadAction(l,l->layoutName(),this);
         connect(a,SIGNAL(triggered(LayoutPlugin*)),this,SLOT(on_layout_trigerred(LayoutPlugin*)));
         ui.menuLayout->addAction(a);
@@ -171,9 +176,9 @@ void MainWindow::newWindowWithFile(SharedGraph g, QString filename) {
 
 void MainWindow::on_actionSave_triggered()
 {
-    const SharedGraph graph = viewport()->graph();
+    const SharedEGraph graph = viewport()->graph();
     if(graph) {
-        QJsonObject json = viewport()->json();
+
         QFileDialog dialog(this,"Save visualization");
         dialog.setNameFilters({"ELFE json (*.json)","ELFE bin (*.elfe)"});
         dialog.setAcceptMode(QFileDialog::AcceptSave);
@@ -187,20 +192,9 @@ void MainWindow::on_actionSave_triggered()
             return;
         }
         QString filename = list.first();
-        QString suffix = filename.split(".").last();
-        QJsonDocument doc(json);
+
         try {
-            QFile file(filename);
-            if(file.open(QFile::WriteOnly)) {
-                if(suffix == "elfe") {
-                    file.write(doc.toBinaryData());
-                } else {
-                    file.write(doc.toJson());
-                }
-                file.close();
-            } else {
-                throw std::runtime_error("Couldn't write to file " + filename.toStdString());
-            }
+
         } catch(std::exception e) {
             QMessageBox::critical(this,"Error", e.what());
         }

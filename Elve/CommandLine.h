@@ -3,12 +3,12 @@
 
 #include <QObject>
 #include "alice/alice.hpp"
-#include <Graph.h>
+#include <EGraph.h>
 #include <QString>
 
-class CommandLine : public QObject
+class CommandLine// : public QObject
 {
-    Q_OBJECT
+    //Q_OBJECT
 public:
     CommandLine& get();
     bool run_command(const QString& cmd);
@@ -17,7 +17,7 @@ private:
     CommandLine(); //Private constructor for singleton
     static CommandLine* sInstance;
 
-    alice::cli_main<SharedGraph> mCli;
+    alice::cli_main<SharedEGraph> mCli;
 };
 
 #endif // COMMANDLINE_H

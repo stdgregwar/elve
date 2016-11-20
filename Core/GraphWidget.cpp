@@ -12,20 +12,17 @@
 #include <random>
 #include <chrono>
 
-#include "MainWindow.h"
-
 #define SS 320000
 
 using namespace std;
 
-GraphWidget::GraphWidget(MainWindow *parent, QString filename) : QGraphicsView(parent),
+GraphWidget::GraphWidget(QWidget* parent, QString filename) : QGraphicsView(parent),
     mScene(new QGraphicsScene(-SS,-SS,SS*2,SS*2,this)),
     mDrag(false),
     mScale(1),
     mBehaviour(new Behaviour(this)),
     mLayout(nullptr),
     mEdgesPath(new QGraphicsPathItem()),
-    mParent(parent),
     mFilename(filename)
 {
     setViewportUpdateMode(QGraphicsView::FullViewportUpdate);

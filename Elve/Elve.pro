@@ -14,8 +14,6 @@ TEMPLATE = app
 
 SOURCES += main.cpp \
     MainWindow.cpp \
-    PluginManager.cpp \
-    GraphWidget.cpp \
     QConsoleWidget.cpp \
     Redirect.cpp \
     uis/Tab.cpp \
@@ -33,7 +31,6 @@ DEPENDPATH += $$PWD/../Core
 
 HEADERS += \
     MainWindow.h \
-    PluginManager.h \
     FileLoadAction.h \
     LayoutLoadAction.h \
     alice/commands/alias.hpp \
@@ -52,7 +49,6 @@ HEADERS += \
     alice/command.hpp \
     alice/readline.hpp \
     alice/rules.hpp \
-    GraphWidget.h \
     QConsoleWidget.h \
     Redirect.h \
     uis/Tab.h \
