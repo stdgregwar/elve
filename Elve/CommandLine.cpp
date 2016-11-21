@@ -23,7 +23,7 @@ template<>
 inline std::string store_entry_to_string<SharedEGraph>( SharedEGraph const& eg )
 {
     const SharedGraph& g = eg->graph();
-    return boost::str( boost::format( "%s i/o = %d/%d, nodecount = " ) % g->filename() % g->inputCount() % g->outputCount() % g->nodeCount());
+    return boost::str( boost::format( "%s i/o = %d/%d, nodecount = %d" ) % g->filename() % g->inputCount() % g->outputCount() % g->nodeCount());
 }
 
 template<>
@@ -46,7 +46,7 @@ inline bool store_can_read_io_type<SharedEGraph, io_graph_tag_t>( command& cmd )
 template<>
 inline SharedEGraph store_read_io_type<SharedEGraph, io_graph_tag_t>( const std::string& file, const command& cmd )
 {
-    EGraph::fromFile(QString::fromStdString(file));
+    return EGraph::fromFile(QString::fromStdString(file));
 }
 
 /* enable `write Graphs`*/
@@ -68,9 +68,18 @@ inline void store_write_io_type<SharedEGraph, io_graph_tag_t>( SharedEGraph cons
 
 CommandLine::CommandLine() : mCli("elve")
 {
-
+    init();
 }
 
+void CommandLine::init()
+{
+    using namespace alice;
+    auto& cli = mCli;
+    mCli.set_category("I/0");
+    ADD_READ_COMMAND(graph,"Graph");
+    ADD_WRITE_COMMAND(graph,"Graph");
+    mCli.init(0,{},std::cout);
+}
 
 bool CommandLine::run_command(const QString& cmd, std::ostream& out,std::ostream& cerr)
 {

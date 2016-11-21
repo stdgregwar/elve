@@ -24,7 +24,7 @@ else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../Core/debug/ -lCo
 else:unix: LIBS += -L$$OUT_PWD/../Core/ -lCore
 
 #boost
-LIBS += -lboost_system -lboost_program_options -lboost_regex
+LIBS += -lboost_system -lboost_program_options -lboost_regex -lboost_filesystem
 
 INCLUDEPATH += $$PWD/../Core
 DEPENDPATH += $$PWD/../Core

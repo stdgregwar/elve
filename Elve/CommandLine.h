@@ -19,6 +19,7 @@ public:
     QStringList completion(const QString& base);
 private:
     CommandLine(); //Private constructor for singleton
+    void init();
     alice::cli_main<SharedEGraph> mCli;
 };
 

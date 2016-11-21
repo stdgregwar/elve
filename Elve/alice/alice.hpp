@@ -472,7 +472,7 @@ private:
     }
     else
     {
-      out << "unknown command: " << vline.front() << std::endl;
+      env->cerr() << "unknown command: " << vline.front() << std::endl;
       return false;
     }
   }

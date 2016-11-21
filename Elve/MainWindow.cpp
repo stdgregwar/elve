@@ -31,10 +31,10 @@ MainWindow::MainWindow(QWidget *parent)
     PluginManager::get().load("plugins");
 
     QFile File(":skin/darkorange.stylesheet");
-     File.open(QFile::ReadOnly);
-     QString StyleSheet = QLatin1String(File.readAll());
+    File.open(QFile::ReadOnly);
+    QString StyleSheet = QLatin1String(File.readAll());
 
-     qApp->setStyleSheet(StyleSheet);
+    //qApp->setStyleSheet(StyleSheet);
 
     ui.setupUi(this);
 

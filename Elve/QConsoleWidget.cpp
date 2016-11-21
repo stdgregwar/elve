@@ -17,6 +17,7 @@ QConsoleWidget::QConsoleWidget(QWidget *parent) : QTextEdit(parent)
     this->setPalette(p);*/
     fixedPosition = 0;
     print_prompt();
+    setLineWrapMode(QConsoleWidget::WidgetWidth);
 }
 
 QConsoleWidget::~QConsoleWidget()
@@ -75,12 +76,20 @@ void QConsoleWidget::run_command(const QString& cmd) {
     std::ostringstream stdout;
     stdout<< std::endl;
     CommandLine::get().run_command(cmd,stdout,stderr);
-    OnChildStdOutWrite(QString::fromStdString(stdout.str() + stderr.str()));
+    OnChildStdOutWrite(QString::fromStdString(stdout.str()));
+    print_error(QString::fromStdString(stderr.str()));
     print_prompt();
 }
 
 void QConsoleWidget::print_prompt() {
     OnChildStdOutWrite("elve>");
+}
+
+void QConsoleWidget::print_error(const QString &error) {
+    QColor c = textColor();
+    setTextColor(Qt::red);
+    OnChildStdOutWrite(error);
+    setTextColor(c);
 }
 
 void QConsoleWidget::cursorPositionChanged()
