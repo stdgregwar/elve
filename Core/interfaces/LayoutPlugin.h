@@ -10,9 +10,9 @@
 #include <NodeItem.h>
 #include <System.h>
 
+#include "LayoutPluginFactory.h"
 
-
-#define LayoutPlugin_iid "ch.epfl.lap.elfe.LayoutPlugin"
+//#define LayoutPlugin_iid "ch.epfl.lap.elfe.LayoutPlugin"
 
 class LayoutPlugin
 {
@@ -25,11 +25,13 @@ public:
     virtual void tick(float dt, bool fast);
     virtual QString layoutName() = 0;
     System& system();
+    const System& system() const;
+    virtual ~LayoutPlugin(){}
 private:
     System mSystem;
     NodePositions mStartPositions;
 };
 
-Q_DECLARE_INTERFACE(LayoutPlugin,LayoutPlugin_iid)
+//Q_DECLARE_INTERFACE(LayoutPlugin,LayoutPlugin_iid)
 
 #endif // LAYOUTPLUGIN_H

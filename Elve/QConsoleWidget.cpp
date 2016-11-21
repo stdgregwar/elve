@@ -1,10 +1,13 @@
 #include "QConsoleWidget.h"
+#include "CommandLine.h"
+#include <sstream>
 
 #include <QKeyEvent>
 
 QConsoleWidget::QConsoleWidget(QWidget *parent) : QTextEdit(parent)
 {
     setUndoRedoEnabled(false);
+    setStyleSheet("font : 11pt 'Mono';");
 
     //setTextColor(QColor("white"));
 
@@ -12,8 +15,8 @@ QConsoleWidget::QConsoleWidget(QWidget *parent) : QTextEdit(parent)
     p.setColor(QPalette::Base,QColor(59,58,58));
     p.setColor(QPalette::Text,Qt::white);
     this->setPalette(p);*/
-
     fixedPosition = 0;
+    print_prompt();
 }
 
 QConsoleWidget::~QConsoleWidget()
@@ -55,7 +58,7 @@ void QConsoleWidget::keyPressEvent(QKeyEvent *event)
         int count = toPlainText().count() - fixedPosition;
         QString cmd = toPlainText().right(count);
         //Call alice here
-        //redirect->WriteChildStdIn(cmd + "\n");
+        run_command(cmd);
     } else if (key == Qt::Key_Up) {
         accept = false;
     } else {
@@ -65,6 +68,19 @@ void QConsoleWidget::keyPressEvent(QKeyEvent *event)
     if (accept) {
         QTextEdit::keyPressEvent(event);
     }
+}
+
+void QConsoleWidget::run_command(const QString& cmd) {
+    std::ostringstream stderr;
+    std::ostringstream stdout;
+    stdout<< std::endl;
+    CommandLine::get().run_command(cmd,stdout,stderr);
+    OnChildStdOutWrite(QString::fromStdString(stdout.str() + stderr.str()));
+    print_prompt();
+}
+
+void QConsoleWidget::print_prompt() {
+    OnChildStdOutWrite("elve>");
 }
 
 void QConsoleWidget::cursorPositionChanged()

@@ -50,6 +50,11 @@ System& LayoutPlugin::system() {
     return mSystem;
 }
 
+const System& LayoutPlugin::system() const
+{
+    return mSystem;
+}
+
 void LayoutPlugin::tick(float dt, bool fast) {
     mSystem.tick(dt,fast);
 }

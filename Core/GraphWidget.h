@@ -7,6 +7,7 @@
 #include "NodeItem.h"
 #include "EdgeItem.h"
 #include "Graph.h"
+#include "EGraph.h"
 #include <interfaces/LayoutPlugin.h>
 
 class MainWindow;
@@ -16,8 +17,9 @@ class GraphWidget : public QGraphicsView
     Q_OBJECT;
 public:
     GraphWidget(QWidget *parent, QString filename = "new file");
-    void setGraph(SharedGraph graph);
-    void setGraph(SharedGraph graph, const NodePositions& positions);
+
+    void setGraph(SharedEGraph graph, unsigned quickTicks = 500);
+    //void setGraph(SharedGraph graph, const NodePositions& positions);
 
     void tick(float dt, bool update = true);
 
@@ -38,10 +40,10 @@ public:
 
     void quickSim(unsigned ticks);
     void setLayout(LayoutPlugin* l);
-    void reflect(System &sys,SharedGraph g);
+    void reflect(System &sys, SharedGraph g);
 
     void drawBackground(QPainter *painter, const QRectF &rect) override;
-    const SharedGraph graph() const;
+    const SharedEGraph& graph() const;
     QJsonObject json() const;
     void fromJson(const QJsonObject& obj);
 public slots:
@@ -83,9 +85,9 @@ private:
     bool mDrag;
     qreal mScale;
     QPointF mLastPos;
-    SharedGraph mCurrentGraph;
+    SharedEGraph mGraph;
     Behaviour* mBehaviour;
-    LayoutPlugin* mLayout;
+    //LayoutPlugin* mLayout;
     //temp
     std::vector<EdgeItem*> mEdges;
     QGraphicsPathItem* mEdgesPath;

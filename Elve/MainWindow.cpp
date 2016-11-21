@@ -24,7 +24,7 @@
 
 
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent)
+    : QMainWindow(parent), mCurrentTab(nullptr)
 {
     Q_INIT_RESOURCE(coreresources); //Init coremodule resources
 
@@ -50,10 +50,17 @@ MainWindow::MainWindow(QWidget *parent)
     }
     //setup layouts
     for(auto& l : pluginManager.layouts()) {
-        LayoutLoadAction* a = new LayoutLoadAction(l,l->layoutName(),this);
-        connect(a,SIGNAL(triggered(LayoutPlugin*)),this,SLOT(on_layout_trigerred(LayoutPlugin*)));
+        LayoutLoadAction* a = new LayoutLoadAction(l,l->name(),this);
+        connect(a,SIGNAL(triggered(LayoutPluginFactory*)),this,SLOT(on_layout_trigerred(LayoutPluginFactory*)));
         ui.menuLayout->addAction(a);
     }
+
+    //Setup terminal
+    QDockWidget* dw = new QDockWidget("Shell",this);
+    mConsole = new QConsoleWidget(this);
+    dw->setWidget(mConsole);
+    addDockWidget(Qt::BottomDockWidgetArea,dw);
+    setDockOptions(QMainWindow::DockOption::AnimatedDocks);
 }
 
 
@@ -73,15 +80,15 @@ void MainWindow::on_import_trigerred(GraphLoaderPlugin* ld) {
             QMessageBox::critical(this,"Error", e.what());
         }
         g->setFilename(filename.toStdString());
-        newWindowWithFile(g,filename);
+        newWindowWithFile(EGraph::fromGraph(g),filename);
     }
 }
 
-void MainWindow::on_layout_trigerred(LayoutPlugin* layout) {
-    qDebug() << "Setting layout to " + layout->layoutName();
+void MainWindow::on_layout_trigerred(LayoutPluginFactory* layout) {
+    qDebug() << "Setting layout to " + layout->name();
     GraphWidget* vp = viewport();
     if(vp) {
-        vp->setLayout(layout);
+        vp->setLayout(layout->create());
     }
 }
 
@@ -157,15 +164,16 @@ GraphWidget* MainWindow::viewport() {
     return nullptr;
 }
 
-void MainWindow::newWindowWithFile(SharedGraph g, QString filename) {
+void MainWindow::newWindowWithFile(SharedEGraph g, QString filename) {
     GraphWidget* gw = new GraphWidget(this,filename.split("/").last());
     QMainWindow* cw = new QMainWindow(ui.mdiArea);
 
     cw->setCentralWidget(gw);
-    QDockWidget* dw = new QDockWidget("Shell",cw);
+
+    /*QDockWidget* dw = new QDockWidget("Shell",cw);
 
     dw->setWidget(new QConsoleWidget(dw));
-    cw->addDockWidget(Qt::BottomDockWidgetArea,dw);
+    cw->addDockWidget(Qt::BottomDockWidgetArea,dw);*/
 
     QMdiSubWindow* w = ui.mdiArea->addSubWindow(cw);
     w->setWindowTitle(filename);
@@ -178,7 +186,6 @@ void MainWindow::on_actionSave_triggered()
 {
     const SharedEGraph graph = viewport()->graph();
     if(graph) {
-
         QFileDialog dialog(this,"Save visualization");
         dialog.setNameFilters({"ELFE json (*.json)","ELFE bin (*.elfe)"});
         dialog.setAcceptMode(QFileDialog::AcceptSave);
@@ -192,9 +199,8 @@ void MainWindow::on_actionSave_triggered()
             return;
         }
         QString filename = list.first();
-
         try {
-
+            graph->toFile(filename);
         } catch(std::exception e) {
             QMessageBox::critical(this,"Error", e.what());
         }

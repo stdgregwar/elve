@@ -5,20 +5,17 @@
 #include <LayoutPlugin.h>
 #include <System.h>
 
-class LevelLayout : public QObject, public LayoutPlugin
+class LevelLayout : public LayoutPlugin
 {
-    Q_OBJECT
-#if QT_VERSION >= 0x050000
-    Q_PLUGIN_METADATA(IID "ch.epfl.lap.LevelLayout")
-#endif // QT_VERSION >= 0x050000
-    Q_INTERFACES(LayoutPlugin)
 public:
-    LevelLayout(QObject *parent = 0);
+    LevelLayout();
     //virtual void setGraph(SharedGraph graph);
     virtual void setGraph(SharedGraph g) override;
     virtual void tick(float dt, bool fast) override;
     virtual QString layoutName() override;
 private:
 };
+
+ELVE_EXPORT_LAYOUT(LevelLayout,"Level-Layout","level")
 
 #endif // LEVELLAYOUTPLUGIN_H

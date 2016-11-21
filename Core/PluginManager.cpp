@@ -41,12 +41,17 @@ void _load(const QString& path, const QString& type, QList<T*>& toFill) {
 
 LayoutPlugin* PluginManager::getLayout(const QString& name) const
 {
-    for(LayoutPlugin* l : mLayouts) {
-        if(l->layoutName() == name) {
-            return l;
+    for(LayoutPluginFactory* l : mLayouts) {
+        if(l->name() == name) {
+            return l->create();
         }
     }
     return nullptr; //TODO
+}
+
+LayoutPlugin* PluginManager::defaultLayout() const
+{
+    return getLayout("Simple-Force");
 }
 
 void PluginManager::load(const QString& path)

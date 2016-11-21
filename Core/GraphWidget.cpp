@@ -21,7 +21,6 @@ GraphWidget::GraphWidget(QWidget* parent, QString filename) : QGraphicsView(pare
     mDrag(false),
     mScale(1),
     mBehaviour(new Behaviour(this)),
-    mLayout(nullptr),
     mEdgesPath(new QGraphicsPathItem()),
     mFilename(filename)
 {
@@ -48,35 +47,34 @@ void GraphWidget::showEvent(QShowEvent *event)
 }
 
 void GraphWidget::clear() {
-    mLayout->clear();
     mEdges.clear();
 }
 
-void GraphWidget::setGraph(SharedGraph graph) {
-    if(mLayout) {
-        mLayout->setGraph(graph);
-        reflect(mLayout->system(),graph);
-        quickSim(500);
+void GraphWidget::setGraph(SharedEGraph graph, unsigned quickTicks) {
+    mGraph = graph;
+    if(graph->layout()) {
+        graph->applyLayout();
+        reflect(graph->layout()->system(),graph->graph());
+        quickSim(quickTicks);
     }
-    mCurrentGraph = graph;
 }
 
-void GraphWidget::setGraph(SharedGraph graph, const NodePositions& positions) {
+/*void GraphWidget::setGraph(SharedGraph graph, const NodePositions& positions) {
     if(mLayout) {
         mLayout->setGraph(graph,positions);
         reflect(mLayout->system(),graph);
     }
     mCurrentGraph = graph;
-}
+}*/
 
 void GraphWidget::quickSim(unsigned ticks)
 {
-    mLayout->quickSim(ticks);
+    mGraph->layout()->quickSim(ticks);
 }
 
 void GraphWidget::drawBackground(QPainter *painter, const QRectF &rect){
     QGraphicsView::drawBackground(painter,rect);
-    if(mLayout) {
+    if(mGraph->layout()) {
         //mLayout->system().debug(painter);
     }
 
@@ -123,53 +121,24 @@ void GraphWidget::mouseMoveEvent(QMouseEvent *event)
 void GraphWidget::keyPressEvent(QKeyEvent *event) {
     QGraphicsView::keyPressEvent(event);
     if(event->key() == Qt::Key_Q) {
-        if(mLayout) {
-            mLayout->quickSim(400);
+        if(mGraph->layout()) {
+            mGraph->layout()->quickSim(400);
         }
     }
 }
 
 void GraphWidget::ungroup(const NodeNames& names) {
-
-    NodePositions positions = mLayout->system().positions();
-    SharedGraph g = mCurrentGraph;
-    for(const NodeID& name : names) {
-        QVector2D base = positions.at(name);
-        SharedGraph cg = g->nodes().at(name).getClusteredGraph();
-        if(cg) {
-            const NodesByID& ugped = cg->nodes();
-            static default_random_engine gen;
-            for(const NodesByID::value_type& p : ugped) {
-                if(!p.second.isInput() && !p.second.isOutput()) {
-                    std::uniform_real_distribution<qreal> x(-32,32);
-                    std::uniform_real_distribution<qreal> y(-32,32);
-                    positions[p.first] = base + QVector2D(x(gen),y(gen));
-                }
-            }
-        }
-        g = g->ungroup(name);
-    }
-    setGraph(g,positions);
+    setGraph(mGraph->ungroup(names));
 }
 
 void GraphWidget::group(const NodeNames &names, const NodeID &groupName) {
-    NodeID trueName = mCurrentGraph->uniqueID(groupName);
-    NodePositions positions = mLayout->system().positions();
-
-    QVector2D groupCenter;
-    for(const NodeID& id : names) {
-        groupCenter += positions.at(id);
-    }
-    groupCenter /= names.size();
-
-    positions[trueName] = groupCenter;
-    setGraph(mCurrentGraph->group(names,trueName), positions);
+    setGraph(mGraph->group(names,groupName));
 }
 
 void GraphWidget::tick(float dt, bool update)
 {
-    if(mLayout) {
-        mLayout->tick(dt,update);
+    if(mGraph->layout()) {
+        mGraph->layout()->tick(dt,update);
         QPainterPath p;
         std::for_each(mEdges.begin(),mEdges.end(),[&p](EdgeItem*& e){
             e->doPath(p);
@@ -193,21 +162,8 @@ void GraphWidget::setBehaviour(Behaviour* b) {
 }
 
 void GraphWidget::setLayout(LayoutPlugin *l) {
-    NodePositions old_pos;
-    if(mLayout) {
-        old_pos = mLayout->system().positions();
-        //delete mLayout;
-        mLayout = l;
-        if(mCurrentGraph) {
-            setGraph(mCurrentGraph,old_pos);
-        }
-    } else {
-        mLayout = l;
-        if(mCurrentGraph) {
-            setGraph(mCurrentGraph);
-        }
-    }
-
+    mGraph->setLayout(l);
+    reflect(mGraph->layout()->system(),mGraph->graph());
 }
 
 void GraphWidget::clearScene() {
@@ -289,54 +245,9 @@ bool GraphWidget::BorderSelect::mouseMoveEvent(QMouseEvent *event) {
     return true;
 }
 
-QJsonObject GraphWidget::json() const {
-    if(!mCurrentGraph) {
-        return QJsonObject();
-    }
-
-    QJsonObject main;
-    main.insert("graph",mCurrentGraph->json());
-
-    if(mLayout) {
-        QJsonObject layout;
-        QJsonObject  positions;
-
-        layout.insert("name",mLayout->layoutName());
-
-        using pair_type = NodePositions::value_type;
-        for(const pair_type& p : mLayout->system().positions()) {
-            const QVector2D& pos = p.second;
-            positions.insert(QString::fromStdString(p.first),
-                             QJsonArray{pos.x(),pos.y()});
-        }
-        layout.insert("positions",positions);
-        main.insert("layout",layout);
-    }
-    return main;
-}
-
-void GraphWidget::fromJson(const QJsonObject& obj)
+const SharedEGraph& GraphWidget::graph() const
 {
-    SharedGraph g = Graph::fromJson(obj.value("graph").toObject());
-    //positions
-    NodePositions positions; positions.reserve(g->nodeCount());
-    QJsonObject jpositions = obj["layout"].toObject()["positions"].toObject();
-    for(QJsonObject::const_iterator it = jpositions.constBegin();
-        it != jpositions.constEnd();
-        it++) {
-
-        QJsonArray jpos = it.value().toArray();
-        positions.emplace(std::piecewise_construct,
-                          std::forward_as_tuple(it.key().toStdString()),
-                          std::forward_as_tuple(jpos.at(0).toDouble(),jpos.at(1).toDouble()));
-    }
-    //TODO load layout type etc....
-    setGraph(g,positions);
-}
-
-const SharedGraph GraphWidget::graph() const
-{
-    return mCurrentGraph;
+    return mGraph;
 }
 
 void GraphWidget::BorderSelect::onEnd() {

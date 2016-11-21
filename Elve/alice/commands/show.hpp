@@ -65,7 +65,7 @@ int show_helper( bool& result, command& cmd, const environment::ptr& env, show_c
 
   if ( cmd.is_set( option ) )
   {
-    result = boost::any_cast<std::shared_ptr<show_store_entry<S>>>( show_commands[option] )->operator()( env->store<S>().current(), dotname, cmd );
+    result = boost::any_cast<std::shared_ptr<show_store_entry<S>>>(show_commands[option])->operator()( env->store<S>().current(), dotname, cmd, env->out());
   }
   return 0;
 }

@@ -1,8 +1,7 @@
 #include "LevelLayout.h"
 #include <cmath>
 
-LevelLayout::LevelLayout(QObject *parent) :
-    QObject(parent)
+LevelLayout::LevelLayout()
 {
 }
 

@@ -9,6 +9,8 @@ class QConsoleWidget : public QTextEdit
     Q_OBJECT
 public:
     QConsoleWidget(QWidget *parent = 0);
+    void run_command(const QString& cmd);
+    void print_prompt();
     ~QConsoleWidget();
 private:
     int fixedPosition;

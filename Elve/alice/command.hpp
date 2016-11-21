@@ -37,6 +37,7 @@
 #include <ctime>
 #include <iomanip>
 #include <iostream>
+#include <ostream>
 #include <fstream>
 #include <functional>
 #include <locale>
@@ -290,7 +291,7 @@ public:
   }
 
 public: /* logging */
-  void start_logging( const std::string& filename )
+  void start_logging( const std::string& filename)
   {
     logger.open( filename.c_str(), std::ofstream::out );
     logger << "[";
@@ -336,6 +337,22 @@ public: /* logging */
     logger << "]" << std::endl;
   }
 
+  std::ostream& out() {
+      return *m_out;
+  }
+
+  std::ostream& cerr() {
+    return *m_cerr;
+  }
+
+  void set_output(std::ostream& aout) {
+      m_out = &aout;
+  }
+
+  void set_cerr(std::ostream& err) {
+    m_cerr = &err;
+  }
+
 public: /* variables */
   const std::string& variable_value( const std::string& key, const std::string& def ) const
   {
@@ -353,9 +370,13 @@ public:
   bool                                            log_first_command = true;
   std::ofstream                                   logger;
 
+
   std::map<std::string, std::string>              aliases;
 
   bool                                            quit = false;
+private:
+  std::ostream*                                   m_out;
+  std::ostream*                                   m_cerr;
 };
 
 /******************************************************************************
@@ -384,7 +405,7 @@ public:
 
   inline const std::string& caption() const { return scaption; }
 
-  virtual bool run( const std::vector<std::string>& args )
+  virtual bool run( const std::vector<std::string>& args)
   {
     std::vector<char*> argv( args.size() );
     boost::transform( args, argv.begin(), []( const std::string& s ) { return const_cast<char*>( s.c_str() ); } );
@@ -397,13 +418,13 @@ public:
     }
     catch ( po::error& e )
     {
-      std::cerr << "[e] " << e.what() << std::endl;
+      env->cerr() << "[e] " << e.what() << std::endl;
       return false;
     }
 
     if ( vm.count( "help" ) )
     {
-      std::cout << opts << std::endl;
+      env->out() << opts << std::endl;
       return false;
     }
 
@@ -411,7 +432,7 @@ public:
     {
       if ( !p.first() )
       {
-        std::cerr << "[e] " << p.second << std::endl;
+        env->cerr() << "[e] " << p.second << std::endl;
         return false;
       }
     }
@@ -473,9 +494,9 @@ struct show_store_entry
 {
   show_store_entry( command& cmd ) {}
 
-  bool operator()( T& element, const std::string& dotname, const command& cmd )
+  bool operator()( T& element, const std::string& dotname, const command& cmd, std::ostream& out )
   {
-    std::cout << "[w] show is not supported for this store element" << std::endl;
+    out << "[w] show is not supported for this store element" << std::endl;
     return false; /* don't open the dot file */
   }
 

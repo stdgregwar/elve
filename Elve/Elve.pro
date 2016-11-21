@@ -24,7 +24,7 @@ else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../Core/debug/ -lCo
 else:unix: LIBS += -L$$OUT_PWD/../Core/ -lCore
 
 #boost
-LIBS += -lboost_system -lboost_program_options
+LIBS += -lboost_system -lboost_program_options -lboost_regex
 
 INCLUDEPATH += $$PWD/../Core
 DEPENDPATH += $$PWD/../Core
@@ -52,7 +52,8 @@ HEADERS += \
     QConsoleWidget.h \
     Redirect.h \
     uis/Tab.h \
-    CommandLine.h
+    CommandLine.h \
+    alice/allalice.h
 
 FORMS += \
     uis/mainwindow_test.ui \

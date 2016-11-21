@@ -1,6 +1,7 @@
 #include "CommandLine.h"
 #include <QJsonDocument>
 #include <QFile>
+#include <sstream>
 
 //ALICE ==================================================
 namespace alice {
@@ -63,31 +64,20 @@ inline void store_write_io_type<SharedEGraph, io_graph_tag_t>( SharedEGraph cons
 }
 
 }
-
-//SINGLETON ==============================================
-CommandLine* CommandLine::sInstance = nullptr;
+//=================================================================================================================================
 
 CommandLine::CommandLine() : mCli("elve")
 {
 
 }
 
-CommandLine& CommandLine::get()
+
+bool CommandLine::run_command(const QString& cmd, std::ostream& out,std::ostream& cerr)
 {
-    if(!sInstance) {
-        sInstance = new CommandLine();
-    }
-    return *sInstance;
-}
-
-
-
-bool CommandLine::run_command(const QString& cmd)
-{
-
+    mCli.run_line(cmd.toStdString(),out,cerr);
 }
 
 QStringList CommandLine::completion(const QString& base)
 {
-
+    return QStringList();
 }

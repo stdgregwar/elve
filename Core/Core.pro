@@ -40,7 +40,8 @@ SOURCES +=\
     QuadTreeNode.cpp \
     EGraph.cpp \
     PluginManager.cpp \
-    GraphWidget.cpp
+    GraphWidget.cpp \
+    interfaces/LayoutPluginFactory.cpp
 
 RESOURCES += \
     coreresources.qrc
@@ -73,4 +74,5 @@ HEADERS += \
     EGraph.h \
     PluginManager.h \
     GraphWidget.h \
-    Singleton.h
+    Singleton.h \
+    interfaces/LayoutPluginFactory.h

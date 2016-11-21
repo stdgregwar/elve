@@ -52,11 +52,11 @@ int ps_helper( const command& cmd, const environment::ptr& env )
   {
     if ( env->store<S>().current_index() == -1 )
     {
-      std::cout << "[w] no " << name << " in store" << std::endl;
+      env->out() << "[w] no " << name << " in store" << std::endl;
     }
     else
     {
-      print_store_entry_statistics<S>( std::cout, env->store<S>().current() );
+      print_store_entry_statistics<S>( env->out(), env->store<S>().current() );
     }
   }
 

@@ -54,16 +54,16 @@ int show_helper( const command& cmd, const environment::ptr& env )
   {
     if ( store.empty() )
     {
-      std::cout << boost::format( "[i] no %s in store" ) % name_plural << std::endl;
+      env->out() << boost::format( "[i] no %s in store" ) % name_plural << std::endl;
     }
     else
     {
-      std::cout << boost::format( "[i] %s in store:" ) % name_plural << std::endl;
+      env->out() << boost::format( "[i] %s in store:" ) % name_plural << std::endl;
       auto index = 0u;
       for ( const auto& element : store.data() )
       {
-        std::cout << boost::format( "  %c %2d: " ) % ( store.current_index() == index ? '*' : ' ' ) % index;
-        std::cout << store_entry_to_string<S>( element ) << std::endl;
+        env->out() << boost::format( "  %c %2d: " ) % ( store.current_index() == index ? '*' : ' ' ) % index;
+        env->out() << store_entry_to_string<S>( element ) << std::endl;
         ++index;
       }
     }

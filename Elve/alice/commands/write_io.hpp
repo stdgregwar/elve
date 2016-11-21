@@ -68,7 +68,7 @@ int write_io_helper( command& cmd, const std::string& default_option, const envi
   {
     if ( env->store<S>().current_index() == -1 )
     {
-      std::cout << "[w] no " << name << " selected in store" << std::endl;
+      env->out() << "[w] no " << name << " selected in store" << std::endl;
     }
     else
     {

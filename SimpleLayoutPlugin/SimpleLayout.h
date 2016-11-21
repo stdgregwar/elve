@@ -5,20 +5,17 @@
 #include <LayoutPlugin.h>
 #include <System.h>
 
-class SimpleLayout : public QObject, public LayoutPlugin
+class SimpleLayout : public LayoutPlugin
 {
-    Q_OBJECT
-#if QT_VERSION >= 0x050000
-    Q_PLUGIN_METADATA(IID "ch.epfl.lap.LevelLayout")
-#endif // QT_VERSION >= 0x050000
-    Q_INTERFACES(LayoutPlugin)
 public:
-    SimpleLayout(QObject *parent = 0);
+    SimpleLayout();
     //virtual void setGraph(SharedGraph graph);
     virtual void setGraph(SharedGraph g) override;
     virtual void tick(float dt, bool fast) override;
     virtual QString layoutName() override;
 private:
 };
+
+ELVE_EXPORT_LAYOUT(SimpleLayout, "Simple-Force","simple")
 
 #endif // LEVELLAYOUTPLUGIN_H

@@ -74,7 +74,7 @@ namespace alice
 namespace detail
 {
 
-std::vector<std::string> split_commands( const std::string& commands )
+inline std::vector<std::string> split_commands( const std::string& commands )
 {
   std::vector<std::string> result;
   std::string current;
@@ -143,7 +143,7 @@ std::vector<std::string> split_commands( const std::string& commands )
 }
 
 // from http://stackoverflow.com/questions/478898/how-to-execute-a-command-and-get-output-of-command-within-c-using-posix
-std::pair<int, std::string> execute_program( const std::string& cmd )
+inline std::pair<int, std::string> execute_program( const std::string& cmd )
 {
   char buffer[128];
   std::string result;
@@ -251,13 +251,13 @@ public:
    * @param argv
    * @return
    */
-  int init(int argc, char** argv) {
+  int init(int argc, char** argv,std::ostream& out) {
       po::store( po::command_line_parser( argc, argv ).options( opts ).run(), vm );
       po::notify( vm );
 
       if ( vm.count( "help" ) || ( vm.count( "command" ) && vm.count( "file" ) ) )
       {
-        std::cout << opts << std::endl;
+        out << opts << std::endl;
         return 1;
       }
 
@@ -276,8 +276,8 @@ public:
    * @brief run_line
    * @param line
    */
-  bool run_line(const std::string& line) {
-      execute_line( preprocess_alias( line ) );
+  bool run_line(const std::string& line, std::ostream& out, std::ostream& cerr) {
+      execute_line( preprocess_alias( line ),out,cerr);
       //rl.add_to_history( line ); //TODO manage
       return true;
   }
@@ -298,10 +298,11 @@ public:
   {
     po::store( po::command_line_parser( argc, argv ).options( opts ).run(), vm );
     po::notify( vm );
+    std::ostream& out = std::cout;
 
     if ( vm.count( "help" ) || ( vm.count( "command" ) && vm.count( "file" ) ) )
     {
-      std::cout << opts << std::endl;
+      out << opts << std::endl;
       return 1;
     }
 
@@ -329,8 +330,8 @@ public:
           batch_string += ( line + "; " );
           if ( line == "quit" )
           {
-            if ( vm.count( "echo" ) ) { std::cout << get_prefix() << "abc -c \"" + batch_string << "\"" << std::endl; }
-            std::cout << "abc" << ' ' << abc_opts << ' ' << batch_string << '\n';
+            if ( vm.count( "echo" ) ) { out << get_prefix() << "abc -c \"" + batch_string << "\"" << std::endl; }
+            out << "abc" << ' ' << abc_opts << ' ' << batch_string << '\n';
             execute_line( ( boost::format("abc %s-c \"%s\"") % abc_opts % batch_string ).str() );
             batch_string.clear();
             collect_commands = false;
@@ -345,8 +346,8 @@ public:
           }
           else
           {
-            if ( vm.count( "echo" ) ) { std::cout << get_prefix() << line << std::endl; }
-            if ( !execute_line( preprocess_alias( line ) ) )
+            if ( vm.count( "echo" ) ) { out << get_prefix() << line << std::endl; }
+            if ( !execute_line( preprocess_alias( line ),out) )
             {
               return 1;
             }
@@ -390,8 +391,10 @@ public:
   std::shared_ptr<environment> env;
 
 private:
-  bool execute_line( const std::string& line )
+  bool execute_line( const std::string& line, std::ostream& out, std::ostream& cerr)
   {
+    env->set_output(out);
+    env->set_cerr(cerr);
     /* ignore comments and empty lines */
     if ( line.empty() || line[0] == '#' ) { return false; }
 
@@ -404,7 +407,7 @@ private:
 
       for ( const auto& cline : lines )
       {
-        result = result && execute_line( preprocess_alias( cline ) );
+        result = result && execute_line( preprocess_alias( cline ),out,cerr);
       }
 
       return result;
@@ -416,11 +419,11 @@ private:
       const auto now = std::chrono::system_clock::now();
       const auto result = detail::execute_program( line.substr( 1u ) );
 
-      std::cout << result.second;
+      out << result.second;
 
       if ( !result.second.empty() && result.second.back() != '\n' )
       {
-        std::cout << '%' << std::endl;
+        out << '%' << std::endl;
       }
 
       if ( env->log )
@@ -439,7 +442,7 @@ private:
     {
       auto filename = line.substr( 1u );
       boost::trim( filename );
-      process_file( filename, vm.count( "echo" ) );
+      process_file( filename, vm.count( "echo" ));
       return true;
     }
 
@@ -458,7 +461,7 @@ private:
     if ( it != env->commands.end() )
     {
       const auto now = std::chrono::system_clock::now();
-      const auto result = it->second->run( vline );
+      const auto result = it->second->run( vline);
 
       if ( result && env->log )
       {
@@ -469,7 +472,7 @@ private:
     }
     else
     {
-      std::cout << "unknown command: " << vline.front() << std::endl;
+      out << "unknown command: " << vline.front() << std::endl;
       return false;
     }
   }
@@ -480,13 +483,14 @@ private:
    *
    * @return true, if program should exit after this call
    */
-  bool process_file( const std::string& filename, bool echo )
+  bool process_file( const std::string& filename, bool echo)
   {
+
     std::ifstream in( filename.c_str(), std::ifstream::in );
 
     if ( !in.good() )
     {
-      std::cout << "[e] file " << filename << " not found" << std::endl;
+      env->out() << "[e] file " << filename << " not found" << std::endl;
       return true;
     }
 
@@ -498,10 +502,10 @@ private:
 
       if ( echo )
       {
-        std::cout << get_prefix() << line << std::endl;
+        env->out() << get_prefix() << line << std::endl;
       }
 
-      execute_line( preprocess_alias( line ) );
+      execute_line( preprocess_alias( line ),env->out(),env->cerr());
 
       if ( env->quit )
       {

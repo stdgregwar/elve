@@ -2,8 +2,7 @@
 #include <cmath>
 #include <QDebug>
 
-SimpleLayout::SimpleLayout(QObject *parent) :
-    QObject(parent)
+SimpleLayout::SimpleLayout()
 {
 }
 

@@ -57,7 +57,7 @@ protected:
   {
     for ( auto& p : env->categories )
     {
-      std::cout << p.first << " commands:" << std::endl;
+      env->out() << p.first << " commands:" << std::endl;
 
       std::sort( p.second.begin(), p.second.end() );
 
@@ -65,25 +65,25 @@ protected:
       {
         for ( const auto& name : p.second )
         {
-          std::cout << boost::format( " %-17s : %s" ) % name % env->commands[name]->caption() << std::endl;
+          env->out() << boost::format( " %-17s : %s" ) % name % env->commands[name]->caption() << std::endl;
         }
-        std::cout << std::endl;
+        env->out() << std::endl;
       }
       else
       {
         auto counter = 0;
-        std::cout << " ";
+        env->out() << " ";
 
         for ( const auto& name : p.second )
         {
           if ( counter > 0 && ( counter % 4 == 0 ) )
           {
-            std::cout << std::endl << " ";
+            env->out() << std::endl << " ";
           }
-          std::cout << boost::format( "%-17s" ) % name;
+          env->out() << boost::format( "%-17s" ) % name;
           ++counter;
         }
-        std::cout << std::endl << std::endl;
+        env->out() << std::endl << std::endl;
       }
     }
 

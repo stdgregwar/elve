@@ -2,21 +2,23 @@
 #define COMMANDLINE_H
 
 #include <QObject>
-#include "alice/alice.hpp"
+
+#include "alice/allalice.h"
+#include "Singleton.h"
+
 #include <EGraph.h>
 #include <QString>
 
-class CommandLine// : public QObject
+class CommandLine : public QObject, public Singleton<CommandLine>
 {
-    //Q_OBJECT
+    friend class Singleton<CommandLine>;
+    Q_OBJECT
 public:
-    CommandLine& get();
-    bool run_command(const QString& cmd);
+
+    bool run_command(const QString& cmd, std::ostream& out, std::ostream &cerr);
     QStringList completion(const QString& base);
 private:
     CommandLine(); //Private constructor for singleton
-    static CommandLine* sInstance;
-
     alice::cli_main<SharedEGraph> mCli;
 };
 
