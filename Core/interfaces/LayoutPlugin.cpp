@@ -6,21 +6,6 @@
 
 using namespace std;
 
-/*void LayoutPlugin::setGraph(SharedGraph graph) {
-    size_t simticks = 500;
-    default_random_engine gen;
-    std::uniform_int_distribution<int> u(-1024,1024);
-    NodePositions randomPos;
-    for(const auto& p : graph->nodes()) {
-        float x = u(gen);
-        float y = u(gen);
-        randomPos.emplace(p.second.id(),QVector2D{x,y});
-    }
-
-    setGraph(graph,randomPos);
-    quickSim(simticks);
-}*/
-
 QVector2D LayoutPlugin::startPosition(const NodeID& id,QRectF rect) {
     static default_random_engine gen;
 

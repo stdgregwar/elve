@@ -1,21 +1,17 @@
-#ifndef LEVELLAYOUTPLUGIN_H
-#define LEVELLAYOUTPLUGIN_H
+#ifndef SIMPLELAYOUTPLUGIN_H
+#define SIMPLELAYOUTPLUGIN_H
 
-#include <QGenericPlugin>
 #include <LayoutPlugin.h>
-#include <System.h>
 
 class SimpleLayout : public LayoutPlugin
 {
-public:
-    SimpleLayout();
-    //virtual void setGraph(SharedGraph graph);
+    Q_OBJECT
+    Q_PLUGIN_METADATA(IID "ch.epfl.lap.simplelayout")
+    Q_INTERFACES(LayoutPlugin)
+
+    ELVE_LAYOUT(SimpleLayout,"Simple-Force","simple")
     virtual void setGraph(SharedGraph g) override;
     virtual void tick(float dt, bool fast) override;
-    virtual QString layoutName() override;
-private:
 };
-
-ELVE_EXPORT_LAYOUT(SimpleLayout, "Simple-Force","simple")
 
 #endif // LEVELLAYOUTPLUGIN_H

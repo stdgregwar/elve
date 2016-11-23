@@ -39,7 +39,7 @@ public:
     void ungroup(const NodeNames& names);
 
     void quickSim(unsigned ticks);
-    void setLayout(LayoutPlugin* l);
+    void setLayout(const SharedLayout &l);
     void reflect(System &sys, SharedGraph g);
 
     void drawBackground(QPainter *painter, const QRectF &rect) override;

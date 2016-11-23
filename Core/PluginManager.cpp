@@ -39,9 +39,9 @@ void _load(const QString& path, const QString& type, QList<T*>& toFill) {
     }
 }
 
-LayoutPlugin* PluginManager::getLayout(const QString& name) const
+SharedLayout PluginManager::getLayout(const QString& name) const
 {
-    for(LayoutPluginFactory* l : mLayouts) {
+    for(LayoutPlugin* l : mLayouts) {
         if(l->name() == name) {
             return l->create();
         }
@@ -49,7 +49,7 @@ LayoutPlugin* PluginManager::getLayout(const QString& name) const
     return nullptr; //TODO
 }
 
-LayoutPlugin* PluginManager::defaultLayout() const
+SharedLayout PluginManager::defaultLayout() const
 {
     return getLayout("Simple-Force");
 }

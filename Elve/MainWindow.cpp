@@ -48,10 +48,11 @@ MainWindow::MainWindow(QWidget *parent)
         connect(a,SIGNAL(triggered(GraphLoaderPlugin*)),this,SLOT(on_import_trigerred(GraphLoaderPlugin*)));
         ui.menuImport->addAction(a);
     }
+
     //setup layouts
     for(auto& l : pluginManager.layouts()) {
         LayoutLoadAction* a = new LayoutLoadAction(l,l->name(),this);
-        connect(a,SIGNAL(triggered(LayoutPluginFactory*)),this,SLOT(on_layout_trigerred(LayoutPluginFactory*)));
+        connect(a,SIGNAL(triggered(LayoutPlugin*)),this,SLOT(on_layout_trigerred(LayoutPlugin*)));
         ui.menuLayout->addAction(a);
     }
 
@@ -84,7 +85,7 @@ void MainWindow::on_import_trigerred(GraphLoaderPlugin* ld) {
     }
 }
 
-void MainWindow::on_layout_trigerred(LayoutPluginFactory* layout) {
+void MainWindow::on_layout_trigerred(LayoutPlugin* layout) {
     qDebug() << "Setting layout to " + layout->name();
     GraphWidget* vp = viewport();
     if(vp) {
@@ -120,7 +121,8 @@ void MainWindow::onFileOpen(const QString& filename){
         } else { //Assume it's json
             doc = QJsonDocument::fromJson(file.readAll());
         }
-        //mViewport->fromJson(doc.object());
+        SharedEGraph eg = EGraph::fromJSON(doc.object());
+        newWindowWithFile(eg,filename);
     } else {
         throw std::runtime_error("Couldn't open file " + filename.toStdString() + " for reading.");
     }

@@ -25,7 +25,7 @@ private:
 public slots:
     void onFileOpen(const QString& file);
     void on_import_trigerred(GraphLoaderPlugin* ld);
-    void on_layout_trigerred(LayoutPluginFactory* layout);
+    void on_layout_trigerred(LayoutPlugin *layout);
     void on_tab_change(QMdiSubWindow* tab);
 private slots:
     void on_actionOpen_triggered();

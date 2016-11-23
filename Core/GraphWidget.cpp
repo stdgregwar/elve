@@ -53,7 +53,7 @@ void GraphWidget::clear() {
 void GraphWidget::setGraph(SharedEGraph graph, unsigned quickTicks) {
     mGraph = graph;
     if(graph->layout()) {
-        graph->applyLayout();
+        //graph->applyLayout();
         reflect(graph->layout()->system(),graph->graph());
         quickSim(quickTicks);
     }
@@ -128,11 +128,11 @@ void GraphWidget::keyPressEvent(QKeyEvent *event) {
 }
 
 void GraphWidget::ungroup(const NodeNames& names) {
-    setGraph(mGraph->ungroup(names));
+    setGraph(mGraph->ungroup(names),0);
 }
 
 void GraphWidget::group(const NodeNames &names, const NodeID &groupName) {
-    setGraph(mGraph->group(names,groupName));
+    setGraph(mGraph->group(names,groupName),0);
 }
 
 void GraphWidget::tick(float dt, bool update)
@@ -161,7 +161,7 @@ void GraphWidget::setBehaviour(Behaviour* b) {
     mBehaviour = b;
 }
 
-void GraphWidget::setLayout(LayoutPlugin *l) {
+void GraphWidget::setLayout(const SharedLayout& l) {
     mGraph->setLayout(l);
     reflect(mGraph->layout()->system(),mGraph->graph());
 }
@@ -220,14 +220,13 @@ bool GraphWidget::BorderSelect::mouseReleaseEvent(QMouseEvent *event) {
     NodeNames names;
     for(QGraphicsItem* i : items) {
         NodeItem* n = dynamic_cast<NodeItem*>(i);
-
         if(n) {
-            //n->setBrush(QBrush(QColor(240,0,0)));
             names.insert(n->id());
         }
     }
-    gw.ungroup(names);
+    gw.group(names);
     gw.setBehaviour(new Behaviour(&gw));
+    //gw.mScene->removeItem(mRectangle);
     return true;
 }
 

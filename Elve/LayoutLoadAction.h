@@ -3,24 +3,24 @@
 
 #include <QAction>
 
-class LayoutPluginFactory;
+class LayoutPlugin;
 
 class LayoutLoadAction : public QAction
 {
     Q_OBJECT
 public:
-    LayoutLoadAction(LayoutPluginFactory* data, const QString& text,QObject* parent = nullptr) : QAction(text,parent),mData(data)
+    LayoutLoadAction(LayoutPlugin* data, const QString& text,QObject* parent = nullptr) : QAction(text,parent),mData(data)
     {
         connect(this,SIGNAL(triggered()),this,SLOT(onTriggered()));
     }
 signals:
-    void triggered(LayoutPluginFactory*);
+    void triggered(LayoutPlugin*);
 public slots:
     void onTriggered() {
         emit triggered(mData);
     }
 private:
-    LayoutPluginFactory* mData;
+    LayoutPlugin* mData;
 };
 
 #endif // LAYOUTLOADACTION_H

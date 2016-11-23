@@ -25,15 +25,15 @@ public:
     QJsonObject json() const;
     const NodePositions &positions() const;
     const SharedGraph& graph() const;
-    void setLayout(LayoutPlugin* l);
-    LayoutPlugin* layout();
+    void setLayout(const SharedLayout& l);
+    const SharedLayout& layout();
     void applyLayout(const NodePositions& p = NodePositions());
     ~EGraph();
 private:
     mutable bool mPosDirty;
     SharedGraph mGraph;
     mutable NodePositions mPositions; //Defining last saved node positions
-    LayoutPlugin* mLayout;
+    SharedLayout mLayout;
 };
 
 #endif // EGRAPH_H

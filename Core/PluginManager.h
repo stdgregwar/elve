@@ -10,7 +10,7 @@
 #include "Singleton.h"
 
 typedef QList<GraphLoaderPlugin*> Loaders;
-typedef QList<LayoutPluginFactory*> Layouts;
+typedef QList<LayoutPlugin*> Layouts;
 
 /**
  * @brief Class responsible for collecting and storing all the plugins present in the given folder
@@ -21,8 +21,8 @@ class PluginManager : public Singleton<PluginManager>
 public:
     const Loaders& loaders() const;
     const Layouts& layouts() const;
-    LayoutPlugin* getLayout(const QString& name) const;
-    LayoutPlugin* defaultLayout() const;
+    SharedLayout getLayout(const QString& name) const;
+    SharedLayout defaultLayout() const;
     void load(const QString& path);
 private:
     PluginManager();

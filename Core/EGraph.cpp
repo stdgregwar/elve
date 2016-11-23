@@ -11,9 +11,9 @@ using namespace std;
 EGraph::EGraph(const SharedGraph &g, const NodePositions &positions) :
     mGraph(g),
     mPositions(positions),
-    mLayout(nullptr),
     mPosDirty(false)
 {
+
 }
 
 SharedEGraph EGraph::fromJSON(const QJsonObject &obj)
@@ -32,7 +32,7 @@ SharedEGraph EGraph::fromJSON(const QJsonObject &obj)
                           std::forward_as_tuple(it.key().toStdString()),
                           std::forward_as_tuple(jpos.at(0).toDouble(),jpos.at(1).toDouble()));
     }
-    SharedEGraph eg =  std::make_shared<EGraph>(g,positions);
+    SharedEGraph eg = std::make_shared<EGraph>(g,positions);
     eg->setLayout(PluginManager::get().getLayout(layoutName));
     return eg;
 }
@@ -57,7 +57,7 @@ QJsonObject EGraph::json() const
         QJsonObject layout;
         QJsonObject  positions;
 
-        layout.insert("name",mLayout->layoutName());
+        layout.insert("name",mLayout->name());
 
         using pair_type = NodePositions::value_type;
         for(const pair_type& p : mLayout->system().positions()) {
@@ -107,6 +107,7 @@ void EGraph::toFile(const QString& filename) {
 
 SharedEGraph EGraph::group(const NodeNames& names, const NodeID &groupName) const
 {
+    mPosDirty = true;
     NodeID trueName = mGraph->uniqueID(groupName);
     NodePositions poss = positions();
 
@@ -117,11 +118,14 @@ SharedEGraph EGraph::group(const NodeNames& names, const NodeID &groupName) cons
     groupCenter /= names.size();
 
     poss[trueName] = groupCenter;
-    return std::make_shared<EGraph>(mGraph->group(names,trueName),poss);
+    SharedEGraph eg = std::make_shared<EGraph>(mGraph->group(names,trueName),poss);
+    eg->setLayout(mLayout->create());
+    return eg;
 }
 
 SharedEGraph EGraph::ungroup(const NodeNames & names) const
 {
+    mPosDirty = true;
     NodePositions poss = positions();
     SharedGraph g = mGraph;
     for(const NodeID& name : names) {
@@ -140,12 +144,13 @@ SharedEGraph EGraph::ungroup(const NodeNames & names) const
         }
         g = g->ungroup(name);
     }
-    return std::make_shared<EGraph>(g,poss);
+    SharedEGraph eg =std::make_shared<EGraph>(g,poss);
+    eg->setLayout(mLayout->create());
+    return eg;
 }
 
 EGraph::~EGraph()
 {
-    delete mLayout;
 }
 
 void EGraph::applyLayout(const NodePositions &p) {
@@ -158,8 +163,9 @@ const NodePositions& EGraph::positions() const
 {
     if(mPosDirty && mLayout) {
         mPositions = mLayout->system().positions();
-        mPosDirty = false;
+
     }
+    mPosDirty = false;
     return mPositions;
 }
 
@@ -168,19 +174,14 @@ const SharedGraph& EGraph::graph() const
     return mGraph;
 }
 
-void EGraph::setLayout(LayoutPlugin* l)
+void EGraph::setLayout(const SharedLayout &l)
 {
-    mPosDirty = true;
-    positions(); //Force update
-    if(mLayout) {
-        delete mLayout; //TODO checklifetime
-    }
+    //mPosDirty = true;
+    l->setGraph(mGraph,positions());
     mLayout = l;
-    mLayout->setGraph(mGraph,positions());
-    mPosDirty = true;
 }
 
-LayoutPlugin* EGraph::layout()
+const SharedLayout &EGraph::layout()
 {
     return mLayout;
 }
