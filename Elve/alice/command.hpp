@@ -177,7 +177,7 @@ public:
   {
     if ( _current < 0 )
     {
-      throw boost::str( boost::format( "[e] no current %s available" ) % _name );
+      throw std::runtime_error(boost::str( boost::format( "[e] no current %s available" ) % _name ));
     }
     return _data[_current];
   }

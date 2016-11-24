@@ -118,6 +118,18 @@ void GraphWidget::mouseMoveEvent(QMouseEvent *event)
     }
 }
 
+void GraphWidget::mouseDoubleClickEvent(QMouseEvent* event) { //TEMP ungroup feature
+    QList<QGraphicsItem*> items = mScene->items(mapToScene(event->pos()));
+    NodeNames names;
+    for(QGraphicsItem* i : items) {
+        NodeItem* n = dynamic_cast<NodeItem*>(i);
+        if(n) {
+            names.insert(n->id());
+        }
+    }
+    ungroup(names);
+}
+
 void GraphWidget::keyPressEvent(QKeyEvent *event) {
     QGraphicsView::keyPressEvent(event);
     if(event->key() == Qt::Key_Q) {

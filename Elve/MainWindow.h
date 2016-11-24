@@ -7,8 +7,9 @@
 #include "PluginManager.h"
 #include "QConsoleWidget.h"
 
-class MainWindow : public QMainWindow
+class MainWindow : public QMainWindow, public Singleton<MainWindow>
 {
+    friend class Singleton<MainWindow>;
     Q_OBJECT
 public:
     MainWindow(QWidget *parent = 0);

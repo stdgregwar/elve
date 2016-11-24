@@ -6,9 +6,13 @@ template<typename T>
 class Singleton
 {
 public:
+    Singleton(){
+        sInstance = reinterpret_cast<T*>(this);
+    }
+
     static T& get() {
         if(!sInstance) {
-            sInstance = new T();
+           new T();
         }
         return *sInstance;
     }

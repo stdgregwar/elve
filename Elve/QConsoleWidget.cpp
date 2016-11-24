@@ -51,7 +51,7 @@ void QConsoleWidget::OnChildStdOutWrite(QString szOutput)
 
 void QConsoleWidget::keyPressEvent(QKeyEvent *event)
 {
-    if(event->text().size()){
+    if(event->text().size() && textCursor().position() < fixedPosition){
         toBottom();
     }
 

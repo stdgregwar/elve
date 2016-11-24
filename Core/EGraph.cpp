@@ -82,7 +82,9 @@ SharedEGraph EGraph::fromFile(const QString& filename)
         } else { //Assume it's json
             doc = QJsonDocument::fromJson(file.readAll());
         }
-        return fromJSON(doc.object());
+        SharedEGraph eg = fromJSON(doc.object());
+        eg->graph()->setFilename(filename.toStdString());
+        return eg;
     } else {
         throw std::runtime_error("Couldn't open file " + filename.toStdString() + " for reading.");
     }
