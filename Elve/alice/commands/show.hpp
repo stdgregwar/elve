@@ -86,7 +86,7 @@ template<class... S>
 class show_command : public command
 {
 public:
-  show_command( const environment::ptr& env ) : command( env, "Shows current data structure in DOT viewer" )
+  show_command( const environment::ptr& env ) : command( env, "Shows current data structure graph viewer" )
   {
     opts.add_options()
       ( "dotname",  value( &dotname )->default_value( dotname ), "filename for the DOT file" )

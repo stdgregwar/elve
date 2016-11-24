@@ -10,8 +10,8 @@ namespace alice {
 template<>
 struct store_info<SharedEGraph>
 {
-    static constexpr const char* key         = "graphs";  /* internal key, must be unique for each store */
-    static constexpr const char* option      = "graph";   /* long flag for general commands, e.g., `store --aig` */
+    static constexpr const char* key         = "graph";  /* internal key, must be unique for each store */
+    static constexpr const char* option      = "gr";   /* long flag for general commands, e.g., `store --aig` */
     static constexpr const char* mnemonic    = "g";     /* short flag for general commands, e.g., `store -a` */
     static constexpr const char* name        = "Graph";   /* singular name for option descriptions */
     static constexpr const char* name_plural = "Graphs";  /* plural name for option descriptions */

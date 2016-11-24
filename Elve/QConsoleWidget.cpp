@@ -1,6 +1,7 @@
 #include "QConsoleWidget.h"
 #include "CommandLine.h"
 #include <sstream>
+#include <QScrollBar>
 
 #include <QKeyEvent>
 
@@ -50,6 +51,10 @@ void QConsoleWidget::OnChildStdOutWrite(QString szOutput)
 
 void QConsoleWidget::keyPressEvent(QKeyEvent *event)
 {
+    if(event->text().size()){
+        toBottom();
+    }
+
     bool accept;
     int key = event->key();
     if (key == Qt::Key_Backspace || event->key() == Qt::Key_Left) {
@@ -64,6 +69,7 @@ void QConsoleWidget::keyPressEvent(QKeyEvent *event)
         accept = false;
     } else {
         accept = textCursor().position() >= fixedPosition;
+
     }
 
     if (accept) {
@@ -81,8 +87,14 @@ void QConsoleWidget::run_command(const QString& cmd) {
     print_prompt();
 }
 
+void QConsoleWidget::toBottom() {
+    verticalScrollBar()->setValue(verticalScrollBar()->maximum());
+    moveCursor(QTextCursor::End);
+}
+
 void QConsoleWidget::print_prompt() {
     OnChildStdOutWrite("elve>");
+    toBottom();
 }
 
 void QConsoleWidget::print_error(const QString &error) {
