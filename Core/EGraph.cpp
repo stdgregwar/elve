@@ -138,8 +138,8 @@ SharedEGraph EGraph::ungroup(const NodeNames & names) const
             static default_random_engine gen;
             for(const NodesByID::value_type& p : ugped) {
                 if(!p.second.isInput() && !p.second.isOutput()) {
-                    std::uniform_real_distribution<qreal> x(-32,32);
-                    std::uniform_real_distribution<qreal> y(-32,32);
+                    std::uniform_real_distribution<qreal> x(-128,128);
+                    std::uniform_real_distribution<qreal> y(-128,128);
                     poss[p.first] = base + QVector2D(x(gen),y(gen));
                 }
             }
