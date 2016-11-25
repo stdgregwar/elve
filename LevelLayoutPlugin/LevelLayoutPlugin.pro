@@ -8,7 +8,7 @@ QT       += core gui widgets
 
 TARGET = LevelLayoutPlugin
 TEMPLATE = lib
-CONFIG += plugin
+CONFIG += plugin c++11
 
 DESTDIR = ../Elve/plugins/layouts
 

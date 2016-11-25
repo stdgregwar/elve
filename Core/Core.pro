@@ -13,6 +13,8 @@ TEMPLATE = lib
 INCLUDEPATH += $$PWD
 DEFINES += ELFE_LIBRARY
 
+CONFIG += c++11
+
 unix {
     target.path = /usr/lib
     INSTALLS += target
