@@ -22,9 +22,9 @@
  */
 
 /**
- * @file ps.hpp
+ * @file store.hpp
  *
- * @brief Print statistics
+ * @brief Store management
  *
  * @author Mathias Soeken
  * @author Heinz Riener
@@ -43,20 +43,29 @@ namespace alice
 {
 
 template<typename S>
-int ps_helper( const command& cmd, const environment::ptr& env )
+int show_helper( const command& cmd, const environment::ptr& env )
 {
-  constexpr auto option = store_info<S>::option;
-  constexpr auto name   = store_info<S>::name;
+  constexpr auto option      = store_info<S>::option;
+  constexpr auto name_plural = store_info<S>::name_plural;
+
+  const auto& store = env->store<S>();
 
   if ( cmd.is_set( option ) )
   {
-    if ( env->store<S>().current_index() == -1 )
+    if ( store.empty() )
     {
-      std::cout << "[w] no " << name << " in store" << std::endl;
+      env->out() << boost::format( "[i] no %s in store" ) % name_plural << std::endl;
     }
     else
     {
-      print_store_entry_statistics<S>( std::cout, env->store<S>().current() );
+      env->out() << boost::format( "[i] %s in store:" ) % name_plural << std::endl;
+      auto index = 0u;
+      for ( const auto& element : store.data() )
+      {
+        env->out() << boost::format( "  %c %2d: " ) % ( store.current_index() == index ? '*' : ' ' ) % index;
+        env->out() << store_entry_to_string<S>( element ) << std::endl;
+        ++index;
+      }
     }
   }
 
@@ -64,37 +73,29 @@ int ps_helper( const command& cmd, const environment::ptr& env )
 }
 
 template<typename S>
-int ps_log_helper( const command& cmd, const environment::ptr& env, command::log_opt_t& ret )
+int clear_helper( const command& cmd, const environment::ptr& env )
 {
-  if ( ret != boost::none )
-  {
-    return 0;
-  }
-
   constexpr auto option = store_info<S>::option;
 
   if ( cmd.is_set( option ) )
   {
-    if ( env->store<S>().current_index() == -1 )
-    {
-      ret = boost::none;
-    }
-    else
-    {
-      ret = log_store_entry_statistics<S>( env->store<S>().current() );
-    }
+    env->store<S>().clear();
   }
-
   return 0;
 }
 
 template<class... S>
-class ps_command : public command
+class store_command : public command
 {
 public:
-  ps_command( const environment::ptr& env )
-    : command( env, "Print statistics" )
+  store_command( const environment::ptr& env )
+    : command( env, "Store management" )
   {
+    opts.add_options()
+      ( "show",  "show contents" )
+      ( "clear", "clear contents" )
+      ;
+
     [](...){}( add_option_helper<S>( opts )... );
   }
 
@@ -102,23 +103,23 @@ protected:
   rules_t validity_rules() const
   {
     return {
+      {[this]() { return static_cast<unsigned>( is_set( "show" ) ) + static_cast<unsigned>( is_set( "clear" ) ) <= 1u; }, "only one operation can be specified" },
       {[this]() { return any_true_helper( { is_set( store_info<S>::option )... } ); }, "no store has been specified" }
     };
   }
 
   bool execute()
   {
-    [](...){}( ps_helper<S>( *this, env )... );
+    if ( is_set( "show" ) || !is_set( "clear" ) )
+    {
+      [](...){}( show_helper<S>( *this, env )... );
+    }
+    else if ( is_set( "clear" ) )
+    {
+      [](...){}( clear_helper<S>( *this, env )... );
+    }
 
     return true;
-  }
-
-public:
-  log_opt_t log() const
-  {
-    log_opt_t ret;
-    [](...){}( ps_log_helper<S>( *this, env, ret )... );
-    return ret;
   }
 };
 

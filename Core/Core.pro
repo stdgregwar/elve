@@ -13,6 +13,8 @@ TEMPLATE = lib
 INCLUDEPATH += $$PWD
 DEFINES += ELFE_LIBRARY
 
+CONFIG += c++11
+
 unix {
     target.path = /usr/lib
     INSTALLS += target
@@ -24,7 +26,6 @@ SOURCES +=\
     Damp.cpp \
     EdgeItem.cpp \
     Graph.cpp \
-    GraphWidget.cpp \
     Gravity.cpp \
     LayoutPolicy.cpp \
     Movable.cpp \
@@ -38,10 +39,14 @@ SOURCES +=\
     interfaces/LayoutPlugin.cpp \
     Point.cpp \
     QuadTree.cpp \
-    QuadTreeNode.cpp
+    QuadTreeNode.cpp \
+    EGraph.cpp \
+    PluginManager.cpp \
+    GraphWidget.cpp \
+    interfaces/LayoutPluginFactory.cpp
 
 RESOURCES += \
-    resources.qrc
+    coreresources.qrc
 
 FORMS +=
 
@@ -53,7 +58,6 @@ HEADERS += \
     Damp.h \
     EdgeItem.h \
     Graph.h \
-    GraphWidget.h \
     Gravity.h \
     LayoutPolicy.h \
     Movable.h \
@@ -68,4 +72,9 @@ HEADERS += \
     interfaces/GraphLoaderPlugin.h \
     Point.h \
     QuadTree.h \
-    QuadTreeNode.h
+    QuadTreeNode.h \
+    EGraph.h \
+    PluginManager.h \
+    GraphWidget.h \
+    Singleton.h \
+    interfaces/LayoutPluginFactory.h

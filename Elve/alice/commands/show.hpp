@@ -65,7 +65,7 @@ int show_helper( bool& result, command& cmd, const environment::ptr& env, show_c
 
   if ( cmd.is_set( option ) )
   {
-    result = boost::any_cast<std::shared_ptr<show_store_entry<S>>>( show_commands[option] )->operator()( env->store<S>().current(), dotname, cmd );
+    result = boost::any_cast<std::shared_ptr<show_store_entry<S>>>(show_commands[option])->operator()( env->store<S>().current(), dotname, cmd, env->out());
   }
   return 0;
 }
@@ -86,7 +86,7 @@ template<class... S>
 class show_command : public command
 {
 public:
-  show_command( const environment::ptr& env ) : command( env, "Shows current data structure in DOT viewer" )
+  show_command( const environment::ptr& env ) : command( env, "Shows current data structure graph viewer" )
   {
     opts.add_options()
       ( "dotname",  value( &dotname )->default_value( dotname ), "filename for the DOT file" )

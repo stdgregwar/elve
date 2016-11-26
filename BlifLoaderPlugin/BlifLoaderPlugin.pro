@@ -8,9 +8,9 @@ QT       += core gui
 
 TARGET = BlifLoaderPlugin
 TEMPLATE = lib
-CONFIG += plugin
+CONFIG += plugin c++11
 
-DESTDIR = ../Elfe/plugins/loaders
+DESTDIR = ../Elve/plugins/loaders
 
 SOURCES += BlifLoader.cpp
 

@@ -20,7 +20,7 @@ class Graph : public std::enable_shared_from_this<Graph>
 public:
     Graph();
     Graph(const NodeDescriptions& descrs, const AdjacencyList& edges);
-    void setFilename(const QString& filename);
+    void setFilename(const std::string& filename);
     Node *addNode(const Node::Description& des);
     void addEdge(const NodeID& from, const NodeID& to);
     const NodesByID& nodes() const;
@@ -38,11 +38,12 @@ public:
     AdjacencyList adjacencyList() const;
     QJsonObject json() const;
     static SharedGraph fromJson(const QJsonObject &obj);
+    const std::string& filename() const;
 private:
     NodePtrs mInputs;
     NodePtrs mOutputs;
     NodesByID mNodes;
-    QString mFilename;
+    std::string mFilename;
 };
 
 #endif // GRAPH_H

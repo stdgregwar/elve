@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>skin/checkbox.png</file>
+        <file>skin/darkorange.stylesheet</file>
+        <file>skin/down_arrow.png</file>
+        <file>skin/handle.png</file>
+    </qresource>
+</RCC>

@@ -8,24 +8,30 @@ QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = Elfe
+TARGET = Elve
 TEMPLATE = app
 
+CONFIG += c++11
 
 SOURCES += main.cpp \
     MainWindow.cpp \
-    PluginManager.cpp
+    QConsoleWidget.cpp \
+    Redirect.cpp \
+    uis/Tab.cpp \
+    CommandLine.cpp
 
 win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../Core/release/ -lCore
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../Core/debug/ -lCore
 else:unix: LIBS += -L$$OUT_PWD/../Core/ -lCore
+
+#boost
+LIBS += -lboost_system -lboost_program_options -lboost_regex -lboost_filesystem
 
 INCLUDEPATH += $$PWD/../Core
 DEPENDPATH += $$PWD/../Core
 
 HEADERS += \
     MainWindow.h \
-    PluginManager.h \
     FileLoadAction.h \
     LayoutLoadAction.h \
     alice/commands/alias.hpp \
@@ -43,7 +49,16 @@ HEADERS += \
     alice/alice.hpp \
     alice/command.hpp \
     alice/readline.hpp \
-    alice/rules.hpp
+    alice/rules.hpp \
+    QConsoleWidget.h \
+    Redirect.h \
+    uis/Tab.h \
+    CommandLine.h \
+    alice/allalice.h
 
 FORMS += \
-    uis/mainwindow_test.ui
+    uis/mainwindow_test.ui \
+    uis/tab.ui
+
+RESOURCES += \
+    elveresources.qrc

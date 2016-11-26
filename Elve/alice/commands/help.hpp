@@ -22,9 +22,9 @@
  */
 
 /**
- * @file rules.hpp
+ * @file help.hpp
  *
- * @brief Some pre-defined rules
+ * @brief Shows help
  *
  * @author Mathias Soeken
  * @since  2.3
@@ -32,9 +32,9 @@
 
 #pragma once
 
-#include <string>
+#include <algorithm>
+#include <iostream>
 
-#include <boost/filesystem.hpp>
 #include <boost/format.hpp>
 
 #include <alice/command.hpp>
@@ -42,27 +42,54 @@
 namespace alice
 {
 
-inline command::rule_t file_exists( const std::string& filename, const std::string& argname )
+class help_command : public command
 {
-  return { [filename, argname]() { return boost::filesystem::exists( filename ); }, argname + " does not exist" };
-}
+public:
+  help_command( const environment::ptr& env )  : command( env, "Shows help" )
+  {
+    opts.add_options()
+      ( "detailed,d", "show command descriptions" )
+      ;
+  }
 
-inline command::rule_t file_exists_if_set( const command& cmd, const std::string& filename, const std::string& argname )
-{
-  return { [&cmd, filename, argname]() { return !cmd.is_set( argname ) || boost::filesystem::exists( filename ); }, argname + " does not exist" };
-}
+protected:
+  bool execute()
+  {
+    for ( auto& p : env->categories )
+    {
+      env->out() << p.first << " commands:" << std::endl;
 
-inline command::rule_t has_addon( const std::string& addon_name )
-{
-  return { []() { return false; }, addon_name + " is not enabled" };
-}
+      std::sort( p.second.begin(), p.second.end() );
 
-template<typename S>
-command::rule_t has_store_element( const environment::ptr& env )
-{
-  auto constexpr name = store_info<S>::name;
-  return { [&]() { return env->store<S>().current_index() >= 0; }, ( boost::format( "no current %s available" ) % name ).str() };
-}
+      if ( is_set( "detailed" ) )
+      {
+        for ( const auto& name : p.second )
+        {
+          env->out() << boost::format( " %-17s : %s" ) % name % env->commands[name]->caption() << std::endl;
+        }
+        env->out() << std::endl;
+      }
+      else
+      {
+        auto counter = 0;
+        env->out() << " ";
+
+        for ( const auto& name : p.second )
+        {
+          if ( counter > 0 && ( counter % 4 == 0 ) )
+          {
+            env->out() << std::endl << " ";
+          }
+          env->out() << boost::format( "%-17s" ) % name;
+          ++counter;
+        }
+        env->out() << std::endl << std::endl;
+      }
+    }
+
+    return true;
+  }
+};
 
 }
 

@@ -1,10 +1,6 @@
 #include "LevelLayout.h"
 #include <cmath>
 
-LevelLayout::LevelLayout(QObject *parent) :
-    QObject(parent)
-{
-}
 
 void LevelLayout::setGraph(SharedGraph graph)
 {
@@ -60,12 +56,3 @@ void LevelLayout::tick(float dt, bool fast)
 {
     LayoutPlugin::tick(dt,fast);
 }
-
-QString LevelLayout::layoutName()
-{
-    return "Level-Force";
-}
-
-#if QT_VERSION < 0x050000
-Q_EXPORT_PLUGIN2(LevelLayoutPlugin, LevelLayoutPlugin)
-#endif // QT_VERSION < 0x050000

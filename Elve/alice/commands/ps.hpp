@@ -22,18 +22,18 @@
  */
 
 /**
- * @file help.hpp
+ * @file ps.hpp
  *
- * @brief Shows help
+ * @brief Print statistics
  *
  * @author Mathias Soeken
+ * @author Heinz Riener
  * @since  2.3
  */
 
 #pragma once
 
-#include <algorithm>
-#include <iostream>
+#include <vector>
 
 #include <boost/format.hpp>
 
@@ -42,52 +42,83 @@
 namespace alice
 {
 
-class help_command : public command
+template<typename S>
+int ps_helper( const command& cmd, const environment::ptr& env )
+{
+  constexpr auto option = store_info<S>::option;
+  constexpr auto name   = store_info<S>::name;
+
+  if ( cmd.is_set( option ) )
+  {
+    if ( env->store<S>().current_index() == -1 )
+    {
+      env->out() << "[w] no " << name << " in store" << std::endl;
+    }
+    else
+    {
+      print_store_entry_statistics<S>( env->out(), env->store<S>().current() );
+    }
+  }
+
+  return 0;
+}
+
+template<typename S>
+int ps_log_helper( const command& cmd, const environment::ptr& env, command::log_opt_t& ret )
+{
+  if ( ret != boost::none )
+  {
+    return 0;
+  }
+
+  constexpr auto option = store_info<S>::option;
+
+  if ( cmd.is_set( option ) )
+  {
+    if ( env->store<S>().current_index() == -1 )
+    {
+      ret = boost::none;
+    }
+    else
+    {
+      ret = log_store_entry_statistics<S>( env->store<S>().current() );
+    }
+  }
+
+  return 0;
+}
+
+template<class... S>
+class ps_command : public command
 {
 public:
-  help_command( const environment::ptr& env )  : command( env, "Shows help" )
+  ps_command( const environment::ptr& env )
+    : command( env, "Print statistics" )
   {
-    opts.add_options()
-      ( "detailed,d", "show command descriptions" )
-      ;
+    [](...){}( add_option_helper<S>( opts )... );
   }
 
 protected:
+  rules_t validity_rules() const
+  {
+    return {
+      {[this]() { return any_true_helper( { is_set( store_info<S>::option )... } ); }, "no store has been specified" }
+    };
+  }
+
   bool execute()
   {
-    for ( auto& p : env->categories )
-    {
-      std::cout << p.first << " commands:" << std::endl;
-
-      std::sort( p.second.begin(), p.second.end() );
-
-      if ( is_set( "detailed" ) )
-      {
-        for ( const auto& name : p.second )
-        {
-          std::cout << boost::format( " %-17s : %s" ) % name % env->commands[name]->caption() << std::endl;
-        }
-        std::cout << std::endl;
-      }
-      else
-      {
-        auto counter = 0;
-        std::cout << " ";
-
-        for ( const auto& name : p.second )
-        {
-          if ( counter > 0 && ( counter % 4 == 0 ) )
-          {
-            std::cout << std::endl << " ";
-          }
-          std::cout << boost::format( "%-17s" ) % name;
-          ++counter;
-        }
-        std::cout << std::endl << std::endl;
-      }
-    }
+    [](...){}( ps_helper<S>( *this, env )... );
 
     return true;
+  }
+
+public:
+  log_opt_t log() const
+  {
+    log_opt_t ret;
+    [](...){}( ps_log_helper<S>( *this, env, ret )... );
+    return ret;
   }
 };
 

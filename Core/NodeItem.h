@@ -12,6 +12,7 @@ public:
     NodeItem(const NodeID& id,const Node::Type& type,QGraphicsItem* parent = nullptr);
     void onStateChange(const QVector2D& pos, const QVector2D& speed) override;
     void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
+    void mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event) override;
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *event) override;
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event) override;
     const NodeID& id() const {return mId;}

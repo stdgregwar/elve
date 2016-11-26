@@ -69,7 +69,7 @@ int add_combination_helper( po::options_description& opts )
 };
 
 template<typename D, class S>
-int convert_helper_inner( const environment::ptr& env, const command& cmd )
+int convert_helper_inner( const environment::ptr& env, const command& cmd)
 {
   if ( store_can_convert<S, D>() )
   {
@@ -83,7 +83,7 @@ int convert_helper_inner( const environment::ptr& env, const command& cmd )
 
       if ( source_store.current_index() == -1 )
       {
-        std::cout << boost::format( "[w] there is no %s to convert from" ) % source_name << std::endl;
+        env->out() << boost::format( "[w] there is no %s to convert from" ) % source_name << std::endl;
         return 0;
       }
 

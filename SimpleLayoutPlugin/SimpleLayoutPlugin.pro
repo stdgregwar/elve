@@ -8,9 +8,9 @@ QT       += core gui widgets
 
 TARGET = SimpleLayoutPlugin
 TEMPLATE = lib
-CONFIG += plugin
+CONFIG += plugin c++11
 
-DESTDIR = ../Elfe/plugins/layouts
+DESTDIR = ../Elve/plugins/layouts
 
 INCLUDEPATH+= ../Core/interfaces
 INCLUDEPATH += ../Core

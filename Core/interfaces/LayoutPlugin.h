@@ -10,26 +10,43 @@
 #include <NodeItem.h>
 #include <System.h>
 
-
+#include "LayoutPluginFactory.h"
 
 #define LayoutPlugin_iid "ch.epfl.lap.elfe.LayoutPlugin"
 
-class LayoutPlugin
+class LayoutPlugin;
+
+typedef std::shared_ptr<LayoutPlugin> SharedLayout;
+
+class LayoutPlugin : public QObject
 {
+    Q_OBJECT
 public:
+    LayoutPlugin(){}
     void clear();
     virtual void setGraph(SharedGraph graph) = 0;
     QVector2D startPosition(const NodeID& id, QRectF rect = QRectF(0,0,1024,1024));
     void setGraph(SharedGraph g,const NodePositions& positions);
     virtual void quickSim(size_t ticks);
     virtual void tick(float dt, bool fast);
-    virtual QString layoutName() = 0;
+    virtual SharedLayout create() = 0;
+    virtual QString name() = 0;
+    virtual QString cliName() = 0;
     System& system();
+    const System& system() const;
+    virtual ~LayoutPlugin(){}
 private:
     System mSystem;
     NodePositions mStartPositions;
 };
 
+
 Q_DECLARE_INTERFACE(LayoutPlugin,LayoutPlugin_iid)
+
+#define ELVE_LAYOUT(Layout,full_name,cli_name)\
+ public:\
+    inline SharedLayout create() override {return std::make_shared<Layout>();}\
+    inline QString name() override {return (full_name);}\
+    inline QString cliName() override {return (cli_name);}
 
 #endif // LAYOUTPLUGIN_H

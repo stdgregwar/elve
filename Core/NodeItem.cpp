@@ -43,6 +43,11 @@ void NodeItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
     }
 }
 
+void NodeItem::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
+{
+
+}
+
 void NodeItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
     if(event->button() == Qt::MouseButton::LeftButton) {

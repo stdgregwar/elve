@@ -3,9 +3,9 @@
 #include <QMessageBox>
 #include <QDebug>
 
-PluginManager::PluginManager(const QString &path)
+PluginManager::PluginManager()
 {
-    loadPlugins(path);
+    //loadPlugins(".");
 }
 
 const Loaders &PluginManager::loaders() const
@@ -18,7 +18,7 @@ const Layouts& PluginManager::layouts() const {
 }
 
 template <class T>
-void load(const QString& path, const QString& type, QList<T*>& toFill) {
+void _load(const QString& path, const QString& type, QList<T*>& toFill) {
     QDir dir(path);
     for(const QFileInfo& info : dir.entryInfoList(QDir::Files)) {
         qDebug() << "Trying to load" << info.baseName();
@@ -39,15 +39,25 @@ void load(const QString& path, const QString& type, QList<T*>& toFill) {
     }
 }
 
-LayoutPlugin* PluginManager::getLayout(const QString& name) const
+SharedLayout PluginManager::getLayout(const QString& name) const
 {
+    for(LayoutPlugin* l : mLayouts) {
+        if(l->name() == name) {
+            return l->create();
+        }
+    }
     return nullptr; //TODO
 }
 
-void PluginManager::loadPlugins(const QString& path)
+SharedLayout PluginManager::defaultLayout() const
+{
+    return getLayout("Simple-Force");
+}
+
+void PluginManager::load(const QString& path)
 {
     //For loaders
-    load(path+"/loaders","Graph Loader",mLoaders);
+    _load(path+"/loaders","Graph Loader",mLoaders);
     //For layouts
-    load(path+"/layouts","Layout",mLayouts);
+    _load(path+"/layouts","Layout",mLayouts);
 }
