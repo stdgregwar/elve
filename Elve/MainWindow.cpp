@@ -210,3 +210,10 @@ void MainWindow::on_actionSave_triggered()
         QMessageBox::information(this,"Mhhh...","There is no current graph to save.");
     }
 }
+
+void MainWindow::on_actionFit_triggered()
+{
+    if(viewport()) {
+        viewport()->fit();
+    }
+}

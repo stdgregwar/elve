@@ -36,6 +36,10 @@ GraphWidget::GraphWidget(QWidget* parent, QString filename) : QGraphicsView(pare
     mEdgesPath->setPen(p);
 }
 
+void GraphWidget::fit() {
+    fitInView(mScene->itemsBoundingRect(),Qt::KeepAspectRatio);
+}
+
 void GraphWidget::init()
 {
 }
