@@ -77,7 +77,7 @@ SharedEGraph EGraph::fromFile(const QString& filename)
     QFile file(filename);
     if(file.open(QFile::ReadOnly)) {
         QJsonDocument doc;
-        if(ext.toLower() == "elfe") {
+        if(ext.toLower() == "elve") {
             doc = QJsonDocument::fromBinaryData(file.readAll());
         } else { //Assume it's json
             doc = QJsonDocument::fromJson(file.readAll());
@@ -96,7 +96,7 @@ void EGraph::toFile(const QString& filename) {
 
     QFile file(filename);
     if(file.open(QFile::WriteOnly)) {
-        if(suffix == "elfe") {
+        if(suffix == "elve") {
             file.write(doc.toBinaryData());
         } else {
             file.write(doc.toJson());

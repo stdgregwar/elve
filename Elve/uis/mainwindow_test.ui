@@ -65,7 +65,7 @@
    </property>
    <widget class="QMenu" name="menuFile">
     <property name="title">
-     <string>File</string>
+     <string>&amp;File</string>
     </property>
     <widget class="QMenu" name="menuImport">
      <property name="title">
@@ -79,12 +79,12 @@
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
-     <string>Help</string>
+     <string>&amp;Help</string>
     </property>
    </widget>
    <widget class="QMenu" name="menuSelect">
     <property name="title">
-     <string>Select</string>
+     <string>&amp;Select</string>
     </property>
     <addaction name="actionBorder"/>
    </widget>
@@ -100,9 +100,9 @@
     <addaction name="actionFit"/>
    </widget>
    <addaction name="menuFile"/>
+   <addaction name="menuView"/>
    <addaction name="menuSelect"/>
    <addaction name="menuLayout"/>
-   <addaction name="menuView"/>
    <addaction name="menuHelp"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
@@ -116,10 +116,10 @@
   </action>
   <action name="actionBorder">
    <property name="text">
-    <string>&amp;Border</string>
+    <string>&amp;Cluster</string>
    </property>
    <property name="shortcut">
-    <string>B</string>
+    <string>C</string>
    </property>
   </action>
   <action name="actionQuit">
@@ -143,7 +143,7 @@
     <string>Fit</string>
    </property>
    <property name="shortcut">
-    <string>Shift+C</string>
+    <string>Ctrl+0</string>
    </property>
   </action>
  </widget>

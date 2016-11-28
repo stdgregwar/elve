@@ -15,7 +15,7 @@ public:
     BlifLoader(QObject *parent = 0);
     SharedGraph load(const QString &filepath) override;
     QString fileFilter() override {
-        return tr("Blif Files (*.blif)");
+        return tr("BLIF Files (*.blif)");
     }
     QString formatName() override {
         return tr("BLIF");

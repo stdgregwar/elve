@@ -96,7 +96,7 @@ void MainWindow::on_layout_trigerred(LayoutPlugin* layout) {
 void MainWindow::on_actionOpen_triggered()
 {
     QFileDialog dialog(this,"Save visualization");
-    dialog.setNameFilters({"ELFE files (*.json *.elfe)"});
+    dialog.setNameFilters({"ELVE files (*.json *.elve)"});
     dialog.setAcceptMode(QFileDialog::AcceptOpen);
     dialog.setFileMode(QFileDialog::ExistingFile);
     if(dialog.exec()) {
@@ -116,7 +116,7 @@ void MainWindow::onFileOpen(const QString& filename){
     QFile file(filename);
     if(file.open(QFile::ReadOnly)) {
         QJsonDocument doc;
-        if(ext.toLower() == "elfe") {
+        if(ext.toLower() == "elve") {
             doc = QJsonDocument::fromBinaryData(file.readAll());
         } else { //Assume it's json
             doc = QJsonDocument::fromJson(file.readAll());
@@ -189,7 +189,7 @@ void MainWindow::on_actionSave_triggered()
     const SharedEGraph graph = viewport()->graph();
     if(graph) {
         QFileDialog dialog(this,"Save visualization");
-        dialog.setNameFilters({"ELFE json (*.json)","ELFE bin (*.elfe)"});
+        dialog.setNameFilters({"ELVE json (*.json)","ELVE bin (*.elve)"});
         dialog.setAcceptMode(QFileDialog::AcceptSave);
         dialog.setFileMode(QFileDialog::AnyFile);
         dialog.exec();
