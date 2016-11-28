@@ -12,6 +12,7 @@ class Node;
 typedef std::shared_ptr<Node> SharedNode;
 typedef std::weak_ptr<Node> WeakNode;
 typedef std::string NodeID;
+typedef std::vector<Node*> Nodes;
 typedef unsigned Index;
 typedef long NodeLevel;
 
@@ -43,8 +44,8 @@ public:
     };
 
 
-    typedef std::vector<Node*> Children;
-    typedef std::vector<Node*> Ancestors;
+    typedef Nodes Children;
+    typedef Nodes Ancestors;
 
     Node(const NodeID& id, Type type, Index ioi = 0);
     Node(const Description& desc);

@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <QDebug>
 #include <QJsonArray>
+#include "utils.h"
 
 using namespace std;
 
@@ -112,12 +113,14 @@ SharedGraph Graph::group(const NodeNames &toGroup, const NodeID &groupID) {
         return shared_from_this();
     }
 
+    Node::Type t;
+    Index i;
+
     NodeDescriptions clusteredNodes; clusteredNodes.reserve(toGroup.size());
     AdjacencyList clusteredAdj; clusteredAdj.reserve(clusteredNodes.size()*2);
 
     NodeDescriptions newNodes;
     newNodes.reserve(mNodes.size()-toGroup.size()+1); //Reserve right number of nodes
-    newNodes.emplace(groupID,Node::Description(groupID,Node::Type::CLUSTER));
 
     AdjacencyList newAdj;
     newAdj.reserve(newNodes.size()*2); //Reserve average number of nodes
@@ -129,6 +132,8 @@ SharedGraph Graph::group(const NodeNames &toGroup, const NodeID &groupID) {
         const NodeID& nid = p.first;
         const Node& n = p.second;
         if(toGroup.count(nid)) {
+            t = n.type();
+            i = n.IOIndex();
             clusteredNodes.emplace(n.id(),n);
             for(const Node* pan : n.ancestors()) {
                 const Node& an = *pan;
@@ -160,6 +165,8 @@ SharedGraph Graph::group(const NodeNames &toGroup, const NodeID &groupID) {
             }
         }
     }
+
+    newNodes.emplace(groupID,Node::Description(groupID,t == Node::NODE ? Node::CLUSTER : t,QJsonObject(),i));
     newNodes.at(groupID).graph = make_shared<Graph>(clusteredNodes,clusteredAdj);
     return make_shared<Graph>(newNodes,newAdj);
 }
@@ -180,6 +187,22 @@ size_t Graph::inputCount() const
 size_t Graph::outputCount() const
 {
     return mOutputs.size();
+}
+
+size_t Graph::maxInputIndex() const
+{
+    return (*std::max_element(mInputs.begin(),mInputs.end(),
+        [](const Node* a,const Node* b) {
+            return a->IOIndex() < b->IOIndex();
+    }))->IOIndex();
+}
+
+size_t Graph::maxOutputIndex() const
+{
+    return (*std::max_element(mOutputs.begin(),mOutputs.end(),
+        [](const Node* a,const Node* b) {
+            return a->IOIndex() < b->IOIndex();
+    }))->IOIndex();
 }
 
 QJsonObject Graph::json() const

@@ -77,4 +77,5 @@ HEADERS += \
     PluginManager.h \
     GraphWidget.h \
     Singleton.h \
-    interfaces/LayoutPluginFactory.h
+    interfaces/LayoutPluginFactory.h \
+    utils.h

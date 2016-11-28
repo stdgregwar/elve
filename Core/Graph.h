@@ -32,6 +32,9 @@ public:
     NodeLevel highestLevel() const;
     size_t inputCount() const;
     size_t outputCount() const;
+    size_t maxInputIndex() const;
+    size_t maxOutputIndex() const;
+
     const NodePtrs& inputs();
     const NodePtrs& outputs();
     NodeDescriptions descriptions() const;

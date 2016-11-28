@@ -81,7 +81,6 @@ void GraphWidget::drawBackground(QPainter *painter, const QRectF &rect){
     if(mGraph->layout()) {
         //mLayout->system().debug(painter);
     }
-
 }
 
 void GraphWidget::wheelEvent(QWheelEvent *event)
@@ -148,7 +147,27 @@ void GraphWidget::ungroup(const NodeNames& names) {
 }
 
 void GraphWidget::group(const NodeNames &names, const NodeID &groupName) {
-    setGraph(mGraph->group(names,groupName),0);
+    NodeNames inputs;
+    NodeNames nonio;
+    NodeNames outputs;
+    for(const NodeID& id : names) {
+        const Node& nd = mGraph->graph()->nodes().at(id);
+        switch(nd.type()) {
+        case Node::INPUT:
+            inputs.insert(id);
+            break;
+        case Node::OUTPUT:
+            outputs.insert(id);
+            break;
+        default:
+            nonio.insert(id);
+            break;
+        }
+    }
+    SharedEGraph eg = mGraph->group(nonio,groupName)
+            ->group(inputs,groupName)
+            ->group(outputs,groupName);
+    setGraph(eg,0);
 }
 
 void GraphWidget::tick(float dt, bool update)
@@ -240,6 +259,7 @@ bool GraphWidget::BorderSelect::mouseReleaseEvent(QMouseEvent *event) {
             names.insert(n->id());
         }
     }
+
     gw.group(names);
     gw.setBehaviour(new Behaviour(&gw));
     //gw.mScene->removeItem(mRectangle);

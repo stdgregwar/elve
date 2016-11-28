@@ -14,8 +14,8 @@ void LevelLayout::setGraph(SharedGraph graph)
     qreal inputHeight = totHeight/2;
     qreal outputHeight = -totHeight/2;
 
-    qreal ioFactor = (qreal)(graph->outputCount()) / graph->inputCount();
-    qreal ioUnit = std::max(totHeight/graph->outputCount(),128.0);
+    qreal ioFactor = (qreal)(graph->maxOutputIndex()) / graph->maxInputIndex();
+    qreal ioUnit = std::max(totHeight/graph->maxOutputIndex(),128.0);
 
     for(const auto& p : graph->nodes()) {
         QVector2D pos = startPosition(p.first);
