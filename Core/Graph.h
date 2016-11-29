@@ -14,7 +14,6 @@ typedef std::unordered_map<NodeID,Node::Description> NodeDescriptions;
 typedef std::pair<NodeID,NodeID> Edge;
 typedef std::vector<Edge> AdjacencyList;
 
-
 class Graph : public std::enable_shared_from_this<Graph>
 {
 public:

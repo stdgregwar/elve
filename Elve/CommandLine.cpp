@@ -87,7 +87,6 @@ struct show_store_entry<SharedEGraph>
 
 }
 
-
 //Show command
 
 

@@ -244,7 +244,7 @@ void GraphWidget::BorderSelect::onStart() {
 
 bool GraphWidget::BorderSelect::mousePressEvent(QMouseEvent *event) {
     gw.mScene->removeItem(mCross);
-    delete mCross;
+    //delete mCross;
     mCross = nullptr;
     mRectangle->setPos(gw.mapToScene(event->pos()));
     return true;
@@ -288,7 +288,7 @@ const SharedEGraph& GraphWidget::graph() const
 void GraphWidget::BorderSelect::onEnd() {
     if(mCross) {
         gw.mScene->removeItem(mCross);
-        delete mCross;
+        //delete mCross;
     }
     //gw.mScene->removeItem(mRectangle);
     //delete mRectangle;

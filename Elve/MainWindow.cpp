@@ -186,8 +186,8 @@ void MainWindow::newWindowWithFile(SharedEGraph g, QString filename) {
 
 void MainWindow::on_actionSave_triggered()
 {
-    const SharedEGraph graph = viewport()->graph();
-    if(graph) {
+    if(viewport()) {
+        const SharedEGraph graph = viewport()->graph();
         QFileDialog dialog(this,"Save visualization");
         dialog.setNameFilters({"ELVE json (*.json)","ELVE bin (*.elve)"});
         dialog.setAcceptMode(QFileDialog::AcceptSave);
