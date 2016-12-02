@@ -4,7 +4,7 @@
 #include <QHash>
 #include <Graph.h>
 
-Node::Node(const NodeID& id, Type type, Index ioi) : mID(id), mType(type), mIOindex(ioi), mLevel(-1)
+Node::Node(const NodeID& id, NodeType type, Index ioi) : mID(id), mType(type), mIOindex(ioi), mLevel(-1)
 {
 
 }
@@ -93,7 +93,7 @@ bool Node::isOutput() const
     return mType == OUTPUT;
 }
 
-const Node::Type& Node::type() const
+const NodeType &Node::type() const
 {
     return mType;
 }

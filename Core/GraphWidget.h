@@ -36,8 +36,8 @@ public:
     void mouseMoveEvent(QMouseEvent *event) override;
     void keyPressEvent(QKeyEvent *event) override;
 
-    void group(const NodeNames& names, const NodeID& groupName = "group");
-    void ungroup(const NodeNames& names);
+    void group(const NodeIDs& names, const NodeID& groupName = "group");
+    void ungroup(const NodeIDs& names);
 
     void quickSim(unsigned ticks);
     void setLayout(const SharedLayout &l);

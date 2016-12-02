@@ -6,26 +6,28 @@
 #include <vector>
 #include <set>
 
+#include "GraphData.h"
+
 typedef std::vector<Node*> NodePtrs;
 typedef std::unordered_map<NodeID,Node> NodesByID;
-typedef std::set<NodeID> NodeNames;
-//typedef std::vector<Node::Description> NodeDescrs;
-typedef std::unordered_map<NodeID,Node::Description> NodeDescriptions;
+
+typedef std::unordered_map<NodeID,NodeID> Aliases;
 typedef std::pair<NodeID,NodeID> Edge;
 typedef std::vector<Edge> AdjacencyList;
 
 class Graph : public std::enable_shared_from_this<Graph>
 {
 public:
-    Graph();
-    Graph(const NodeDescriptions& descrs, const AdjacencyList& edges);
+    Graph(const SharedData& data);
+    //Graph(const SharedData& data, const NodeDescriptions& descrs, const AdjacencyList& edges, Aliases aliases = {});
     void setFilename(const std::string& filename);
-    Node *addNode(const Node::Description& des);
+    //Node *addNode(const Node::Description& des);
     void addEdge(const NodeID& from, const NodeID& to);
     const NodesByID& nodes() const;
+    const NodeID& alias(const NodeID& id) const;
     size_t nodeCount() const;
     SharedGraph clusterize(size_t maxLevel) const;
-    SharedGraph group(const NodeNames& toGroup, const NodeID& groupID);
+    SharedGraph group(const NodeIDs& toGroup, const NodeID& groupID);
     SharedGraph ungroup(const NodeID& cluster);
     NodeID uniqueID(const NodeID& base) const;
     NodeLevel highestLevel() const;
@@ -36,16 +38,16 @@ public:
 
     const NodePtrs& inputs();
     const NodePtrs& outputs();
-    NodeDescriptions descriptions() const;
-    AdjacencyList adjacencyList() const;
     QJsonObject json() const;
     static SharedGraph fromJson(const QJsonObject &obj);
-    const std::string& filename() const;
+    const QString &filename() const;
 private:
+    Aliases aliasesWithout(const NodeID& repl) const;
     NodePtrs mInputs;
     NodePtrs mOutputs;
     NodesByID mNodes;
-    std::string mFilename;
+    Aliases mAliases;
+    const SharedData& mData;
 };
 
 #endif // GRAPH_H

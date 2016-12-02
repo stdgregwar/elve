@@ -123,7 +123,7 @@ void GraphWidget::mouseMoveEvent(QMouseEvent *event)
 
 void GraphWidget::mouseDoubleClickEvent(QMouseEvent* event) { //TEMP ungroup feature
     QList<QGraphicsItem*> items = mScene->items(mapToScene(event->pos()));
-    NodeNames names;
+    NodeIDs names;
     for(QGraphicsItem* i : items) {
         NodeItem* n = dynamic_cast<NodeItem*>(i);
         if(n) {
@@ -142,14 +142,14 @@ void GraphWidget::keyPressEvent(QKeyEvent *event) {
     }
 }
 
-void GraphWidget::ungroup(const NodeNames& names) {
+void GraphWidget::ungroup(const NodeIDs& names) {
     setGraph(mGraph->ungroup(names),0);
 }
 
-void GraphWidget::group(const NodeNames &names, const NodeID &groupName) {
-    NodeNames inputs;
-    NodeNames nonio;
-    NodeNames outputs;
+void GraphWidget::group(const NodeIDs &names, const NodeID &groupName) {
+    NodeIDs inputs;
+    NodeIDs nonio;
+    NodeIDs outputs;
     for(const NodeID& id : names) {
         const Node& nd = mGraph->graph()->nodes().at(id);
         switch(nd.type()) {
@@ -252,7 +252,7 @@ bool GraphWidget::BorderSelect::mousePressEvent(QMouseEvent *event) {
 
 bool GraphWidget::BorderSelect::mouseReleaseEvent(QMouseEvent *event) {
     QList<QGraphicsItem*> items = gw.mScene->items(mRectangle->sceneBoundingRect());
-    NodeNames names;
+    NodeIDs names;
     for(QGraphicsItem* i : items) {
         NodeItem* n = dynamic_cast<NodeItem*>(i);
         if(n) {

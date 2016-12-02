@@ -9,12 +9,13 @@
 
 using namespace std;
 
-Graph::Graph()
+Graph::Graph(const SharedData &data) : mData(data)
 {
 
 }
 
-Graph::Graph(const NodeDescriptions &descrs, const AdjacencyList& edges)
+Graph::Graph(const SharedData &data, const NodeDescriptions &descrs, const AdjacencyList& edges, Aliases aliases)
+    : Graph(data),mAliases(aliases)
 {
     for(const auto& p : descrs) {
         //qDebug() << p.second.properties;
@@ -25,12 +26,8 @@ Graph::Graph(const NodeDescriptions &descrs, const AdjacencyList& edges)
     }
 }
 
-void Graph::setFilename(const string &filename) {
-    mFilename = filename;
-}
-
-const std::string& Graph::filename() const {
-    return mFilename;
+const QString& Graph::filename() const {
+    return mData->mFilename;
 }
 
 const NodesByID& Graph::nodes() const
@@ -40,6 +37,12 @@ const NodesByID& Graph::nodes() const
 
 size_t Graph::nodeCount() const {
     return mNodes.size();
+}
+
+const NodeID& Graph::alias(const NodeID& id) const {
+    auto it = mAliases.find(id);
+    if(it != mAliases.end()) return alias(it->second);
+    return id;
 }
 
 Node* Graph::addNode(const Node::Description& des) {
@@ -91,24 +94,46 @@ SharedGraph Graph::ungroup(const NodeID &cluster) {
         return shared_from_this();
     }
 
-    NodeDescriptions gnodes = descriptions();
-    AdjacencyList gadj = adjacencyList();
-    NodeDescriptions cnodes = cn.getClusteredGraph()->descriptions();
-    AdjacencyList cadj = cn.getClusteredGraph()->adjacencyList();
+    const SharedGraph& cg = cn.getClusteredGraph();
 
-    gnodes.insert(cnodes.begin(),cnodes.end());
+    NodeDescriptions gnodes; gnodes.reserve(nodeCount()+cg->nodeCount());
+    AdjacencyList gadj; gadj.reserve(gnodes.size()*2); //True for AIG
 
-
-    for(const Edge& e : gadj) {
-        if(e.first != cluster && e.second != cluster) {
-            cadj.push_back(e);
+    using pair_type = NodesByID::value_type;
+    for(const pair_type& p : nodes()) {
+        const Node& n = p.second;
+        if(n.id() != cluster) {
+            gnodes.emplace(n.id(),n);
+            for(const Node* an : n.ancestors()) { //Add all ancestors that are not part of the cluster
+                if(an->id() != cluster) {
+                    gadj.push_back({an->id(),n.id()});
+                }
+            }
         }
     }
-    gnodes.erase(cluster);
-    return make_shared<Graph>(gnodes,cadj);
+
+    for(const pair_type& p : cg->nodes()) {
+        const Node& n = p.second;
+        if(n.isOutput()) {
+            for(const Node* an : n.ancestors()) {//Add
+                gadj.push_back({an->id() ,alias(n.id())});
+            }
+        } else if(!n.isInput()) {
+            gnodes.emplace(n.id(),n);
+            for(const Node* an : n.ancestors()) { //Add all ancestors that are not part of the cluster
+                if(an->isInput()) { //Make sure node is connected to right node/cluster
+                    gadj.push_back({alias(an->id()),n.id()});
+                } else {
+                    gadj.push_back({an->id(),n.id()});
+                }
+            }
+        }
+    }
+
+    return make_shared<Graph>(gnodes,gadj,aliasesWithout(cluster));
 }
 
-SharedGraph Graph::group(const NodeNames &toGroup, const NodeID &groupID) {
+SharedGraph Graph::group(const NodeIDs &toGroup, const NodeID &groupID) {
     if(toGroup.size() < 2) {
         return shared_from_this();
     }
@@ -124,6 +149,7 @@ SharedGraph Graph::group(const NodeNames &toGroup, const NodeID &groupID) {
 
     AdjacencyList newAdj;
     newAdj.reserve(newNodes.size()*2); //Reserve average number of nodes
+
 
     size_t inputi = 0;
     size_t outputi = 0;
@@ -168,7 +194,11 @@ SharedGraph Graph::group(const NodeNames &toGroup, const NodeID &groupID) {
 
     newNodes.emplace(groupID,Node::Description(groupID,t == Node::NODE ? Node::CLUSTER : t,QJsonObject(),i));
     newNodes.at(groupID).graph = make_shared<Graph>(clusteredNodes,clusteredAdj);
-    return make_shared<Graph>(newNodes,newAdj);
+    Aliases als(mAliases);
+    for(const NodeID& id : toGroup) {
+        als.emplace(id,groupID);
+    }
+    return make_shared<Graph>(newNodes,newAdj,als);
 }
 
 const NodePtrs& Graph::inputs() {
@@ -273,6 +303,16 @@ SharedGraph Graph::fromJson(const QJsonObject& obj)
     }
 
     return make_shared<Graph>(descrs,adjl);
+}
+
+Aliases Graph::aliasesWithout(const NodeID& repl) const {
+    Aliases als;
+    for(const auto& p : mAliases) {
+        if(p.second != repl) {
+            als.insert(p);
+        }
+    }
+    return als;
 }
 
 AdjacencyList Graph::adjacencyList() const {

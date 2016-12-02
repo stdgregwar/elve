@@ -27,7 +27,6 @@ SOURCES +=\
     EdgeItem.cpp \
     Graph.cpp \
     Gravity.cpp \
-    LayoutPolicy.cpp \
     Movable.cpp \
     Node.cpp \
     NodeItem.cpp \
@@ -43,7 +42,9 @@ SOURCES +=\
     EGraph.cpp \
     PluginManager.cpp \
     GraphWidget.cpp \
-    interfaces/LayoutPluginFactory.cpp
+    interfaces/LayoutPluginFactory.cpp \
+    NodeData.cpp \
+    GraphData.cpp
 
 RESOURCES += \
     coreresources.qrc
@@ -59,7 +60,6 @@ HEADERS += \
     EdgeItem.h \
     Graph.h \
     Gravity.h \
-    LayoutPolicy.h \
     Movable.h \
     Node.h \
     NodeItem.h \
@@ -78,4 +78,6 @@ HEADERS += \
     GraphWidget.h \
     Singleton.h \
     interfaces/LayoutPluginFactory.h \
-    utils.h
+    utils.h \
+    NodeData.h \
+    GraphData.h

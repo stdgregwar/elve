@@ -19,8 +19,8 @@ public:
     static SharedEGraph fromFile(const QString& filename);
     void toFile(const QString& filename);
 
-    SharedEGraph group(const NodeNames& names, const NodeID &groupName) const;
-    SharedEGraph ungroup(const NodeNames & names) const;
+    SharedEGraph group(const NodeIDs& names, const NodeID &groupName) const;
+    SharedEGraph ungroup(const NodeIDs & names) const;
 
     QJsonObject json() const;
     const NodePositions &positions() const;
