@@ -57,6 +57,15 @@ BlifLoader::BlifLoader(QObject *parent) :
 {
 }
 
+int find(const NodeIDs& vec, const NodeID& key) {
+    for(int i = 0; i < vec.size(); i++) {
+        if(vec[i] == key) {
+            return i;
+        }
+    }
+    return -1;
+}
+
 SharedGraph BlifLoader::load(const QString &filepath) {
 
     ifstream file(filepath.toStdString());
@@ -65,9 +74,10 @@ SharedGraph BlifLoader::load(const QString &filepath) {
     }
     qDebug() << "Loading BLIF file" << filepath;
 
-    NodeDescriptions desc;
-    AdjacencyList adj;
+    NodeDatas data;
     string line;
+
+    NodeIDs outputs;
 
     Index inputI = 0;
     Index outputI = 0;
@@ -90,10 +100,11 @@ SharedGraph BlifLoader::load(const QString &filepath) {
             while(getline(lss,inname,' ')) { //TODO
                 trim(inname);
                 if(inname != "") {
-                    desc.emplace(std::piecewise_construct,
-                                 std::forward_as_tuple(inname),
-                                 std::forward_as_tuple(inname,Node::INPUT,QJsonObject(),inputI++));
+                    //inputs.push_back(inname);
                     //addDescription(inname,Node::INPUT,inputI++);
+                    data.emplace(std::piecewise_construct,
+                            std::forward_as_tuple(inname),
+                            std::forward_as_tuple(inname,NodeIDs(),INPUT,QJsonObject(),inputI++));
                 }
                 lss >> std::ws;
             }
@@ -104,29 +115,30 @@ SharedGraph BlifLoader::load(const QString &filepath) {
                 trim(outname);
                 if(outname != "") {
                     //qDebug() << "out:" << outname.c_str();
-                    desc.emplace(std::piecewise_construct,
-                                 std::forward_as_tuple(outname),
-                                 std::forward_as_tuple(outname,Node::OUTPUT,QJsonObject(),outputI++));
+                    outputs.push_back(outname);
                 }
                 lss >> std::ws;
             }
         }
         else if(com == ".names") {
             string name;
-            vector<string> names;
+            NodeIDs names;
             while(getline(lss,name,' ')) {
                 trim(name);
                 if(name.length() != 0) {
                     names.push_back(name);
-                    desc.emplace(std::piecewise_construct,
-                                 std::forward_as_tuple(name),
-                                 std::forward_as_tuple(name,Node::NODE,QJsonObject(),0));
                 }
             }
             lastname = name;
-            for(size_t i = 0; i < names.size()-1;i++) {
-                adj.push_back({names[i],name});
-            }
+            names.pop_back(); //Remove destination
+
+            int outindex = find(outputs,name);
+
+            NodeType type = (outindex != -1) ? OUTPUT : NODE;
+
+            data.emplace(std::piecewise_construct,
+                         std::forward_as_tuple(name),
+                         std::forward_as_tuple(name,names,type,QJsonObject(),outindex));
         }
         else if(com[0] == '0' or com[0] == '1' or com[0] == '-') { //Truth tables
             if(lastname.size()) {
@@ -134,18 +146,18 @@ SharedGraph BlifLoader::load(const QString &filepath) {
                 lss >> last;
 
                 QJsonObject tt;
-                if(!desc.at(lastname).properties["truthtable"].isUndefined()) {
-                    QJsonObject tt = desc.at(lastname).properties["truthtable"].toObject();
+                if(!data.at(lastname).properties()["truthtable"].isUndefined()) {
+                    QJsonObject tt = data.at(lastname).properties()["truthtable"].toObject();
                 }
                 tt[com.c_str()] = last.c_str();
-                desc.at(lastname).properties["truthtable"] = tt;
+                data.at(lastname).properties()["truthtable"] = tt;
             }
         }
     }
+
     qDebug() <<"file loaded";
-    SharedGraph g = make_shared<Graph>(desc,adj);
-    g->setFilename(filepath.toStdString());
-    return g;
+    SharedData sdata = make_shared<GraphData>(data,filepath);
+    return make_shared<Graph>(sdata);
 }
 
 

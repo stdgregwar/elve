@@ -27,7 +27,7 @@ template<>
 inline std::string store_entry_to_string<SharedEGraph>( SharedEGraph const& eg )
 {
     const SharedGraph& g = eg->graph();
-    return boost::str( boost::format( "%s i/o = %d/%d, nodecount = %d" ) % g->filename() % g->inputCount() % g->outputCount() % g->nodeCount());
+    return boost::str( boost::format( "%s i/o = %d/%d, nodecount = %d" ) % g->filename().toStdString() % g->inputCount() % g->outputCount() % g->nodeCount());
 }
 
 template<>
@@ -75,7 +75,7 @@ struct show_store_entry<SharedEGraph>
 
     bool operator()(SharedEGraph& element, const std::string& dotname, const command& cmd, std::ostream& out )
     {
-        MainWindow::get().newWindowWithFile(element,QString::fromStdString(element->graph()->filename()));
+        MainWindow::get().newWindowWithFile(element,element->graph()->filename());
         return false; //Deprecated //TODO change this
     }
 

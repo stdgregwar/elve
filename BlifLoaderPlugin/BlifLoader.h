@@ -20,9 +20,6 @@ public:
     QString formatName() override {
         return tr("BLIF");
     }
-private:
-    NodeDescriptions mDescriptions;
-
 };
 
 #endif // BLIFLOADER_H

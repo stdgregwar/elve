@@ -75,12 +75,12 @@ void MainWindow::on_import_trigerred(GraphLoaderPlugin* ld) {
     QString filename = QFileDialog::getOpenFileName(this,"Open " + ld->formatName(),"",ld->fileFilter());
     if(filename != "") {
         SharedGraph g;
-        try {
+        //try {
             g = ld->load(filename);
-        } catch (std::exception e) {
-            QMessageBox::critical(this,"Error", e.what());
-        }
-        g->setFilename(filename.toStdString());
+        //} catch (std::exception e) {
+            //QMessageBox::critical(this,"Error", e.what());
+        //}
+        //g->setFilename(filename.toStdString());
         newWindowWithFile(EGraph::fromGraph(g),filename);
     }
 }

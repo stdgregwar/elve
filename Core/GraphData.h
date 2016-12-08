@@ -11,7 +11,9 @@ class GraphData
 {
     friend class Graph;
 public:
-    GraphData();
+    GraphData(const NodeDatas& nodesData = {}, QString filename = "graph");
+    const NodeDatas& nodeDatas() const;
+    const QString& filename() const;
 private:
     QString mFilename;
     NodeDatas mDatas;

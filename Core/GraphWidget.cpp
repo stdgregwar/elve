@@ -127,7 +127,7 @@ void GraphWidget::mouseDoubleClickEvent(QMouseEvent* event) { //TEMP ungroup fea
     for(QGraphicsItem* i : items) {
         NodeItem* n = dynamic_cast<NodeItem*>(i);
         if(n) {
-            names.insert(n->id());
+            names.push_back(n->id());
         }
     }
     ungroup(names);
@@ -153,14 +153,14 @@ void GraphWidget::group(const NodeIDs &names, const NodeID &groupName) {
     for(const NodeID& id : names) {
         const Node& nd = mGraph->graph()->nodes().at(id);
         switch(nd.type()) {
-        case Node::INPUT:
-            inputs.insert(id);
+        case INPUT:
+            inputs.push_back(id);
             break;
-        case Node::OUTPUT:
-            outputs.insert(id);
+        case OUTPUT:
+            outputs.push_back(id);
             break;
         default:
-            nonio.insert(id);
+            nonio.push_back(id);
             break;
         }
     }
@@ -213,7 +213,7 @@ void GraphWidget::reflect(System &sys,SharedGraph g) {
     clearScene();
     for(auto& nbi : g->nodes()) {
         const Node& n = nbi.second;
-        NodeItem* ni = new NodeItem(n.id(),n.type());
+        NodeItem* ni = new NodeItem(n.data());
         Point* p = sys.point(n.id());
         p->addMovable(ni);
         mScene->addItem(ni);
@@ -256,7 +256,7 @@ bool GraphWidget::BorderSelect::mouseReleaseEvent(QMouseEvent *event) {
     for(QGraphicsItem* i : items) {
         NodeItem* n = dynamic_cast<NodeItem*>(i);
         if(n) {
-            names.insert(n->id());
+            names.push_back(n->id());
         }
     }
 

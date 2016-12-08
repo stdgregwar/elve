@@ -4,37 +4,26 @@
 #include <QHash>
 #include <Graph.h>
 
-Node::Node(const NodeID& id, NodeType type, Index ioi) : mID(id), mType(type), mIOindex(ioi), mLevel(-1)
+Node::Node(const NodeData &data) : mData(data),mLevel(-1)
 {
 
 }
 
-Node::Description::Description(const QJsonObject& obj) {
-    static QHash<QString,Type> stringToType{{"node",NODE},
-                                                             {"input",INPUT},
-                                                             {"output",OUTPUT},
-                                                             {"cluster",CLUSTER}};
+//Node::Description::Description(const QJsonObject& obj) {
+//    static QHash<QString,Type> stringToType{{"node",NODE},
+//                                                             {"input",INPUT},
+//                                                             {"output",OUTPUT},
+//                                                             {"cluster",CLUSTER}};
 
 
-    properties = obj.value("properties").toObject();
-    id = obj.value("id").toString().toStdString();
-    type = stringToType.value(obj.value("type").toString());
-    ioi = obj.value("io_index").toInt(0);
-    if(obj.contains("graph")) { //Parse internal graph
-        graph = Graph::fromJson(obj.value("graph").toObject());
-    }
-}
-
-Node::Node(const Description& desc) :
-    mIOindex(desc.ioi),
-    mID(desc.id),
-    mProperties(desc.properties),
-    mType(desc.type),
-    mGraph(desc.graph),
-    mLevel(-1)
-{
-
-}
+//    properties = obj.value("properties").toObject();
+//    id = obj.value("id").toString().toStdString();
+//    type = stringToType.value(obj.value("type").toString());
+//    ioi = obj.value("io_index").toInt(0);
+//    if(obj.contains("graph")) { //Parse internal graph
+//        graph = Graph::fromJson(obj.value("graph").toObject());
+//    }
+//}
 
 void Node::addChild(Node* child)
 {
@@ -63,14 +52,9 @@ size_t Node::childCount() const
     return mChildren.size();
 }
 
-void Node::setIOIndex(const Index& i)
-{
-    mIOindex = i;
-}
-
 const Index& Node::IOIndex() const
 {
-    return mIOindex;
+    return mData.ioIndex();
 }
 
 void Node::_addAncestor(Node* anc)
@@ -85,21 +69,21 @@ const Node::Ancestors& Node::ancestors() const
 
 bool Node::isInput() const
 {
-    return mType == INPUT;
+    return mData.type() == INPUT;
 }
 
 bool Node::isOutput() const
 {
-    return mType == OUTPUT;
+    return mData.type() == OUTPUT;
 }
 
 const NodeType &Node::type() const
 {
-    return mType;
+    return mData.type();
 }
 
 const NodeLevel& Node::level() const { //TODO add special treatment for OUTPUTS
-    if(mType == INPUT) { //Base case
+    if(type() == INPUT) { //Base case
         return mLevel = 0;
     }
     if(mLevel == -1) { //Recursive def
@@ -127,14 +111,14 @@ void Node::setClusteredGraph(SharedGraph graph)
 
 QJsonObject Node::json() const
 {
-    static std::unordered_map<Type,QString> typeToString{{NODE,"node"},
+    static std::unordered_map<NodeType,QString> typeToString{{NODE,"node"},
                                                              {INPUT,"input"},
                                                              {OUTPUT,"output"},
                                                              {CLUSTER,"cluster"}};
 
 
     QJsonObject obj;
-    obj.insert("properties",mProperties);
+    obj.insert("properties",mData.properties());
     obj.insert("id",QString::fromStdString(id()));
     obj.insert("type",typeToString.at(type()));
     if(isInput() or isOutput()) {
@@ -154,7 +138,15 @@ QJsonObject Node::json() const
 }
 
 const QJsonObject& Node::properties() const {
-    return mProperties;
+    return mData.properties();
+}
+
+const NodeData& Node::data() const {
+    return mData;
+}
+
+const NodeID& Node::id() const {
+    return mData.id();
 }
 
 const Node::Children& Node::children() const

@@ -25,10 +25,9 @@ public:
     typedef Nodes Children;
     typedef Nodes Ancestors;
 
-    Node(const NodeID& id, NodeType type, Index ioi = 0);
+    Node(const NodeData& data);
     void addChild(Node* child);
     void addAncestor(Node* anc);
-    void setIOIndex(const Index& i);
     const Index& IOIndex() const;
     const Ancestors& ancestors() const;
     const Children& children() const;
@@ -43,6 +42,7 @@ public:
     void setClusteredGraph(SharedGraph graph);
     const QJsonObject& properties() const;
     QJsonObject json() const;
+    const NodeData& data() const;
     //QJsonObject& properties();
 private:
     void _addChild(Node* child);
@@ -52,7 +52,7 @@ private:
     SharedGraph mGraph; //Intern graph when node is a cluster
     Ancestors mAncestors;
     Children mChildren;
-    const NodeData* mData;
+    const NodeData& mData;
 };
 
 #endif // GATE_H

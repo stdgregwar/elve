@@ -10,13 +10,13 @@
 
 using namespace std;
 
-NodeItem::NodeItem(const NodeID &id, const Node::Type &type, QGraphicsItem *parent) : QGraphicsPixmapItem(parent), mDraged(false), mId(id)
+NodeItem::NodeItem(const NodeData& data, QGraphicsItem *parent) : QGraphicsPixmapItem(parent), mDraged(false), mData(data)
 {
-    setToolTip(QString(id.c_str()));
-    static unordered_map<Node::Type,QString> pixmaps{{Node::CLUSTER,":/resources/cluster.svg"},{Node::NODE,":/resources/node.svg"},{Node::INPUT,":/resources/input.svg"},{Node::OUTPUT,":/resources/output.svg"}};
+    setToolTip(QString::fromStdString(data.id()));
+    static unordered_map<NodeType,QString> pixmaps{{NodeType::CLUSTER,":/resources/cluster.svg"},{NodeType::NODE,":/resources/node.svg"},{NodeType::INPUT,":/resources/input.svg"},{NodeType::OUTPUT,":/resources/output.svg"}};
 
     setZValue(1);
-    setPixmap(QIcon(pixmaps.at(type)).pixmap(QSize(64,64)));
+    setPixmap(QIcon(pixmaps.at(data.type())).pixmap(QSize(64,64)));
     setOffset(-32,-32);
     setScale(0.25f);
 
@@ -38,7 +38,7 @@ void NodeItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     if(event->button() == Qt::MouseButton::LeftButton) {
         mDraged = true;
-        qDebug() << mId.c_str();
+        qDebug() << mData.id().c_str();
         event->accept();
     }
 }
