@@ -19,12 +19,13 @@ class Graph : public std::enable_shared_from_this<Graph>
 {
 public:
     Graph(const SharedData& data);
+    Graph(const SharedData& data,const NodeIDSet& groups, const Aliases& aliases);
 
     const NodesByID& nodes() const;
     const NodeID& alias(const NodeID& id) const;
     size_t nodeCount() const;
     SharedGraph clusterize(size_t maxLevel) const;
-    SharedGraph group(const NodeIDs& toGroup, const NodeID& groupID);
+    SharedGraph group(const NodeIDSet& toGroup, const NodeID& groupID);
     SharedGraph ungroup(const NodeID& cluster);
     NodeID uniqueID(const NodeID& base) const;
     NodeLevel highestLevel() const;
@@ -47,6 +48,7 @@ private:
     NodesByID mNodes;
     Aliases mAliases;
     SharedData mData;
+    NodeDatas  mGroupsData;
 };
 
 #endif // GRAPH_H

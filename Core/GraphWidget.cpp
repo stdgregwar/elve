@@ -146,21 +146,21 @@ void GraphWidget::ungroup(const NodeIDs& names) {
     setGraph(mGraph->ungroup(names),0);
 }
 
-void GraphWidget::group(const NodeIDs &names, const NodeID &groupName) {
-    NodeIDs inputs;
-    NodeIDs nonio;
-    NodeIDs outputs;
+void GraphWidget::group(const NodeIDSet &names, const NodeID &groupName) {
+    NodeIDSet inputs;
+    NodeIDSet nonio;
+    NodeIDSet outputs;
     for(const NodeID& id : names) {
         const Node& nd = mGraph->graph()->nodes().at(id);
         switch(nd.type()) {
         case INPUT:
-            inputs.push_back(id);
+            inputs.insert(id);
             break;
         case OUTPUT:
-            outputs.push_back(id);
+            outputs.insert(id);
             break;
         default:
-            nonio.push_back(id);
+            nonio.insert(id);
             break;
         }
     }
@@ -252,11 +252,11 @@ bool GraphWidget::BorderSelect::mousePressEvent(QMouseEvent *event) {
 
 bool GraphWidget::BorderSelect::mouseReleaseEvent(QMouseEvent *event) {
     QList<QGraphicsItem*> items = gw.mScene->items(mRectangle->sceneBoundingRect());
-    NodeIDs names;
+    NodeIDSet names;
     for(QGraphicsItem* i : items) {
         NodeItem* n = dynamic_cast<NodeItem*>(i);
         if(n) {
-            names.push_back(n->id());
+            names.insert(n->id());
         }
     }
 

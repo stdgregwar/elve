@@ -22,6 +22,30 @@ Graph::Graph(const SharedData &data) : mData(data)
     }
 }
 
+Graph::Graph(const SharedData& data, const NodeIDSet &groups, const Aliases &aliases)
+    : mData(data), mAliases(aliases)
+{
+    //Build groups data
+    for(const NodeID& id : groups) {
+        std::pair<NodeDatas::iterator,bool> p = mGroupsData.emplace(std::piecewise_construct,
+                            std::forward_as_tuple(id),
+                            std::forward_as_tuple(NodeData(id,{},CLUSTER)));
+        Node* n = addNode(p.first->second);
+        //Todo construct inner graph if needed
+    }
+
+    using pair_type = NodeDatas::value_type;
+
+    for(const pair_type& p : data->nodeDatas()) {
+        addNode(p.second);
+    }
+    for(const pair_type& p : data->nodeDatas()) {
+        for(const NodeID& did : p.second.dependencies()) {
+            addEdge(alias(did),alias(p.first));
+        }
+    }
+}
+
 const QString& Graph::filename() const {
     return mData->mFilename;
 }
@@ -55,7 +79,9 @@ Node* Graph::addNode(const NodeData& d) {
 
 void Graph::addEdge(const NodeID& from, const NodeID& to)
 {
-    mNodes.at(from).addChild(&mNodes.at(to));
+    if(from != to) {
+        mNodes.at(from).addChild(&mNodes.at(to));
+    }
 }
 
 SharedGraph Graph::clusterize(size_t maxLevel) const {
@@ -128,73 +154,27 @@ SharedGraph Graph::ungroup(const NodeID &cluster) {
     return SharedGraph();
 }
 
-SharedGraph Graph::group(const NodeIDs &toGroup, const NodeID &groupID) {
-//    if(toGroup.size() < 2) {
-//        return shared_from_this();
-//    }
+SharedGraph Graph::group(const NodeIDSet &toGroup, const NodeID &groupID) {
+    if(toGroup.size() < 2) {
+        return shared_from_this();
+    }
 
-//    Node::Type t;
-//    Index i;
+    NodeID trueID = uniqueID(groupID);
 
-//    NodeDescriptions clusteredNodes; clusteredNodes.reserve(toGroup.size());
-//    AdjacencyList clusteredAdj; clusteredAdj.reserve(clusteredNodes.size()*2);
+    NodeIDSet groups;// groups.reserve(mGroupsData.size()+1);
+    Aliases aliases = mAliases;
+    aliases.reserve(aliases.size()+toGroup.size());
 
-//    NodeDescriptions newNodes;
-//    newNodes.reserve(mNodes.size()-toGroup.size()+1); //Reserve right number of nodes
+    for(const NodeID& id : toGroup) {
+        aliases.emplace(id,trueID);
+    }
 
-//    AdjacencyList newAdj;
-//    newAdj.reserve(newNodes.size()*2); //Reserve average number of nodes
-
-
-//    size_t inputi = 0;
-//    size_t outputi = 0;
-
-//    for(const auto& p : mNodes) {
-//        const NodeID& nid = p.first;
-//        const Node& n = p.second;
-//        if(toGroup.count(nid)) {
-//            t = n.type();
-//            i = n.IOIndex();
-//            clusteredNodes.emplace(n.id(),n);
-//            for(const Node* pan : n.ancestors()) {
-//                const Node& an = *pan;
-//                if(!toGroup.count(an.id())) { //If ancestor is external
-//                    newAdj.push_back({an.id(),groupID});
-//                    //Add external ancestor as input
-//                    clusteredNodes.emplace(an.id(),
-//                                           Node::Description(an.id(),Node::INPUT,an.properties(),inputi++));
-//                }
-//                clusteredAdj.push_back({an.id(),nid});
-//            }
-//            for(const Node* pcn : n.children()) {
-//                const Node& cn = *pcn;
-//                if(!toGroup.count(cn.id())) { //If child is external
-//                    newAdj.push_back(Edge{groupID,cn.id()});
-//                    //Add external ancestor as output
-//                    clusteredAdj.push_back({nid,cn.id()}); //Connect child only if in outputs
-//                    clusteredNodes.emplace(cn.id(),
-//                                           Node::Description(cn.id(),Node::OUTPUT,cn.properties(),outputi++));
-//                }
-//            }
-//        } else { //If node not in group reinsert it in graph
-//            newNodes.emplace(n.id(),n);
-//            for(const Node* pan : n.ancestors()) {
-//                const Node& an = *pan;
-//                if(toGroup.count(an.id()) == 0) { //If ancestor is also external
-//                    newAdj.push_back({an.id(),nid});
-//                }
-//            }
-//        }
-//    }
-
-//    newNodes.emplace(groupID,Node::Description(groupID,t == Node::NODE ? Node::CLUSTER : t,QJsonObject(),i));
-//    newNodes.at(groupID).graph = make_shared<Graph>(clusteredNodes,clusteredAdj);
-//    Aliases als(mAliases);
-//    for(const NodeID& id : toGroup) {
-//        als.emplace(id,groupID);
-//    }
-//    return make_shared<Graph>(newNodes,newAdj,als);
-    return SharedGraph();
+    using pair_type = NodeDatas::value_type;
+    for(const pair_type& p : mGroupsData) {
+        groups.insert(p.first);
+    }
+    groups.insert(trueID);
+    return make_shared<Graph>(mData,groups,aliases);
 }
 
 const NodePtrs& Graph::inputs() {

@@ -107,7 +107,7 @@ void EGraph::toFile(const QString& filename) {
     }
 }
 
-SharedEGraph EGraph::group(const NodeIDs& names, const NodeID &groupName) const
+SharedEGraph EGraph::group(const NodeIDSet& names, const NodeID &groupName) const
 {
     mPosDirty = true;
     NodeID trueName = mGraph->uniqueID(groupName);

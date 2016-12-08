@@ -11,6 +11,7 @@
 typedef std::string NodeID;
 typedef unsigned Index;
 typedef std::vector<NodeID> NodeIDs;
+typedef std::set<NodeID> NodeIDSet;
 typedef QJsonObject NodeProperties;
 
 enum NodeType{
@@ -25,7 +26,8 @@ class NodeData
 {
     friend class Node;
 public:
-    NodeData(const NodeID& id = "unnamed",const NodeIDs& dependencies = {}, const NodeType& type = NODE, const NodeProperties& props = {}, const Index& ioindex = 0);
+    NodeData(const NodeID& id = "unnamed",const NodeIDs& dependencies = {},
+             const NodeType& type = NODE, const NodeProperties& props = {}, const Index& ioindex = 0);
     NodeData(const QJsonObject& obj);
     const NodeProperties& properties() const;
     NodeProperties& properties();
