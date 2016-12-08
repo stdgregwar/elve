@@ -26,12 +26,14 @@ class NodeData
     friend class Node;
 public:
     NodeData(const NodeID& id = "unnamed",const NodeIDs& dependencies = {}, const NodeType& type = NODE, const NodeProperties& props = {}, const Index& ioindex = 0);
+    NodeData(const QJsonObject& obj);
     const NodeProperties& properties() const;
     NodeProperties& properties();
     const NodeID& id() const;
     const NodeIDs& dependencies() const;
     const NodeType& type() const;
     const Index& ioIndex() const;
+    const QJsonObject json() const;
 private:
     NodeProperties mProperties;
     NodeID mId;

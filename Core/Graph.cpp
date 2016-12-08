@@ -234,26 +234,10 @@ size_t Graph::maxOutputIndex() const
 QJsonObject Graph::json() const
 {
     QJsonObject main;
+    main.insert("graph_data",mData->json());
 
+    //Todo insert clustering details here
 
-    //all node json
-    QJsonArray nodeArray;
-
-    //Adjacency list from ancestor to child
-    QJsonObject adj;
-
-    using pair_type = NodesByID::value_type;
-    for(const pair_type& p : mNodes) {
-        nodeArray.append(p.second.json());
-        QJsonArray jancestors;
-        for(const Node* an : p.second.ancestors()) {
-            jancestors.append(QString::fromStdString(an->id()));
-        }
-        adj.insert(QString::fromStdString(p.first),jancestors);
-    }
-    main.insert("node_count",(int)mNodes.size());
-    main.insert("nodes",nodeArray);
-    main.insert("adjacency",adj);
     return main;
 }
 
@@ -268,30 +252,9 @@ NodeLevel Graph::highestLevel() const {
 
 SharedGraph Graph::fromJson(const QJsonObject& obj)
 {
-//    size_t count = obj.value("node_count").toInt();
-//    NodeDescriptions descrs; descrs.reserve(obj.value("node_count").toInt());
-//    AdjacencyList adjl; adjl.reserve(count*2); //Good guess I think
-
-//    QJsonArray nodeArray = obj.value("nodes").toArray();
-//    for(const QJsonValue& val : nodeArray) {
-//        QJsonObject nObj = val.toObject();
-//        descrs.emplace(std::piecewise_construct,
-//                       std::forward_as_tuple(nObj.value("id").toString("noname").toStdString()),
-//                       std::forward_as_tuple(nObj));
-//    }
-//    QJsonObject adj = obj.value("adjacency").toObject();
-//    for(QJsonObject::const_iterator it = adj.constBegin();
-//        it != adj.constEnd(); it++) {
-//        NodeID nid = it.key().toStdString();
-//        QJsonArray jancestors = it.value().toArray();
-//        for(const QJsonValue& v : jancestors) {
-//            NodeID aid = v.toString().toStdString();
-//            adjl.push_back({aid,nid});
-//        }
-//    }
-
-//    return make_shared<Graph>(descrs,adjl);
-    return SharedGraph();
+    SharedData sdata = make_shared<GraphData>(obj.value("graph_data").toObject());
+    //Todo find clustering primitives here
+    return make_shared<Graph>(sdata);
 }
 
 Aliases Graph::aliasesWithout(const NodeID& repl) const {

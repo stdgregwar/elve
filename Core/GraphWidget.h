@@ -48,8 +48,8 @@ public:
     void fit();
 
     const SharedEGraph& graph() const;
-    QJsonObject json() const;
-    void fromJson(const QJsonObject& obj);
+    //QJsonObject json() const;
+    //void fromJson(const QJsonObject& obj);
 public slots:
     void borderSelect();
 private:

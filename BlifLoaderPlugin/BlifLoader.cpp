@@ -154,7 +154,6 @@ SharedGraph BlifLoader::load(const QString &filepath) {
             }
         }
     }
-
     qDebug() <<"file loaded";
     SharedData sdata = make_shared<GraphData>(data,filepath);
     return make_shared<Graph>(sdata);

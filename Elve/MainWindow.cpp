@@ -201,11 +201,11 @@ void MainWindow::on_actionSave_triggered()
             return;
         }
         QString filename = list.first();
-        try {
+        //try {
             graph->toFile(filename);
-        } catch(std::exception e) {
-            QMessageBox::critical(this,"Error", e.what());
-        }
+        //} catch(std::exception e) {
+        //    QMessageBox::critical(this,"Error", e.what());
+        //}
     } else {
         QMessageBox::information(this,"Mhhh...","There is no current graph to save.");
     }

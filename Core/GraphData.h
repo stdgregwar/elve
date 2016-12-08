@@ -12,8 +12,10 @@ class GraphData
     friend class Graph;
 public:
     GraphData(const NodeDatas& nodesData = {}, QString filename = "graph");
+    GraphData(const QJsonObject& obj);
     const NodeDatas& nodeDatas() const;
     const QString& filename() const;
+    QJsonObject json() const;
 private:
     QString mFilename;
     NodeDatas mDatas;
