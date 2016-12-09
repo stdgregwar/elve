@@ -25,6 +25,10 @@ Node::Node(const NodeData &data) : mData(data),mLevel(-1)
 //    }
 //}
 
+const NodeName& Node::name() const {
+    return mData.name();
+}
+
 void Node::addChild(Node* child)
 {
     child->_addAncestor(this);

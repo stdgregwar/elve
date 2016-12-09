@@ -19,7 +19,7 @@ class Graph : public std::enable_shared_from_this<Graph>
 {
 public:
     Graph(const SharedData& data);
-    Graph(const SharedData& data,const NodeIDSet& groups, const Aliases& aliases);
+    Graph(const SharedData& data, const NodeIDSet& groups, const Aliases& aliases, const NodeIDSet &excluded = {});
 
     const NodesByID& nodes() const;
     const NodeID& alias(const NodeID& id) const;
@@ -27,7 +27,7 @@ public:
     SharedGraph clusterize(size_t maxLevel) const;
     SharedGraph group(const NodeIDSet& toGroup, const NodeID& groupID);
     SharedGraph ungroup(const NodeID& cluster);
-    NodeID uniqueID(const NodeID& base) const;
+    NodeName uniqueName(const NodeName &base) const;
     NodeLevel highestLevel() const;
     size_t inputCount() const;
     size_t outputCount() const;
@@ -49,6 +49,7 @@ private:
     Aliases mAliases;
     SharedData mData;
     NodeDatas  mGroupsData;
+    NodeIDSet mExcluded;
 };
 
 #endif // GRAPH_H

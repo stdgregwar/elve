@@ -22,8 +22,8 @@ Graph::Graph(const SharedData &data) : mData(data)
     }
 }
 
-Graph::Graph(const SharedData& data, const NodeIDSet &groups, const Aliases &aliases)
-    : mData(data), mAliases(aliases)
+Graph::Graph(const SharedData& data, const NodeIDSet &groups, const Aliases &aliases, const NodeIDSet& excluded)
+    : mData(data), mAliases(aliases), mExcluded(excluded)
 {
     //Build groups data
     for(const NodeID& id : groups) {
@@ -31,13 +31,14 @@ Graph::Graph(const SharedData& data, const NodeIDSet &groups, const Aliases &ali
                             std::forward_as_tuple(id),
                             std::forward_as_tuple(NodeData(id,{},CLUSTER)));
         Node* n = addNode(p.first->second);
+
         //Todo construct inner graph if needed
     }
 
     using pair_type = NodeDatas::value_type;
 
     for(const pair_type& p : data->nodeDatas()) {
-        if(!aliases.count(p.first)) {
+        if(!excluded.count(p.first)) {
             addNode(p.second);
         }
     }
@@ -90,12 +91,12 @@ SharedGraph Graph::clusterize(size_t maxLevel) const {
     return nullptr;
 }
 
-NodeID Graph::uniqueID(const NodeID& base) const {
-    NodeID current = base;
+NodeName Graph::uniqueName(const NodeName& base) const {
+    NodeName current = base;
     unsigned suffix = 1;
     repeat:
     for(const auto& p : mNodes) {
-        const NodeID& id = p.first;
+        const NodeName& id = p.second.name();
         if(id == current) {
            current = base + "_" + std::to_string(suffix++);
            goto repeat;

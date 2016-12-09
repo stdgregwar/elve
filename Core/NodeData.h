@@ -8,9 +8,11 @@
 #include <memory>
 #include <QJsonObject>
 
-typedef std::string NodeID;
+typedef unsigned NodeID;
+typedef std::string NodeName;
 typedef unsigned Index;
 typedef std::vector<NodeID> NodeIDs;
+typedef std::vector<NodeName> NodeNames;
 typedef std::set<NodeID> NodeIDSet;
 typedef QJsonObject NodeProperties;
 
@@ -26,7 +28,7 @@ class NodeData
 {
     friend class Node;
 public:
-    NodeData(const NodeID& id = "unnamed",const NodeIDs& dependencies = {},
+    NodeData(const NodeID& id = -1, const NodeName& name = "unnamed",const NodeIDs& dependencies = {},
              const NodeType& type = NODE, const NodeProperties& props = {}, const Index& ioindex = 0);
     NodeData(const QJsonObject& obj);
     const NodeProperties& properties() const;
@@ -36,14 +38,16 @@ public:
     const NodeType& type() const;
     const Index& ioIndex() const;
     const QJsonObject json() const;
+    const NodeName& name() const;
 private:
     NodeProperties mProperties;
     NodeID mId;
+    NodeName mName;
     NodeIDs mDependencies;
     NodeType mType;
     Index mIOIndex;
 };
 
-typedef std::unordered_map<NodeID,NodeData> NodeDatas;
+typedef std::vector<NodeData> NodeDatas;
 
 #endif // NODEDATA_H
