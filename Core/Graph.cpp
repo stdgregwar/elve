@@ -37,7 +37,9 @@ Graph::Graph(const SharedData& data, const NodeIDSet &groups, const Aliases &ali
     using pair_type = NodeDatas::value_type;
 
     for(const pair_type& p : data->nodeDatas()) {
-        addNode(p.second);
+        if(!aliases.count(p.first)) {
+            addNode(p.second);
+        }
     }
     for(const pair_type& p : data->nodeDatas()) {
         for(const NodeID& did : p.second.dependencies()) {
@@ -105,53 +107,14 @@ NodeID Graph::uniqueID(const NodeID& base) const {
 
 SharedGraph Graph::ungroup(const NodeID &cluster) {
 
-//    auto it = mNodes.find(cluster);
-//    if(it == mNodes.end()) {
-//        return shared_from_this();
-//    }
-//    const Node& cn = it->second;
-//    if(!cn.getClusteredGraph()) { //Node is not a cluster
-//        return shared_from_this();
-//    }
-
-//    const SharedGraph& cg = cn.getClusteredGraph();
-
-//    NodeDescriptions gnodes; gnodes.reserve(nodeCount()+cg->nodeCount());
-//    AdjacencyList gadj; gadj.reserve(gnodes.size()*2); //True for AIG
-
-//    using pair_type = NodesByID::value_type;
-//    for(const pair_type& p : nodes()) {
-//        const Node& n = p.second;
-//        if(n.id() != cluster) {
-//            gnodes.emplace(n.id(),n);
-//            for(const Node* an : n.ancestors()) { //Add all ancestors that are not part of the cluster
-//                if(an->id() != cluster) {
-//                    gadj.push_back({an->id(),n.id()});
-//                }
-//            }
-//        }
-//    }
-
-//    for(const pair_type& p : cg->nodes()) {
-//        const Node& n = p.second;
-//        if(n.isOutput()) {
-//            for(const Node* an : n.ancestors()) {//Add
-//                gadj.push_back({an->id() ,alias(n.id())});
-//            }
-//        } else if(!n.isInput()) {
-//            gnodes.emplace(n.id(),n);
-//            for(const Node* an : n.ancestors()) { //Add all ancestors that are not part of the cluster
-//                if(an->isInput()) { //Make sure node is connected to right node/cluster
-//                    gadj.push_back({alias(an->id()),n.id()});
-//                } else {
-//                    gadj.push_back({an->id(),n.id()});
-//                }
-//            }
-//        }
-//    }
-
-//    return make_shared<Graph>(gnodes,gadj,aliasesWithout(cluster));
-    return SharedGraph();
+    NodeIDSet groups;
+    using pair_type = NodeDatas::value_type;
+    for(const pair_type& p : mGroupsData) {
+        if(p.first != cluster) {
+            groups.insert(p.first);
+        }
+    }
+    return make_shared<Graph>(mData,groups,aliasesWithout(cluster));
 }
 
 SharedGraph Graph::group(const NodeIDSet &toGroup, const NodeID &groupID) {
