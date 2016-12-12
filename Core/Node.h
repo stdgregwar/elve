@@ -13,7 +13,6 @@ class Node;
 
 typedef std::shared_ptr<Node> SharedNode;
 typedef std::weak_ptr<Node> WeakNode;
-typedef std::string NodeID;
 typedef std::vector<Node*> Nodes;
 typedef unsigned Index;
 typedef long NodeLevel;
@@ -32,6 +31,7 @@ public:
     const Ancestors& ancestors() const;
     const Children& children() const;
     const NodeID& id() const;
+    const NodeName& name() const;
     size_t ancestorCount() const;
     size_t childCount() const;
     bool isInput() const;

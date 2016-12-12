@@ -29,7 +29,7 @@ SharedEGraph EGraph::fromJSON(const QJsonObject &obj)
 
         QJsonArray jpos = it.value().toArray();
         positions.emplace(std::piecewise_construct,
-                          std::forward_as_tuple(it.key().toStdString()),
+                          std::forward_as_tuple(it.key().toInt()),
                           std::forward_as_tuple(jpos.at(0).toDouble(),jpos.at(1).toDouble()));
     }
     SharedEGraph eg = std::make_shared<EGraph>(g,positions);
@@ -62,7 +62,7 @@ QJsonObject EGraph::json() const
         using pair_type = NodePositions::value_type;
         for(const pair_type& p : mLayout->system().positions()) {
             const QVector2D& pos = p.second;
-            positions.insert(QString::fromStdString(p.first),
+            positions.insert(to_string(p.first).c_str(),
                              QJsonArray{pos.x(),pos.y()});
         }
         layout.insert("positions",positions);
@@ -107,20 +107,19 @@ void EGraph::toFile(const QString& filename) {
     }
 }
 
-SharedEGraph EGraph::group(const NodeIDSet& names, const NodeID &groupName) const
+SharedEGraph EGraph::group(const NodeIDSet& names, const NodeName &groupName) const
 {
     mPosDirty = true;
-    NodeID trueName = mGraph->uniqueID(groupName);
     NodePositions poss = positions();
-
+    NodeID nid = mGraph->newID();
     QVector2D groupCenter;
     for(const NodeID& id : names) {
         groupCenter += poss.at(id);
     }
     groupCenter /= names.size();
 
-    poss[trueName] = groupCenter;
-    SharedEGraph eg = std::make_shared<EGraph>(mGraph->group(names,trueName),poss);
+    poss[nid] = groupCenter;
+    SharedEGraph eg = std::make_shared<EGraph>(mGraph->group(names,nid,groupName),poss);
     eg->setLayout(mLayout->create());
     return eg;
 }
@@ -132,17 +131,11 @@ SharedEGraph EGraph::ungroup(const NodeIDs & names) const
     SharedGraph g = mGraph;
     for(const NodeID& name : names) {
         QVector2D base = poss.at(name);
-        SharedGraph cg = g->nodes().at(name).getClusteredGraph();
-        if(cg) {
-            const NodesByID& ugped = cg->nodes();
-            static default_random_engine gen;
-            for(const NodesByID::value_type& p : ugped) {
-                if(!p.second.isInput() && !p.second.isOutput()) {
-                    std::uniform_real_distribution<qreal> x(-128,128);
-                    std::uniform_real_distribution<qreal> y(-128,128);
-                    poss[p.first] = base + QVector2D(x(gen),y(gen));
-                }
-            }
+        const NodeIDs& ids = g->data(name).dependencies();
+        static qreal radius = 128;
+        for(size_t i = 0; i < ids.size(); ++i) {
+            qreal p = M_PI*((qreal)i)/ids.size();
+            poss[ids[i]] = base + QVector2D(radius*cos(p),radius*sin(p));
         }
         g = g->ungroup(name);
     }
@@ -178,7 +171,7 @@ const SharedGraph& EGraph::graph() const
 
 void EGraph::setLayout(const SharedLayout &l)
 {
-    //mPosDirty = true;
+    mPosDirty = true;
     l->setGraph(mGraph,positions());
     mLayout = l;
 }

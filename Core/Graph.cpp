@@ -11,41 +11,48 @@ using namespace std;
 
 Graph::Graph(const SharedData &data) : mData(data)
 {
-    using pair_type = NodeDatas::value_type;
-    for(const pair_type& p : data->nodeDatas()) {
-        addNode(p.second);
+    for(const NodeData& d : data->nodeDatas()) {
+        addNode(d);
     }
-    for(const pair_type& p : data->nodeDatas()) {
-        for(const NodeID& did : p.second.dependencies()) {
-            addEdge(did,p.first);
+    for(const NodeData& d : data->nodeDatas()) {
+        for(const NodeID& did : d.dependencies()) {
+            addEdge(did,d.id());
         }
     }
 }
 
-Graph::Graph(const SharedData& data, const NodeIDSet &groups, const Aliases &aliases)
-    : mData(data), mAliases(aliases)
+Graph::Graph(const SharedData& data, const SparseData &extraData, const Aliases &aliases, const NodeIDSet& excluded)
+    : mData(data), mExtraData(extraData), mAliases(aliases), mExcluded(excluded)
 {
     //Build groups data
-    for(const NodeID& id : groups) {
-        std::pair<NodeDatas::iterator,bool> p = mGroupsData.emplace(std::piecewise_construct,
-                            std::forward_as_tuple(id),
-                            std::forward_as_tuple(NodeData(id,{},CLUSTER)));
-        Node* n = addNode(p.first->second);
-        //Todo construct inner graph if needed
-    }
-
-    using pair_type = NodeDatas::value_type;
-
-    for(const pair_type& p : data->nodeDatas()) {
-        if(!aliases.count(p.first)) {
+    using pair_type = SparseData::value_type;
+    for(const pair_type& p : mExtraData) {
+        if(!mExcluded.count(p.first)) {
             addNode(p.second);
         }
     }
-    for(const pair_type& p : data->nodeDatas()) {
-        for(const NodeID& did : p.second.dependencies()) {
-            addEdge(alias(did),alias(p.first));
+
+    for(const NodeData& d : data->nodeDatas()) {
+        if(!mExcluded.count(d.id())) {
+            addNode(d);
         }
     }
+
+    for(const NodeData& d : data->nodeDatas()) {
+        NodeID tid = alias(d.id());
+        if(!mExcluded.count(tid)) {
+            for(const NodeID& did : d.dependencies()) {
+                NodeID tpid = alias(did);
+                if(!mExcluded.count(tpid)) {
+                    addEdge(tpid,tid);
+                }
+            }
+        }
+    }
+}
+
+NodeID Graph::newID() const {
+    NodeID i = mData->nodeDatas().size()+mExtraData.size();
 }
 
 const QString& Graph::filename() const {
@@ -86,16 +93,24 @@ void Graph::addEdge(const NodeID& from, const NodeID& to)
     }
 }
 
+const NodeData& Graph::data(const NodeID& id) const {
+    if(id < mData->nodeDatas().size()) {
+        return mData->nodeDatas().at(id);
+    } else {
+        return mExtraData.at(id);
+    }
+}
+
 SharedGraph Graph::clusterize(size_t maxLevel) const {
     return nullptr;
 }
 
-NodeID Graph::uniqueID(const NodeID& base) const {
-    NodeID current = base;
+NodeName Graph::uniqueName(const NodeName& base) const {
+    NodeName current = base;
     unsigned suffix = 1;
     repeat:
     for(const auto& p : mNodes) {
-        const NodeID& id = p.first;
+        const NodeName& id = p.second.name();
         if(id == current) {
            current = base + "_" + std::to_string(suffix++);
            goto repeat;
@@ -106,38 +121,56 @@ NodeID Graph::uniqueID(const NodeID& base) const {
 
 
 SharedGraph Graph::ungroup(const NodeID &cluster) {
-
-    NodeIDSet groups;
-    using pair_type = NodeDatas::value_type;
-    for(const pair_type& p : mGroupsData) {
-        if(p.first != cluster) {
-            groups.insert(p.first);
-        }
+    if(!mExtraData.count(cluster)) {
+        return shared_from_this();
     }
-    return make_shared<Graph>(mData,groups,aliasesWithout(cluster));
+    SparseData extras(mExtraData);
+    NodeIDSet excl = excludedWithout(extras.at(cluster).dependencies());
+    extras.erase(cluster);
+    return make_shared<Graph>(mData,extras,aliasesWithout(cluster),excl);
 }
 
-SharedGraph Graph::group(const NodeIDSet &toGroup, const NodeID &groupID) {
+SharedGraph Graph::group(const NodeIDSet &toGroup, const NodeID& i,const NodeName &groupName) {
     if(toGroup.size() < 2) {
         return shared_from_this();
     }
 
-    NodeID trueID = uniqueID(groupID);
+    NodeName trueName = uniqueName(groupName);
 
-    NodeIDSet groups;// groups.reserve(mGroupsData.size()+1);
-    Aliases aliases = mAliases;
+    SparseData extra; extra.reserve(mExtraData.size()+1);
+    Aliases aliases(mAliases);
+    NodeIDSet excluded(mExcluded); excluded.reserve(mExcluded.size()+toGroup.size());
     aliases.reserve(aliases.size()+toGroup.size());
+    NodeIDs deps; deps.reserve(toGroup.size());
+    deps.insert(deps.end(),toGroup.begin(),toGroup.end());
 
     for(const NodeID& id : toGroup) {
-        aliases.emplace(id,trueID);
+        aliases.emplace(id,i);
+        excluded.insert(id);
     }
 
-    using pair_type = NodeDatas::value_type;
-    for(const pair_type& p : mGroupsData) {
-        groups.insert(p.first);
+    using pair_type = SparseData::value_type;
+    for(const pair_type& p : mExtraData) {
+        extra.emplace(p.first,p.second);
     }
-    groups.insert(trueID);
-    return make_shared<Graph>(mData,groups,aliases);
+
+    //Handle cluster types
+    const NodeData& first = mData->nodeDatas().at(*toGroup.begin());
+    NodeType t = CLUSTER;
+    switch (first.type()) {
+    case INPUT:
+    case INPUT_CLUSTER:
+        t = INPUT_CLUSTER;
+        break;
+    case OUTPUT:
+    case OUTPUT_CLUSTER:
+        t = OUTPUT_CLUSTER;
+        break;
+    default:
+        break;
+    }
+    extra.emplace(i,NodeData(i,trueName,deps,t,{},first.ioIndex()));
+    return make_shared<Graph>(mData,extra,aliases,excluded);
 }
 
 const NodePtrs& Graph::inputs() {
@@ -181,6 +214,27 @@ QJsonObject Graph::json() const
 
     //Todo insert clustering details here
 
+    {
+        QJsonArray extra;
+        using pair_type = SparseData::value_type;
+        for(const pair_type& p : mExtraData) {
+            extra.append(p.second.json());
+        }
+        main.insert("extra_data",extra);
+    }
+    {
+        QJsonArray als;
+        using pair_type = Aliases::value_type;
+        for(const pair_type& p : mAliases) {
+            als.append(QJsonArray{(int)p.first,(int)p.second});
+        }
+        main.insert("aliases",als);
+    }
+    QJsonArray excl;
+    for(const NodeID& id : mExcluded) {
+        excl.append((int)id);
+    }
+    main.insert("excluded",excl);
     return main;
 }
 
@@ -197,7 +251,27 @@ SharedGraph Graph::fromJson(const QJsonObject& obj)
 {
     SharedData sdata = make_shared<GraphData>(obj.value("graph_data").toObject());
     //Todo find clustering primitives here
-    return make_shared<Graph>(sdata);
+    SparseData extra;
+    QJsonArray jextr = obj.value("extra_data").toArray();
+    extra.reserve(jextr.size());
+    for(const QJsonValue& v : jextr) {
+        QJsonObject obj = v.toObject();
+        extra.emplace(obj.value("id").toInt(),obj);
+    }
+    Aliases als;
+    QJsonArray jals = obj.value("aliases").toArray();
+    als.reserve(jals.size());
+    for(const QJsonValue& v : jals) {
+        QJsonArray pair = v.toArray();
+        als.emplace(pair.at(0).toInt(-1),pair.at(1).toInt(-1));
+    }
+    NodeIDSet excl;
+    QJsonArray jexcl = obj.value("excluded").toArray();
+    excl.reserve(jexcl.size());
+    for(const QJsonValue& v : jexcl) {
+        excl.insert(v.toInt());
+    }
+    return make_shared<Graph>(sdata,extra,als,excl);
 }
 
 Aliases Graph::aliasesWithout(const NodeID& repl) const {
@@ -208,4 +282,12 @@ Aliases Graph::aliasesWithout(const NodeID& repl) const {
         }
     }
     return als;
+}
+
+NodeIDSet Graph::excludedWithout(const NodeIDs& ids) const {
+    NodeIDSet excl(mExcluded);
+    for(const NodeID& id : ids) {
+        excl.erase(id);
+    }
+    return excl;
 }

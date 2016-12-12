@@ -25,6 +25,10 @@ Node::Node(const NodeData &data) : mData(data),mLevel(-1)
 //    }
 //}
 
+const NodeName& Node::name() const {
+    return mData.name();
+}
+
 void Node::addChild(Node* child)
 {
     child->_addAncestor(this);
@@ -69,12 +73,12 @@ const Node::Ancestors& Node::ancestors() const
 
 bool Node::isInput() const
 {
-    return mData.type() == INPUT;
+    return mData.type() == INPUT or mData.type() == INPUT_CLUSTER;
 }
 
 bool Node::isOutput() const
 {
-    return mData.type() == OUTPUT;
+    return mData.type() == OUTPUT or mData.type() == OUTPUT_CLUSTER;
 }
 
 const NodeType &Node::type() const
@@ -109,7 +113,7 @@ void Node::setClusteredGraph(SharedGraph graph)
     mGraph = graph;
 }
 
-QJsonObject Node::json() const
+/*QJsonObject Node::json() const
 {
     static std::unordered_map<NodeType,QString> typeToString{{NODE,"node"},
                                                              {INPUT,"input"},
@@ -135,7 +139,7 @@ QJsonObject Node::json() const
     }
     obj.insert("ancestors",array);
     return obj;
-}
+}*/
 
 const QJsonObject& Node::properties() const {
     return mData.properties();
