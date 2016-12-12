@@ -111,15 +111,15 @@ SharedEGraph EGraph::group(const NodeIDSet& names, const NodeName &groupName) co
 {
     mPosDirty = true;
     NodePositions poss = positions();
-
+    NodeID nid = mGraph->newID();
     QVector2D groupCenter;
     for(const NodeID& id : names) {
         groupCenter += poss.at(id);
     }
     groupCenter /= names.size();
 
-    poss[mGraph->newID()] = groupCenter;
-    SharedEGraph eg = std::make_shared<EGraph>(mGraph->group(names,groupName),poss);
+    poss[nid] = groupCenter;
+    SharedEGraph eg = std::make_shared<EGraph>(mGraph->group(names,nid,groupName),poss);
     eg->setLayout(mLayout->create());
     return eg;
 }
@@ -131,17 +131,11 @@ SharedEGraph EGraph::ungroup(const NodeIDs & names) const
     SharedGraph g = mGraph;
     for(const NodeID& name : names) {
         QVector2D base = poss.at(name);
-        SharedGraph cg = g->nodes().at(name).getClusteredGraph();
-        if(cg) {
-            const NodesByID& ugped = cg->nodes();
-            static default_random_engine gen;
-            for(const NodesByID::value_type& p : ugped) {
-                if(!p.second.isInput() && !p.second.isOutput()) {
-                    std::uniform_real_distribution<qreal> x(-128,128);
-                    std::uniform_real_distribution<qreal> y(-128,128);
-                    poss[p.first] = base + QVector2D(x(gen),y(gen));
-                }
-            }
+        const NodeIDs& ids = g->data(name).dependencies();
+        static qreal radius = 128;
+        for(size_t i = 0; i < ids.size(); ++i) {
+            qreal p = M_PI*((qreal)i)/ids.size();
+            poss[ids[i]] = base + QVector2D(radius*cos(p),radius*sin(p));
         }
         g = g->ungroup(name);
     }

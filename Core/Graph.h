@@ -19,13 +19,13 @@ class Graph : public std::enable_shared_from_this<Graph>
 {
 public:
     Graph(const SharedData& data);
-    Graph(const SharedData& data, const NodeDatas &groups, const Aliases& aliases, const NodeIDSet &excluded = {});
+    Graph(const SharedData& data, const SparseData &extraData, const Aliases& aliases, const NodeIDSet &excluded = {});
 
     const NodesByID& nodes() const;
     const NodeID& alias(const NodeID& id) const;
     size_t nodeCount() const;
     SharedGraph clusterize(size_t maxLevel) const;
-    SharedGraph group(const NodeIDSet& toGroup, const NodeName &groupName);
+    SharedGraph group(const NodeIDSet& toGroup, const NodeID &i, const NodeName &groupName);
     SharedGraph ungroup(const NodeID& cluster);
     NodeName uniqueName(const NodeName &base) const;
     NodeLevel highestLevel() const;
@@ -34,6 +34,7 @@ public:
     size_t maxInputIndex() const;
     size_t maxOutputIndex() const;
     NodeID newID() const;
+    const NodeData& data(const NodeID& id) const;
 
     const NodePtrs& inputs();
     const NodePtrs& outputs();
@@ -41,16 +42,16 @@ public:
     static SharedGraph fromJson(const QJsonObject &obj);
     const QString &filename() const;
 private:
-
     Node* addNode(const NodeData &d);
     void addEdge(const NodeID& from, const NodeID& to);
     Aliases aliasesWithout(const NodeID& repl) const;
+    NodeIDSet excludedWithout(const NodeIDs& ids) const;
     NodePtrs mInputs;
     NodePtrs mOutputs;
     NodesByID mNodes;
     Aliases mAliases;
     SharedData mData;
-    NodeDatas  mGroupsData;
+    SparseData mExtraData;
     NodeIDSet mExcluded;
 };
 

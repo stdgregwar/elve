@@ -2,7 +2,7 @@
 #define NODEDATA_H
 
 #include <string>
-#include <set>
+#include <unordered_set>
 #include <vector>
 #include <unordered_map>
 #include <memory>
@@ -13,7 +13,7 @@ typedef std::string NodeName;
 typedef unsigned Index;
 typedef std::vector<NodeID> NodeIDs;
 typedef std::vector<NodeName> NodeNames;
-typedef std::set<NodeID> NodeIDSet;
+typedef std::unordered_set<NodeID> NodeIDSet;
 typedef QJsonObject NodeProperties;
 
 enum NodeType{
@@ -49,5 +49,6 @@ private:
 };
 
 typedef std::vector<NodeData> NodeDatas;
+typedef std::unordered_map<NodeID,NodeData> SparseData;
 
 #endif // NODEDATA_H

@@ -21,32 +21,36 @@ Graph::Graph(const SharedData &data) : mData(data)
     }
 }
 
-Graph::Graph(const SharedData& data, const NodeDatas &groups, const Aliases &aliases, const NodeIDSet& excluded)
-    : mData(data), mGroupsData(groups), mAliases(aliases), mExcluded(excluded)
+Graph::Graph(const SharedData& data, const SparseData &extraData, const Aliases &aliases, const NodeIDSet& excluded)
+    : mData(data), mExtraData(extraData), mAliases(aliases), mExcluded(excluded)
 {
     //Build groups data
-    /*NodeID i = mData->nodeDatas().size();
-    for(const NodeName& name : groups) {
-        mGroupsData.emplace_back(NodeData(i,name,{},CLUSTER));
-        //Todo construct inner graph if needed
-    }*/
-
-    using pair_type = NodeDatas::value_type;
+    using pair_type = SparseData::value_type;
+    for(const pair_type& p : mExtraData) {
+        if(!mExcluded.count(p.first)) {
+            addNode(p.second);
+        }
+    }
 
     for(const NodeData& d : data->nodeDatas()) {
-        if(!excluded.count(d.id())) {
+        if(!mExcluded.count(d.id())) {
             addNode(d);
         }
     }
+
     for(const NodeData& d : data->nodeDatas()) {
-        for(const NodeID& did : d.dependencies()) {
-            addEdge(alias(did),alias(d.id()));
+        if(!mExcluded.count(d.id()) || mAliases.count(d.id())) {
+            for(const NodeID& did : d.dependencies()) {
+                if(!mExcluded.count(did)  || mAliases.count(did)) {
+                    addEdge(alias(did),alias(d.id()));
+                }
+            }
         }
     }
 }
 
 NodeID Graph::newID() const {
-    NodeID i = mData->nodeDatas().size()+mGroupsData.size();
+    NodeID i = mData->nodeDatas().size()+mExtraData.size();
 }
 
 const QString& Graph::filename() const {
@@ -87,6 +91,14 @@ void Graph::addEdge(const NodeID& from, const NodeID& to)
     }
 }
 
+const NodeData& Graph::data(const NodeID& id) const {
+    if(id < mData->nodeDatas().size()) {
+        return mData->nodeDatas().at(id);
+    } else {
+        return mExtraData.at(id);
+    }
+}
+
 SharedGraph Graph::clusterize(size_t maxLevel) const {
     return nullptr;
 }
@@ -108,38 +120,39 @@ NodeName Graph::uniqueName(const NodeName& base) const {
 
 SharedGraph Graph::ungroup(const NodeID &cluster) {
 
-    /*NodeIDSet groups;
-    using pair_type = NodeDatas::value_type;
-    for(const NodeData& d : mGroupsData) {
-        if(d.id() != cluster) {
-            groups.insert(d.id());
-        }
-    }
-    return make_shared<Graph>(mData,groups,aliasesWithout(cluster));*/
+    SparseData extras(mExtraData);
+    NodeIDSet excl = excludedWithout(extras.at(cluster).dependencies());
+    extras.erase(cluster);
+    return make_shared<Graph>(mData,extras,aliasesWithout(cluster),excl);
 }
 
-SharedGraph Graph::group(const NodeIDSet &toGroup, const NodeName &groupName) {
-    /*if(toGroup.size() < 2) {
+SharedGraph Graph::group(const NodeIDSet &toGroup, const NodeID& i,const NodeName &groupName) {
+    if(toGroup.size() < 2) {
         return shared_from_this();
     }
 
-    NodeName trueName = uniqueName(groupID);
-    NodeID i = newID();
+    NodeName trueName = uniqueName(groupName);
 
-    NodeIDSet groups;// groups.reserve(mGroupsData.size()+1);
-    Aliases aliases = mAliases;
+    SparseData extra; extra.reserve(mExtraData.size()+1);
+    Aliases aliases(mAliases);
+    NodeIDSet excluded(mExcluded); excluded.reserve(mExcluded.size()+toGroup.size());
     aliases.reserve(aliases.size()+toGroup.size());
+    NodeIDs deps; deps.reserve(toGroup.size());
+    deps.insert(deps.end(),toGroup.begin(),toGroup.end());
 
     for(const NodeID& id : toGroup) {
         aliases.emplace(id,i);
+        excluded.insert(id);
     }
 
-    using pair_type = NodeDatas::value_type;
-    for(const pair_type& p : mGroupsData) {
-        groups.insert(p.first);
+    using pair_type = SparseData::value_type;
+    for(const pair_type& p : mExtraData) {
+        extra.emplace(p.first,p.second);
     }
-    groups.insert(trueID);
-    return make_shared<Graph>(mData,groups,aliases);*/
+    //TODO add properties to cluster
+    //Dependencies are
+    extra.emplace(i,NodeData(i,trueName,deps,CLUSTER));
+    return make_shared<Graph>(mData,extra,aliases,excluded);
 }
 
 const NodePtrs& Graph::inputs() {
@@ -210,4 +223,12 @@ Aliases Graph::aliasesWithout(const NodeID& repl) const {
         }
     }
     return als;
+}
+
+NodeIDSet Graph::excludedWithout(const NodeIDs& ids) const {
+    NodeIDSet excl(mExcluded);
+    for(const NodeID& id : ids) {
+        excl.erase(id);
+    }
+    return excl;
 }
