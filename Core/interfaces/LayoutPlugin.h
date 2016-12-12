@@ -10,7 +10,7 @@
 #include <NodeItem.h>
 #include <System.h>
 
-#include "LayoutPluginFactory.h"
+#include "Plugin.h"
 
 #define LayoutPlugin_iid "ch.epfl.lap.elfe.LayoutPlugin"
 
@@ -18,7 +18,7 @@ class LayoutPlugin;
 
 typedef std::shared_ptr<LayoutPlugin> SharedLayout;
 
-class LayoutPlugin : public QObject
+class LayoutPlugin : public QObject, public Plugin
 {
     Q_OBJECT
 public:

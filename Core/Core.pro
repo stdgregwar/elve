@@ -42,9 +42,9 @@ SOURCES +=\
     EGraph.cpp \
     PluginManager.cpp \
     GraphWidget.cpp \
-    interfaces/LayoutPluginFactory.cpp \
     NodeData.cpp \
-    GraphData.cpp
+    GraphData.cpp \
+    interfaces/Plugin.cpp
 
 RESOURCES += \
     coreresources.qrc
@@ -77,7 +77,23 @@ HEADERS += \
     PluginManager.h \
     GraphWidget.h \
     Singleton.h \
-    interfaces/LayoutPluginFactory.h \
     utils.h \
     NodeData.h \
-    GraphData.h
+    GraphData.h \
+    interfaces/Plugin.h\
+    alice/commands/alias.hpp \
+    alice/commands/convert.hpp \
+    alice/commands/current.hpp \
+    alice/commands/help.hpp \
+    alice/commands/print.hpp \
+    alice/commands/ps.hpp \
+    alice/commands/quit.hpp \
+    alice/commands/read_io.hpp \
+    alice/commands/set.hpp \
+    alice/commands/show.hpp \
+    alice/commands/store.hpp \
+    alice/commands/write_io.hpp \
+    alice/alice.hpp \
+    alice/command.hpp \
+    alice/readline.hpp \
+    alice/rules.hpp \

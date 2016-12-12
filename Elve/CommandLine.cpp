@@ -3,7 +3,8 @@
 #include <QFile>
 #include <sstream>
 
-#include "alice/commands/show.hpp"
+#include <alice/commands/show.hpp>
+#include <interfaces/LayoutPlugin.h>
 
 #include "MainWindow.h"
 
@@ -85,9 +86,18 @@ struct show_store_entry<SharedEGraph>
     }
 };
 
-}
 
 //Show command
+class LayoutCommand : public command
+{
+    LayoutCommand(LayoutPlugin* pl, const envirronment::ptr& env) : command(env, pl->name + " Layout")
+    {
+        opts.add_options()
+                ("");
+    }
+};
+
+}
 
 
 //=================================================================================================================================
