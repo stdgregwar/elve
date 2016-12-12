@@ -20,7 +20,9 @@ enum NodeType{
     NODE,
     INPUT,
     OUTPUT,
-    CLUSTER
+    CLUSTER,
+    INPUT_CLUSTER,
+    OUTPUT_CLUSTER
 };
 
 class Node;

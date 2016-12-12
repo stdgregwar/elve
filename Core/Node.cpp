@@ -73,12 +73,12 @@ const Node::Ancestors& Node::ancestors() const
 
 bool Node::isInput() const
 {
-    return mData.type() == INPUT;
+    return mData.type() == INPUT or mData.type() == INPUT_CLUSTER;
 }
 
 bool Node::isOutput() const
 {
-    return mData.type() == OUTPUT;
+    return mData.type() == OUTPUT or mData.type() == OUTPUT_CLUSTER;
 }
 
 const NodeType &Node::type() const

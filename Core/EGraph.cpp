@@ -171,7 +171,7 @@ const SharedGraph& EGraph::graph() const
 
 void EGraph::setLayout(const SharedLayout &l)
 {
-    //mPosDirty = true;
+    mPosDirty = true;
     l->setGraph(mGraph,positions());
     mLayout = l;
 }

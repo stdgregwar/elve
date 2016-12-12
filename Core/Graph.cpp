@@ -39,10 +39,12 @@ Graph::Graph(const SharedData& data, const SparseData &extraData, const Aliases 
     }
 
     for(const NodeData& d : data->nodeDatas()) {
-        if(!mExcluded.count(d.id()) || mAliases.count(d.id())) {
+        NodeID tid = alias(d.id());
+        if(!mExcluded.count(tid)) {
             for(const NodeID& did : d.dependencies()) {
-                if(!mExcluded.count(did)  || mAliases.count(did)) {
-                    addEdge(alias(did),alias(d.id()));
+                NodeID tpid = alias(did);
+                if(!mExcluded.count(tpid)) {
+                    addEdge(tpid,tid);
                 }
             }
         }
@@ -119,7 +121,9 @@ NodeName Graph::uniqueName(const NodeName& base) const {
 
 
 SharedGraph Graph::ungroup(const NodeID &cluster) {
-
+    if(!mExtraData.count(cluster)) {
+        return shared_from_this();
+    }
     SparseData extras(mExtraData);
     NodeIDSet excl = excludedWithout(extras.at(cluster).dependencies());
     extras.erase(cluster);
@@ -149,9 +153,23 @@ SharedGraph Graph::group(const NodeIDSet &toGroup, const NodeID& i,const NodeNam
     for(const pair_type& p : mExtraData) {
         extra.emplace(p.first,p.second);
     }
-    //TODO add properties to cluster
-    //Dependencies are
-    extra.emplace(i,NodeData(i,trueName,deps,CLUSTER));
+
+    //Handle cluster types
+    const NodeData& first = mData->nodeDatas().at(*toGroup.begin());
+    NodeType t = CLUSTER;
+    switch (first.type()) {
+    case INPUT:
+    case INPUT_CLUSTER:
+        t = INPUT_CLUSTER;
+        break;
+    case OUTPUT:
+    case OUTPUT_CLUSTER:
+        t = OUTPUT_CLUSTER;
+        break;
+    default:
+        break;
+    }
+    extra.emplace(i,NodeData(i,trueName,deps,t,{},first.ioIndex()));
     return make_shared<Graph>(mData,extra,aliases,excluded);
 }
 
@@ -195,20 +213,23 @@ QJsonObject Graph::json() const
     main.insert("graph_data",mData->json());
 
     //Todo insert clustering details here
-    QJsonArray extra;
+
     {
-    using pair_type = SparseData::value_type;
-    for(const pair_type& p : mExtraData) {
-        extra.append(p.second.json());
+        QJsonArray extra;
+        using pair_type = SparseData::value_type;
+        for(const pair_type& p : mExtraData) {
+            extra.append(p.second.json());
+        }
+        main.insert("extra_data",extra);
     }
-    main.insert("extra_data",extra);
+    {
+        QJsonArray als;
+        using pair_type = Aliases::value_type;
+        for(const pair_type& p : mAliases) {
+            als.append(QJsonArray{(int)p.first,(int)p.second});
+        }
+        main.insert("aliases",als);
     }
-    QJsonArray als;
-    using pair_type = Aliases::value_type;
-    for(const pair_type& p : mAliases) {
-        als.append(QJsonArray{(int)p.first,(int)p.second});
-    }
-    main.insert("aliases",als);
     QJsonArray excl;
     for(const NodeID& id : mExcluded) {
         excl.append((int)id);

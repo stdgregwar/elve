@@ -13,7 +13,13 @@ using namespace std;
 NodeItem::NodeItem(const NodeData& data, QGraphicsItem *parent) : QGraphicsPixmapItem(parent), mDraged(false), mData(data)
 {
     setToolTip(QString::fromStdString(data.name()));
-    static unordered_map<NodeType,QString> pixmaps{{NodeType::CLUSTER,":/resources/cluster.svg"},{NodeType::NODE,":/resources/node.svg"},{NodeType::INPUT,":/resources/input.svg"},{NodeType::OUTPUT,":/resources/output.svg"}};
+    static unordered_map<NodeType,QString> pixmaps{
+        {NodeType::CLUSTER,":/resources/cluster.svg"},
+        {NodeType::NODE,":/resources/node.svg"},
+        {NodeType::INPUT,":/resources/input.svg"},
+        {NodeType::OUTPUT,":/resources/output.svg"},
+        {NodeType::INPUT_CLUSTER,":/resources/input.svg"},
+        {NodeType::OUTPUT_CLUSTER,":/resources/output.svg"}};
 
     setZValue(1);
     setPixmap(QIcon(pixmaps.at(data.type())).pixmap(QSize(64,64)));
