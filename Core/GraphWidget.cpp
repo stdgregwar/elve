@@ -146,7 +146,7 @@ void GraphWidget::ungroup(const NodeIDs& names) {
     setGraph(mGraph->ungroup(names),0);
 }
 
-void GraphWidget::group(const NodeIDSet &names, const NodeID &groupName) {
+void GraphWidget::group(const NodeIDSet &names, const NodeName &groupName) {
     NodeIDSet inputs;
     NodeIDSet nonio;
     NodeIDSet outputs;

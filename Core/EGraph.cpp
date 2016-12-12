@@ -29,7 +29,7 @@ SharedEGraph EGraph::fromJSON(const QJsonObject &obj)
 
         QJsonArray jpos = it.value().toArray();
         positions.emplace(std::piecewise_construct,
-                          std::forward_as_tuple(it.key().toStdString()),
+                          std::forward_as_tuple(it.key().toInt()),
                           std::forward_as_tuple(jpos.at(0).toDouble(),jpos.at(1).toDouble()));
     }
     SharedEGraph eg = std::make_shared<EGraph>(g,positions);
@@ -62,7 +62,7 @@ QJsonObject EGraph::json() const
         using pair_type = NodePositions::value_type;
         for(const pair_type& p : mLayout->system().positions()) {
             const QVector2D& pos = p.second;
-            positions.insert(QString::fromStdString(p.first),
+            positions.insert(to_string(p.first).c_str(),
                              QJsonArray{pos.x(),pos.y()});
         }
         layout.insert("positions",positions);
@@ -107,10 +107,9 @@ void EGraph::toFile(const QString& filename) {
     }
 }
 
-SharedEGraph EGraph::group(const NodeIDSet& names, const NodeID &groupName) const
+SharedEGraph EGraph::group(const NodeIDSet& names, const NodeName &groupName) const
 {
     mPosDirty = true;
-    NodeID trueName = mGraph->uniqueID(groupName);
     NodePositions poss = positions();
 
     QVector2D groupCenter;
@@ -119,8 +118,8 @@ SharedEGraph EGraph::group(const NodeIDSet& names, const NodeID &groupName) cons
     }
     groupCenter /= names.size();
 
-    poss[trueName] = groupCenter;
-    SharedEGraph eg = std::make_shared<EGraph>(mGraph->group(names,trueName),poss);
+    poss[mGraph->newID()] = groupCenter;
+    SharedEGraph eg = std::make_shared<EGraph>(mGraph->group(names,groupName),poss);
     eg->setLayout(mLayout->create());
     return eg;
 }

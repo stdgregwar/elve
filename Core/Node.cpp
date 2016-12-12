@@ -113,7 +113,7 @@ void Node::setClusteredGraph(SharedGraph graph)
     mGraph = graph;
 }
 
-QJsonObject Node::json() const
+/*QJsonObject Node::json() const
 {
     static std::unordered_map<NodeType,QString> typeToString{{NODE,"node"},
                                                              {INPUT,"input"},
@@ -139,7 +139,7 @@ QJsonObject Node::json() const
     }
     obj.insert("ancestors",array);
     return obj;
-}
+}*/
 
 const QJsonObject& Node::properties() const {
     return mData.properties();

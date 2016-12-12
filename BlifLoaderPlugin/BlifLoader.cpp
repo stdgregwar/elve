@@ -74,7 +74,7 @@ SharedGraph BlifLoader::load(const QString &filepath) {
     }
     qDebug() << "Loading BLIF file" << filepath;
 
-    NodeDatas data;
+    GraphData::Builder b;
     string line;
 
     NodeIDs outputs;
@@ -100,11 +100,8 @@ SharedGraph BlifLoader::load(const QString &filepath) {
             while(getline(lss,inname,' ')) { //TODO
                 trim(inname);
                 if(inname != "") {
-                    //inputs.push_back(inname);
-                    //addDescription(inname,Node::INPUT,inputI++);
-                    data.emplace(std::piecewise_construct,
-                            std::forward_as_tuple(inname),
-                            std::forward_as_tuple(inname,NodeIDs(),INPUT,QJsonObject(),inputI++));
+                    b.setType(inname,INPUT);
+                    b.setIoIndex(inname,inputI++);
                 }
                 lss >> std::ws;
             }
@@ -114,15 +111,15 @@ SharedGraph BlifLoader::load(const QString &filepath) {
             while(getline(lss,outname,' ')) { //TODO
                 trim(outname);
                 if(outname != "") {
-                    //qDebug() << "out:" << outname.c_str();
-                    outputs.push_back(outname);
+                    b.setType(outname,OUTPUT);
+                    b.setIoIndex(outname,outputI++);
                 }
                 lss >> std::ws;
             }
         }
         else if(com == ".names") {
             string name;
-            NodeIDs names;
+            NodeNames names;
             while(getline(lss,name,' ')) {
                 trim(name);
                 if(name.length() != 0) {
@@ -132,13 +129,7 @@ SharedGraph BlifLoader::load(const QString &filepath) {
             lastname = name;
             names.pop_back(); //Remove destination
 
-            int outindex = find(outputs,name);
-
-            NodeType type = (outindex != -1) ? OUTPUT : NODE;
-
-            data.emplace(std::piecewise_construct,
-                         std::forward_as_tuple(name),
-                         std::forward_as_tuple(name,names,type,QJsonObject(),outindex));
+            b.setDependencies(name,names);
         }
         else if(com[0] == '0' or com[0] == '1' or com[0] == '-') { //Truth tables
             if(lastname.size()) {
@@ -146,16 +137,16 @@ SharedGraph BlifLoader::load(const QString &filepath) {
                 lss >> last;
 
                 QJsonObject tt;
-                if(!data.at(lastname).properties()["truthtable"].isUndefined()) {
-                    QJsonObject tt = data.at(lastname).properties()["truthtable"].toObject();
+                if(b.properties(lastname)["truthtable"].isUndefined()) {
+                    QJsonObject tt = b.properties(lastname)["truthtable"].toObject();
                 }
                 tt[com.c_str()] = last.c_str();
-                data.at(lastname).properties()["truthtable"] = tt;
+                b.properties(lastname)["truthtable"] = tt;
             }
         }
     }
     qDebug() <<"file loaded";
-    SharedData sdata = make_shared<GraphData>(data,filepath);
+    SharedData sdata = b.build(filepath);
     return make_shared<Graph>(sdata);
 }
 

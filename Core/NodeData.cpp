@@ -5,11 +5,12 @@
 
 NodeData::NodeData(const NodeID& id, const NodeName &name, const NodeIDs& dependencies, const NodeType& type, const NodeProperties& props, const Index& ioindex)
     : mId(id),
+      mName(name),
       mDependencies(dependencies),
       mType(type),
       mProperties(props),
-      mIOIndex(ioindex),
-      mName(name)
+      mIOIndex(ioindex)
+
 {
 
 }
@@ -44,7 +45,7 @@ const QJsonObject NodeData::json() const {
                                                              {CLUSTER,"cluster"}};
     QJsonObject obj;
     obj.insert("properties",properties());
-    obj.insert("id",id());
+    obj.insert("id",(int)id());
     obj.insert("name",QString::fromStdString(name()));
     obj.insert("type",typeToString.at(type()));
     obj.insert("io_index",(int)ioIndex());
@@ -52,7 +53,7 @@ const QJsonObject NodeData::json() const {
 
     QJsonArray array;
     for(const NodeID& id : mDependencies) {
-        array.append(id);
+        array.append((int)id);
     }
     obj.insert("dependencies",array);
     return obj;

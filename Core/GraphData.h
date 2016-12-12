@@ -14,24 +14,26 @@ public:
     class Builder{
     public:
         Builder();
-        void addNode(const NodeName& name, const NodeType& type = NODE, const NodeNames& dependencies = {}, const NodeProperties& props = {},const Index& ioindex = 0);
         void setDependencies(const NodeName& name, const NodeNames& dependencies);
         void setProperties(const NodeName& name, const NodeProperties& props);
+        QJsonObject& properties(const NodeName& name);
         void setType(const NodeName& name, const NodeType& type);
         void setIoIndex(const NodeName& name, const Index& index);
-        SharedData build(QString filename);
+        const SharedData build(const QString &filename);
     private:
-        /*void setDependencies(NodeData& data, const NodeNames& dependencies);
-        void setProperties(NodeData& data, const NodeProperties& props);
-        void setType(const NodeData& data, const NodeType& type);
-        void setIoIndex(const NodeName& data, const Index& index);*/
+        NodeID id(const NodeName& name);
+        NodeType type(const NodeID& id);
+        NodeProperties props(const NodeID& id);
+        Index index(const NodeID& id);
+        NodeIDs dependencies(const NodeID& id);
 
-        std::unordered_map<NodeName,std::vector<NodeName>> mDependencies;
-        std::unordered_map<NodeName,NodeProperties> mProperties;
-        std::unordered_map<NodeName,Index> mIndice;
-        std::unordered_map<NodeName,NodeType> mTypes;
+        NodeID mID;
+        std::unordered_map<NodeID,std::vector<NodeName>> mDependencies;
+        std::unordered_map<NodeID,NodeProperties> mProperties;
+        std::unordered_map<NodeID,Index> mIndice;
+        std::unordered_map<NodeID,NodeType> mTypes;
         std::unordered_map<NodeName,NodeID> mIDs;
-        std::vector<NodeName> mNames;
+        std::unordered_map<NodeID,NodeName> mNames;
     };
 
     GraphData(const NodeDatas& nodesData = {}, QString filename = "graph");

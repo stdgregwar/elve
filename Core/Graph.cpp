@@ -11,42 +11,42 @@ using namespace std;
 
 Graph::Graph(const SharedData &data) : mData(data)
 {
-    using pair_type = NodeDatas::value_type;
-    for(const pair_type& p : data->nodeDatas()) {
-        addNode(p.second);
+    for(const NodeData& d : data->nodeDatas()) {
+        addNode(d);
     }
-    for(const pair_type& p : data->nodeDatas()) {
-        for(const NodeID& did : p.second.dependencies()) {
-            addEdge(did,p.first);
+    for(const NodeData& d : data->nodeDatas()) {
+        for(const NodeID& did : d.dependencies()) {
+            addEdge(did,d.id());
         }
     }
 }
 
-Graph::Graph(const SharedData& data, const NodeIDSet &groups, const Aliases &aliases, const NodeIDSet& excluded)
-    : mData(data), mAliases(aliases), mExcluded(excluded)
+Graph::Graph(const SharedData& data, const NodeDatas &groups, const Aliases &aliases, const NodeIDSet& excluded)
+    : mData(data), mGroupsData(groups), mAliases(aliases), mExcluded(excluded)
 {
     //Build groups data
-    for(const NodeID& id : groups) {
-        std::pair<NodeDatas::iterator,bool> p = mGroupsData.emplace(std::piecewise_construct,
-                            std::forward_as_tuple(id),
-                            std::forward_as_tuple(NodeData(id,{},CLUSTER)));
-        Node* n = addNode(p.first->second);
-
+    /*NodeID i = mData->nodeDatas().size();
+    for(const NodeName& name : groups) {
+        mGroupsData.emplace_back(NodeData(i,name,{},CLUSTER));
         //Todo construct inner graph if needed
-    }
+    }*/
 
     using pair_type = NodeDatas::value_type;
 
-    for(const pair_type& p : data->nodeDatas()) {
-        if(!excluded.count(p.first)) {
-            addNode(p.second);
+    for(const NodeData& d : data->nodeDatas()) {
+        if(!excluded.count(d.id())) {
+            addNode(d);
         }
     }
-    for(const pair_type& p : data->nodeDatas()) {
-        for(const NodeID& did : p.second.dependencies()) {
-            addEdge(alias(did),alias(p.first));
+    for(const NodeData& d : data->nodeDatas()) {
+        for(const NodeID& did : d.dependencies()) {
+            addEdge(alias(did),alias(d.id()));
         }
     }
+}
+
+NodeID Graph::newID() const {
+    NodeID i = mData->nodeDatas().size()+mGroupsData.size();
 }
 
 const QString& Graph::filename() const {
@@ -108,29 +108,30 @@ NodeName Graph::uniqueName(const NodeName& base) const {
 
 SharedGraph Graph::ungroup(const NodeID &cluster) {
 
-    NodeIDSet groups;
+    /*NodeIDSet groups;
     using pair_type = NodeDatas::value_type;
-    for(const pair_type& p : mGroupsData) {
-        if(p.first != cluster) {
-            groups.insert(p.first);
+    for(const NodeData& d : mGroupsData) {
+        if(d.id() != cluster) {
+            groups.insert(d.id());
         }
     }
-    return make_shared<Graph>(mData,groups,aliasesWithout(cluster));
+    return make_shared<Graph>(mData,groups,aliasesWithout(cluster));*/
 }
 
-SharedGraph Graph::group(const NodeIDSet &toGroup, const NodeID &groupID) {
-    if(toGroup.size() < 2) {
+SharedGraph Graph::group(const NodeIDSet &toGroup, const NodeName &groupName) {
+    /*if(toGroup.size() < 2) {
         return shared_from_this();
     }
 
-    NodeID trueID = uniqueID(groupID);
+    NodeName trueName = uniqueName(groupID);
+    NodeID i = newID();
 
     NodeIDSet groups;// groups.reserve(mGroupsData.size()+1);
     Aliases aliases = mAliases;
     aliases.reserve(aliases.size()+toGroup.size());
 
     for(const NodeID& id : toGroup) {
-        aliases.emplace(id,trueID);
+        aliases.emplace(id,i);
     }
 
     using pair_type = NodeDatas::value_type;
@@ -138,7 +139,7 @@ SharedGraph Graph::group(const NodeIDSet &toGroup, const NodeID &groupID) {
         groups.insert(p.first);
     }
     groups.insert(trueID);
-    return make_shared<Graph>(mData,groups,aliases);
+    return make_shared<Graph>(mData,groups,aliases);*/
 }
 
 const NodePtrs& Graph::inputs() {
