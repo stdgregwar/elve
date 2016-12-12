@@ -195,7 +195,25 @@ QJsonObject Graph::json() const
     main.insert("graph_data",mData->json());
 
     //Todo insert clustering details here
-
+    QJsonArray extra;
+    {
+    using pair_type = SparseData::value_type;
+    for(const pair_type& p : mExtraData) {
+        extra.append(p.second.json());
+    }
+    main.insert("extra_data",extra);
+    }
+    QJsonArray als;
+    using pair_type = Aliases::value_type;
+    for(const pair_type& p : mAliases) {
+        als.append(QJsonArray{(int)p.first,(int)p.second});
+    }
+    main.insert("aliases",als);
+    QJsonArray excl;
+    for(const NodeID& id : mExcluded) {
+        excl.append((int)id);
+    }
+    main.insert("excluded",excl);
     return main;
 }
 
@@ -212,7 +230,27 @@ SharedGraph Graph::fromJson(const QJsonObject& obj)
 {
     SharedData sdata = make_shared<GraphData>(obj.value("graph_data").toObject());
     //Todo find clustering primitives here
-    return make_shared<Graph>(sdata);
+    SparseData extra;
+    QJsonArray jextr = obj.value("extra_data").toArray();
+    extra.reserve(jextr.size());
+    for(const QJsonValue& v : jextr) {
+        QJsonObject obj = v.toObject();
+        extra.emplace(obj.value("id").toInt(),obj);
+    }
+    Aliases als;
+    QJsonArray jals = obj.value("aliases").toArray();
+    als.reserve(jals.size());
+    for(const QJsonValue& v : jals) {
+        QJsonArray pair = v.toArray();
+        als.emplace(pair.at(0).toInt(-1),pair.at(1).toInt(-1));
+    }
+    NodeIDSet excl;
+    QJsonArray jexcl = obj.value("excluded").toArray();
+    excl.reserve(jexcl.size());
+    for(const QJsonValue& v : jexcl) {
+        excl.insert(v.toInt());
+    }
+    return make_shared<Graph>(sdata,extra,als,excl);
 }
 
 Aliases Graph::aliasesWithout(const NodeID& repl) const {
