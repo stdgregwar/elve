@@ -6,6 +6,17 @@
 
 using namespace std;
 
+LayoutPlugin::LayoutPlugin()
+{
+
+}
+
+LayoutPlugin::LayoutPlugin(const LayoutPlugin& other) :
+    QObject(other.parent())
+{
+
+}
+
 QVector2D LayoutPlugin::startPosition(const NodeID& id,QRectF rect) {
     static default_random_engine gen;
 
