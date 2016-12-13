@@ -10,7 +10,7 @@ QConsoleWidget::QConsoleWidget(QWidget *parent) : QTextEdit(parent)
     setUndoRedoEnabled(false);
     setStyleSheet("font : 11pt 'Mono';");
 
-    //setTextColor(QColor("white"));
+    setTextColor(QColor("white"));
 
     /*QPalette p = this->palette();
     p.setColor(QPalette::Base,QColor(59,58,58));

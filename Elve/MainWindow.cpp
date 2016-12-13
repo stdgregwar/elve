@@ -34,7 +34,7 @@ MainWindow::MainWindow(QWidget *parent)
     File.open(QFile::ReadOnly);
     QString StyleSheet = QLatin1String(File.readAll());
 
-    //qApp->setStyleSheet(StyleSheet);
+    qApp->setStyleSheet(StyleSheet);
 
     ui.setupUi(this);
 
@@ -60,6 +60,7 @@ MainWindow::MainWindow(QWidget *parent)
     QDockWidget* dw = new QDockWidget("Shell",this);
     mConsole = new QConsoleWidget(this);
     dw->setWidget(mConsole);
+    dw->setFeatures(QDockWidget::DockWidgetFloatable | QDockWidget::DockWidgetMovable);
     addDockWidget(Qt::BottomDockWidgetArea,dw);
     setDockOptions(QMainWindow::DockOption::AnimatedDocks);
 }

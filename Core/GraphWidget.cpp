@@ -267,7 +267,6 @@ bool GraphWidget::BorderSelect::mouseReleaseEvent(QMouseEvent *event) {
 }
 
 bool GraphWidget::BorderSelect::mouseMoveEvent(QMouseEvent *event) {
-
     float inf = 800000; //TODO cross
     QPointF pos = gw.mapToScene(event->pos());
     if(mCross) {
