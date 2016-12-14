@@ -16,6 +16,7 @@ class CommandLine : public QObject, public Singleton<CommandLine>
 public:
     bool run_command(const QString& cmd, std::ostream& out, std::ostream &cerr);
     QStringList completion(const QString& base);
+    alice::cli_store<SharedEGraph>& store();
 private:
     CommandLine(); //Private constructor for singleton
     void init();

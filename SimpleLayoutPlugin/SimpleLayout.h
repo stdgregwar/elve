@@ -10,8 +10,15 @@ class SimpleLayout : public LayoutPlugin
     Q_INTERFACES(LayoutPlugin)
 
     ELVE_LAYOUT(SimpleLayout,"Simple-Force","simple")
+    SimpleLayout();
     virtual void setGraph(SharedGraph g) override;
     virtual void tick(float dt, bool fast) override;
+private:
+    qreal mK = 2; //Plugin options with default values
+    qreal mL0 = 0;
+    qreal mDamp = 2;
+    qreal mMinUnit = 64.0;
+    qreal mMinIOUnit = 128.0;
 };
 
 #endif // LEVELLAYOUTPLUGIN_H

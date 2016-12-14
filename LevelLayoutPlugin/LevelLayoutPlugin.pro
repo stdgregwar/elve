@@ -20,7 +20,8 @@ SOURCES += \
 
 HEADERS += \
     LevelLayout.h
-DISTFILES +=
+DISTFILES += \
+    libLevelLayoutPlugin.ini
 
 unix {
     target.path = /usr/lib

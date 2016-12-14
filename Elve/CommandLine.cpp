@@ -193,6 +193,10 @@ void CommandLine::setupPluginsCommands() {
     }
 }
 
+alice::cli_store<SharedEGraph>& CommandLine::store() {
+    return mCli.env->store<SharedEGraph>();
+}
+
 bool CommandLine::run_command(const QString& cmd, std::ostream& out,std::ostream& cerr)
 {
     try {

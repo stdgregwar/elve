@@ -38,7 +38,23 @@ HEADERS += \
     Redirect.h \
     uis/Tab.h \
     CommandLine.h \
-    alice/allalice.h
+    alice/allalice.h \
+    alice/commands/alias.hpp \
+    alice/commands/convert.hpp \
+    alice/commands/current.hpp \
+    alice/commands/help.hpp \
+    alice/commands/print.hpp \
+    alice/commands/ps.hpp \
+    alice/commands/quit.hpp \
+    alice/commands/read_io.hpp \
+    alice/commands/set.hpp \
+    alice/commands/show.hpp \
+    alice/commands/store.hpp \
+    alice/commands/write_io.hpp \
+    alice/alice.hpp \
+    alice/command.hpp \
+    alice/readline.hpp \
+    alice/rules.hpp \
 
 FORMS += \
     uis/mainwindow_test.ui \
