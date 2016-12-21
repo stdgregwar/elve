@@ -149,8 +149,7 @@ public:
 
     bool execute() override {
         auto& graphs = env->store<SharedEGraph>();
-        graphs.extend();
-        graphs.current() = std::make_shared<EGraph>(mLoader->load(QString::fromStdString(mFilename)));
+        graphs.push(std::make_shared<EGraph>(mLoader->load(QString::fromStdString(mFilename))));
         return true;
     }
 private:
@@ -193,7 +192,7 @@ void CommandLine::setupPluginsCommands() {
     }
 }
 
-alice::cli_store<SharedEGraph>& CommandLine::store() {
+Store &CommandLine::store() {
     return mCli.env->store<SharedEGraph>();
 }
 

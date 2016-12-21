@@ -9,6 +9,8 @@
 #include <EGraph.h>
 #include <QString>
 
+typedef alice::cli_store<SharedEGraph> Store;
+
 class CommandLine : public QObject, public Singleton<CommandLine>
 {
     friend class Singleton<CommandLine>;
@@ -16,7 +18,7 @@ class CommandLine : public QObject, public Singleton<CommandLine>
 public:
     bool run_command(const QString& cmd, std::ostream& out, std::ostream &cerr);
     QStringList completion(const QString& base);
-    alice::cli_store<SharedEGraph>& store();
+    Store& store();
 private:
     CommandLine(); //Private constructor for singleton
     void init();

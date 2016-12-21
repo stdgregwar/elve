@@ -56,6 +56,7 @@ void GraphWidget::clear() {
 
 void GraphWidget::setGraph(SharedEGraph graph, unsigned quickTicks) {
     mGraph = graph;
+    mGraph->setView(this);
     if(graph->layout()) {
         //graph->applyLayout();
         reflect(graph->layout()->system(),graph->graph());

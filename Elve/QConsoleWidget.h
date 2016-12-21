@@ -9,7 +9,7 @@ class QConsoleWidget : public QTextEdit
     Q_OBJECT
 public:
     QConsoleWidget(QWidget *parent = 0);
-    void run_command(const QString& cmd);
+    void run_command(const QString& cmd,bool print = false);
     void cmd_up();
     void cmd_down();
     void replace(QString rep);

@@ -20,6 +20,7 @@
 
 #include "FileLoadAction.h"
 #include "LayoutLoadAction.h"
+#include "CommandLine.h"
 
 
 
@@ -41,7 +42,6 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui.mdiArea,SIGNAL(subWindowActivated(QMdiSubWindow*)),this,SLOT(on_tab_change(QMdiSubWindow*)));
 
     PluginManager& pluginManager = PluginManager::get();
-
     //setup loaders
     for(auto& l : pluginManager.loaders()) {
         FileLoadAction* a = new FileLoadAction(l,l->formatName(),this);
@@ -63,6 +63,14 @@ MainWindow::MainWindow(QWidget *parent)
     dw->setFeatures(QDockWidget::DockWidgetFloatable | QDockWidget::DockWidgetMovable);
     addDockWidget(Qt::BottomDockWidgetArea,dw);
     setDockOptions(QMainWindow::DockOption::AnimatedDocks);
+
+    //Setup store view
+    QDockWidget* vdw = new QDockWidget("Store",this);
+    mStoreView = new StoreView(CommandLine::get().store(),this);
+    vdw->setWidget(mStoreView);
+    vdw->setFeatures(QDockWidget::DockWidgetFloatable | QDockWidget::DockWidgetMovable);
+    addDockWidget(Qt::LeftDockWidgetArea,vdw);
+    setDockOptions(QMainWindow::DockOption::AnimatedDocks);
 }
 
 
@@ -75,15 +83,22 @@ MainWindow::~MainWindow()
 void MainWindow::on_import_trigerred(GraphLoaderPlugin* ld) {
     QString filename = QFileDialog::getOpenFileName(this,"Open " + ld->formatName(),"",ld->fileFilter());
     if(filename != "") {
-        SharedGraph g;
+        runUiCommand(QString("load_%1 \"%2\"").arg(ld->cliName().c_str(),filename));
+        /*SharedGraph g;
         //try {
             g = ld->load(filename);
         //} catch (std::exception e) {
             //QMessageBox::critical(this,"Error", e.what());
         //}
         //g->setFilename(filename.toStdString());
-        newWindowWithFile(EGraph::fromGraph(g),filename);
+        SharedEGraph eg = EGraph::fromGraph(g);
+        CommandLine::get().store().push(eg);
+        newWindowWithFile(eg,filename);*/
     }
+}
+
+void MainWindow::runUiCommand(const QString& cmd) {
+    mConsole->run_command(cmd,true);
 }
 
 void MainWindow::on_layout_trigerred(LayoutPlugin* layout) {
@@ -108,7 +123,8 @@ void MainWindow::on_actionOpen_triggered()
         if(QFileInfo(list.last()).isDir()) {
             return;
         }
-        onFileOpen(list.first());
+        //onFileOpen(list.first());
+        runUiCommand(QString("read_graph \"%1\"").arg(list.last()));
     }
 }
 
@@ -123,6 +139,7 @@ void MainWindow::onFileOpen(const QString& filename){
             doc = QJsonDocument::fromJson(file.readAll());
         }
         SharedEGraph eg = EGraph::fromJSON(doc.object());
+        CommandLine::get().store().push(eg);
         newWindowWithFile(eg,filename);
     } else {
         throw std::runtime_error("Couldn't open file " + filename.toStdString() + " for reading.");

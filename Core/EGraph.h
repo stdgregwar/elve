@@ -8,6 +8,7 @@ class EGraph;
 
 typedef std::shared_ptr<EGraph> SharedEGraph;
 
+class GraphWidget;
 class EGraph
 {
 public:
@@ -28,12 +29,14 @@ public:
     void setLayout(const SharedLayout& l);
     const SharedLayout& layout();
     void applyLayout(const NodePositions& p = NodePositions());
+    void setView(GraphWidget* view){mView = view;}
     ~EGraph();
 private:
     mutable bool mPosDirty;
     SharedGraph mGraph;
     mutable NodePositions mPositions; //Defining last saved node positions
     SharedLayout mLayout;
+    GraphWidget* mView;
 };
 
 #endif // EGRAPH_H

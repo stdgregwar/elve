@@ -102,20 +102,22 @@ void QConsoleWidget::replace(QString rep)
 void QConsoleWidget::issue() {
     int count = toPlainText().count() - mFixedPosition;
     QString cmd = toPlainText().right(count);
-    mHistory.append(cmd);
-    mCmdIndex = mHistory.size();
     //Call alice here
     run_command(cmd);
 }
 
-void QConsoleWidget::run_command(const QString& cmd) {
+void QConsoleWidget::run_command(const QString& cmd, bool print) {
     std::ostringstream stderr;
     std::ostringstream stdout;
     stdout<< std::endl;
+    if(print) insertPlainText(cmd);
     CommandLine::get().run_command(cmd,stdout,stderr);
     OnChildStdOutWrite(QString::fromStdString(stdout.str()));
     print_error(QString::fromStdString(stderr.str()));
     print_prompt();
+
+    mHistory.append(cmd);
+    mCmdIndex = mHistory.size();
 }
 
 void QConsoleWidget::toBottom() {

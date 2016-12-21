@@ -5,13 +5,15 @@
 #include <QFile>
 #include "PluginManager.h"
 #include <random>
+#include "GraphWidget.h"
 
 using namespace std;
 
 EGraph::EGraph(const SharedGraph &g, const NodePositions &positions) :
     mGraph(g),
     mPositions(positions),
-    mPosDirty(false)
+    mPosDirty(false),
+    mView(nullptr)
 {
 
 }
@@ -174,6 +176,7 @@ void EGraph::setLayout(const SharedLayout &l)
     mPosDirty = true;
     l->setGraph(mGraph,positions());
     mLayout = l;
+    if(mView) mView->reflect(l->system(),mGraph);
 }
 
 const SharedLayout &EGraph::layout()

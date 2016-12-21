@@ -26,7 +26,7 @@
  *
  * @brief CLI general command data structure
  *
- * @author Mathias Soeken
+ * @author Mathias Soeken, modifications Grégoire Hirt
  * @since  2.3
  */
 
@@ -234,6 +234,7 @@ public:
     inline void set_current_index( unsigned i )
     {
         _current = i;
+        _callback();
     }
 
     void extend()
@@ -242,18 +243,35 @@ public:
         _data.resize( s + 1u );
         _current = s;
         current() = T();
+        _callback();
+    }
+
+    void push(const T& data) {
+        extend();
+        current() = data;
+        _callback();
     }
 
     void clear()
     {
         _data.clear();
         _current = -1;
+        _callback();
+    }
+
+    void notify() {
+        _callback();
+    }
+
+    void set_callback(std::function<void()> c) {
+        _callback = c;
     }
 
 private:
     std::string    _name;
     std::vector<T> _data;
     int            _current = -1;
+    std::function<void()> _callback = []{};
 };
 
 template<typename T>
