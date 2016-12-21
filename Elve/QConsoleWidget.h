@@ -10,12 +10,18 @@ class QConsoleWidget : public QTextEdit
 public:
     QConsoleWidget(QWidget *parent = 0);
     void run_command(const QString& cmd);
+    void cmd_up();
+    void cmd_down();
+    void replace(QString rep);
+    void issue();
     void print_prompt();
     void print_error(const QString& error);
     void toBottom();
     ~QConsoleWidget();
 private:
-    int fixedPosition;
+    int mFixedPosition;
+    int mCmdIndex;
+    QStringList mHistory;
 protected:
     void keyPressEvent (QKeyEvent * event);
 public slots:
