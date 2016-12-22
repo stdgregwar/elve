@@ -103,10 +103,11 @@ void MainWindow::runUiCommand(const QString& cmd) {
 
 void MainWindow::on_layout_trigerred(LayoutPlugin* layout) {
     qDebug() << "Setting layout to " + layout->name();
-    GraphWidget* vp = viewport();
+    /*GraphWidget* vp = viewport();
     if(vp) {
         vp->setLayout(layout->create());
-    }
+    }*/
+    runUiCommand(QString("%1_layout").arg(QString::fromStdString(layout->cliName())));
 }
 
 void MainWindow::on_actionOpen_triggered()

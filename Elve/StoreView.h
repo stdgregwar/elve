@@ -3,15 +3,18 @@
 
 #include <QListWidget>
 #include "CommandLine.h"
-
+class MainWindow;
 class StoreView : public QListWidget
 {
+    Q_OBJECT
 public:
-    StoreView(Store &store, QWidget* parent = nullptr);
+    StoreView(Store &store, MainWindow* parent = nullptr);
     void update();
 public slots:
+    void setCurrentStoreIndex(QModelIndex);
 private:
     Store& mStore;
+    MainWindow* mWindow;
 };
 
 #endif // STOREVIEW_H

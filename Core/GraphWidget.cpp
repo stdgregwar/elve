@@ -199,7 +199,7 @@ void GraphWidget::setBehaviour(Behaviour* b) {
 
 void GraphWidget::setLayout(const SharedLayout& l) {
     mGraph->setLayout(l);
-    reflect(mGraph->layout()->system(),mGraph->graph());
+    //reflect(mGraph->layout()->system(),mGraph->graph());
 }
 
 void GraphWidget::clearScene() {

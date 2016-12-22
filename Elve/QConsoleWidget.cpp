@@ -5,7 +5,10 @@
 #include <QDebug>
 #include <QKeyEvent>
 
-QConsoleWidget::QConsoleWidget(QWidget *parent) : QTextEdit(parent)
+QConsoleWidget::QConsoleWidget(QWidget *parent) : QTextEdit(parent),
+    mHistory{
+        "read_graph -n ~/mul5.json"
+        }
 {
     setUndoRedoEnabled(false);
     setStyleSheet("font : 11pt 'Mono';");
@@ -116,7 +119,7 @@ void QConsoleWidget::run_command(const QString& cmd, bool print) {
     print_error(QString::fromStdString(stderr.str()));
     print_prompt();
 
-    mHistory.append(cmd);
+    if(!cmd.isEmpty()) mHistory.append(cmd);
     mCmdIndex = mHistory.size();
 }
 
