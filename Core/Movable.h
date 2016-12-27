@@ -13,7 +13,7 @@ public:
     void setPoint(Point* m);
     Point* point();
 private:
-    Point* mMass;
+    Point* mPoint;
 };
 
 #endif // MOVABLE_H

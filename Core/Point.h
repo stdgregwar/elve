@@ -11,6 +11,7 @@
 
 class Point
 {
+    friend class Movable;
 public:
     Point(qreal mass,const NodeID& id);
     bool moved() const;
@@ -30,6 +31,7 @@ public:
     void setContainerData(void* data) const;
     const NodeID& boundID() const;
 private:
+    std::set<Movable*>& movables() {return mMovables;}
     NodeID mID;
     QVector2D mPos;
     QVector2D mSpeed;
