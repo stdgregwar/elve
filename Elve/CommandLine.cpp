@@ -3,7 +3,8 @@
 #include <QFile>
 #include <sstream>
 
-#include "alice/commands/show.hpp"
+#include <alice/commands/show.hpp>
+#include <interfaces/LayoutPlugin.h>
 
 #include "MainWindow.h"
 
@@ -85,12 +86,84 @@ struct show_store_entry<SharedEGraph>
     }
 };
 
-}
 
-//Show command
+//Layout command
+class LayoutCommand : public command
+{
+public:
+    LayoutCommand(LayoutPlugin* pl, const environment::ptr& env) : command(env, (pl->name() + " Layout").toStdString()),
+      mLayout(pl)
+    {
+        pod.add("index",1);
+        opts.add_options()
+                ("index,i",po::value(&id),
+                 ("id of the graph to set Layout " + pl->name() + " on.").toStdString().c_str());
+
+        opts.add(pl->opts()); //Add plugin options themselves
+    }
+
+    rules_t validity_rules() const override {
+        auto& graphs = env->store<SharedEGraph>();
+        return {
+            {[this,&graphs] {return (!is_set("id") && !graphs.empty()) || (id<graphs.size() && id > -1);},
+                "if set id must be in store range, store must not be empty"}
+        };
+    }
+
+    bool execute() override {
+        auto& graphs = env->store<SharedEGraph>();
+        SharedEGraph eg;
+        if(is_set("index")){
+            eg = graphs[id];
+        } else {
+            eg = graphs.current();
+        }
+        eg->setLayout(mLayout->create());
+        return true;
+    }
+private:
+    unsigned id = 0;
+    LayoutPlugin* mLayout;
+};
+
+//Layout command
+class LoaderCommand : public command
+{
+public:
+    LoaderCommand(GraphLoaderPlugin* pl, const environment::ptr& env) : command(env, (pl->formatName() + " Loader").toStdString()),
+      mLoader(pl)
+    {
+        pod.add("filename",1);
+        opts.add_options()
+                ("filename,f",po::value(&mFilename),
+                 ("filename of the " + pl->formatName() + " file to load").toStdString().c_str());
+
+        opts.add(pl->opts()); //Add plugin options themselves
+    }
+
+    rules_t validity_rules() const override {
+        return  {
+            file_exists_if_set( *this, process_filename( mFilename ),"filename")
+        };
+    }
+
+    bool execute() override {
+        auto& graphs = env->store<SharedEGraph>();
+        graphs.push(std::make_shared<EGraph>(mLoader->load(QString::fromStdString(mFilename))));
+        return true;
+    }
+private:
+    std::string mFilename;
+    GraphLoaderPlugin* mLoader;
+};
+
+}
 
 
 //=================================================================================================================================
+
+using namespace std;
+using namespace alice;
 
 CommandLine::CommandLine() : mCli("elve")
 {
@@ -105,6 +178,22 @@ void CommandLine::init()
     ADD_READ_COMMAND(graph,"Graph");
     ADD_WRITE_COMMAND(graph,"Graph");
     mCli.init(0,{},std::cout);
+    setupPluginsCommands();
+}
+
+void CommandLine::setupPluginsCommands() {
+    mCli.set_category("Layouts");
+    for(LayoutPlugin* pl : PluginManager::get().layouts()) {
+        mCli.insert_command(pl->cliName()+"_layout", make_shared<LayoutCommand>(pl,mCli.env));
+    }
+    mCli.set_category("Loaders");
+    for(GraphLoaderPlugin* pl : PluginManager::get().loaders()) {
+        mCli.insert_command("load_" + pl->cliName(), make_shared<LoaderCommand>(pl,mCli.env));
+    }
+}
+
+Store &CommandLine::store() {
+    return mCli.env->store<SharedEGraph>();
 }
 
 bool CommandLine::run_command(const QString& cmd, std::ostream& out,std::ostream& cerr)

@@ -22,20 +22,26 @@ void _load(const QString& path, const QString& type, QList<T*>& toFill) {
     QDir dir(path);
     for(const QFileInfo& info : dir.entryInfoList(QDir::Files)) {
         qDebug() << "Trying to load" << info.baseName();
-        QPluginLoader* qpl = new QPluginLoader(info.filePath());
-        if(!qpl->load()) {
-            QMessageBox("Warning","Could not load " + info.baseName() + " : \n" + qpl->errorString(),QMessageBox::Warning,0,0,0).exec();
-            qDebug() << qpl->errorString() << endl;
-        } else {
-            QObject* obj = qpl->instance();
-            T* interface = qobject_cast<T*>(obj);
-            if(interface) {
-                toFill.push_back(interface);
+        if(info.suffix() == "so" || info.suffix() == "dll" || info.suffix() == "dylib") {
+            QPluginLoader* qpl = new QPluginLoader(info.filePath());
+            if(!qpl->load()) {
+                QMessageBox("Warning","Could not load " + info.baseName() + " : \n" + qpl->errorString(),QMessageBox::Warning,0,0,0).exec();
+                qDebug() << qpl->errorString() << endl;
             } else {
-                QMessageBox("Warning","Could not load " + info.baseName() + " : \n Plugin is not a " + type,QMessageBox::Warning,0,0,0).exec();
+                QObject* obj = qpl->instance();
+                T* interface = qobject_cast<T*>(obj);
+                if(interface) {
+                    if(dir.exists(info.baseName()+".ini")) {
+                        qDebug() << "found config file for plugin" << info.baseName();
+                        //TODO link config file path with plugin
+                    }
+                    toFill.push_back(interface);
+                } else {
+                    QMessageBox("Warning","Could not load " + info.baseName() + " : \n Plugin is not a " + type,QMessageBox::Warning,0,0,0).exec();
+                }
             }
+            delete qpl;
         }
-        delete qpl;
     }
 }
 

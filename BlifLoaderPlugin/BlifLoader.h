@@ -14,12 +14,7 @@ class BlifLoader : public QObject, public GraphLoaderPlugin
 public:
     BlifLoader(QObject *parent = 0);
     SharedGraph load(const QString &filepath) override;
-    QString fileFilter() override {
-        return tr("BLIF Files (*.blif)");
-    }
-    QString formatName() override {
-        return tr("BLIF");
-    }
+    ELVE_LOADER(BlifLoader,"BLIF","BLIF Files (*.blif)","blif")
 };
 
 #endif // BLIFLOADER_H

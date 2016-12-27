@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui svg
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -42,9 +42,9 @@ SOURCES +=\
     EGraph.cpp \
     PluginManager.cpp \
     GraphWidget.cpp \
-    interfaces/LayoutPluginFactory.cpp \
     NodeData.cpp \
-    GraphData.cpp
+    GraphData.cpp \
+    interfaces/Plugin.cpp
 
 RESOURCES += \
     coreresources.qrc
@@ -77,7 +77,7 @@ HEADERS += \
     PluginManager.h \
     GraphWidget.h \
     Singleton.h \
-    interfaces/LayoutPluginFactory.h \
     utils.h \
     NodeData.h \
-    GraphData.h
+    GraphData.h \
+    interfaces/Plugin.h

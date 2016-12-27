@@ -18,7 +18,8 @@ SOURCES += main.cpp \
     QConsoleWidget.cpp \
     Redirect.cpp \
     uis/Tab.cpp \
-    CommandLine.cpp
+    CommandLine.cpp \
+    StoreView.cpp
 
 win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../Core/release/ -lCore
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../Core/debug/ -lCore
@@ -34,6 +35,11 @@ HEADERS += \
     MainWindow.h \
     FileLoadAction.h \
     LayoutLoadAction.h \
+    QConsoleWidget.h \
+    Redirect.h \
+    uis/Tab.h \
+    CommandLine.h \
+    alice/allalice.h \
     alice/commands/alias.hpp \
     alice/commands/convert.hpp \
     alice/commands/current.hpp \
@@ -50,11 +56,7 @@ HEADERS += \
     alice/command.hpp \
     alice/readline.hpp \
     alice/rules.hpp \
-    QConsoleWidget.h \
-    Redirect.h \
-    uis/Tab.h \
-    CommandLine.h \
-    alice/allalice.h
+    StoreView.h
 
 FORMS += \
     uis/mainwindow_test.ui \

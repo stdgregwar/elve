@@ -6,6 +6,7 @@
 #include <ui_mainwindow_test.h>
 #include "PluginManager.h"
 #include "QConsoleWidget.h"
+#include "StoreView.h"
 
 class MainWindow : public QMainWindow, public Singleton<MainWindow>
 {
@@ -17,12 +18,14 @@ public:
     void newWindowWithFile(SharedEGraph g, QString filename);
     void connectTab(QMdiSubWindow* tab);
     void disconnectTab(QMdiSubWindow* tab);
+    void runUiCommand(const QString& cmd);
     GraphWidget* viewport();
     ~MainWindow();
 private:
     //PluginManager mPluginManager;
     QMdiSubWindow* mCurrentTab;
     QConsoleWidget* mConsole;
+    StoreView* mStoreView;
 public slots:
     void onFileOpen(const QString& file);
     void on_import_trigerred(GraphLoaderPlugin* ld);

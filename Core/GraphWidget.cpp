@@ -56,6 +56,7 @@ void GraphWidget::clear() {
 
 void GraphWidget::setGraph(SharedEGraph graph, unsigned quickTicks) {
     mGraph = graph;
+    mGraph->setView(this);
     if(graph->layout()) {
         //graph->applyLayout();
         reflect(graph->layout()->system(),graph->graph());
@@ -198,7 +199,7 @@ void GraphWidget::setBehaviour(Behaviour* b) {
 
 void GraphWidget::setLayout(const SharedLayout& l) {
     mGraph->setLayout(l);
-    reflect(mGraph->layout()->system(),mGraph->graph());
+    //reflect(mGraph->layout()->system(),mGraph->graph());
 }
 
 void GraphWidget::clearScene() {
@@ -267,7 +268,6 @@ bool GraphWidget::BorderSelect::mouseReleaseEvent(QMouseEvent *event) {
 }
 
 bool GraphWidget::BorderSelect::mouseMoveEvent(QMouseEvent *event) {
-
     float inf = 800000; //TODO cross
     QPointF pos = gw.mapToScene(event->pos());
     if(mCross) {

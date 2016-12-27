@@ -1,21 +1,30 @@
 #include "LevelLayout.h"
 #include <cmath>
 
+LevelLayout::LevelLayout() {
+    opts().add_options()
+            ("k_const,k",po::value(&mK)->default_value(mK),"base k constant of the springs")
+            ("l_zero,l",po::value(&mL0)->default_value(mL0),"lenght of the springs at rest")
+            ("damp,d",po::value(&mDamp)->default_value(mDamp),"damping factor of the points")
+            ("unitLenght,u",po::value(&mMinUnit)->default_value(mMinUnit),"minimal level unit lenght in pixels")
+            ("iosUnitLenght,o",po::value(&mMinIOUnit)->default_value(mMinIOUnit), "minimal space between two I/Os")
+            ;
+}
 
 void LevelLayout::setGraph(SharedGraph graph)
 {
     clear();
-    qreal sk = 2;
-    qreal l0 = 0;
-    qreal damp = 2;
-    qreal unit = std::max(qreal(graph->nodeCount())/20,64.0);
+    qreal sk = mK;
+    qreal l0 = mL0;
+    qreal damp = mDamp;
+    qreal unit = std::max(qreal(graph->nodeCount())/20,mMinUnit);
 
     qreal totHeight = graph->highestLevel()*unit;
     qreal inputHeight = totHeight/2;
     qreal outputHeight = -totHeight/2;
 
     qreal ioFactor = (qreal)(graph->maxOutputIndex()) / graph->maxInputIndex();
-    qreal ioUnit = std::max(totHeight/graph->maxOutputIndex(),128.0);
+    qreal ioUnit = std::max(totHeight/graph->maxOutputIndex(),mMinIOUnit);
 
     for(const auto& p : graph->nodes()) {
         QVector2D pos = startPosition(p.first);

@@ -91,6 +91,7 @@ int read_io_helper( command& cmd, const std::string& default_option, const envir
     }
 
     env->store<S>().current() = store_read_io_type<S, Tag>( filename, cmd );
+    env->store<S>().notify();
   }
   return 0;
 }
