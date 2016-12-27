@@ -4,7 +4,9 @@
 #include <QGraphicsSceneMouseEvent>
 #include <QString>
 #include <QIcon>
+#include <QImageReader>
 #include <unordered_map>
+
 
 #define SIZE 4
 
@@ -22,7 +24,8 @@ NodeItem::NodeItem(const NodeData& data, QGraphicsItem *parent) : QGraphicsPixma
         {NodeType::OUTPUT_CLUSTER,":/resources/output.svg"}};
 
     setZValue(1);
-    setPixmap(QIcon(pixmaps.at(data.type())).pixmap(QSize(64,64)));
+    QIcon ico(pixmaps.at(data.type()));
+    setPixmap(ico.pixmap(64,64));
     setOffset(-32,-32);
     setScale(0.25f);
 

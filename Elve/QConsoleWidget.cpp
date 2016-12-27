@@ -8,7 +8,8 @@
 QConsoleWidget::QConsoleWidget(QWidget *parent) : QTextEdit(parent),
     mHistory{
         "read_graph -n ~/mul5.json"
-        }
+        },
+    mCmdIndex(1)
 {
     setUndoRedoEnabled(false);
     setStyleSheet("font : 11pt 'Mono';");

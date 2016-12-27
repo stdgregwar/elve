@@ -172,6 +172,11 @@ class cli_store
 {
 public:
     explicit cli_store( const std::string& name ) : _name( name ) {}
+    enum update{
+        ALL,
+        CURRENT,
+        INDEX
+    };
 
     inline T& current()
     {
@@ -234,7 +239,7 @@ public:
     inline void set_current_index( unsigned i )
     {
         _current = i;
-        _callback();
+        _callback(INDEX);
     }
 
     void extend()
@@ -243,27 +248,27 @@ public:
         _data.resize( s + 1u );
         _current = s;
         current() = T();
-        _callback();
+        _callback(ALL);
     }
 
     void push(const T& data) {
         extend();
         current() = data;
-        _callback();
+        _callback(CURRENT);
     }
 
     void clear()
     {
         _data.clear();
         _current = -1;
-        _callback();
+        _callback(ALL);
     }
 
-    void notify() {
-        _callback();
+    void notify(update u = ALL) {
+        _callback(u);
     }
 
-    void set_callback(std::function<void()> c) {
+    void set_callback(std::function<void(update)> c) {
         _callback = c;
     }
 
@@ -271,7 +276,7 @@ private:
     std::string    _name;
     std::vector<T> _data;
     int            _current = -1;
-    std::function<void()> _callback = []{};
+    std::function<void(update)> _callback = [](update){};
 };
 
 template<typename T>

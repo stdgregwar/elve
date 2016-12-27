@@ -9,9 +9,10 @@ class StoreView : public QListWidget
     Q_OBJECT
 public:
     StoreView(Store &store, MainWindow* parent = nullptr);
-    void update();
+    void update(Store::update u);
 public slots:
     void setCurrentStoreIndex(QModelIndex);
+    void showStoreIndex(QModelIndex);
 private:
     Store& mStore;
     MainWindow* mWindow;
