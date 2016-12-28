@@ -2,24 +2,24 @@
 #define FILEEXPORTACTION_H
 
 #include <QAction>
-#include <interfaces/FileExporter.h>
+#include <interfaces/FileExporterPlugin.h>
 
 class FileExportAction : public QAction
 {
     Q_OBJECT
 public:
-    FileExportAction(FileExporter* data, const QString& text,QObject* parent = nullptr) : QAction(text,parent),mData(data)
+    FileExportAction(FileExporterPlugin* data, const QString& text,QObject* parent = nullptr) : QAction(text,parent),mData(data)
     {
         connect(this,SIGNAL(triggered()),this,SLOT(onTriggered()));
     }
 signals:
-    void triggered(FileExporter*);
+    void triggered(FileExporterPlugin*);
 public slots:
     void onTriggered() {
         emit triggered(mData);
     }
 private:
-    FileExporter* mData;
+    FileExporterPlugin* mData;
 };
 
 #endif // FILEEXPORTACTION_H

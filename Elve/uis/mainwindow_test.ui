@@ -94,7 +94,8 @@
     <property name="title">
      <string>&amp;Select</string>
     </property>
-    <addaction name="actionBorder"/>
+    <addaction name="actionRectangle"/>
+    <addaction name="actionToggle"/>
    </widget>
    <widget class="QMenu" name="menuLayout">
     <property name="title">
@@ -152,6 +153,22 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+0</string>
+   </property>
+  </action>
+  <action name="actionRectangle">
+   <property name="text">
+    <string>Rectangle</string>
+   </property>
+   <property name="shortcut">
+    <string>R</string>
+   </property>
+  </action>
+  <action name="actionToggle">
+   <property name="text">
+    <string>Toggle</string>
+   </property>
+   <property name="shortcut">
+    <string>A</string>
    </property>
   </action>
  </widget>

@@ -45,7 +45,8 @@ SOURCES +=\
     NodeData.cpp \
     GraphData.cpp \
     interfaces/Plugin.cpp \
-    interfaces/FileExporter.cpp
+    interfaces/FileExporterPlugin.cpp \
+    Selection.cpp
 
 RESOURCES += \
     coreresources.qrc
@@ -82,4 +83,6 @@ HEADERS += \
     NodeData.h \
     GraphData.h \
     interfaces/Plugin.h \
-    interfaces/FileExporter.h
+    interfaces/FileExporterPlugin.h \
+    interfaces/GraphTransform.h \
+    Selection.h

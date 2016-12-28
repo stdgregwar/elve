@@ -29,7 +29,7 @@ private:
 public slots:
     void onFileOpen(const QString& file);
     void on_import_trigerred(GraphLoaderPlugin* ld);
-    void on_export_trigerred(FileExporter* exp);
+    void on_export_trigerred(FileExporterPlugin* exp);
     void on_layout_trigerred(LayoutPlugin *layout);
     void on_tab_change(QMdiSubWindow* tab);
 private slots:

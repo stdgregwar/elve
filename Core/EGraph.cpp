@@ -146,6 +146,15 @@ SharedEGraph EGraph::ungroup(const NodeIDs & names) const
     return eg;
 }
 
+SelectionMasks& EGraph::selections() {
+    return mSelections;
+}
+
+Selection& EGraph::selection(size_t i) {
+    return mSelections[i];
+}
+
+
 EGraph::~EGraph()
 {
 }
