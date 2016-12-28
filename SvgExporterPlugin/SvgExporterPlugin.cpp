@@ -11,7 +11,10 @@ SvgExporterPlugin::SvgExporterPlugin()
 void SvgExporterPlugin::exportGraph(const QString& filename, const SharedEGraph& eg) {
     QSvgGenerator svgGen;
 
-    QGraphicsScene* scene = eg->view()->scene();
+    QGraphicsScene* scene = sceneForGraph(eg);
+    if(!scene) {
+        throw std::runtime_error("No scene found for graph, maybe there is no layout set.");
+    }
     qDebug() << "saving scene with" << scene->items().count() << "items to svg";
     qDebug() << "bounds :" << scene->itemsBoundingRect().size().toSize();
     svgGen.setFileName(filename);

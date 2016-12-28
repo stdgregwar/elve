@@ -13,6 +13,7 @@ class FileExporter : public QObject, public Plugin
 public:
     FileExporter();
     virtual void exportGraph(const QString& filename, const SharedEGraph& eg) = 0;
+    QGraphicsScene* sceneForGraph(const SharedEGraph& eg);
     virtual QString formatName() = 0;
     virtual QString fileFilter() = 0;
     virtual std::string cliName() = 0;

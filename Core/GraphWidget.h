@@ -16,7 +16,7 @@ class GraphWidget : public QGraphicsView
 {
     Q_OBJECT;
 public:
-    GraphWidget(QWidget *parent, QString filename = "new file");
+    GraphWidget(QWidget *parent = nullptr, QString filename = "new file");
 
     void setGraph(SharedEGraph graph, unsigned quickTicks = 500);
     //void setGraph(SharedGraph graph, const NodePositions& positions);
