@@ -166,6 +166,14 @@ const NodePositions& EGraph::positions() const
     return mPositions;
 }
 
+void EGraph::setView(GraphWidget *view) {
+    mView = view;
+}
+
+GraphWidget* EGraph::view() {
+    return mView;
+}
+
 const SharedGraph& EGraph::graph() const
 {
     return mGraph;

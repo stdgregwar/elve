@@ -19,6 +19,7 @@
 #include <QDockWidget>
 
 #include "FileLoadAction.h"
+#include "FileExportAction.h"
 #include "LayoutLoadAction.h"
 #include "CommandLine.h"
 
@@ -42,11 +43,19 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui.mdiArea,SIGNAL(subWindowActivated(QMdiSubWindow*)),this,SLOT(on_tab_change(QMdiSubWindow*)));
 
     PluginManager& pluginManager = PluginManager::get();
+
     //setup loaders
     for(auto& l : pluginManager.loaders()) {
         FileLoadAction* a = new FileLoadAction(l,l->formatName(),this);
         connect(a,SIGNAL(triggered(GraphLoaderPlugin*)),this,SLOT(on_import_trigerred(GraphLoaderPlugin*)));
         ui.menuImport->addAction(a);
+    }
+
+    //setup exporters
+    for(auto& l : pluginManager.exporters()) {
+        FileExportAction* a = new FileExportAction(l,l->formatName(),this);
+        connect(a,SIGNAL(triggered(FileExporter*)),this,SLOT(on_export_trigerred(FileExporter*)));
+        ui.menuExport->addAction(a);
     }
 
     //setup layouts
@@ -55,6 +64,8 @@ MainWindow::MainWindow(QWidget *parent)
         connect(a,SIGNAL(triggered(LayoutPlugin*)),this,SLOT(on_layout_trigerred(LayoutPlugin*)));
         ui.menuLayout->addAction(a);
     }
+
+
 
     //Setup terminal
     QDockWidget* dw = new QDockWidget("Shell",this);
@@ -94,6 +105,13 @@ void MainWindow::on_import_trigerred(GraphLoaderPlugin* ld) {
         SharedEGraph eg = EGraph::fromGraph(g);
         CommandLine::get().store().push(eg);
         newWindowWithFile(eg,filename);*/
+    }
+}
+
+void MainWindow::on_export_trigerred(FileExporter* exp) {
+    QString filename = QFileDialog::getSaveFileName(this,"Export " + exp->formatName(),"",exp->fileFilter());
+    if(filename != "") {
+        runUiCommand(QString("save_%1 \"%2\"").arg(exp->cliName().c_str(),filename));
     }
 }
 

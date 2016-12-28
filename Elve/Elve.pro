@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui svg
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -56,7 +56,8 @@ HEADERS += \
     alice/command.hpp \
     alice/readline.hpp \
     alice/rules.hpp \
-    StoreView.h
+    StoreView.h \
+    FileExportAction.h
 
 FORMS += \
     uis/mainwindow_test.ui \

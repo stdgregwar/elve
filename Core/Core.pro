@@ -44,7 +44,8 @@ SOURCES +=\
     GraphWidget.cpp \
     NodeData.cpp \
     GraphData.cpp \
-    interfaces/Plugin.cpp
+    interfaces/Plugin.cpp \
+    interfaces/FileExporter.cpp
 
 RESOURCES += \
     coreresources.qrc
@@ -80,4 +81,5 @@ HEADERS += \
     utils.h \
     NodeData.h \
     GraphData.h \
-    interfaces/Plugin.h
+    interfaces/Plugin.h \
+    interfaces/FileExporter.h

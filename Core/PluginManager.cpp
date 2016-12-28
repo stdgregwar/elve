@@ -17,8 +17,13 @@ const Layouts& PluginManager::layouts() const {
     return mLayouts;
 }
 
+const Exporters& PluginManager::exporters() const {
+    return mExporters;
+}
+
 template <class T>
 void _load(const QString& path, const QString& type, QList<T*>& toFill) {
+    qDebug() << "Searching for" << type << "plugins in" << path;
     QDir dir(path);
     for(const QFileInfo& info : dir.entryInfoList(QDir::Files)) {
         qDebug() << "Trying to load" << info.baseName();
@@ -66,4 +71,6 @@ void PluginManager::load(const QString& path)
     _load(path+"/loaders","Graph Loader",mLoaders);
     //For layouts
     _load(path+"/layouts","Layout",mLayouts);
+    //For exporters
+    _load(path+"/exporters","Exporter",mExporters);
 }
