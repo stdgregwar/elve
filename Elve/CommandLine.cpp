@@ -126,7 +126,7 @@ private:
     LayoutPlugin* mLayout;
 };
 
-//Layout command
+//Loader command
 class LoaderCommand : public command
 {
 public:
@@ -155,6 +155,39 @@ public:
 private:
     std::string mFilename;
     GraphLoaderPlugin* mLoader;
+};
+
+//Export command
+class ExportCommand : public command
+{
+public:
+    ExportCommand(FileExporter* pl, const environment::ptr& env) : command(env, (pl->formatName() + " Saver").toStdString()),
+      mSaver(pl)
+    {
+        pod.add("filename",1);
+        opts.add_options()
+                ("filename,f",po::value(&mFilename),
+                 ("filename of the " + pl->formatName() + " file to save").toStdString().c_str());
+
+        opts.add(pl->opts()); //Add plugin options themselves
+    }
+
+    rules_t validity_rules() const override {
+        return  {
+            //file_exists_if_set( *this, process_filename( mFilename ),"filename")
+        };
+    }
+
+    bool execute() override {
+        auto& graph = env->store<SharedEGraph>().current();
+        //Todo make sure scene is available, or find better way
+        mSaver->exportGraph(QString::fromStdString(mFilename),graph);
+        return true;
+    }
+
+private:
+    std::string mFilename;
+    FileExporter* mSaver;
 };
 
 }
@@ -189,6 +222,10 @@ void CommandLine::setupPluginsCommands() {
     mCli.set_category("Loaders");
     for(GraphLoaderPlugin* pl : PluginManager::get().loaders()) {
         mCli.insert_command("load_" + pl->cliName(), make_shared<LoaderCommand>(pl,mCli.env));
+    }
+    mCli.set_category("saver/exporters");
+    for(FileExporter* pl : PluginManager::get().exporters()) {
+        mCli.insert_command("save_" + pl->cliName(), make_shared<ExportCommand>(pl,mCli.env));
     }
 }
 

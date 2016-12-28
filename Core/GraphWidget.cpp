@@ -64,6 +64,10 @@ void GraphWidget::setGraph(SharedEGraph graph, unsigned quickTicks) {
     }
 }
 
+QGraphicsScene* GraphWidget::scene() {
+    return mScene;
+}
+
 /*void GraphWidget::setGraph(SharedGraph graph, const NodePositions& positions) {
     if(mLayout) {
         mLayout->setGraph(graph,positions);

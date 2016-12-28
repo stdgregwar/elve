@@ -8,4 +8,5 @@ SUBDIRS += \
     LevelLayoutPlugin \
     SimpleLayoutPlugin \
     Elve \
+    SvgExporterPlugin
 

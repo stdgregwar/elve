@@ -29,7 +29,8 @@ public:
     void setLayout(const SharedLayout& l);
     const SharedLayout& layout();
     void applyLayout(const NodePositions& p = NodePositions());
-    void setView(GraphWidget* view){mView = view;}
+    void setView(GraphWidget* view);
+    GraphWidget* view();
     ~EGraph();
 private:
     mutable bool mPosDirty;

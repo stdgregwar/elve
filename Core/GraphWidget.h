@@ -48,6 +48,7 @@ public:
     void fit();
 
     const SharedEGraph& graph() const;
+    QGraphicsScene* scene();
     //QJsonObject json() const;
     //void fromJson(const QJsonObject& obj);
 public slots:
