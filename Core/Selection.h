@@ -14,6 +14,8 @@ public:
     void add(const Selection& other);
     void sub(const Selection& other);
     void sub(const NodeID& id);
+    QJsonArray json() const;
+    static Selection fromJson(const QJsonArray& arr);
 };
 
 #endif // SELECTION_H

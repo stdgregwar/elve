@@ -34,7 +34,15 @@ SharedEGraph EGraph::fromJSON(const QJsonObject &obj)
                           std::forward_as_tuple(it.key().toInt()),
                           std::forward_as_tuple(jpos.at(0).toDouble(),jpos.at(1).toDouble()));
     }
+
+    QJsonObject selections = obj["selections"].toObject();
+    int i = 0;
+    SelectionMasks masks;
+    for(Selection& s : masks) {
+        s = Selection::fromJson(selections.value(QString::number(i++)).toArray());
+    }
     SharedEGraph eg = std::make_shared<EGraph>(g,positions);
+    eg->selections() = masks;
     eg->setLayout(PluginManager::get().getLayout(layoutName));
     return eg;
 }
@@ -70,6 +78,13 @@ QJsonObject EGraph::json() const
         layout.insert("positions",positions);
         main.insert("layout",layout);
     }
+
+    QJsonObject selections;
+    int i = 0;
+    for(const Selection& s : mSelections) {
+        selections.insert(QString::number(i++),s.json());
+    }
+    main.insert("selections",selections);
     return main;
 }
 
