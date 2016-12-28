@@ -92,6 +92,10 @@ void Point::tick(float dt, bool update)
     }
 }
 
+void Point::clearMovables() {
+    mMovables.clear();
+}
+
 void* Point::containerData() const
 {
     return mContainerData;

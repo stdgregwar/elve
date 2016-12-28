@@ -139,6 +139,11 @@ SharedEGraph EGraph::group(const NodeIDSet& names, const NodeName &groupName)
     poss[nid] = groupCenter;
     SharedEGraph eg = std::make_shared<EGraph>(mGraph->group(names,nid,groupName),poss);
     eg->setLayout(mLayout->create());
+    for(int i = 0; i < 10; i++) {
+        for(const NodeID& id : selection(i)) {
+            eg->selection(i).add(eg->graph()->alias(i));
+        }
+    }
     return eg;
 }
 

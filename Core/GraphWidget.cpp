@@ -350,6 +350,9 @@ void GraphWidget::BorderSelect::onEnd() {
 GraphWidget::~GraphWidget() {
     if(mGraph) {
         mGraph->setView(nullptr);
+        if(mGraph->layout()) {
+            mGraph->layout()->system().clearMovables();
+        }
     }
 }
 
