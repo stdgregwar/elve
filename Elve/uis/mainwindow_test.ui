@@ -92,10 +92,11 @@
    </widget>
    <widget class="QMenu" name="menuSelect">
     <property name="title">
-     <string>&amp;Select</string>
+     <string>&amp;Selection</string>
     </property>
     <addaction name="actionRectangle"/>
     <addaction name="actionToggle"/>
+    <addaction name="actionGroup"/>
    </widget>
    <widget class="QMenu" name="menuLayout">
     <property name="title">
@@ -169,6 +170,14 @@
    </property>
    <property name="shortcut">
     <string>A</string>
+   </property>
+  </action>
+  <action name="actionGroup">
+   <property name="text">
+    <string>Group</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+G</string>
    </property>
   </action>
  </widget>

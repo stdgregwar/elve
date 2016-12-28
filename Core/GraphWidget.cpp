@@ -36,7 +36,7 @@ GraphWidget::GraphWidget(QWidget* parent, QString filename) : QGraphicsView(pare
     mBehaviour(new Behaviour(this)),
     mEdgesPath(new QGraphicsPathItem()),
     mFilename(filename),
-    mCurrentMask(0)
+    mCurrentMask(1)
 {
     setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
     setDragMode(QGraphicsView::ScrollHandDrag);
@@ -76,6 +76,7 @@ void GraphWidget::setGraph(SharedEGraph graph, unsigned quickTicks) {
         reflect(graph->layout()->system(),graph->graph());
         quickSim(quickTicks);
     }
+    updateSelectionColor();
 }
 
 QGraphicsScene* GraphWidget::scene() {
@@ -156,6 +157,11 @@ void GraphWidget::keyPressEvent(QKeyEvent *event) {
     }
 }
 
+void GraphWidget::group() {
+    qDebug() << "grouping!";
+    group(mGraph->selection(mCurrentMask));
+}
+
 void GraphWidget::toggleSelection() {
     Selection& s = mGraph->selection(mCurrentMask);
     if(s.size() == 0) {
@@ -172,11 +178,13 @@ void GraphWidget::ungroup(const NodeIDs& names) {
     setGraph(mGraph->ungroup(names),0);
 }
 
-void GraphWidget::group(const NodeIDSet &names, const NodeName &groupName) {
+void GraphWidget::group(const Selection &names, const NodeName &groupName) {
+    if(names.empty()) return;
     NodeIDSet inputs;
     NodeIDSet nonio;
     NodeIDSet outputs;
     for(const NodeID& id : names) {
+        qDebug() << "id" << id;
         const Node& nd = mGraph->graph()->nodes().at(id);
         switch(nd.type()) {
         case INPUT:
@@ -339,5 +347,10 @@ void GraphWidget::BorderSelect::onEnd() {
     //delete mRectangle;
 }
 
+GraphWidget::~GraphWidget() {
+    if(mGraph) {
+        mGraph->setView(nullptr);
+    }
+}
 
 

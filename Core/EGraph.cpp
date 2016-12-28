@@ -124,8 +124,9 @@ void EGraph::toFile(const QString& filename) {
     }
 }
 
-SharedEGraph EGraph::group(const NodeIDSet& names, const NodeName &groupName) const
+SharedEGraph EGraph::group(const NodeIDSet& names, const NodeName &groupName)
 {
+    if(names.size() == 0) return shared_from_this();
     mPosDirty = true;
     NodePositions poss = positions();
     NodeID nid = mGraph->newID();

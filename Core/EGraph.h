@@ -5,6 +5,7 @@
 #include <array>
 #include "interfaces/LayoutPlugin.h"
 #include "Selection.h"
+#include <memory>
 
 class EGraph;
 
@@ -12,7 +13,7 @@ typedef std::shared_ptr<EGraph> SharedEGraph;
 typedef std::array<Selection,10> SelectionMasks;
 
 class GraphWidget;
-class EGraph
+class EGraph : public std::enable_shared_from_this<EGraph>
 {
 public:
     EGraph(const SharedGraph& g, const NodePositions& positions = NodePositions());
@@ -23,7 +24,7 @@ public:
     static SharedEGraph fromFile(const QString& filename);
     void toFile(const QString& filename);
 
-    SharedEGraph group(const NodeIDSet &names, const NodeName &groupName) const;
+    SharedEGraph group(const NodeIDSet &names, const NodeName &groupName);
     SharedEGraph ungroup(const NodeIDs & names) const;
 
     SelectionMasks& selections();

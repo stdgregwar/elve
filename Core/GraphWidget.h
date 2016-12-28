@@ -39,7 +39,7 @@ public:
     void mouseMoveEvent(QMouseEvent *event) override;
     void keyPressEvent(QKeyEvent *event) override;
 
-    void group(const NodeIDSet &names, const NodeName& groupName = "group");
+    void group(const Selection &names, const NodeName& groupName = "group");
     void ungroup(const NodeIDs& names);
 
     void quickSim(unsigned ticks);
@@ -55,9 +55,11 @@ public:
     QGraphicsScene* scene();
     //QJsonObject json() const;
     //void fromJson(const QJsonObject& obj);
+    ~GraphWidget();
 public slots:
     void borderSelect();
     void toggleSelection();
+    void group();
 private:
     class Behaviour
     {
