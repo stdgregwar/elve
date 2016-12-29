@@ -69,6 +69,7 @@ void GraphWidget::clear() {
 }
 
 void GraphWidget::setGraph(SharedEGraph graph, unsigned quickTicks) {
+    unsetGraph();
     mGraph = graph;
     mGraph->setView(this);
     if(graph->layout()) {
@@ -347,13 +348,17 @@ void GraphWidget::BorderSelect::onEnd() {
     //delete mRectangle;
 }
 
-GraphWidget::~GraphWidget() {
+void GraphWidget::unsetGraph() {
     if(mGraph) {
         mGraph->setView(nullptr);
         if(mGraph->layout()) {
             mGraph->layout()->system().clearMovables();
         }
     }
+}
+
+GraphWidget::~GraphWidget() {
+    unsetGraph();
 }
 
 

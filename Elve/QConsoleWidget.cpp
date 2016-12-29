@@ -13,6 +13,12 @@ QConsoleWidget::QConsoleWidget(QWidget *parent) : QTextEdit(parent),
 {
     setUndoRedoEnabled(false);
     setStyleSheet("font : 11pt 'Mono';");
+    setWhatsThis(tr("<html><head/><body>"
+                    "<p>Elve's Terminal</p>"
+                    "<p><br/></p>"
+                    "<p>A terminal emulator to issue elve commands. Plugins are automatically exported to the CLI.</p>"
+                    "<p>See 'help' command for more info.</p>"
+                    "</body></html>"));
 
     setTextColor(QColor("white"));
 

@@ -10,6 +10,7 @@
 #include <QJsonDocument>
 #include "QConsoleWidget.h"
 #include <QMessageBox>
+#include <QWhatsThis>
 
 #include <interfaces/GraphLoaderPlugin.h>
 #include <Graph.h>
@@ -64,6 +65,8 @@ MainWindow::MainWindow(QWidget *parent)
         connect(a,SIGNAL(triggered(LayoutPlugin*)),this,SLOT(on_layout_trigerred(LayoutPlugin*)));
         ui.menuLayout->addAction(a);
     }
+
+    ui.menuHelp->addAction(QWhatsThis::createAction(this));
 
     //Setup terminal
     QDockWidget* dw = new QDockWidget("Shell",this);

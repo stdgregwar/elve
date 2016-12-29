@@ -92,6 +92,7 @@ private:
     void setBehaviour(Behaviour* b);
     void clear();
     void clearScene();
+    void unsetGraph();
 
     QGraphicsScene* mScene;
     bool mDrag;

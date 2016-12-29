@@ -4,6 +4,12 @@
 
 StoreView::StoreView(Store& store, MainWindow *parent) : QListWidget(parent), mStore(store), mWindow(parent)
 {
+    setWhatsThis(tr("<html><head/><body>"
+                    "<p>Store view</p>"
+                    "<p><br/></p>"
+                    "<p>View the command-line 'store', meaning all the graphs that are loaded.</p>"
+                    "<p>Single-click to change current graph (current store index), Double-click to show graph in a new tab.</p>"
+                    "</body></html>"));
     mStore.set_callback([this](Store::update u){update(u);});
     setSelectionMode(QAbstractItemView::SingleSelection);
     connect(this,SIGNAL(clicked(QModelIndex)),this,SLOT(setCurrentStoreIndex(QModelIndex)));
