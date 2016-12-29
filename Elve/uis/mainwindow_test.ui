@@ -177,7 +177,7 @@
     <string>Group</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+G</string>
+    <string>G</string>
    </property>
   </action>
  </widget>
