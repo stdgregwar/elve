@@ -103,7 +103,7 @@ public:
     }
 
     rules_t validity_rules() const override {
-        auto& graphs = env->store<SharedEGraph>();
+        Store& graphs = env->store<SharedEGraph>();
         return {
             {[this,&graphs] {return (!is_set("id") && !graphs.empty()) || (id<graphs.size() && id > -1);},
                 "if set id must be in store range, store must not be empty"}
@@ -192,7 +192,6 @@ private:
 
 }
 
-
 //=================================================================================================================================
 
 using namespace std;
@@ -219,11 +218,13 @@ void CommandLine::setupPluginsCommands() {
     for(LayoutPlugin* pl : PluginManager::get().layouts()) {
         mCli.insert_command(pl->cliName()+"_layout", make_shared<LayoutCommand>(pl,mCli.env));
     }
+
     mCli.set_category("Loaders");
     for(GraphLoaderPlugin* pl : PluginManager::get().loaders()) {
         mCli.insert_command("load_" + pl->cliName(), make_shared<LoaderCommand>(pl,mCli.env));
     }
-    mCli.set_category("saver/exporters");
+
+    mCli.set_category("Savers/Exporters");
     for(FileExporterPlugin* pl : PluginManager::get().exporters()) {
         mCli.insert_command("save_" + pl->cliName(), make_shared<ExportCommand>(pl,mCli.env));
     }

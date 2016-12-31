@@ -17,7 +17,6 @@ SOURCES += main.cpp \
     MainWindow.cpp \
     QConsoleWidget.cpp \
     Redirect.cpp \
-    uis/Tab.cpp \
     CommandLine.cpp \
     StoreView.cpp
 
@@ -37,7 +36,6 @@ HEADERS += \
     LayoutLoadAction.h \
     QConsoleWidget.h \
     Redirect.h \
-    uis/Tab.h \
     CommandLine.h \
     alice/allalice.h \
     alice/commands/alias.hpp \
@@ -60,8 +58,7 @@ HEADERS += \
     FileExportAction.h
 
 FORMS += \
-    uis/mainwindow_test.ui \
-    uis/tab.ui
+    uis/mainwindow_test.ui
 
 RESOURCES += \
     elveresources.qrc
