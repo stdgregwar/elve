@@ -1,11 +1,11 @@
-#include "FileExporter.h"
+#include "FileExporterPlugin.h"
 #include "GraphWidget.h"
 
-FileExporter::FileExporter()
+FileExporterPlugin::FileExporterPlugin()
 {
 }
 
-QGraphicsScene* FileExporter::sceneForGraph(const SharedEGraph& eg) {
+QGraphicsScene* FileExporterPlugin::sceneForGraph(const SharedEGraph& eg) {
     if(eg->view()) {
         return eg->view()->scene();
     } else {

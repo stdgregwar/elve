@@ -3,7 +3,7 @@
 
 #include <interfaces/GraphLoaderPlugin.h>
 #include <interfaces/LayoutPlugin.h>
-#include <interfaces/FileExporter.h>
+#include <interfaces/FileExporterPlugin.h>
 #include <QPluginLoader>
 #include <QMap>
 #include <QList>
@@ -11,7 +11,7 @@
 #include "Singleton.h"
 
 typedef QList<GraphLoaderPlugin*> Loaders;
-typedef QList<FileExporter*> Exporters;
+typedef QList<FileExporterPlugin*> Exporters;
 typedef QList<LayoutPlugin*> Layouts;
 
 /**

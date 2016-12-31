@@ -7,11 +7,11 @@
 
 #define ExporterPlugin_iid "ch.epfl.lap.elfe.LayoutPlugin"
 
-class FileExporter : public QObject, public Plugin
+class FileExporterPlugin : public QObject, public Plugin
 {
     Q_OBJECT
 public:
-    FileExporter();
+    FileExporterPlugin();
     virtual void exportGraph(const QString& filename, const SharedEGraph& eg) = 0;
     QGraphicsScene* sceneForGraph(const SharedEGraph& eg);
     virtual QString formatName() = 0;
@@ -19,7 +19,7 @@ public:
     virtual std::string cliName() = 0;
 };
 
-Q_DECLARE_INTERFACE(FileExporter,ExporterPlugin_iid)
+Q_DECLARE_INTERFACE(FileExporterPlugin,ExporterPlugin_iid)
 
 #define ELVE_EXPORTER(Exporter,full_name,filter,cli_name)\
  public:\

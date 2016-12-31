@@ -26,6 +26,9 @@
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
      <widget class="QMdiArea" name="mdiArea">
+      <property name="whatsThis">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;The graph area.&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;A multi-document area where the graph viewports are diplayed in a tabbed fashion.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
       <property name="frameShape">
        <enum>QFrame::NoFrame</enum>
       </property>
@@ -68,11 +71,17 @@
      <string>&amp;File</string>
     </property>
     <widget class="QMenu" name="menuImport">
+     <property name="whatsThis">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This menu is automatically populated with loader-plugins entries. Allowing to import any kind of file.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
      <property name="title">
       <string>&amp;Import</string>
      </property>
     </widget>
     <widget class="QMenu" name="menuExport">
+     <property name="whatsThis">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Menu automatically populated with exporter-plugins. Allowing to save graph in various fashions.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
      <property name="title">
       <string>&amp;Export</string>
      </property>
@@ -86,17 +95,25 @@
     <addaction name="actionQuit"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
+    <property name="whatsThis">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;The help menu.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
     <property name="title">
      <string>&amp;Help</string>
     </property>
    </widget>
    <widget class="QMenu" name="menuSelect">
     <property name="title">
-     <string>&amp;Select</string>
+     <string>&amp;Selection</string>
     </property>
-    <addaction name="actionBorder"/>
+    <addaction name="actionRectangle"/>
+    <addaction name="actionToggle"/>
+    <addaction name="actionGroup"/>
    </widget>
    <widget class="QMenu" name="menuLayout">
+    <property name="whatsThis">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This menu is automatically populated with the layout-plugins.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
     <property name="title">
      <string>&amp;Layout</string>
     </property>
@@ -117,6 +134,9 @@
   <action name="actionOpen">
    <property name="text">
     <string>&amp;Open</string>
+   </property>
+   <property name="whatsThis">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Allow to open a graph in elve file format (.json,.elve) and put it in the store.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+O</string>
@@ -142,6 +162,9 @@
    <property name="text">
     <string>&amp;Save</string>
    </property>
+   <property name="whatsThis">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Save file in the elve file format (.json,.elve).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
    <property name="shortcut">
     <string>Ctrl+S</string>
    </property>
@@ -150,8 +173,44 @@
    <property name="text">
     <string>Fit</string>
    </property>
+   <property name="whatsThis">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Reset the viewport, if any, to fit the visualized graph.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
    <property name="shortcut">
     <string>Ctrl+0</string>
+   </property>
+  </action>
+  <action name="actionRectangle">
+   <property name="text">
+    <string>Rectangle</string>
+   </property>
+   <property name="whatsThis">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Start a rectangle selection micro-state. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+   <property name="shortcut">
+    <string>R</string>
+   </property>
+  </action>
+  <action name="actionToggle">
+   <property name="text">
+    <string>Toggle</string>
+   </property>
+   <property name="whatsThis">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;quot;Toggle current selection&amp;quot;. Meaning that if anything is selected then it clears the selection. And if none is selected then it select all.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+   <property name="shortcut">
+    <string>A</string>
+   </property>
+  </action>
+  <action name="actionGroup">
+   <property name="text">
+    <string>Group</string>
+   </property>
+   <property name="whatsThis">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Group currently selected nodes together.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+   <property name="shortcut">
+    <string>G</string>
    </property>
   </action>
  </widget>

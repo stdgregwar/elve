@@ -20,6 +20,7 @@ public:
     const qreal& mass() const;
     void setPos(const QVector2D& pos);
     void setSpeed(const QVector2D& speed);
+    void clearMovables();
     void addMovable(Movable* m);
     void removeMovable(Movable* m);
     void addForce(Force* force);

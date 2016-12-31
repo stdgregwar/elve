@@ -74,6 +74,12 @@ NodePositions System::positions() const
     return poss;
 }
 
+void System::clearMovables() {
+    for(Point* p : mPoints) {
+        p->clearMovables();
+    }
+}
+
 Point* System::addPoint(qreal mass, const NodeID &id, QVector2D pos, qreal damp, GravityMode g)
 {
     Point* nm = new Point(mass,id);

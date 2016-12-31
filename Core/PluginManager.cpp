@@ -23,8 +23,8 @@ const Exporters& PluginManager::exporters() const {
 
 template <class T>
 void _load(const QString& path, const QString& type, QList<T*>& toFill) {
-    qDebug() << "Searching for" << type << "plugins in" << path;
     QDir dir(path);
+    qDebug() << "Searching for" << type << "plugins in" << dir.absoluteFilePath(path);
     for(const QFileInfo& info : dir.entryInfoList(QDir::Files)) {
         qDebug() << "Trying to load" << info.baseName();
         if(info.suffix() == "so" || info.suffix() == "dll" || info.suffix() == "dylib") {
@@ -57,6 +57,7 @@ SharedLayout PluginManager::getLayout(const QString& name) const
             return l->create();
         }
     }
+    throw std::runtime_error("couldn't find " + name.toStdString() + " layout");
     return nullptr; //TODO
 }
 

@@ -34,7 +34,15 @@ SharedEGraph EGraph::fromJSON(const QJsonObject &obj)
                           std::forward_as_tuple(it.key().toInt()),
                           std::forward_as_tuple(jpos.at(0).toDouble(),jpos.at(1).toDouble()));
     }
+
+    QJsonObject selections = obj["selections"].toObject();
+    int i = 0;
+    SelectionMasks masks;
+    for(Selection& s : masks) {
+        s = Selection::fromJson(selections.value(QString::number(i++)).toArray());
+    }
     SharedEGraph eg = std::make_shared<EGraph>(g,positions);
+    eg->selections() = masks;
     eg->setLayout(PluginManager::get().getLayout(layoutName));
     return eg;
 }
@@ -70,6 +78,13 @@ QJsonObject EGraph::json() const
         layout.insert("positions",positions);
         main.insert("layout",layout);
     }
+
+    QJsonObject selections;
+    int i = 0;
+    for(const Selection& s : mSelections) {
+        selections.insert(QString::number(i++),s.json());
+    }
+    main.insert("selections",selections);
     return main;
 }
 
@@ -109,8 +124,9 @@ void EGraph::toFile(const QString& filename) {
     }
 }
 
-SharedEGraph EGraph::group(const NodeIDSet& names, const NodeName &groupName) const
+SharedEGraph EGraph::group(const NodeIDSet& names, const NodeName &groupName)
 {
+    if(names.size() == 0) return shared_from_this();
     mPosDirty = true;
     NodePositions poss = positions();
     NodeID nid = mGraph->newID();
@@ -123,6 +139,11 @@ SharedEGraph EGraph::group(const NodeIDSet& names, const NodeName &groupName) co
     poss[nid] = groupCenter;
     SharedEGraph eg = std::make_shared<EGraph>(mGraph->group(names,nid,groupName),poss);
     eg->setLayout(mLayout->create());
+    for(int i = 0; i < 10; i++) {
+        for(const NodeID& id : selection(i)) {
+            eg->selection(i).add(eg->graph()->alias(i));
+        }
+    }
     return eg;
 }
 
@@ -145,6 +166,15 @@ SharedEGraph EGraph::ungroup(const NodeIDs & names) const
     eg->setLayout(mLayout->create());
     return eg;
 }
+
+SelectionMasks& EGraph::selections() {
+    return mSelections;
+}
+
+Selection& EGraph::selection(size_t i) {
+    return mSelections[i];
+}
+
 
 EGraph::~EGraph()
 {

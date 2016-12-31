@@ -1,8 +1,11 @@
 #ifndef GRAPHWIDGET_H
 #define GRAPHWIDGET_H
 
+#include <QGraphicsColorizeEffect>
 #include <QGraphicsView>
 #include <QPointF>
+#include <QColor>
+
 #include "System.h"
 #include "NodeItem.h"
 #include "EdgeItem.h"
@@ -36,23 +39,27 @@ public:
     void mouseMoveEvent(QMouseEvent *event) override;
     void keyPressEvent(QKeyEvent *event) override;
 
-    void group(const NodeIDSet &names, const NodeName& groupName = "group");
+    void group(const Selection &names, const NodeName& groupName = "group");
     void ungroup(const NodeIDs& names);
 
     void quickSim(unsigned ticks);
     void setLayout(const SharedLayout &l);
     void reflect(System &sys, SharedGraph g);
 
-
     void drawBackground(QPainter *painter, const QRectF &rect) override;
     void fit();
+
+    void updateSelectionColor();
 
     const SharedEGraph& graph() const;
     QGraphicsScene* scene();
     //QJsonObject json() const;
     //void fromJson(const QJsonObject& obj);
+    ~GraphWidget();
 public slots:
     void borderSelect();
+    void toggleSelection();
+    void group();
 private:
     class Behaviour
     {
@@ -85,6 +92,7 @@ private:
     void setBehaviour(Behaviour* b);
     void clear();
     void clearScene();
+    void unsetGraph();
 
     QGraphicsScene* mScene;
     bool mDrag;
@@ -95,8 +103,11 @@ private:
     //LayoutPlugin* mLayout;
     //temp
     std::vector<EdgeItem*> mEdges;
+    std::vector<NodeItem*> mNodes;
     QGraphicsPathItem* mEdgesPath;
     QString mFilename;
+    size_t mCurrentMask;
+    static std::array<QColor,10> mSelectionColors;
 };
 
 #endif // GRAPHWIDGET_H

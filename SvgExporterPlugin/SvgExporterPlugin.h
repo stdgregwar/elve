@@ -1,13 +1,13 @@
 #ifndef SVGEXPORTERPLUGIN_H
 #define SVGEXPORTERPLUGIN_H
 
-#include <interfaces/FileExporter.h>
+#include <interfaces/FileExporterPlugin.h>
 
-class SvgExporterPlugin : public FileExporter
+class SvgExporterPlugin : public FileExporterPlugin
 {
     Q_OBJECT
     Q_PLUGIN_METADATA(IID "ch.epfl.lap.svgexporter")
-    Q_INTERFACES(FileExporter)
+    Q_INTERFACES(FileExporterPlugin)
 public:
     ELVE_EXPORTER(SvgExporterPlugin,"SVG","SVG Files (*.svg)","svg")
     SvgExporterPlugin();

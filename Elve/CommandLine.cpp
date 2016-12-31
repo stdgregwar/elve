@@ -103,7 +103,7 @@ public:
     }
 
     rules_t validity_rules() const override {
-        auto& graphs = env->store<SharedEGraph>();
+        Store& graphs = env->store<SharedEGraph>();
         return {
             {[this,&graphs] {return (!is_set("id") && !graphs.empty()) || (id<graphs.size() && id > -1);},
                 "if set id must be in store range, store must not be empty"}
@@ -161,7 +161,7 @@ private:
 class ExportCommand : public command
 {
 public:
-    ExportCommand(FileExporter* pl, const environment::ptr& env) : command(env, (pl->formatName() + " Saver").toStdString()),
+    ExportCommand(FileExporterPlugin* pl, const environment::ptr& env) : command(env, (pl->formatName() + " Saver").toStdString()),
       mSaver(pl)
     {
         pod.add("filename",1);
@@ -187,11 +187,10 @@ public:
 
 private:
     std::string mFilename;
-    FileExporter* mSaver;
+    FileExporterPlugin* mSaver;
 };
 
 }
-
 
 //=================================================================================================================================
 
@@ -219,12 +218,14 @@ void CommandLine::setupPluginsCommands() {
     for(LayoutPlugin* pl : PluginManager::get().layouts()) {
         mCli.insert_command(pl->cliName()+"_layout", make_shared<LayoutCommand>(pl,mCli.env));
     }
+
     mCli.set_category("Loaders");
     for(GraphLoaderPlugin* pl : PluginManager::get().loaders()) {
         mCli.insert_command("load_" + pl->cliName(), make_shared<LoaderCommand>(pl,mCli.env));
     }
-    mCli.set_category("saver/exporters");
-    for(FileExporter* pl : PluginManager::get().exporters()) {
+
+    mCli.set_category("Savers/Exporters");
+    for(FileExporterPlugin* pl : PluginManager::get().exporters()) {
         mCli.insert_command("save_" + pl->cliName(), make_shared<ExportCommand>(pl,mCli.env));
     }
 }

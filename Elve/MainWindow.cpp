@@ -10,6 +10,7 @@
 #include <QJsonDocument>
 #include "QConsoleWidget.h"
 #include <QMessageBox>
+#include <QWhatsThis>
 
 #include <interfaces/GraphLoaderPlugin.h>
 #include <Graph.h>
@@ -54,7 +55,7 @@ MainWindow::MainWindow(QWidget *parent)
     //setup exporters
     for(auto& l : pluginManager.exporters()) {
         FileExportAction* a = new FileExportAction(l,l->formatName(),this);
-        connect(a,SIGNAL(triggered(FileExporter*)),this,SLOT(on_export_trigerred(FileExporter*)));
+        connect(a,SIGNAL(triggered(FileExporterPlugin*)),this,SLOT(on_export_trigerred(FileExporterPlugin*)));
         ui.menuExport->addAction(a);
     }
 
@@ -65,7 +66,7 @@ MainWindow::MainWindow(QWidget *parent)
         ui.menuLayout->addAction(a);
     }
 
-
+    ui.menuHelp->addAction(QWhatsThis::createAction(this));
 
     //Setup terminal
     QDockWidget* dw = new QDockWidget("Shell",this);
@@ -108,7 +109,7 @@ void MainWindow::on_import_trigerred(GraphLoaderPlugin* ld) {
     }
 }
 
-void MainWindow::on_export_trigerred(FileExporter* exp) {
+void MainWindow::on_export_trigerred(FileExporterPlugin* exp) {
     QString filename = QFileDialog::getSaveFileName(this,"Export " + exp->formatName(),"",exp->fileFilter());
     if(filename != "") {
         runUiCommand(QString("save_%1 \"%2\"").arg(exp->cliName().c_str(),filename));
@@ -173,7 +174,9 @@ void MainWindow::connectTab(QMdiSubWindow* tab) {
         //qApp->quit();
         return;
     }
-    connect(ui.actionBorder,SIGNAL(triggered()),gw,SLOT(borderSelect()));
+    connect(ui.actionRectangle,SIGNAL(triggered()),gw,SLOT(borderSelect()));
+    connect(ui.actionToggle,SIGNAL(triggered()),gw,SLOT(toggleSelection()));
+    connect(ui.actionGroup,SIGNAL(triggered()),gw,SLOT(group()));
     mCurrentTab = tab;
 }
 

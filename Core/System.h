@@ -32,6 +32,7 @@ public:
     void addVConstraint(Point* m, qreal height);
     void addPConstrain(Point* m, const QVector2D& p);
     void clear();
+    void clearMovables();
     size_t massCount() const;
     size_t forceCount() const;
     const Point* nearest(const QVector2D& p) const;

@@ -30,9 +30,6 @@ QVector2D Gravity::plainOldGravity(const Point& m) const
             qreal lr = r.lengthSquared();
             if(lr > 1e-2 and lr < 1024*1024) {
                 f += -r.normalized() * ((mK*ms->mass()*m.mass()) / lr);
-                if(f.x() != f.x() or f.y() != f.y()) {
-                    qDebug() << "NAN";
-                }
             }
         }
     }
