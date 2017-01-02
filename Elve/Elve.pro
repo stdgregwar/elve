@@ -55,7 +55,8 @@ HEADERS += \
     alice/readline.hpp \
     alice/rules.hpp \
     StoreView.h \
-    FileExportAction.h
+    FileExportAction.h \
+    TransformAction.h
 
 FORMS += \
     uis/mainwindow_test.ui

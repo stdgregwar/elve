@@ -21,6 +21,10 @@ const Exporters& PluginManager::exporters() const {
     return mExporters;
 }
 
+const Transforms& PluginManager::transforms() const {
+    return mTransforms;
+}
+
 template <class T>
 void _load(const QString& path, const QString& type, QList<T*>& toFill) {
     QDir dir(path);
@@ -63,7 +67,7 @@ SharedLayout PluginManager::getLayout(const QString& name) const
 
 SharedLayout PluginManager::defaultLayout() const
 {
-    return getLayout("Simple-Force");
+    return getLayout("Simple-Force"); //TODO fallbacks
 }
 
 void PluginManager::load(const QString& path)
@@ -74,4 +78,6 @@ void PluginManager::load(const QString& path)
     _load(path+"/layouts","Layout",mLayouts);
     //For exporters
     _load(path+"/exporters","Exporter",mExporters);
+    //For transforms
+    _load(path+"/transforms","Transform",mTransforms);
 }

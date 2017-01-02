@@ -31,6 +31,7 @@ public slots:
     void on_import_trigerred(GraphLoaderPlugin* ld);
     void on_export_trigerred(FileExporterPlugin* exp);
     void on_layout_trigerred(LayoutPlugin *layout);
+    void on_transform_triggered(GraphTransformPlugin* trans);
     void on_tab_change(QMdiSubWindow* tab);
 private slots:
     void on_actionOpen_triggered();

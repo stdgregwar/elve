@@ -29,12 +29,15 @@ public:
 
     SelectionMasks& selections();
     Selection& selection(size_t i);
+    Selection& currentSelection();
 
     QJsonObject json() const;
     const NodePositions &positions() const;
     const SharedGraph& graph() const;
 
     void setLayout(const SharedLayout& l);
+    void setMask(int id);
+    int mask() const;
     const SharedLayout& layout();
     void applyLayout(const NodePositions& p = NodePositions());
     void setView(GraphWidget* view);
@@ -47,6 +50,7 @@ private:
     SharedLayout mLayout;
     GraphWidget* mView;
     SelectionMasks mSelections;
+    int mMaskId; ///Selection mask index
 };
 
 #endif // EGRAPH_H

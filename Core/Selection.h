@@ -2,7 +2,6 @@
 #define SELECTION_H
 
 #include <unordered_set>
-
 #include <Node.h>
 
 class Selection : public NodeIDSet
@@ -17,5 +16,7 @@ public:
     QJsonArray json() const;
     static Selection fromJson(const QJsonArray& arr);
 };
+
+QDebug operator<<(QDebug stream, const Selection& s);
 
 #endif // SELECTION_H

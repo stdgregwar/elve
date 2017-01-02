@@ -1,6 +1,7 @@
 #include "CommandLine.h"
 #include <QJsonDocument>
 #include <QFile>
+#include <QDebug>
 #include <sstream>
 
 #include <alice/commands/show.hpp>
@@ -87,11 +88,19 @@ struct show_store_entry<SharedEGraph>
 };
 
 
+class PluginCommand : public command
+{
+public : PluginCommand(Plugin* pl,const environment::ptr& env,const std::string& name) : command(env,name)
+    {
+        pl->set_vmap(&vm);
+    }
+};
+
 //Layout command
-class LayoutCommand : public command
+class LayoutCommand : public PluginCommand
 {
 public:
-    LayoutCommand(LayoutPlugin* pl, const environment::ptr& env) : command(env, (pl->name() + " Layout").toStdString()),
+    LayoutCommand(LayoutPlugin* pl, const environment::ptr& env) : PluginCommand(pl,env, (pl->name() + " Layout").toStdString()),
       mLayout(pl)
     {
         pod.add("index",1);
@@ -127,10 +136,10 @@ private:
 };
 
 //Loader command
-class LoaderCommand : public command
+class LoaderCommand : public PluginCommand
 {
 public:
-    LoaderCommand(GraphLoaderPlugin* pl, const environment::ptr& env) : command(env, (pl->formatName() + " Loader").toStdString()),
+    LoaderCommand(GraphLoaderPlugin* pl, const environment::ptr& env) : PluginCommand(pl,env, (pl->formatName() + " Loader").toStdString()),
       mLoader(pl)
     {
         pod.add("filename",1);
@@ -158,10 +167,10 @@ private:
 };
 
 //Export command
-class ExportCommand : public command
+class ExportCommand : public PluginCommand
 {
 public:
-    ExportCommand(FileExporterPlugin* pl, const environment::ptr& env) : command(env, (pl->formatName() + " Saver").toStdString()),
+    ExportCommand(FileExporterPlugin* pl, const environment::ptr& env) : PluginCommand(pl,env, (pl->formatName() + " Saver").toStdString()),
       mSaver(pl)
     {
         pod.add("filename",1);
@@ -188,6 +197,51 @@ public:
 private:
     std::string mFilename;
     FileExporterPlugin* mSaver;
+};
+
+//Transform command
+class TransformCommand : public PluginCommand
+{
+public:
+    TransformCommand(GraphTransformPlugin* pl, const environment::ptr& env) : PluginCommand(pl,env, (pl->name()).toStdString()),
+      mTrans(pl)
+    {
+        opts.add_options()
+                ("input,i",po::value(&mInput),
+                 "index of the graph to transform (default : current)")
+                ("output,o",po::value(&mOutput),"output index for the graph (opt)");
+
+        opts.add(pl->opts()); //Add plugin options themselves
+    }
+
+    rules_t validity_rules() const override {
+        return  {
+            //file_exists_if_set( *this, process_filename( mFilename ),"filename")
+        };
+    }
+
+    bool execute() override {
+        SharedEGraph input;
+        if(is_set("input")) {
+            input = env->store<SharedEGraph>()[mInput];
+        } else {
+            input = env->store<SharedEGraph>().current();
+        }
+        SharedEGraph output = mTrans->transform(input);
+        if(is_set("output")) {
+            env->store<SharedEGraph>()[mOutput] = output;
+        } else {
+            env->store<SharedEGraph>().current() = output;
+        }
+        env->store<SharedEGraph>().notify();
+        if(output->view() && mTrans->type() == SELECTION) {
+            output->view()->updateSelectionColor();
+        }
+    }
+private:
+    GraphTransformPlugin* mTrans;
+    int mInput;
+    int mOutput;
 };
 
 }
@@ -227,6 +281,11 @@ void CommandLine::setupPluginsCommands() {
     mCli.set_category("Savers/Exporters");
     for(FileExporterPlugin* pl : PluginManager::get().exporters()) {
         mCli.insert_command("save_" + pl->cliName(), make_shared<ExportCommand>(pl,mCli.env));
+    }
+
+    mCli.set_category("Transforms");
+    for(GraphTransformPlugin* pl : PluginManager::get().transforms()) {
+        mCli.insert_command(pl->cliName(), make_shared<TransformCommand>(pl,mCli.env));
     }
 }
 

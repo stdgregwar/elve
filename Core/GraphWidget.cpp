@@ -35,8 +35,7 @@ GraphWidget::GraphWidget(QWidget* parent, QString filename) : QGraphicsView(pare
     mScale(1),
     mBehaviour(new Behaviour(this)),
     mEdgesPath(new QGraphicsPathItem()),
-    mFilename(filename),
-    mCurrentMask(1)
+    mFilename(filename)
 {
     setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
     setDragMode(QGraphicsView::ScrollHandDrag);
@@ -153,18 +152,18 @@ void GraphWidget::keyPressEvent(QKeyEvent *event) {
             mGraph->layout()->quickSim(400);
         }
     } else if(event->key() >= Qt::Key_0 && event->key() <= Qt::Key_9) {
-        mCurrentMask = event->key()-Qt::Key_0;
+        mGraph->setMask(event->key()-Qt::Key_0);
         updateSelectionColor();
     }
 }
 
 void GraphWidget::group() {
     qDebug() << "grouping!";
-    group(mGraph->selection(mCurrentMask));
+    group(mGraph->currentSelection());
 }
 
 void GraphWidget::toggleSelection() {
-    Selection& s = mGraph->selection(mCurrentMask);
+    Selection& s = mGraph->currentSelection();
     if(s.size() == 0) {
         for(const auto& p : mGraph->graph()->nodes()) {
             s.add(p.first);
@@ -297,8 +296,8 @@ bool GraphWidget::BorderSelect::mouseReleaseEvent(QMouseEvent *event) {
             names.insert(n->id());
         }
     }
-    gw.mGraph->selection(gw.mCurrentMask).clear();
-    gw.mGraph->selection(gw.mCurrentMask).add(names);
+    gw.mGraph->currentSelection().clear();
+    gw.mGraph->currentSelection().add(names);
     gw.updateSelectionColor();
     //gw.group(names);
     gw.setBehaviour(new Behaviour(&gw));
@@ -307,7 +306,7 @@ bool GraphWidget::BorderSelect::mouseReleaseEvent(QMouseEvent *event) {
 }
 
 void GraphWidget::updateSelectionColor() {
-    Selection& s = mGraph->selection(mCurrentMask);
+    Selection& s = mGraph->currentSelection();
     for(NodeItem* i : mNodes) {
         if(i->graphicsEffect()) {
             delete i->graphicsEffect();
@@ -315,7 +314,7 @@ void GraphWidget::updateSelectionColor() {
         }
         if(s.count(i->id())) {
            QGraphicsColorizeEffect* eff = new QGraphicsColorizeEffect(this);
-           eff->setColor(mSelectionColors[mCurrentMask]);
+           eff->setColor(mSelectionColors[mGraph->mask()]);
            i->setGraphicsEffect(eff);
         }
     }

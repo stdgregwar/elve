@@ -106,7 +106,6 @@ private:
     std::vector<NodeItem*> mNodes;
     QGraphicsPathItem* mEdgesPath;
     QString mFilename;
-    size_t mCurrentMask;
     static std::array<QColor,10> mSelectionColors;
 };
 

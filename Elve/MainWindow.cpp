@@ -22,6 +22,7 @@
 #include "FileLoadAction.h"
 #include "FileExportAction.h"
 #include "LayoutLoadAction.h"
+#include "TransformAction.h"
 #include "CommandLine.h"
 
 
@@ -66,6 +67,19 @@ MainWindow::MainWindow(QWidget *parent)
         ui.menuLayout->addAction(a);
     }
 
+    //Setup transforms
+    for(auto& l : pluginManager.transforms()) {
+        TransformAction* a = new TransformAction(l,l->name(),this);
+        connect(a,SIGNAL(triggered(GraphTransformPlugin*)),this,SLOT(on_transform_trigerred(GraphTransformPlugin*)));
+        switch(l->type()) {
+        case SELECTION:
+            ui.menuSelect->addAction(a);
+            break;
+        default: //TODO add more types
+            ui.menuTransform->addAction(a); break;
+        }
+    }
+
     ui.menuHelp->addAction(QWhatsThis::createAction(this));
 
     //Setup terminal
@@ -107,6 +121,9 @@ void MainWindow::on_import_trigerred(GraphLoaderPlugin* ld) {
         CommandLine::get().store().push(eg);
         newWindowWithFile(eg,filename);*/
     }
+}
+
+void MainWindow::on_transform_triggered(GraphTransformPlugin* trans) {
 }
 
 void MainWindow::on_export_trigerred(FileExporterPlugin* exp) {

@@ -53,6 +53,7 @@ Graph::Graph(const SharedData& data, const SparseData &extraData, const Aliases 
 
 NodeID Graph::newID() const {
     NodeID i = mData->nodeDatas().size()+mExtraData.size();
+    return i;
 }
 
 const QString& Graph::filename() const {
@@ -193,18 +194,24 @@ size_t Graph::outputCount() const
 
 size_t Graph::maxInputIndex() const
 {
-    return (*std::max_element(mInputs.begin(),mInputs.end(),
-        [](const Node* a,const Node* b) {
-            return a->IOIndex() < b->IOIndex();
-    }))->IOIndex();
+    size_t i = 0;
+    for(const Node* in : mInputs) {
+        if(in->IOIndex() > i) {
+            i = in->IOIndex();
+        }
+    }
+    return i == 0 ? 1 : i;
 }
 
 size_t Graph::maxOutputIndex() const
 {
-    return (*std::max_element(mOutputs.begin(),mOutputs.end(),
-        [](const Node* a,const Node* b) {
-            return a->IOIndex() < b->IOIndex();
-    }))->IOIndex();
+    size_t i = 0;
+    for(const Node* in : mOutputs) {
+        if(in->IOIndex() > i) {
+            i = in->IOIndex();
+        }
+    }
+    return i == 0 ? 1 : i;
 }
 
 QJsonObject Graph::json() const

@@ -13,7 +13,8 @@ EGraph::EGraph(const SharedGraph &g, const NodePositions &positions) :
     mGraph(g),
     mPositions(positions),
     mPosDirty(false),
-    mView(nullptr)
+    mView(nullptr),
+    mMaskId(1)
 {
 
 }
@@ -36,6 +37,7 @@ SharedEGraph EGraph::fromJSON(const QJsonObject &obj)
     }
 
     QJsonObject selections = obj["selections"].toObject();
+
     int i = 0;
     SelectionMasks masks;
     for(Selection& s : masks) {
@@ -43,6 +45,7 @@ SharedEGraph EGraph::fromJSON(const QJsonObject &obj)
     }
     SharedEGraph eg = std::make_shared<EGraph>(g,positions);
     eg->selections() = masks;
+    eg->setMask(obj["mask"].toInt());
     eg->setLayout(PluginManager::get().getLayout(layoutName));
     return eg;
 }
@@ -78,6 +81,8 @@ QJsonObject EGraph::json() const
         layout.insert("positions",positions);
         main.insert("layout",layout);
     }
+
+    main.insert("mask",mMaskId);
 
     QJsonObject selections;
     int i = 0;
@@ -207,6 +212,18 @@ GraphWidget* EGraph::view() {
 const SharedGraph& EGraph::graph() const
 {
     return mGraph;
+}
+
+void EGraph::setMask(int id) {
+    mMaskId = id;
+}
+
+int EGraph::mask() const {
+    return mMaskId;
+}
+
+Selection& EGraph::currentSelection() {
+    return selection(mMaskId);
 }
 
 void EGraph::setLayout(const SharedLayout &l)

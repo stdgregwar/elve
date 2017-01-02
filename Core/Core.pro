@@ -84,5 +84,5 @@ HEADERS += \
     GraphData.h \
     interfaces/Plugin.h \
     interfaces/FileExporterPlugin.h \
-    interfaces/GraphTransform.h \
-    Selection.h
+    Selection.h \
+    interfaces/GraphTransformPlugin.h

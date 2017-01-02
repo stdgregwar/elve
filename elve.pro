@@ -8,5 +8,6 @@ SUBDIRS += \
     LevelLayoutPlugin \
     SimpleLayoutPlugin \
     Elve \
-    SvgExporterPlugin
+    SvgExporterPlugin \
+    Fan-Select
 

@@ -109,6 +109,7 @@
     <addaction name="actionRectangle"/>
     <addaction name="actionToggle"/>
     <addaction name="actionGroup"/>
+    <addaction name="separator"/>
    </widget>
    <widget class="QMenu" name="menuLayout">
     <property name="whatsThis">
@@ -124,9 +125,15 @@
     </property>
     <addaction name="actionFit"/>
    </widget>
+   <widget class="QMenu" name="menuTransform">
+    <property name="title">
+     <string>Transform</string>
+    </property>
+   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuView"/>
    <addaction name="menuSelect"/>
+   <addaction name="menuTransform"/>
    <addaction name="menuLayout"/>
    <addaction name="menuHelp"/>
   </widget>

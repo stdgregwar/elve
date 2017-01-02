@@ -1,6 +1,7 @@
 #include "Selection.h"
 
 #include <QJsonArray>
+#include <QDebug>
 
 Selection::Selection(const NodeIDSet &set) : NodeIDSet(set)
 {
@@ -49,4 +50,11 @@ Selection Selection::fromJson(const QJsonArray& arr) {
         set.insert(v.toInt());
     }
     return Selection(set);
+}
+
+QDebug operator<<(QDebug stream, const Selection& s) {
+   for(const NodeID& i : s) {
+       stream << QVariant(i);
+   }
+   return stream;
 }
