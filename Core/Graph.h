@@ -24,7 +24,7 @@ public:
     const NodesByID& nodes() const;
     const NodeID& alias(const NodeID& id) const;
     size_t nodeCount() const;
-    SharedGraph clusterize(size_t maxLevel) const;
+    SharedGraph clusterize(size_t level);
     SharedGraph group(const NodeIDSet& toGroup, const NodeID &i, const NodeName &groupName);
     SharedGraph ungroup(const NodeID& cluster);
     NodeName uniqueName(const NodeName &base) const;
