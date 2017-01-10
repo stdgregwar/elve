@@ -10,7 +10,7 @@ QGraphicsScene* FileExporterPlugin::sceneForGraph(const SharedEGraph& eg) {
         return eg->view()->scene();
     } else {
         if(eg->layout()) {
-            GraphWidget* gw = new GraphWidget();
+            GraphWidget* gw = new GraphWidget(); //TODO manage memory
             gw->setGraph(eg);
             return eg->view()->scene();
         } else {

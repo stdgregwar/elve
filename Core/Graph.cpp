@@ -60,8 +60,7 @@ const QString& Graph::filename() const {
     return mData->mFilename;
 }
 
-const NodesByID& Graph::nodes() const
-{
+const NodesByID& Graph::nodes() const {
     return mNodes;
 }
 
@@ -87,8 +86,7 @@ Node* Graph::addNode(const NodeData& d) {
     return n;
 }
 
-void Graph::addEdge(const NodeID& from, const NodeID& to)
-{
+void Graph::addEdge(const NodeID& from, const NodeID& to) {
     if(from != to) {
         mNodes.at(from).addChild(&mNodes.at(to));
     }
