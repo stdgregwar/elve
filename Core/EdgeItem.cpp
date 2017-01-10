@@ -41,7 +41,19 @@ void EdgeItem::doPath(QPainterPath& p) {
     }*/
 
     for(size_t i = 1; i < mHandles.size(); i++) {
-        p.lineTo(mHandles[i].pos().toPointF());
+        QPointF from = mHandles[i-1].pos().toPointF();
+        QPointF to = mHandles[i].pos().toPointF();
+
+        qreal fac = 0.5;
+        QPointF ctl1 = QPointF(from.x(),from.y()*(1-fac)+to.y()*fac);
+        QPointF ctl2 = QPointF(to.x(),from.y()*(fac)+to.y()*(1-fac));
+        /*if(from.y() > to.y()) {
+            ctl1 = QPointF(from.x(),from.y()*fac+to.y()*(1-fac));
+            ctl2 = QPointF(to.x(),from.y()*fac+to.y()*(1-fac));
+        }*/
+        p.cubicTo(ctl1,ctl2,to);
+        //p.lineTo(mHandles[i].pos().toPointF());
+        //p.cubicTo();
         //sp.addEllipse(mHandles[i].pos(),8,8);
     }
     //p.addPath(sp);
