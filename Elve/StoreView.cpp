@@ -17,7 +17,7 @@ StoreView::StoreView(Store& store, MainWindow *parent) : QListWidget(parent), mS
 }
 
 void StoreView::update(Store::update u) {
-    if(u == Store::ALL) {
+    if(u == Store::ALL or u == Store::CURRENT) {
         clear();
         int i = 0;
         for(SharedEGraph eg : mStore.data()) {
