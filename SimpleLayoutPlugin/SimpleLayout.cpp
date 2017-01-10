@@ -24,6 +24,9 @@ void SimpleLayout::setGraph(SharedGraph graph)
     qreal inputHeight = totHeight/2;
     qreal outputHeight = -totHeight/2;
 
+    qreal maxOut = graph->maxOutputIndex();
+    qreal maxIn = graph->maxInputIndex();
+    qDebug() << "MaxOut" << maxOut << "maxIn" << maxIn;
     qreal ioFactor = (qreal)(graph->maxOutputIndex()) / graph->maxInputIndex();
     qreal ioUnit = std::max(totHeight/graph->maxOutputIndex(),mMinIOUnit);
 
@@ -39,7 +42,7 @@ void SimpleLayout::setGraph(SharedGraph graph)
             int index = p.second.IOIndex();
             int index1 = index*2;
             int index2 = (index-(graph->inputCount()/2))*2+1;
-            int t_index = index > (graph->inputCount()/2) ? index2 : index1;
+            int t_index = index;// > (graph->inputCount()/2) ? index2 : index1;
             system().addPConstrain(m,{t_index*ioUnit*ioFactor,inputHeight});
         } else if(p.second.isOutput()) {
             //mSystem.addVConstraint(m,-1024*SS);

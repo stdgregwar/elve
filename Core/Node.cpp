@@ -91,13 +91,10 @@ const NodeLevel& Node::level() const { //TODO add special treatment for OUTPUTS
         return mLevel = 0;
     }
     if(mLevel == -1) { //Recursive def
-        if(mAncestors.size()) {
-            mLevel = (*std::max_element(mAncestors.begin(),mAncestors.end(),
-                [](const Node* a,const Node* b) {
-                    return a->level() < b->level();
-            }))->level() + 1;
-        } else {
-            mLevel = 0;
+        for(const Node* an : ancestors()) {
+            if(an->level() +1 > mLevel) {
+                mLevel = an->level() + 1;
+            }
         }
     }
     return mLevel;

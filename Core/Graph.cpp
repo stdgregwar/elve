@@ -79,9 +79,9 @@ Node* Graph::addNode(const NodeData& d) {
     auto pi = mNodes.emplace(d.id(),d);
 
     Node* n = &pi.first->second;
-    if(d.type() == NodeType::OUTPUT) {
+    if(d.type() == NodeType::OUTPUT or d.type() == NodeType::OUTPUT_CLUSTER) {
         mOutputs.push_back(n);
-    } else if (d.type() == NodeType::INPUT) {
+    } else if (d.type() == NodeType::INPUT or d.type() == NodeType::INPUT_CLUSTER) {
         mInputs.push_back(n);
     }
     return n;
@@ -145,10 +145,13 @@ SharedGraph Graph::group(const NodeIDSet &toGroup, const NodeID& i,const NodeNam
     NodeIDs deps; deps.reserve(toGroup.size());
     deps.insert(deps.end(),toGroup.begin(),toGroup.end());
 
+    float av_index = 0;
     for(const NodeID& id : toGroup) {
         aliases.emplace(id,i);
         excluded.insert(id);
+        av_index += data(id).ioIndex();
     }
+    av_index /= toGroup.size();
 
     using pair_type = SparseData::value_type;
     for(const pair_type& p : mExtraData) {
@@ -156,7 +159,7 @@ SharedGraph Graph::group(const NodeIDSet &toGroup, const NodeID& i,const NodeNam
     }
 
     //Handle cluster types
-    const NodeData& first = mData->nodeDatas().at(*toGroup.begin());
+    const NodeData& first = data(*toGroup.begin());
     NodeType t = CLUSTER;
     switch (first.type()) {
     case INPUT:
@@ -170,7 +173,8 @@ SharedGraph Graph::group(const NodeIDSet &toGroup, const NodeID& i,const NodeNam
     default:
         break;
     }
-    extra.emplace(i,NodeData(i,trueName,deps,t,{},first.ioIndex()));
+
+    extra.emplace(i,NodeData(i,trueName,deps,t,{},av_index));
     return make_shared<Graph>(mData,extra,aliases,excluded);
 }
 
