@@ -29,13 +29,13 @@ std::array<QColor,10> GraphWidget::mSelectionColors = {
         QColor(128, 0, 0) //Bordeaux
     };
 
-GraphWidget::GraphWidget(QWidget* parent, QString filename) : QGraphicsView(parent),
+GraphWidget::GraphWidget(QWidget* parent, GraphWidgetListener* listener) : QGraphicsView(parent),
     mScene(new QGraphicsScene(-SS,-SS,SS*2,SS*2,this)),
     mDrag(false),
     mScale(1),
     mBehaviour(new Behaviour(this)),
     mEdgesPath(new QGraphicsPathItem()),
-    mFilename(filename)
+    mListener(listener)
 {
     setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
     setDragMode(QGraphicsView::ScrollHandDrag);
@@ -69,6 +69,8 @@ void GraphWidget::clear() {
 
 void GraphWidget::setGraph(SharedEGraph graph, unsigned quickTicks) {
     unsetGraph();
+
+    mListener->graphChanged(mGraph,graph);
     mGraph = graph;
     mGraph->setView(this);
     if(graph->layout()) {
@@ -135,11 +137,11 @@ void GraphWidget::mouseMoveEvent(QMouseEvent *event)
 
 void GraphWidget::mouseDoubleClickEvent(QMouseEvent* event) { //TEMP ungroup feature
     QList<QGraphicsItem*> items = mScene->items(mapToScene(event->pos()));
-    NodeIDs names;
+    NodeIDSet names;
     for(QGraphicsItem* i : items) {
         NodeItem* n = dynamic_cast<NodeItem*>(i);
         if(n) {
-            names.push_back(n->id());
+            names.insert(n->id());
         }
     }
     ungroup(names);
@@ -174,7 +176,7 @@ void GraphWidget::toggleSelection() {
     updateSelectionColor();
 }
 
-void GraphWidget::ungroup(const NodeIDs& names) {
+void GraphWidget::ungroup(const NodeIDSet& names) {
     setGraph(mGraph->ungroup(names),0);
 }
 

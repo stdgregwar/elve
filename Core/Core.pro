@@ -50,7 +50,8 @@ SOURCES +=\
     interfaces/LookFactoryPlugin.cpp \
     interfaces/NodeLook.cpp \
     interfaces/EdgeLook.cpp \
-    BoxConstraint.cpp
+    BoxConstraint.cpp \
+    interfaces/GraphWidgetListener.cpp
 
 RESOURCES += \
     coreresources.qrc
@@ -93,4 +94,5 @@ HEADERS += \
     interfaces/LookFactoryPlugin.h \
     interfaces/NodeLook.h \
     interfaces/EdgeLook.h \
-    BoxConstraint.h
+    BoxConstraint.h \
+    interfaces/GraphWidgetListener.h

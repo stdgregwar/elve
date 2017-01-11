@@ -12,6 +12,7 @@
 #include "Graph.h"
 #include "EGraph.h"
 #include <interfaces/LayoutPlugin.h>
+#include <interfaces/GraphWidgetListener.h>
 
 class MainWindow;
 
@@ -19,7 +20,7 @@ class GraphWidget : public QGraphicsView
 {
     Q_OBJECT;
 public:
-    GraphWidget(QWidget *parent = nullptr, QString filename = "new file");
+    GraphWidget(QWidget *parent = nullptr, GraphWidgetListener* listener = new GraphWidgetListener());
 
     void setGraph(SharedEGraph graph, unsigned quickTicks = 500);
     //void setGraph(SharedGraph graph, const NodePositions& positions);
@@ -40,7 +41,7 @@ public:
     void keyPressEvent(QKeyEvent *event) override;
 
     void group(const Selection &names, const NodeName& groupName = "group");
-    void ungroup(const NodeIDs& names);
+    void ungroup(const NodeIDSet &names);
 
     void quickSim(unsigned ticks);
     void setLayout(const SharedLayout &l);
@@ -105,7 +106,7 @@ private:
     std::vector<EdgeItem*> mEdges;
     std::vector<NodeItem*> mNodes;
     QGraphicsPathItem* mEdgesPath;
-    QString mFilename;
+    GraphWidgetListener* mListener;
     static std::array<QColor,10> mSelectionColors;
 };
 

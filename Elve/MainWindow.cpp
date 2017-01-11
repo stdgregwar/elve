@@ -44,6 +44,10 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(ui.mdiArea,SIGNAL(subWindowActivated(QMdiSubWindow*)),this,SLOT(on_tab_change(QMdiSubWindow*)));
 
+    /*connect(ui.actionRectangle,SIGNAL(triggered()),this,SLOT(borderSelect()));
+    connect(ui.actionToggle,SIGNAL(triggered()),this,SLOT(toggleSelection()));
+    connect(ui.actionGroup,SIGNAL(triggered()),this,SLOT(group()));*/
+
     PluginManager& pluginManager = PluginManager::get();
 
     //setup loaders
@@ -129,7 +133,7 @@ void MainWindow::on_transform_triggered(GraphTransformPlugin* trans) {
 void MainWindow::on_export_trigerred(FileExporterPlugin* exp) {
     QString filename = QFileDialog::getSaveFileName(this,"Export " + exp->formatName(),"",exp->fileFilter());
     if(filename != "") {
-        runUiCommand(QString("save_%1 \"%2\"").arg(exp->cliName().c_str(),filename));
+        runCommandOnShownGraph(QString("save_%1 \"%2\"").arg(exp->cliName().c_str(),filename));
     }
 }
 
@@ -143,7 +147,7 @@ void MainWindow::on_layout_trigerred(LayoutPlugin* layout) {
     if(vp) {
         vp->setLayout(layout->create());
     }*/
-    runUiCommand(QString("%1_layout").arg(QString::fromStdString(layout->cliName())));
+    runCommandOnShownGraph(QString("%1_layout").arg(QString::fromStdString(layout->cliName())));
 }
 
 void MainWindow::on_actionOpen_triggered()
@@ -197,6 +201,24 @@ void MainWindow::connectTab(QMdiSubWindow* tab) {
     mCurrentTab = tab;
 }
 
+void MainWindow::on_group() {
+    runCommandOnShownGraph(QString("group %1")
+                           .arg(QString::number(
+                                    viewport()->graph()->mask())));
+}
+
+void MainWindow::on_toggle() {
+    runCommandOnShownGraph(QString("select -a %1")
+                           .arg(QString::number(
+                                    viewport()->graph()->mask())));
+}
+
+void MainWindow::on_ungroup() {
+    runCommandOnShownGraph(QString("ungroup %1")
+                           .arg(QString::number(
+                                    viewport()->graph()->mask())));
+}
+
 void MainWindow::disconnectTab(QMdiSubWindow* tab) {
     GraphWidget* gw = viewport();
     if(!gw) {
@@ -224,7 +246,7 @@ GraphWidget* MainWindow::viewport() {
 }
 
 void MainWindow::newWindowWithFile(SharedEGraph g, QString filename) {
-    GraphWidget* gw = new GraphWidget(this,filename.split("/").last());
+    GraphWidget* gw = new GraphWidget(this,&CommandLine::get());
     QMainWindow* cw = new QMainWindow(ui.mdiArea);
 
     cw->setCentralWidget(gw);
@@ -266,6 +288,18 @@ void MainWindow::on_actionSave_triggered()
     } else {
         QMessageBox::information(this,"Mhhh...","There is no current graph to save.");
     }
+}
+
+void MainWindow::runCommandOnShownGraph(const QString& cmd) {
+    SharedEGraph eg = viewport()->graph();
+    Store& st = CommandLine::get().store();
+    for(int i = 0; i < st.data().size(); i ++) {
+        if(st.data()[i] == eg) {
+            st.set_current_index(i);
+            break;
+        }
+    }
+    runUiCommand(cmd);
 }
 
 void MainWindow::on_actionFit_triggered()

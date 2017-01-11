@@ -19,6 +19,7 @@ public:
     void connectTab(QMdiSubWindow* tab);
     void disconnectTab(QMdiSubWindow* tab);
     void runUiCommand(const QString& cmd);
+    void runCommandOnShownGraph(const QString& cmd);
     GraphWidget* viewport();
     ~MainWindow();
 private:
@@ -34,6 +35,9 @@ public slots:
     void on_transform_triggered(GraphTransformPlugin* trans);
     void on_tab_change(QMdiSubWindow* tab);
 private slots:
+    void on_group();
+    void on_toggle();
+    void on_ungroup();
     void on_actionOpen_triggered();
     void on_actionQuit_triggered();
     void on_actionSave_triggered();

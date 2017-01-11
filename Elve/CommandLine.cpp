@@ -287,6 +287,70 @@ private:
     int mask;
 };
 
+class GroupCmd : public command
+{
+public:
+    GroupCmd(const environment::ptr& env) : command(env,"Group"),name("group") {
+        pod.add("mask",1).add("name",1);
+
+        opts.add_options()
+                ("mask,m",po::value(&mask)->default_value(0),"Selection mask index")
+                ("name,n",po::value(&name)->default_value(name),"Name of the group")
+                ("index,i",po::value(&sid));
+    }
+
+    bool execute() override {
+        SharedEGraph eg = env->store<SharedEGraph>().current();
+        SharedEGraph grouped =  eg->group(eg->selection(mask),name);
+        env->store<SharedEGraph>().current() = grouped;
+        if(eg->view()) eg->view()->setGraph(grouped);
+    }
+private:
+    NodeName name;
+    int sid;
+    int mask;
+};
+
+class UngroupCmd : public command
+{
+public:
+    UngroupCmd(const environment::ptr& env) : command(env,"Ungroup") {
+        pod.add("mask",1).add("name",1);
+
+        opts.add_options()
+                ("mask,m",po::value(&mask)->default_value(0),"Selection mask index")
+                ("index,i",po::value(&sid));
+    }
+
+    bool execute() override {
+        SharedEGraph eg = env->store<SharedEGraph>().current();
+        Selection& s = eg->selection(mask);
+        SharedEGraph ungrouped = eg->ungroup(s);
+        env->store<SharedEGraph>().current() = ungrouped;
+        if(eg->view()) eg->view()->setGraph(ungrouped);
+    }
+private:
+    int sid;
+    int mask;
+};
+
+class clustercmd : public command
+{
+public:
+    clustercmd(const environment::ptr& env) : command(env,"Ungroup") {
+    }
+
+    bool execute() override {
+        SharedEGraph eg = env->store<SharedEGraph>().current();
+        SharedGraph ng = eg->graph()->clusterize(1);
+        SharedEGraph neg = std::make_shared<EGraph>(ng,eg->positions());
+        neg->setLayout(eg->layout());
+        neg->setView(eg->view());
+        env->store<SharedEGraph>().current() = neg;
+        if(neg->view()) neg->view()->setGraph(neg);
+    }
+};
+
 }
 
 //=================================================================================================================================
@@ -309,6 +373,9 @@ void CommandLine::init()
     mCli.init(0,{},std::cout);
     mCli.set_category("Selection");
     mCli.insert_command("select",make_shared<SelectCmd>(mCli.env));
+    mCli.insert_command("group",make_shared<GroupCmd>(mCli.env));
+    mCli.insert_command("ungroup",make_shared<UngroupCmd>(mCli.env));
+    mCli.insert_command("cluster",make_shared<clustercmd>(mCli.env));
     setupPluginsCommands();
 }
 
@@ -336,6 +403,21 @@ void CommandLine::setupPluginsCommands() {
 
 Store &CommandLine::store() {
     return mCli.env->store<SharedEGraph>();
+}
+
+void CommandLine::graphChanged(SharedEGraph oldGraph, SharedEGraph newGraph) {
+    Store& st = mCli.env->store<SharedEGraph>();
+
+    qDebug() << "Graph modified";
+    for(int i = 0; i < st.data().size(); i ++) {
+        if(st.data()[i] == oldGraph) {
+            st.set_current_index(i);
+            st.current() = newGraph;
+            qDebug() << "previous found";
+            break;
+        }
+    }
+    st.notify(Store::ALL);
 }
 
 bool CommandLine::run_command(const QString& cmd, std::ostream& out,std::ostream& cerr)

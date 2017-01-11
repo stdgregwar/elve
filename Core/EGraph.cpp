@@ -153,7 +153,7 @@ SharedEGraph EGraph::group(const NodeIDSet& names, const NodeName &groupName)
     return eg;
 }
 
-SharedEGraph EGraph::ungroup(const NodeIDs & names) const
+SharedEGraph EGraph::ungroup(const NodeIDSet & names) const
 {
     mPosDirty = true;
     NodePositions poss = positions();
@@ -230,6 +230,7 @@ Selection& EGraph::currentSelection() {
 
 void EGraph::setLayout(const SharedLayout &l)
 {
+    if(!l) return;
     mPosDirty = true;
     l->setGraph(mGraph,positions());
     mLayout = l;

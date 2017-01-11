@@ -43,7 +43,7 @@ void QConsoleWidget::OnChildStdOutWrite(QString szOutput)
 
     if (fixedPosition != 0) {
         content = szOutput.right(szOutput.count() - szOutput.indexOf('\n') - 1);
-    } else {    
+    } else {
         content = szOutput;
     }
 
@@ -110,6 +110,7 @@ void QConsoleWidget::replace(QString rep)
 }
 
 void QConsoleWidget::issue() {
+    toBottom();
     int count = toPlainText().count() - mFixedPosition;
     QString cmd = toPlainText().right(count);
     //Call alice here
