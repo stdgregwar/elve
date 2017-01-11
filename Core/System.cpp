@@ -95,6 +95,7 @@ Point* System::addPoint(qreal mass, const NodeID &id, QVector2D pos, qreal damp,
     }
     Damp* d = new Damp(damp);
     nm->addForce(d);
+    nm->addConstraint(&mBox);
     return nm;
 }
 
@@ -138,6 +139,11 @@ const Point* System::nearest(const QVector2D& p) const
         }
     }
     return ml;
+}
+
+void System::setSizeHint(const QRectF& rect) {
+    mGravity.setQuadTreeBounds(rect);
+    mBox.setBounds(rect.adjusted(-512,-512,512,512));
 }
 
 void System::addVConstraint(Point* m, qreal height)

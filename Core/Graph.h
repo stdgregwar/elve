@@ -27,6 +27,7 @@ public:
     SharedGraph clusterize(size_t level);
     SharedGraph group(const NodeIDSet& toGroup, const NodeID &i, const NodeName &groupName);
     SharedGraph ungroup(const NodeID& cluster);
+    SharedGraph fastGroup(const std::vector<NodeIDSet>& groups, const NodeName& basename);
     NodeName uniqueName(const NodeName &base) const;
     NodeLevel highestLevel() const;
     size_t inputCount() const;

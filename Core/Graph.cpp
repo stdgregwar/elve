@@ -29,6 +29,8 @@ Graph::Graph(const SharedData& data, const SparseData &extraData, const Aliases 
     for(const pair_type& p : mExtraData) {
         if(!mExcluded.count(p.first)) {
             addNode(p.second);
+        } else {
+            qDebug() << "Extra data" << p.second.name().c_str() << "was exluded";
         }
     }
 
@@ -100,16 +102,19 @@ const NodeData& Graph::data(const NodeID& id) const {
     }
 }
 
+///CLUSTERING SECTION
+
 void _descend(const Node *n, vector<NodeIDSet> &sets, NodeIDSet &mainSet);
 
 void _collectClusterables(const Node* n, NodeIDSet& set, vector<NodeIDSet>& sets, NodeIDSet& mainSet) {
     set.insert(n->id());
     mainSet.insert(n->id());
-    vector<const Node*> collected;
+    vector<const Node*> collected; collected.reserve(n->ancestors().size());
     for(const Node* cn : n->ancestors()) {
         if(std::all_of(cn->children().begin(),
                        cn->children().end(),
-                       [&set](const Node* an){return set.count(an->id());})) {
+                       [&set](const Node* an){return set.count(an->id());})
+                and !cn->isOutput() and !mainSet.count(cn->id())) {
             set.insert(cn->id()); //insert if all ancestors are in accumulator
             collected.push_back(cn);
             mainSet.insert(cn->id());
@@ -118,7 +123,7 @@ void _collectClusterables(const Node* n, NodeIDSet& set, vector<NodeIDSet>& sets
         }
     }
     for(const Node* cn : collected) { //doing breadth first visit
-        _collectClusterables(cn,set,sets,mainSet);
+         _collectClusterables(cn,set,sets,mainSet);
     }
 }
 
@@ -138,7 +143,7 @@ SharedGraph Graph::clusterize(size_t level) {
     vector<NodeIDSet> sets;
     NodeIDSet mainSet; mainSet.reserve(nodeCount());
     for(Node* out : outputs()) {
-        qDebug() << "output" << out->name().c_str();
+        //qDebug() << "output" << out->name().c_str();
         NodeIDSet collect;
         _collectClusterables(out,collect,sets,mainSet);
         collect.erase(out->id());
@@ -148,12 +153,12 @@ SharedGraph Graph::clusterize(size_t level) {
     qDebug() << "begin of" << sets.size() << "groups";
     SharedGraph g = shared_from_this();
     int i = 0;
-    for(NodeIDSet& s : sets) {
-        g = g->group(s,g->newID(),"cluster");
-    }
+    g = g->fastGroup(sets,"cluster");
     qDebug() << "shrinked a" << nodeCount() << "nodes graph to a" << g->nodeCount() << "one";
-    return g->clusterize(level-1);
+    return g->clusterize(level-1); //Does not do anything...
 }
+
+///END OF CLUSTERING SECTION
 
 NodeName Graph::uniqueName(const NodeName& base) const {
     NodeName current = base;
@@ -178,6 +183,47 @@ SharedGraph Graph::ungroup(const NodeID &cluster) {
     NodeIDSet excl = excludedWithout(extras.at(cluster).dependencies());
     extras.erase(cluster);
     return make_shared<Graph>(mData,extras,aliasesWithout(cluster),excl);
+}
+
+SharedGraph Graph::fastGroup(const vector<NodeIDSet>& groups, const NodeName& basename) {
+    //Gather stats
+    size_t contentSize = 0;
+    for(const NodeIDSet& group : groups) {
+        contentSize += group.size();
+    }
+
+    SparseData extra; extra.reserve(mExtraData.size()+groups.size());
+
+    using pair_type = SparseData::value_type;
+    for(const pair_type& p : mExtraData) {
+        extra.emplace(p.first,p.second);
+    }
+
+    Aliases aliases(mAliases);
+    NodeIDSet excluded(mExcluded); excluded.reserve(mExcluded.size()+contentSize);
+    aliases.reserve(aliases.size()+contentSize);
+
+
+    NodeID i = newID();
+    for(const NodeIDSet& group : groups) {
+        if(group.size() < 2) { //Ignore groups of one or less elements
+            continue;
+        }
+        NodeIDs deps; deps.reserve(group.size());
+        deps.insert(deps.end(),group.begin(),group.end());
+
+        float av_index = 0;
+        for(const NodeID& id : group) {
+            aliases.emplace(id,i);
+            excluded.insert(id);
+            av_index += data(id).ioIndex();
+        }
+        av_index /= group.size();
+
+        extra.emplace(i,NodeData(i,basename + to_string(i),deps,CLUSTER,{},av_index));
+        i++;
+    }
+    return make_shared<Graph>(mData,extra,aliases,excluded);
 }
 
 SharedGraph Graph::group(const NodeIDSet &toGroup, const NodeID& i,const NodeName &groupName) {

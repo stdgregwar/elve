@@ -12,7 +12,7 @@
 #include <random>
 #include <chrono>
 
-#define SS 320000
+#define SS 4096000
 
 using namespace std;
 
@@ -91,7 +91,7 @@ void GraphWidget::quickSim(unsigned ticks)
 void GraphWidget::drawBackground(QPainter *painter, const QRectF &rect){
     QGraphicsView::drawBackground(painter,rect);
     if(mGraph->layout()) {
-        //mLayout->system().debug(painter);
+        //mGraph->layout()->system().debug(painter);
     }
 }
 

@@ -12,6 +12,8 @@ QuadTreeNode::QuadTreeNode()
 {
     reset();
     mPoints.reserve(20); //Should be enough
+    for(int i = 0; i < 4; i++)
+        mChildren[i] = nullptr;
     //pen().setColor(Qt::red);
 }
 
@@ -110,8 +112,6 @@ void QuadTreeNode::reset()
     mMC = {0,0};
     mParent = nullptr;
     mPoints.clear();
-    /*for(int i = 0; i < 4; i++)
-        mChildren[i] = nullptr;*/
 }
 
 const QVector2D& QuadTreeNode::getCenter() const

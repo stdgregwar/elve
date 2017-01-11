@@ -24,6 +24,8 @@ public:
 
     QVector2D gravityFor(const Point &m) const;
 
+    void setBounds(const QRectF& bounds);
+
     QuadTreeNode* rootNode() const;
     void reset();
     QRectF bounds() const;
