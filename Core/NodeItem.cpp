@@ -29,9 +29,9 @@ NodeItem::NodeItem(const NodeData& data, QGraphicsItem *parent) : QGraphicsPixma
         }
         setToolTip(QString("Name : %1\n"
                            "ID   : %2\n"
-                           "truthtable : %3\n"
+                           "truthtable :\n %3\n"
                            "ancestorsCount : %4").arg(mData.name().c_str()).arg(mData.id()).arg(table).arg(mData.dependencies().size()));
-    }
+    } //TODO move all of this to a information module or smth
 
     static unordered_map<NodeType,QString> pixmaps{
         {NodeType::CLUSTER,":/resources/cluster.svg"},

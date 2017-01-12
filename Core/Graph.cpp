@@ -114,7 +114,7 @@ void _collectClusterables(const Node* n, NodeIDSet& set, vector<NodeIDSet>& sets
         if(std::all_of(cn->children().begin(),
                        cn->children().end(),
                        [&set](const Node* an){return set.count(an->id());})
-                and !cn->isOutput() and !mainSet.count(cn->id())) {
+                and !cn->isInput() and !cn->isOutput() and !mainSet.count(cn->id())) {
             set.insert(cn->id()); //insert if all ancestors are in accumulator
             collected.push_back(cn);
             mainSet.insert(cn->id());

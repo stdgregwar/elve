@@ -137,8 +137,8 @@ SharedGraph BlifLoader::load(const QString &filepath) {
                 lss >> last;
 
                 QJsonObject tt;
-                if(b.properties(lastname)["truthtable"].isUndefined()) {
-                    QJsonObject tt = b.properties(lastname)["truthtable"].toObject();
+                if(!b.properties(lastname)["truthtable"].isUndefined()) {
+                    tt = b.properties(lastname)["truthtable"].toObject();
                 }
                 tt[com.c_str()] = last.c_str();
                 b.properties(lastname)["truthtable"] = tt;
