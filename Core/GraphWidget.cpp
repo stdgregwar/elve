@@ -164,6 +164,10 @@ void GraphWidget::group() {
     group(mGraph->currentSelection());
 }
 
+void GraphWidget::ungroup() {
+    ungroup(mGraph->currentSelection());
+}
+
 void GraphWidget::toggleSelection() {
     Selection& s = mGraph->currentSelection();
     if(s.size() == 0) {

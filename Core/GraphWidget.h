@@ -61,6 +61,7 @@ public slots:
     void borderSelect();
     void toggleSelection();
     void group();
+    void ungroup();
 private:
     class Behaviour
     {

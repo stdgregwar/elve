@@ -54,8 +54,13 @@ Graph::Graph(const SharedData& data, const SparseData &extraData, const Aliases 
 }
 
 NodeID Graph::newID() const {
-    NodeID i = mData->nodeDatas().size()+mExtraData.size();
-    return i;
+    return ++mLastId;
+    /*NodeID i = mData->nodeDatas().size()+mExtraData.size();
+    NodesByID::const_iterator it;
+    while((it = mNodes.find(i)) != mNodes.end()) {
+        i++;
+    }
+    return i;*/
 }
 
 const QString& Graph::filename() const {
@@ -85,6 +90,7 @@ Node* Graph::addNode(const NodeData& d) {
     } else if (d.type() == NodeType::INPUT or d.type() == NodeType::INPUT_CLUSTER) {
         mInputs.push_back(n);
     }
+    if(n->id() > mLastId) mLastId = n->id();
     return n;
 }
 
@@ -204,8 +210,9 @@ SharedGraph Graph::fastGroup(const vector<NodeIDSet>& groups, const NodeName& ba
     aliases.reserve(aliases.size()+contentSize);
 
 
-    NodeID i = newID();
+
     for(const NodeIDSet& group : groups) {
+        NodeID i = newID();
         if(group.size() < 2) { //Ignore groups of one or less elements
             continue;
         }
@@ -221,7 +228,7 @@ SharedGraph Graph::fastGroup(const vector<NodeIDSet>& groups, const NodeName& ba
         av_index /= group.size();
 
         extra.emplace(i,NodeData(i,basename + to_string(i),deps,CLUSTER,{},av_index));
-        i++;
+        //i++;
     }
     return make_shared<Graph>(mData,extra,aliases,excluded);
 }

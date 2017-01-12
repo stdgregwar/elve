@@ -198,6 +198,7 @@ void MainWindow::connectTab(QMdiSubWindow* tab) {
     connect(ui.actionRectangle,SIGNAL(triggered()),gw,SLOT(borderSelect()));
     connect(ui.actionToggle,SIGNAL(triggered()),gw,SLOT(toggleSelection()));
     connect(ui.actionGroup,SIGNAL(triggered()),gw,SLOT(group()));
+    connect(ui.actionUngroup,SIGNAL(triggered()),gw,SLOT(ungroup()));
     mCurrentTab = tab;
 }
 

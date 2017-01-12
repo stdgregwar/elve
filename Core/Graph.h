@@ -54,6 +54,7 @@ private:
     SharedData mData;
     SparseData mExtraData;
     NodeIDSet mExcluded;
+    mutable NodeID mLastId;
 };
 
 #endif // GRAPH_H
