@@ -30,9 +30,12 @@ void SimpleLayout::setGraph(SharedGraph graph)
     qreal ioFactor = (qreal)(graph->maxOutputIndex()) / graph->maxInputIndex();
     qreal ioUnit = std::max(totHeight/graph->maxOutputIndex(),mMinIOUnit);
 
-    for(const auto& p : graph->nodes()) {
+    QRectF rect(0,outputHeight,graph->maxOutputIndex()*ioUnit,totHeight);
+    system().setSizeHint(rect);
+    qDebug() << "rect" << rect;
 
-        QVector2D pos = startPosition(p.first);
+    for(const auto& p : graph->nodes()) {
+        QVector2D pos = startPosition(p.first,rect);
         Point* m = system().addPoint(1,p.second.id(),pos,damp,FULL);
 
         if(p.second.isInput()) {

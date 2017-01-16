@@ -86,6 +86,10 @@ const NodeType &Node::type() const
     return mData.type();
 }
 
+bool Node::isCluster() const {
+    return type() == CLUSTER || type() == INPUT_CLUSTER || type() == OUTPUT_CLUSTER;
+}
+
 const NodeLevel& Node::level() const { //TODO add special treatment for OUTPUTS
     if(type() == INPUT) { //Base case
         return mLevel = 0;

@@ -7,6 +7,7 @@
 #include "Gravity.h"
 #include "Constraint.h"
 #include "Graph.h"
+#include "BoxConstraint.h"
 
 #include <vector>
 #include <unordered_map>
@@ -39,10 +40,12 @@ public:
     NodePositions positions() const;
     const PointsByID& pointsByID() const;
     void debug(QPainter* p) const;
+    void setSizeHint(const QRectF& rect);
     ~System();
 private:
     void computeForces(size_t from,size_t until);
     Gravity mGravity;
+    BoxConstraint mBox;
     std::vector<Point*> mPoints;
     PointsByID mPointsById;
     std::vector<Force*> mForces;

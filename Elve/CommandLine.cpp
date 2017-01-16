@@ -6,6 +6,7 @@
 
 #include <alice/commands/show.hpp>
 #include <interfaces/LayoutPlugin.h>
+#include <chrono>
 
 #include "MainWindow.h"
 
@@ -105,7 +106,7 @@ public:
     {
         pod.add("index",1);
         opts.add_options()
-                ("index,i",po::value(&id),
+                ("index",po::value(&id),
                  ("id of the graph to set Layout " + pl->name() + " on.").toStdString().c_str());
 
         opts.add(pl->opts()); //Add plugin options themselves
@@ -237,11 +238,150 @@ public:
         if(output->view() && mTrans->type() == SELECTION) {
             output->view()->updateSelectionColor();
         }
+        return true;
     }
 private:
     GraphTransformPlugin* mTrans;
     int mInput;
     int mOutput;
+};
+
+class SelectCmd : public command
+{
+public:
+    SelectCmd(const environment::ptr& env) : command(env,"Select") {
+        pod.add("mask",1).add("nodeIDs",-1);
+
+        opts.add_options()
+                ("mask,m",po::value(&mask)->default_value(0),"Selection mask index")
+                ("index,i",po::value(&sid))
+                ("clear,c","clear existing selection")
+                ("all,a","select all")
+                ("add","add nodes")
+                ("sub","sub nodes")
+                ("nodeIDs",po::value(&ids),"node ids to process");
+    }
+    bool execute() override {
+        SharedEGraph eg = env->store<SharedEGraph>().current();
+        Selection& s = eg->selection(mask);
+        if(is_set("clear")) {
+            s.clear();
+        }
+        if(is_set("all")) {
+            for(const auto& p : eg->graph()->nodes()) {
+                s.add(p.first);
+            }
+        }
+        auto op = static_cast<void(Selection::*)(const NodeID&)>(&Selection::add);
+        if(is_set("sub")) {
+            op = static_cast<void(Selection::*)(const NodeID&)>(&Selection::sub);
+        }
+        for(const NodeID& id : ids) {
+            (s.*op)(id);
+        }
+        if(eg->view()) {
+            eg->view()->updateSelectionColor();
+        }
+        return true;
+    }
+private:
+    int sid;
+    NodeIDs ids;
+    int mask;
+};
+
+class GroupCmd : public command
+{
+public:
+    GroupCmd(const environment::ptr& env) : command(env,"Group"),name("group") {
+        pod.add("mask",1).add("name",1);
+
+        opts.add_options()
+                ("mask,m",po::value(&mask)->default_value(0),"Selection mask index")
+                ("name,n",po::value(&name)->default_value(name),"Name of the group")
+                ("index,i",po::value(&sid));
+    }
+
+    bool execute() override {
+        SharedEGraph eg = env->store<SharedEGraph>().current();
+        SharedEGraph grouped =  eg->group(eg->selection(mask),name);
+        env->store<SharedEGraph>().current() = grouped;
+        if(eg->view()) eg->view()->setGraph(grouped);
+        return true;
+    }
+private:
+    NodeName name;
+    int sid;
+    int mask;
+};
+
+class UngroupCmd : public command
+{
+public:
+    UngroupCmd(const environment::ptr& env) : command(env,"Ungroup") {
+        pod.add("mask",1).add("name",1);
+
+        opts.add_options()
+                ("mask,m",po::value(&mask)->default_value(0),"Selection mask index")
+                ("index,i",po::value(&sid));
+    }
+
+    bool execute() override {
+        SharedEGraph eg = env->store<SharedEGraph>().current();
+        Selection& s = eg->selection(mask);
+        SharedEGraph ungrouped = eg->ungroup(s);
+        env->store<SharedEGraph>().current() = ungrouped;
+        if(eg->view()) eg->view()->setGraph(ungrouped);
+        return true;
+    }
+private:
+    int sid;
+    int mask;
+};
+
+class clustercmd : public command
+{
+public:
+    clustercmd(const environment::ptr& env) : command(env,"cluster") {
+        opts.add_options()("level,l",po::value(&level)->default_value(level),"clustering iterations count");
+    }
+
+    bool execute() override {
+        SharedEGraph eg = env->store<SharedEGraph>().current();
+        SharedGraph ng = eg->graph()->clusterize(level);
+        SharedEGraph neg = std::make_shared<EGraph>(ng,eg->positions());
+        neg->setLayout(eg->layout());
+        neg->setView(eg->view());
+        env->store<SharedEGraph>().current() = neg;
+        if(neg->view()) neg->view()->setGraph(neg);
+        return true;
+    }
+private:
+    int level = 1;
+};
+
+using namespace std::chrono;
+
+class chrono_command : public command
+{
+
+public:
+    chrono_command(const environment::ptr& env) : command(env,"chrono") {
+        opts.add_options()("reset,r","reset chrono");
+    }
+
+    bool execute() override {
+        if(is_set("reset")) {
+            startTime = high_resolution_clock::now();
+        } else {
+            high_resolution_clock::time_point endTime = high_resolution_clock::now();
+            milliseconds ms = duration_cast<milliseconds>(endTime - startTime);
+            env->out() << "Elapsed time : " << ms.count() << " [ms]\n";
+        }
+        return true;
+    }
+private:
+    high_resolution_clock::time_point startTime;
 };
 
 }
@@ -264,6 +404,13 @@ void CommandLine::init()
     ADD_READ_COMMAND(graph,"Graph");
     ADD_WRITE_COMMAND(graph,"Graph");
     mCli.init(0,{},std::cout);
+    mCli.set_category("Selection");
+    mCli.insert_command("select",make_shared<SelectCmd>(mCli.env));
+    mCli.insert_command("group",make_shared<GroupCmd>(mCli.env));
+    mCli.insert_command("ungroup",make_shared<UngroupCmd>(mCli.env));
+    mCli.insert_command("cluster",make_shared<clustercmd>(mCli.env));
+    mCli.set_category("utils");
+    mCli.insert_command("chrono",make_shared<chrono_command>(mCli.env));
     setupPluginsCommands();
 }
 
@@ -291,6 +438,21 @@ void CommandLine::setupPluginsCommands() {
 
 Store &CommandLine::store() {
     return mCli.env->store<SharedEGraph>();
+}
+
+void CommandLine::graphChanged(SharedEGraph oldGraph, SharedEGraph newGraph) {
+    Store& st = mCli.env->store<SharedEGraph>();
+
+    qDebug() << "Graph modified";
+    for(int i = 0; i < st.data().size(); i ++) {
+        if(st.data()[i] == oldGraph) {
+            st.set_current_index(i);
+            st.current() = newGraph;
+            qDebug() << "previous found";
+            break;
+        }
+    }
+    st.notify(Store::ALL);
 }
 
 bool CommandLine::run_command(const QString& cmd, std::ostream& out,std::ostream& cerr)

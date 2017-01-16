@@ -447,10 +447,10 @@ public:
 
         if ( vm.count( "help" ) )
         {
-            env->out() << "positionnals : ";
+            /*env->out() << "positionnals : ";
             for(size_t i = 0; i < pod.max_total_count(); ++i) {
                 env->out() << "[" << pod.name_for_position(i) << "] ";
-            }
+            }*/
             env->out() << std::endl << opts << std::endl;
             return false;
         }

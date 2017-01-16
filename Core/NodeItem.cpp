@@ -14,7 +14,25 @@ using namespace std;
 
 NodeItem::NodeItem(const NodeData& data, QGraphicsItem *parent) : QGraphicsPixmapItem(parent), mDraged(false), mData(data)
 {
-    setToolTip(QString::fromStdString(data.name()));
+    if(data.type() == CLUSTER) {
+        setToolTip(QString("Name : %1\n"
+                           "ID   : %2\n"
+                           "nodeCount : %3").arg(mData.name().c_str()).arg(mData.id()).arg(data.dependencies().size()));
+    } else {
+        QJsonObject truthtable = mData.properties()["truthtable"].toObject();
+        QString table;
+        for(QJsonObject::const_iterator it = truthtable.constBegin();
+                it != truthtable.constEnd();
+                it++) {
+            table += it.key() + " ";
+            table += it.value().toString() + "\n";
+        }
+        setToolTip(QString("Name : %1\n"
+                           "ID   : %2\n"
+                           "truthtable :\n %3\n"
+                           "ancestorsCount : %4").arg(mData.name().c_str()).arg(mData.id()).arg(table).arg(mData.dependencies().size()));
+    } //TODO move all of this to a information module or smth
+
     static unordered_map<NodeType,QString> pixmaps{
         {NodeType::CLUSTER,":/resources/cluster.svg"},
         {NodeType::NODE,":/resources/node.svg"},

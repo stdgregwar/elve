@@ -8,6 +8,7 @@ LevelLayout::LevelLayout() {
             ("damp,d",po::value(&mDamp)->default_value(mDamp),"damping factor of the points")
             ("unitLenght,u",po::value(&mMinUnit)->default_value(mMinUnit),"minimal level unit lenght in pixels")
             ("iosUnitLenght,o",po::value(&mMinIOUnit)->default_value(mMinIOUnit), "minimal space between two I/Os")
+            ("interleave,i","input node interleaving")
             ;
 }
 
@@ -26,8 +27,11 @@ void LevelLayout::setGraph(SharedGraph graph)
     qreal ioFactor = (qreal)(graph->maxOutputIndex()) / graph->maxInputIndex();
     qreal ioUnit = std::max(totHeight/graph->maxOutputIndex(),mMinIOUnit);
 
+    QRectF rect = {0,outputHeight,graph->maxOutputIndex()*ioUnit,totHeight};
+    system().setSizeHint(rect);
+
     for(const auto& p : graph->nodes()) {
-        QVector2D pos = startPosition(p.first);
+        QVector2D pos = startPosition(p.first,rect);
 
         Point* m = system().addPoint(1,p.second.id(),pos,damp,FULL);
 
@@ -37,7 +41,7 @@ void LevelLayout::setGraph(SharedGraph graph)
             int index = p.second.IOIndex();
             int index1 = index*2;
             int index2 = (index-(graph->inputCount()/2))*2+1;
-            int t_index = index > (graph->inputCount()/2) ? index2 : index1;
+            int t_index = is_set("interleave") ? (index > (graph->inputCount()/2) ? index2 : index1) : index;
             system().addPConstrain(m,{t_index*ioUnit*ioFactor,inputHeight});
         } else if(p.second.isOutput()) {
             //mSystem.addVConstraint(m,-1024*SS);
@@ -52,7 +56,6 @@ void LevelLayout::setGraph(SharedGraph graph)
         Point* ms = system().point(g.id());
 
         float congr = std::pow(g.children().size(),2);
-
 
         for(const Node* n : g.children()) {
             Point* me = system().point(n->id());

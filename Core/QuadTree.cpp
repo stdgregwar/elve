@@ -20,6 +20,11 @@ QuadTree& QuadTree::operator=(QuadTree&& other) {
     init(other.bounds());
 }
 
+void QuadTree::setBounds(const QRectF& bounds) {
+    initLite(bounds);
+    reinsertAll();
+}
+
 bool QuadTree::init(const QRectF &bounds)
 {
     reset();
@@ -144,7 +149,7 @@ bool QuadTree::_addPoint(const Point *m)
     if(bounds().contains(m->pos().toPointF())) {
         return rootNode()->addPoint(m,mParams);
     } else { //Trigger resizing of the quadtree
-        qDebug() << "resizing quad tree!!! because of" << m->pos();
+        //qDebug() << "resizing quad tree!!! because of" << m->pos();
         QRectF newRect = unionRectVec(bounds(),m->pos());
         newRect.adjust(-100,-100,100,100);
         initNodesPos(newRect);

@@ -11,14 +11,14 @@ Gravity::Gravity(qreal k) : mK(k) ,mQuadTree(QRectF(-QSIZE,-QSIZE,QSIZE*2,QSIZE*
 }
 
 QVector2D Gravity::force(const Point &m) const {
-   return plainOldGravity(m);
-   //return quadGravity(m);
+   //return plainOldGravity(m);
+   return quadGravity(m);
 }
 
 void Gravity::addPoint(const Point* m)
 {
     mGalaxy.insert(m);
-    //mQuadTree.addPoint(m);
+    mQuadTree.addPoint(m);
 }
 
 QVector2D Gravity::plainOldGravity(const Point& m) const
@@ -36,13 +36,17 @@ QVector2D Gravity::plainOldGravity(const Point& m) const
     return f;
 }
 
+void Gravity::setQuadTreeBounds(const QRectF bounds) {
+    mQuadTree.setBounds(bounds);
+}
+
 void Gravity::updateQuadTree() {
     /*for(const Point* m : mGalaxy) {
         if(m->moved()) {
             mQuadTree.movePoint(m);
         }
     }*/
-    //mQuadTree.reinsertAll();
+    mQuadTree.reinsertAll();
 }
 
 QVector2D Gravity::quadGravity(const Point& m) const

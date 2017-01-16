@@ -37,6 +37,7 @@ public:
     bool isInput() const;
     bool isOutput() const;
     const NodeType& type() const;
+    bool isCluster() const;
     const NodeLevel& level() const;
     const SharedGraph getClusteredGraph() const;
     void setClusteredGraph(SharedGraph graph);

@@ -25,7 +25,7 @@ public:
     void toFile(const QString& filename);
 
     SharedEGraph group(const NodeIDSet &names, const NodeName &groupName);
-    SharedEGraph ungroup(const NodeIDs & names) const;
+    SharedEGraph ungroup(const NodeIDSet &names) const;
 
     SelectionMasks& selections();
     Selection& selection(size_t i);

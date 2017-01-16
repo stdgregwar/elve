@@ -7,9 +7,11 @@
 
 QConsoleWidget::QConsoleWidget(QWidget *parent) : QTextEdit(parent),
     mHistory{
-        "read_graph -n ~/mul5.json"
+        "read_graph -n ~/mul5.json",
+        "chrono -r; load_blif \"/home/ghirt/benchs/random/dec.blif\"; level_layout; show -g; chrono",
+        "chrono -r; load_blif \"/home/ghirt/benchs/random/dec.blif\"; cluster; level_layout; show -g; chrono"
         },
-    mCmdIndex(1)
+    mCmdIndex(3)
 {
     setUndoRedoEnabled(false);
     setStyleSheet("font : 11pt 'Mono';");
@@ -43,7 +45,7 @@ void QConsoleWidget::OnChildStdOutWrite(QString szOutput)
 
     if (fixedPosition != 0) {
         content = szOutput.right(szOutput.count() - szOutput.indexOf('\n') - 1);
-    } else {    
+    } else {
         content = szOutput;
     }
 
@@ -110,6 +112,7 @@ void QConsoleWidget::replace(QString rep)
 }
 
 void QConsoleWidget::issue() {
+    toBottom();
     int count = toPlainText().count() - mFixedPosition;
     QString cmd = toPlainText().right(count);
     //Call alice here

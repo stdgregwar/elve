@@ -12,7 +12,7 @@
 #include <random>
 #include <chrono>
 
-#define SS 320000
+#define SS 4096000
 
 using namespace std;
 
@@ -29,13 +29,13 @@ std::array<QColor,10> GraphWidget::mSelectionColors = {
         QColor(128, 0, 0) //Bordeaux
     };
 
-GraphWidget::GraphWidget(QWidget* parent, QString filename) : QGraphicsView(parent),
+GraphWidget::GraphWidget(QWidget* parent, GraphWidgetListener* listener) : QGraphicsView(parent),
     mScene(new QGraphicsScene(-SS,-SS,SS*2,SS*2,this)),
     mDrag(false),
     mScale(1),
     mBehaviour(new Behaviour(this)),
     mEdgesPath(new QGraphicsPathItem()),
-    mFilename(filename)
+    mListener(listener)
 {
     setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
     setDragMode(QGraphicsView::ScrollHandDrag);
@@ -69,6 +69,8 @@ void GraphWidget::clear() {
 
 void GraphWidget::setGraph(SharedEGraph graph, unsigned quickTicks) {
     unsetGraph();
+
+    mListener->graphChanged(mGraph,graph);
     mGraph = graph;
     mGraph->setView(this);
     if(graph->layout()) {
@@ -91,7 +93,7 @@ void GraphWidget::quickSim(unsigned ticks)
 void GraphWidget::drawBackground(QPainter *painter, const QRectF &rect){
     QGraphicsView::drawBackground(painter,rect);
     if(mGraph->layout()) {
-        //mLayout->system().debug(painter);
+        //mGraph->layout()->system().debug(painter);
     }
 }
 
@@ -135,11 +137,11 @@ void GraphWidget::mouseMoveEvent(QMouseEvent *event)
 
 void GraphWidget::mouseDoubleClickEvent(QMouseEvent* event) { //TEMP ungroup feature
     QList<QGraphicsItem*> items = mScene->items(mapToScene(event->pos()));
-    NodeIDs names;
+    NodeIDSet names;
     for(QGraphicsItem* i : items) {
         NodeItem* n = dynamic_cast<NodeItem*>(i);
         if(n) {
-            names.push_back(n->id());
+            names.insert(n->id());
         }
     }
     ungroup(names);
@@ -162,6 +164,10 @@ void GraphWidget::group() {
     group(mGraph->currentSelection());
 }
 
+void GraphWidget::ungroup() {
+    ungroup(mGraph->currentSelection());
+}
+
 void GraphWidget::toggleSelection() {
     Selection& s = mGraph->currentSelection();
     if(s.size() == 0) {
@@ -174,7 +180,7 @@ void GraphWidget::toggleSelection() {
     updateSelectionColor();
 }
 
-void GraphWidget::ungroup(const NodeIDs& names) {
+void GraphWidget::ungroup(const NodeIDSet& names) {
     setGraph(mGraph->ungroup(names),0);
 }
 
