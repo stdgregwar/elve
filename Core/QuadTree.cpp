@@ -6,7 +6,7 @@
 #include <limits>
 
 using namespace std;
-#define THRESHOLD 4096
+#define THRESHOLD 2048
 
 QuadTree::QuadTree(const QRectF &bounds) : mParams{THRESHOLD*THRESHOLD,7,10}
 {

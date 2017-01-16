@@ -9,7 +9,7 @@
 
 using namespace std;
 
-System::System() : mGravity(7e4)
+System::System() : mGravity(7e5)
 {
 
 }

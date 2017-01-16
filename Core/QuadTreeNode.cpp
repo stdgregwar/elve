@@ -34,6 +34,7 @@ void QuadTreeNode::debug(QPainter* p) const
     if(leaf() && mPoints.size()) {
         p->drawRect(mCenter.x()-mRadius,mCenter.y()-mRadius,2*mRadius,2*mRadius);
         QPointF c = CoM().toPointF();
+        //p->drawEllipse(c,4096,4096);
         p->drawEllipse(c,32,32);
         p->drawText(c,QString::number(mMass));
     }
@@ -134,8 +135,15 @@ QVector2D QuadTreeNode::gravityFor(const Point& m, const QuadTreeParams& params)
     QVector2D f;
     QVector2D r = (CoM() - m.pos());
     qreal lr = r.lengthSquared();
-    if(lr > params.gravDistSquare && mRadius*2 < lr) {
-        return r.normalized() * ((mMass*m.mass()) / lr);
+    if(lr > params.gravDistSquare && lr > mRadius*mRadius*2) {
+        /*if(leaf()) {
+            return r.normalized() * ((mMass*m.mass()) / lr);
+        } else {
+            for(int i = 0; i < 4; i++) {
+                f += mChildren[i]->gravityFor(m,params);
+            }
+        }*/
+        return -r.normalized() * ((mMass*m.mass()) / lr);
     } else {
         if(leaf()) {
             return trueGravity(m);

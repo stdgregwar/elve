@@ -93,8 +93,10 @@ void GraphWidget::quickSim(unsigned ticks)
 void GraphWidget::drawBackground(QPainter *painter, const QRectF &rect){
     QGraphicsView::drawBackground(painter,rect);
     if(mGraph->layout()) {
+        //painter->setPen(mEdgesPath->pen());
         //mGraph->layout()->system().debug(painter);
     }
+    //painter->fillRect(rect,Qt::CrossPattern);
 }
 
 void GraphWidget::wheelEvent(QWheelEvent *event)
