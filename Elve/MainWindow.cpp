@@ -296,12 +296,14 @@ void MainWindow::on_actionSave_triggered()
 }
 
 void MainWindow::runCommandOnShownGraph(const QString& cmd) {
-    SharedEGraph eg = viewport()->graph();
-    Store& st = CommandLine::get().store();
-    for(int i = 0; i < st.data().size(); i ++) {
-        if(st.data()[i] == eg) {
-            st.set_current_index(i);
-            break;
+    if(viewport()) {
+        SharedEGraph eg = viewport()->graph();
+        Store& st = CommandLine::get().store();
+        for(int i = 0; i < st.data().size(); i ++) {
+            if(st.data()[i] == eg) {
+                st.set_current_index(i);
+                break;
+            }
         }
     }
     runUiCommand(cmd);
