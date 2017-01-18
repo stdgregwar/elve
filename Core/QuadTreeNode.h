@@ -11,7 +11,7 @@
 typedef std::vector<Point*> Masses;
 
 struct QuadTreeParams {
-    qreal gravDistSquare;
+    qreal theta;
     size_t depth;
     size_t maxMasses;
 };

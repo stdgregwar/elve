@@ -12,7 +12,7 @@
 #include <random>
 #include <chrono>
 
-#define SS 4096000
+#define SS 40960000
 
 using namespace std;
 

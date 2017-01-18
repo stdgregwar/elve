@@ -145,7 +145,6 @@ SharedGraph Graph::clusterize(size_t level) {
     if(level == 0) {
         return shared_from_this();
     }
-    qDebug() << "begin of clustering" << endl;
     vector<NodeIDSet> sets;
     NodeIDSet mainSet; mainSet.reserve(nodeCount());
     for(Node* out : outputs()) {
@@ -155,8 +154,6 @@ SharedGraph Graph::clusterize(size_t level) {
         collect.erase(out->id());
         sets.push_back(collect);
     }
-
-    qDebug() << "begin of" << sets.size() << "groups";
     SharedGraph g = shared_from_this();
     int i = 0;
     g = g->fastGroup(sets,"cluster");

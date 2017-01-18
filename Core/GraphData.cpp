@@ -67,16 +67,24 @@ NodeIDs GraphData::Builder::dependencies(const NodeID& i) {
     if(it == mDependencies.end()) {
         return {};
     }
-    NodeIDs deps; deps.reserve(it->second.size());
-
-    for(const NodeName& name : it->second) {
-        deps.push_back(id(name));
-    }
-    return deps;
+    return it->second;
 }
 
-void GraphData::Builder::setDependencies(const NodeName& name, const NodeNames& dependencies) {
+void GraphData::Builder::setDependencies(const NodeName& name, const NodeIDs &dependencies) {
     mDependencies[id(name)] = dependencies;
+}
+
+
+void GraphData::Builder::setDependencies(const NodeName& name, const NodeNames &dependencies) {
+    NodeIDs deps;
+    for(const NodeName& n : dependencies) {
+        deps.push_back(id(n));
+    }
+    mDependencies[id(name)] = deps;
+}
+
+void GraphData::Builder::setProperties(const NodeName& name, const NodeProperties& props) {
+    mProperties[id(name)] = props;
 }
 
 QJsonObject& GraphData::Builder::properties(const NodeName& name) {
@@ -89,7 +97,13 @@ QJsonObject& GraphData::Builder::properties(const NodeName& name) {
 }
 
 void GraphData::Builder::setType(const NodeName& name, const NodeType& type) {
-    mTypes[id(name)] = type;
+    NodeID i = id(name);
+    mTypes[i] = type;
+    if(type == OUTPUT_CLUSTER || type == OUTPUT) {
+        mOutputs.push_back(i);
+    } else if (type == INPUT_CLUSTER || type == INPUT) {
+        mInputs.push_back(i);
+    }
 }
 
 void GraphData::Builder::setIoIndex(const NodeName& name, const Index& index) {
@@ -102,6 +116,18 @@ const SharedData GraphData::Builder::build(const QString& filename) {
         dats.emplace_back(i,mNames.at(i),dependencies(i),type(i),props(i),index(i));
     }
     return std::make_shared<GraphData>(dats,filename);
+}
+
+const NodeIDs& GraphData::Builder::outputs() const {
+    return mOutputs;
+}
+
+const NodeIDs& GraphData::Builder::inputs() const {
+    return mInputs;
+}
+
+const NodeName& GraphData::Builder::name(const NodeID& id) const {
+    return mNames.at(id);
 }
 
 const NodeDatas& GraphData::nodeDatas() const {

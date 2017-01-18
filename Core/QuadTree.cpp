@@ -6,9 +6,9 @@
 #include <limits>
 
 using namespace std;
-#define THRESHOLD 2048
+#define THRESHOLD 512
 
-QuadTree::QuadTree(const QRectF &bounds) : mParams{THRESHOLD*THRESHOLD,7,10}
+QuadTree::QuadTree(const QRectF &bounds) : mParams{50,6,10}
 {
     mNodes = nullptr;
     init(bounds);
@@ -32,6 +32,7 @@ bool QuadTree::init(const QRectF &bounds)
     if(!mNodes) {
         mNodes = reinterpret_cast<QuadTreeNode*>(new unsigned char[QUADTREESIZE*sizeof(QuadTreeNode)]);
     }
+
     if(!mNodes) {return false;}
     QuadTreeNode* root = rootNode();
 
@@ -149,7 +150,7 @@ bool QuadTree::_addPoint(const Point *m)
     if(bounds().contains(m->pos().toPointF())) {
         return rootNode()->addPoint(m,mParams);
     } else { //Trigger resizing of the quadtree
-        //qDebug() << "resizing quad tree!!! because of" << m->pos();
+        qDebug() << "resizing quad tree!!! because of" << m->pos();
         QRectF newRect = unionRectVec(bounds(),m->pos());
         newRect.adjust(-100,-100,100,100);
         initNodesPos(newRect);
@@ -180,7 +181,7 @@ void QuadTree::reinsertAll()
         mNodes[i].reset();
     }
 
-    if(count > 200) {
+    if(count > 400) {
         QRectF rect = computeMinRect();
         initNodesPos(computeMinRect());
         count = 0;

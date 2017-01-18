@@ -20,6 +20,7 @@ public:
     void disconnectTab(QMdiSubWindow* tab);
     void runUiCommand(const QString& cmd);
     void runCommandOnShownGraph(const QString& cmd);
+    void closeAllTabs();
     GraphWidget* viewport();
     ~MainWindow();
 private:

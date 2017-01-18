@@ -110,6 +110,10 @@ MainWindow::~MainWindow()
 
 }
 
+void MainWindow::closeAllTabs() {
+    ui.mdiArea->closeAllSubWindows();
+}
+
 void MainWindow::on_import_trigerred(GraphLoaderPlugin* ld) {
     QString filename = QFileDialog::getOpenFileName(this,"Open " + ld->formatName(),"",ld->fileFilter());
     if(filename != "") {

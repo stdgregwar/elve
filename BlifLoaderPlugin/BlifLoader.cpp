@@ -145,6 +145,25 @@ SharedGraph BlifLoader::load(const QString &filepath) {
             }
         }
     }
+
+    //Replace outputs with dummies if needed
+    for(NodeID id : b.outputs()) {
+        NodeIDs deps = b.dependencies(id);
+        if(deps.size() > 1) { //Replace by a extra top node
+            NodeName oName = b.name(id);
+
+            //Create new node
+            NodeName nName = oName+"_and";
+            b.setDependencies(nName,deps);
+            b.setProperties(nName,b.properties(oName));
+
+            //Edit output
+            b.setDependencies(oName,{nName});
+            QJsonObject tt;
+            tt["1"] = "1";
+            b.properties(oName)["truthtable"] = tt;
+        }
+    }
     qDebug() <<"file loaded";
     SharedData sdata = b.build(filepath);
     return make_shared<Graph>(sdata);//->clusterize(1);

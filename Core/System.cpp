@@ -9,7 +9,7 @@
 
 using namespace std;
 
-System::System() : mGravity(7e5)
+System::System() : mGravity(7e4)
 {
 
 }
@@ -142,8 +142,9 @@ const Point* System::nearest(const QVector2D& p) const
 }
 
 void System::setSizeHint(const QRectF& rect) {
-    mGravity.setQuadTreeBounds(rect);
-    mBox.setBounds(rect.adjusted(-512,-512,512,512));
+    QRectF tRect = rect.adjusted(-512,-512,512,512);
+    mGravity.setQuadTreeBounds(tRect);
+    mBox.setBounds(tRect);
 }
 
 void System::addVConstraint(Point* m, qreal height)

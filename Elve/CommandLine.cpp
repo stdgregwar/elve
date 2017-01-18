@@ -30,6 +30,7 @@ template<>
 inline std::string store_entry_to_string<SharedEGraph>( SharedEGraph const& eg )
 {
     const SharedGraph& g = eg->graph();
+    qDebug() << "node count" << g->nodeCount();
     return boost::str( boost::format( "%s i/o = %d/%d, nodecount = %d" ) % g->filename().toStdString() % g->inputCount() % g->outputCount() % g->nodeCount());
 }
 
@@ -377,11 +378,25 @@ public:
             high_resolution_clock::time_point endTime = high_resolution_clock::now();
             milliseconds ms = duration_cast<milliseconds>(endTime - startTime);
             env->out() << "Elapsed time : " << ms.count() << " [ms]\n";
+            qDebug() << "Elapsed time :" << ms.count() << "[ms]";
         }
         return true;
     }
 private:
     high_resolution_clock::time_point startTime;
+};
+
+class ClearAll : public command
+{
+public:
+    ClearAll(const environment::ptr& env) : command(env,"ClearAll") {
+
+    }
+    bool execute() override {
+        env->store<SharedEGraph>().clear();
+        MainWindow::get().closeAllTabs();
+        return true;
+    }
 };
 
 }
@@ -411,6 +426,7 @@ void CommandLine::init()
     mCli.insert_command("cluster",make_shared<clustercmd>(mCli.env));
     mCli.set_category("utils");
     mCli.insert_command("chrono",make_shared<chrono_command>(mCli.env));
+    mCli.insert_command("clearall",make_shared<ClearAll>(mCli.env));
     setupPluginsCommands();
 }
 

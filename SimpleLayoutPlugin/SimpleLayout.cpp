@@ -26,13 +26,11 @@ void SimpleLayout::setGraph(SharedGraph graph)
 
     qreal maxOut = graph->maxOutputIndex();
     qreal maxIn = graph->maxInputIndex();
-    qDebug() << "MaxOut" << maxOut << "maxIn" << maxIn;
     qreal ioFactor = (qreal)(graph->maxOutputIndex()) / graph->maxInputIndex();
     qreal ioUnit = std::max(totHeight/graph->maxOutputIndex(),mMinIOUnit);
 
     QRectF rect(0,outputHeight,graph->maxOutputIndex()*ioUnit,totHeight);
     system().setSizeHint(rect);
-    qDebug() << "rect" << rect;
 
     for(const auto& p : graph->nodes()) {
         QVector2D pos = startPosition(p.first,rect);

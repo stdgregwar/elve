@@ -11,7 +11,7 @@ using namespace std;
 QuadTreeNode::QuadTreeNode()
 {
     reset();
-    mPoints.reserve(20); //Should be enough
+    mPoints.reserve(100); //Should be enough
     for(int i = 0; i < 4; i++)
         mChildren[i] = nullptr;
     //pen().setColor(Qt::red);
@@ -134,8 +134,10 @@ QVector2D QuadTreeNode::gravityFor(const Point& m, const QuadTreeParams& params)
 {
     QVector2D f;
     QVector2D r = (CoM() - m.pos());
-    qreal lr = r.lengthSquared();
-    if(lr > params.gravDistSquare && lr > mRadius*mRadius*2) {
+    qreal l = r.length();
+
+    qreal ratio = (mRadius*2) / l;
+    if(ratio < params.theta) {
         /*if(leaf()) {
             return r.normalized() * ((mMass*m.mass()) / lr);
         } else {
@@ -143,7 +145,8 @@ QVector2D QuadTreeNode::gravityFor(const Point& m, const QuadTreeParams& params)
                 f += mChildren[i]->gravityFor(m,params);
             }
         }*/
-        return -r.normalized() * ((mMass*m.mass()) / lr);
+        qreal lr = l*l;
+        return -(r / l) * ((mMass*m.mass()) / lr);
     } else {
         if(leaf()) {
             return trueGravity(m);
