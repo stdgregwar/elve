@@ -77,6 +77,8 @@ void GraphWidget::setGraph(SharedEGraph graph, unsigned quickTicks) {
         //graph->applyLayout();
         reflect(graph->layout()->system(),graph->graph());
         quickSim(quickTicks);
+
+        mScene->setSceneRect(graph->layout()->system().sizeHint());
     }
     updateSelectionColor();
 }

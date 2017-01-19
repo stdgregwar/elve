@@ -52,6 +52,10 @@ void System::computeForces(size_t from,size_t until)
     }
 }
 
+const QRectF& System::sizeHint() const {
+    return mSizeHint;
+}
+
 Point* System::point(const NodeID& id) {
     auto it = mPointsById.find(id);
     if(it != mPointsById.end()) {
@@ -142,9 +146,9 @@ const Point* System::nearest(const QVector2D& p) const
 }
 
 void System::setSizeHint(const QRectF& rect) {
-    QRectF tRect = rect.adjusted(-512,-512,512,512);
-    mGravity.setQuadTreeBounds(tRect);
-    mBox.setBounds(tRect);
+    mSizeHint = rect.adjusted(-512,-512,512,512);
+    mGravity.setQuadTreeBounds(mSizeHint);
+    mBox.setBounds(mSizeHint);
 }
 
 void System::addVConstraint(Point* m, qreal height)

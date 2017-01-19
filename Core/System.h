@@ -41,8 +41,10 @@ public:
     const PointsByID& pointsByID() const;
     void debug(QPainter* p) const;
     void setSizeHint(const QRectF& rect);
+    const QRectF& sizeHint() const;
     ~System();
 private:
+    QRectF mSizeHint;
     void computeForces(size_t from,size_t until);
     Gravity mGravity;
     BoxConstraint mBox;

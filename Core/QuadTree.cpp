@@ -8,7 +8,7 @@
 using namespace std;
 #define THRESHOLD 512
 
-QuadTree::QuadTree(const QRectF &bounds) : mParams{50,6,10}
+QuadTree::QuadTree(const QRectF &bounds) : mParams{0.5,6,10}
 {
     mNodes = nullptr;
     init(bounds);
