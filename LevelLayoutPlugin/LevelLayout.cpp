@@ -4,10 +4,10 @@
 LevelLayout::LevelLayout() {
     opts().add_options()
             ("k_const,k",po::value(&mK)->default_value(mK),"base k constant of the springs")
-            ("l_zero,l",po::value(&mL0)->default_value(mL0),"lenght of the springs at rest")
+            ("l_zero,l",po::value(&mL0)->default_value(mL0),"length of the springs at rest")
             ("damp,d",po::value(&mDamp)->default_value(mDamp),"damping factor of the points")
-            ("unitLenght,u",po::value(&mMinUnit)->default_value(mMinUnit),"minimal level unit lenght in pixels")
-            ("iosUnitLenght,o",po::value(&mMinIOUnit)->default_value(mMinIOUnit), "minimal space between two I/Os")
+            ("unitLength,u",po::value(&mMinUnit)->default_value(mMinUnit),"minimal level unit length in pixels")
+            ("iosUnitLength,o",po::value(&mMinIOUnit)->default_value(mMinIOUnit), "minimal space between two I/Os")
             ("interleave,i","input node interleaving")
             ;
 }
