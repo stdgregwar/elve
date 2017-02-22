@@ -11,8 +11,8 @@ class LevelLayout : public LayoutPlugin
 
     ELVE_LAYOUT(LevelLayout,"Level-Force","level")
     LevelLayout();
-    virtual void setGraph(SharedGraph g) override;
-    virtual void tick(float dt, bool fast) override;
+    void setGraph(SharedGraph g) override;
+    void tick(float dt, bool fast) override;
 private:
     qreal mK = 2; //Plugin options with default values
     qreal mL0 = 0;

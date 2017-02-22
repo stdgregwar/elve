@@ -4,6 +4,7 @@
 #include "Graph.h"
 #include <array>
 #include "interfaces/LayoutPlugin.h"
+#include "interfaces/LookFactoryPlugin.h"
 #include "Selection.h"
 #include <memory>
 
@@ -36,9 +37,12 @@ public:
     const SharedGraph& graph() const;
 
     void setLayout(const SharedLayout& l);
+    void setLook(const SharedLook& l);
+
     void setMask(int id);
     int mask() const;
     const SharedLayout& layout();
+    const SharedLook& look();
     void applyLayout(const NodePositions& p = NodePositions());
     void setView(GraphWidget* view);
     GraphWidget* view();
@@ -48,6 +52,7 @@ private:
     SharedGraph mGraph;
     mutable NodePositions mPositions; //Defining last saved node positions
     SharedLayout mLayout;
+    SharedLook mLook;
     GraphWidget* mView;
     SelectionMasks mSelections;
     int mMaskId; ///Selection mask index

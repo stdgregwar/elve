@@ -6,10 +6,10 @@
 class EdgeLook
 {
 public:
-    EdgeLook(NodeLook* ancestor, NodeLook* child);
+    EdgeLook(NodeLook* from, NodeLook* to);
     virtual void addToPath(QPainterPath& path) = 0;
-    NodeLook* ancestor();
-    NodeLook* child();
+    NodeLook* from();
+    NodeLook* to();
 private:
     NodeLook* mAncestor;
     NodeLook* mChild;

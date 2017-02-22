@@ -15,8 +15,8 @@ Graph::Graph(const SharedData &data) : mData(data)
         addNode(d);
     }
     for(const NodeData& d : data->nodeDatas()) {
-        for(const NodeID& did : d.dependencies()) {
-            addEdge(did,d.id());
+        for(const Dependency& dep : d.dependencies()) {
+            addEdge(dep.id,d.id());
         }
     }
 }
@@ -43,8 +43,8 @@ Graph::Graph(const SharedData& data, const SparseData &extraData, const Aliases 
     for(const NodeData& d : data->nodeDatas()) {
         NodeID tid = alias(d.id());
         if(!mExcluded.count(tid)) {
-            for(const NodeID& did : d.dependencies()) {
-                NodeID tpid = alias(did);
+            for(const Dependency& dep : d.dependencies()) {
+                NodeID tpid = alias(dep.id);
                 if(!mExcluded.count(tpid)) {
                     addEdge(tpid,tid);
                 }
@@ -96,7 +96,7 @@ Node* Graph::addNode(const NodeData& d) {
 
 void Graph::addEdge(const NodeID& from, const NodeID& to) {
     if(from != to) {
-        mNodes.at(from).addChild(&mNodes.at(to));
+        mNodes.at(from).addChild(&mNodes.at(to),0,0);
     }
 }
 
@@ -213,7 +213,7 @@ SharedGraph Graph::fastGroup(const vector<NodeIDSet>& groups, const NodeName& ba
         if(group.size() < 2) { //Ignore groups of one or less elements
             continue;
         }
-        NodeIDs deps; deps.reserve(group.size());
+        Dependencies deps; deps.reserve(group.size());
         deps.insert(deps.end(),group.begin(),group.end());
 
         float av_index = 0;
@@ -241,7 +241,7 @@ SharedGraph Graph::group(const NodeIDSet &toGroup, const NodeID& i,const NodeNam
     Aliases aliases(mAliases);
     NodeIDSet excluded(mExcluded); excluded.reserve(mExcluded.size()+toGroup.size());
     aliases.reserve(aliases.size()+toGroup.size());
-    NodeIDs deps; deps.reserve(toGroup.size());
+    Dependencies deps; deps.reserve(toGroup.size());
     deps.insert(deps.end(),toGroup.begin(),toGroup.end());
 
     float av_index = 0;
@@ -394,10 +394,10 @@ Aliases Graph::aliasesWithout(const NodeID& repl) const {
     return als;
 }
 
-NodeIDSet Graph::excludedWithout(const NodeIDs& ids) const {
+NodeIDSet Graph::excludedWithout(const Dependencies& ids) const {
     NodeIDSet excl(mExcluded);
-    for(const NodeID& id : ids) {
-        excl.erase(id);
+    for(const Dependency& dep : ids) {
+        excl.erase(dep.id);
     }
     return excl;
 }

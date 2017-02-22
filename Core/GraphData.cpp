@@ -62,7 +62,7 @@ Index GraphData::Builder::index(const NodeID& id) {
     return it->second;
 }
 
-NodeIDs GraphData::Builder::dependencies(const NodeID& i) {
+Dependencies GraphData::Builder::dependencies(const NodeID& i) {
     auto it = mDependencies.find(i);
     if(it == mDependencies.end()) {
         return {};
@@ -70,17 +70,19 @@ NodeIDs GraphData::Builder::dependencies(const NodeID& i) {
     return it->second;
 }
 
-void GraphData::Builder::setDependencies(const NodeName& name, const NodeIDs &dependencies) {
+void GraphData::Builder::setDependencies(const NodeName& name, const Dependencies &dependencies) {
     mDependencies[id(name)] = dependencies;
 }
 
 
 void GraphData::Builder::setDependencies(const NodeName& name, const NodeNames &dependencies) {
-    NodeIDs deps;
+    Dependencies deps;
+    Index from = 0;
+    Index to = 0;
     for(const NodeName& n : dependencies) {
-        deps.push_back(id(n));
+        deps.push_back(Dependency{id(n),from,to++});
     }
-    mDependencies[id(name)] = deps;
+    setDependencies(name,deps);
 }
 
 void GraphData::Builder::setProperties(const NodeName& name, const NodeProperties& props) {
@@ -113,7 +115,9 @@ void GraphData::Builder::setIoIndex(const NodeName& name, const Index& index) {
 const SharedData GraphData::Builder::build(const QString& filename) {
     NodeDatas dats;
     for(NodeID i = 0; i < mID; i++) {
-        dats.emplace_back(i,mNames.at(i),dependencies(i),type(i),props(i),index(i));
+        dats.emplace_back(i,mNames.at(i),dependencies(i),type(i),props(i),index(i),
+                          nodeInputCount(i),nodeOutputCount(i),
+                          nodeInputNames(i),nodeOutputNames(i));
     }
     return std::make_shared<GraphData>(dats,filename);
 }
@@ -128,6 +132,50 @@ const NodeIDs& GraphData::Builder::inputs() const {
 
 const NodeName& GraphData::Builder::name(const NodeID& id) const {
     return mNames.at(id);
+}
+
+void GraphData::Builder::setNodeInputNames(const NodeName& name, const Names& names) {
+    mNodeInputCount.at(id(name)) = names.size();
+    mNodeInputsNames.at(id(name)) = names;
+}
+
+void GraphData::Builder::setNodeOutputNames(const NodeName& name, const Names& names) {
+    mNodeOutputCount.at(id(name)) = names.size();
+    mNodeOutputsNames.at(id(name)) = names;
+}
+
+Names GraphData::Builder::nodeInputNames(const NodeID& id) {
+    auto it = mNodeInputsNames.find(id);
+    if(it == mNodeInputsNames.end()) {
+        return {};
+    }
+    return it->second;
+}
+
+Names GraphData::Builder::nodeOutputNames(const NodeID& id) {
+    auto it = mNodeOutputsNames.find(id);
+    if(it == mNodeOutputsNames.end()) {
+        return {};
+    }
+    return it->second;
+}
+
+int GraphData::Builder::nodeInputCount(const NodeID& id) {
+    auto it = mNodeInputCount.find(id);
+    if(it != mNodeInputCount.end()) {
+        return it->second;
+    } else {
+        return dependencies(id).size(); //Defaults
+    }
+}
+
+int GraphData::Builder::nodeOutputCount(const NodeID& id) {
+    auto it = mNodeOutputCount.find(id);
+    if(it != mNodeOutputCount.end()) {
+        return it->second;
+    } else {
+        return type(id) == OUTPUT or type(id) == OUTPUT_CLUSTER ? 0 : 1; //Defaults
+    }
 }
 
 const NodeDatas& GraphData::nodeDatas() const {

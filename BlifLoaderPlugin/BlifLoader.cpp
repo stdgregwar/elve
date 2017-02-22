@@ -148,7 +148,7 @@ SharedGraph BlifLoader::load(const QString &filepath) {
 
     //Replace outputs with dummies if needed
     for(NodeID id : b.outputs()) {
-        NodeIDs deps = b.dependencies(id);
+        Dependencies deps = b.dependencies(id);
         if(deps.size() > 1) { //Replace by a extra top node
             NodeName oName = b.name(id);
 

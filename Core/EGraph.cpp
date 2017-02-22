@@ -47,6 +47,7 @@ SharedEGraph EGraph::fromJSON(const QJsonObject &obj)
     eg->selections() = masks;
     eg->setMask(obj["mask"].toInt());
     eg->setLayout(PluginManager::get().getLayout(layoutName));
+    eg->setLook(PluginManager::get().defaultLook());
     return eg;
 }
 
@@ -160,11 +161,11 @@ SharedEGraph EGraph::ungroup(const NodeIDSet & names) const
     SharedGraph g = mGraph;
     for(const NodeID& name : names) {
         QVector2D base = poss.at(name);
-        const NodeIDs& ids = g->data(name).dependencies();
+        const Dependencies& ids = g->data(name).dependencies();
         static qreal radius = 128;
         for(size_t i = 0; i < ids.size(); ++i) {
             qreal p = M_PI*((qreal)i)/ids.size();
-            poss[ids[i]] = base + QVector2D(radius*cos(p),radius*sin(p));
+            poss[ids[i].id] = base + QVector2D(radius*cos(p),radius*sin(p));
         }
         g = g->ungroup(name);
     }
@@ -234,10 +235,20 @@ void EGraph::setLayout(const SharedLayout &l)
     mPosDirty = true;
     l->setGraph(mGraph,positions());
     mLayout = l;
-    if(mView) mView->reflect(l->system(),mGraph);
+    if(mView && mLook) mView->reflect(l->system(),mGraph,mLook);
+}
+
+void EGraph::setLook(const SharedLook& l) {
+    mLook = l;
+    if(mView && mLayout) mView->reflect(mLayout->system(),mGraph,mLook);
 }
 
 const SharedLayout &EGraph::layout()
 {
     return mLayout;
+}
+
+const SharedLook& EGraph::look()
+{
+    return mLook;
 }

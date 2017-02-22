@@ -11,22 +11,34 @@
 
 class Node;
 
-typedef std::shared_ptr<Node> SharedNode;
-typedef std::weak_ptr<Node> WeakNode;
+//typedef std::shared_ptr<Node> SharedNode;
+//typedef std::weak_ptr<Node> WeakNode;
+
 typedef std::vector<Node*> Nodes;
 typedef unsigned Index;
 typedef long NodeLevel;
 class Graph;
 typedef std::shared_ptr<Graph> SharedGraph;
+
+
+
 class Node
 {
 public:
     typedef Nodes Children;
     typedef Nodes Ancestors;
 
+    struct Connexion {
+        Node* node;
+        Index from;
+        Index to;
+    };
+
+    typedef std::vector<Connexion> Fan;
+
     Node(const NodeData& data);
-    void addChild(Node* child);
-    void addAncestor(Node* anc);
+    void addChild(Node* child, Index from, Index to);
+    void addAncestor(Node* anc, Index from, Index to);
     const Index& IOIndex() const;
     const Ancestors& ancestors() const;
     const Children& children() const;
@@ -34,6 +46,12 @@ public:
     const NodeName& name() const;
     size_t ancestorCount() const;
     size_t childCount() const;
+    int inputCount() const;
+    int outputCount() const;
+    Name inputName(Index i) const;
+    Name outputName(Index i) const;
+    const Fan& fanIn() const;
+    const Fan& fanOut() const;
     bool isInput() const;
     bool isOutput() const;
     const NodeType& type() const;
@@ -46,13 +64,15 @@ public:
     const NodeData& data() const;
     //QJsonObject& properties();
 private:
-    void _addChild(Node* child);
-    void _addAncestor(Node* anc);
+    void _addChild(Node* child,  Index from, Index to);
+    void _addAncestor(Node* anc, Index from, Index to);
 
     mutable NodeLevel mLevel;
     SharedGraph mGraph; //Intern graph when node is a cluster
     Ancestors mAncestors;
     Children mChildren;
+    Fan mFanIn;
+    Fan mFanOut;
     const NodeData& mData;
 };
 

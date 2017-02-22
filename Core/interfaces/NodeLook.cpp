@@ -2,7 +2,7 @@
 
 #include <QGraphicsSceneMouseEvent>
 
-NodeLook::NodeLook(Node *n) : mNode(n), mDraged(false)
+NodeLook::NodeLook(const Node &n) : mNode(n), mDraged(false)
 {
 
 }
@@ -10,9 +10,10 @@ NodeLook::NodeLook(Node *n) : mNode(n), mDraged(false)
 void NodeLook::onStateChange(const QVector2D& p, const QVector2D& speed)
 {
     if(mDraged) {
-        setState({pos().x(),pos().y()},{0,0});
+        QPointF np = pos() * inverseOrientationTransform();
+        setState({np.x(),np.y()},{0,0});
     } else {
-        setPos(p.x(),p.y());
+        setPos(p.toPointF() * orientationTransform());
     }
 }
 
@@ -39,7 +40,7 @@ void NodeLook::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
     if(mDraged) {
         setState({event->scenePos().x(),event->scenePos().y()},{0,0});
-        setPos(event->scenePos());
+        //setPos(event->scenePos());
         event->accept();
     }
 }
@@ -54,7 +55,7 @@ QPointF NodeLook::outputPos(int index) {
 
 QPointF NodeLook::inputPos(const NodeID& from) {
     int i = 0;
-    for(Node* n : mNode->ancestors()) {
+    for(Node* n : mNode.ancestors()) {
         if(n->id() == from) {
             return inputPos(i);
         }
@@ -65,7 +66,7 @@ QPointF NodeLook::inputPos(const NodeID& from) {
 
 QPointF NodeLook::outputPos(const NodeID& to) {
     int i = 0;
-    for(Node* n : mNode->children()) {
+    for(Node* n : mNode.children()) {
         if(n->id() == to) {
             return outputPos(i);
         }
@@ -74,6 +75,19 @@ QPointF NodeLook::outputPos(const NodeID& to) {
     return inputPos(0);
 }
 
-Node* NodeLook::node() {
+const Node &NodeLook::node() const {
     return mNode;
+}
+
+const QTransform& NodeLook::orientationTransform() const {
+    return *mTransform;
+}
+
+const QTransform& NodeLook::inverseOrientationTransform() const {
+    return *mInverseTransform;
+}
+
+void NodeLook::setOrientationTransform(const QTransform *transform, const QTransform *inverse) {
+    mTransform = transform;
+    mInverseTransform = inverse;
 }

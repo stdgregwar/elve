@@ -1,11 +1,17 @@
-#ifndef BLOCKNODELOOK_H
-#define BLOCKNODELOOK_H
+#pragma once
 
+#include <NodeLook.h>
 
-class BlockNodeLook
+#include <QGraphicsRectItem>
+
+class BlockNodeLook : public NodeLook
 {
 public:
-    BlockNodeLook();
+    BlockNodeLook(const Node& node);
+    QPointF inputPos(int index);
+    QPointF outputPos(int index);
+    void setColor(const QColor& col);
+    void resetColor();
+private:
+    QGraphicsRectItem* mMainRect;
 };
-
-#endif // BLOCKNODELOOK_H

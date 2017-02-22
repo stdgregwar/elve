@@ -5,10 +5,10 @@ EdgeLook::EdgeLook(NodeLook *ancestor, NodeLook *child) : mAncestor(ancestor), m
 
 }
 
-NodeLook* EdgeLook::ancestor() {
+NodeLook* EdgeLook::from() {
     return mAncestor;
 }
 
-NodeLook *EdgeLook::child() {
+NodeLook *EdgeLook::to() {
     return mChild;
 }

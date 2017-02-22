@@ -13,6 +13,7 @@
 #include "EGraph.h"
 #include <interfaces/LayoutPlugin.h>
 #include <interfaces/GraphWidgetListener.h>
+#include <interfaces/LookFactoryPlugin.h>
 
 class MainWindow;
 
@@ -45,7 +46,7 @@ public:
 
     void quickSim(unsigned ticks);
     void setLayout(const SharedLayout &l);
-    void reflect(System &sys, SharedGraph g);
+    void reflect(System &sys, SharedGraph g, SharedLook lf);
 
     void drawBackground(QPainter *painter, const QRectF &rect) override;
     void fit();
@@ -102,10 +103,9 @@ private:
     QPointF mLastPos;
     SharedEGraph mGraph;
     Behaviour* mBehaviour;
-    //LayoutPlugin* mLayout;
     //temp
-    std::vector<EdgeItem*> mEdges;
-    std::vector<NodeItem*> mNodes;
+    std::vector<EdgeLook*> mEdges;
+    std::vector<NodeLook*> mNodes;
     QGraphicsPathItem* mEdgesPath;
     GraphWidgetListener* mListener;
     static std::array<QColor,10> mSelectionColors;

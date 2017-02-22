@@ -73,9 +73,9 @@ void GraphWidget::setGraph(SharedEGraph graph, unsigned quickTicks) {
     mListener->graphChanged(mGraph,graph);
     mGraph = graph;
     mGraph->setView(this);
-    if(graph->layout()) {
+    if(graph->layout() && graph->look()) {
         //graph->applyLayout();
-        reflect(graph->layout()->system(),graph->graph());
+        reflect(graph->layout()->system(),graph->graph(),graph->look());
         quickSim(quickTicks);
 
         mScene->setSceneRect(graph->layout()->system().sizeHint());
@@ -219,8 +219,8 @@ void GraphWidget::tick(float dt, bool update)
     if(mGraph->layout()) {
         mGraph->layout()->tick(dt,update);
         QPainterPath p;
-        std::for_each(mEdges.begin(),mEdges.end(),[&p](EdgeItem*& e){
-            e->doPath(p);
+        std::for_each(mEdges.begin(),mEdges.end(),[&p](EdgeLook*& e){
+            e->addToPath(p);
         });
         mEdgesPath->setPath(p);
     }
@@ -249,28 +249,33 @@ void GraphWidget::clearScene() {
     mScene->removeItem(mEdgesPath);
     mScene->clear();
     mScene->addItem(mEdgesPath);
-    for_each(mEdges.begin(),mEdges.end(),[](EdgeItem* e){delete e;});
+    for_each(mEdges.begin(),mEdges.end(),[](EdgeLook* e){delete e;});
     mEdges.clear();
     mNodes.clear();
 }
 
-void GraphWidget::reflect(System &sys,SharedGraph g) {
+void GraphWidget::reflect(System &sys, SharedGraph g, SharedLook lf) {
     clearScene();
+
     for(auto& nbi : g->nodes()) {
         const Node& n = nbi.second;
-        NodeItem* ni = new NodeItem(n.data());
+        NodeLook* ni = lf->getNode(n);
         mNodes.push_back(ni);
         Point* p = sys.point(n.id());
         p->addMovable(ni);
         mScene->addItem(ni);
+
+    }
+
+    /*for(auto& nbi : g->nodes()) {
         for(const Node* an : n.ancestors()) {
-            EdgeItem* ei = new EdgeItem(1);
+            EdgeLook* ei = lf->edge();
             Point* ep = sys.point(an->id());
             p->addMovable(ei->getHandle(0));
             ep->addMovable(ei->getHandle(1));
             mEdges.push_back(ei);
         }
-    }
+    }*/
 }
 
 /*
@@ -317,15 +322,13 @@ bool GraphWidget::BorderSelect::mouseReleaseEvent(QMouseEvent *event) {
 
 void GraphWidget::updateSelectionColor() {
     Selection& s = mGraph->currentSelection();
-    for(NodeItem* i : mNodes) {
-        if(i->graphicsEffect()) {
-            delete i->graphicsEffect();
-            i->setGraphicsEffect(nullptr);
-        }
-        if(s.count(i->id())) {
+    for(NodeLook* i : mNodes) {
+        if(s.count(i->node().id())) {
            QGraphicsColorizeEffect* eff = new QGraphicsColorizeEffect(this);
            eff->setColor(mSelectionColors[mGraph->mask()]);
            i->setGraphicsEffect(eff);
+        } else {
+
         }
     }
 }

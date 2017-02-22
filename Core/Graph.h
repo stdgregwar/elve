@@ -46,7 +46,7 @@ private:
     Node* addNode(const NodeData &d);
     void addEdge(const NodeID& from, const NodeID& to);
     Aliases aliasesWithout(const NodeID& repl) const;
-    NodeIDSet excludedWithout(const NodeIDs& ids) const;
+    NodeIDSet excludedWithout(const Dependencies &ids) const;
     NodePtrs mInputs;
     NodePtrs mOutputs;
     NodesByID mNodes;
