@@ -34,7 +34,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     PluginManager::get().load("plugins");
 
-    QFile File(":skin/darkorange.stylesheet");
+    QFile File(":skin/darkorange.css");
     File.open(QFile::ReadOnly);
     QString StyleSheet = QLatin1String(File.readAll());
 

@@ -17,10 +17,11 @@ void SvgExporterPlugin::exportGraph(const QString& filename, const SharedEGraph&
     }
     qDebug() << "saving scene with" << scene->items().count() << "items to svg";
     qDebug() << "bounds :" << scene->itemsBoundingRect().size().toSize();
+    QRectF rect = scene->itemsBoundingRect();
     svgGen.setFileName(filename);
     svgGen.setResolution(300);
-    svgGen.setSize(scene->itemsBoundingRect().size().toSize());
-    svgGen.setViewBox(scene->itemsBoundingRect());
+    svgGen.setSize(rect.size().toSize());
+    //svgGen.setViewBox(rect.adjusted(0,rect.height(),0,0));
     svgGen.setTitle(QString("%1 exported by ELVE").arg(eg->graph()->filename()));
     svgGen.setDescription("layouted using elve");
 

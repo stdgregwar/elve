@@ -11,8 +11,6 @@ BlockNodeLook::BlockNodeLook(const Node& node) : NodeLook(node)
 
     size_t io_count = std::max(node.inputCount(),node.outputCount());
 
-    qDebug() << "inputs " << node.inputCount() << " outputs " << node.outputCount();
-
     mMainRect = new QGraphicsRectItem(0,0,200,io_count*20+20,this);
     addToGroup(mMainRect);
 

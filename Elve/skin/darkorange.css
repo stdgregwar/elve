@@ -1,6 +1,6 @@
 QToolTip
 {
-     border: 1px solid black;
+     border: 0px solid black;
      background-color: white;
      color: black;
      padding: 1px;
@@ -16,13 +16,13 @@ QWidget
 
 QWidget:item:hover
 {
-    background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #ffa02f, stop: 1 #ca0619);
+    background-color: #555;
     color: #000000;
 }
 
 QWidget:item:selected
 {
-    background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #ffa02f, stop: 1 #d7801a);
+    background-color: #555;
 }
 
 QMenuBar::item
@@ -32,33 +32,27 @@ QMenuBar::item
 
 QMenuBar::item:selected
 {
-    background: transparent;
-    border: 1px solid #ffaa00;
+    background: #555;
+    /*border: 1px solid #aaaaaa;*/
 }
 
 QMenuBar::item:pressed
 {
-    background: #444;
-    border: 1px solid #000;
-    background-color: QLinearGradient(
-        x1:0, y1:0,
-        x2:0, y2:1,
-        stop:1 #212121,
-        stop:0.4 #343434/*,
-        stop:0.2 #343434,
-        stop:0.1 #ffaa00*/
-    );
+    background: #555;
+    /*border: 1px solid #000;
+    background-color: #999999*/
     margin-bottom:-1px;
     padding-bottom:1px;
 }
 
 QMenu
 {
-    border: 1px solid #000;
+    /*border: 1px solid #000;*/
 }
 
 QMenu::item
 {
+
     padding: 2px 20px 2px 20px;
 }
 
@@ -75,7 +69,7 @@ QWidget:disabled
 
 QAbstractItemView
 {
-    background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #4d4d4d, stop: 0.1 #646464, stop: 1 #5d5d5d);
+    background-color: #5d5d5d;
 }
 
 QWidget:focus
@@ -165,7 +159,7 @@ border: 2px solid QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #ffa02f, 
 
 QTextEdit:focus
 {
-    border: 2px solid QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #ffa02f, stop: 1 #d7801a);
+    /*border: 2px solid QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #ffa02f, stop: 1 #d7801a);*/
 }
 
 QScrollBar:horizontal {
@@ -282,14 +276,14 @@ QHeaderView::section
 
 QCheckBox:disabled
 {
-color: #414141;
+    color: #414141;
 }
 
 QDockWidget::title
 {
     text-align: center;
-    spacing: 3px; /* spacing between items in the tool bar */
-    background-color: QLinearGradient(x1:0, y1:0, x2:0, y2:1, stop:0 #323232, stop: 0.5 #242424, stop:1 #323232);
+    spacing: 0px; /* spacing between items in the tool bar */
+    background-color: #424242;
 }
 
 QDockWidget::close-button, QDockWidget::float-button
