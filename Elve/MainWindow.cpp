@@ -18,6 +18,7 @@
 #include <QMdiSubWindow>
 #include <QMainWindow>
 #include <QDockWidget>
+#include <QShortcut>
 
 #include "FileLoadAction.h"
 #include "FileExportAction.h"
@@ -34,11 +35,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     PluginManager::get().load("plugins");
 
-    QFile File(":skin/darkorange.css");
-    File.open(QFile::ReadOnly);
-    QString StyleSheet = QLatin1String(File.readAll());
-
-    qApp->setStyleSheet(StyleSheet);
+    QObject::connect(new QShortcut(QKeySequence("F12"), this), SIGNAL(activated()), this, SLOT(applyQSSTheme()));
+    applyQSSTheme();
 
     ui.setupUi(this);
 
@@ -293,6 +291,14 @@ void MainWindow::on_actionSave_triggered()
     } else {
         QMessageBox::information(this,"Mhhh...","There is no current graph to save.");
     }
+}
+
+void MainWindow::applyQSSTheme() {
+    QFile File(":skin/darkorange.css");
+    File.open(QFile::ReadOnly);
+    QString StyleSheet = QLatin1String(File.readAll());
+
+    qApp->setStyleSheet(StyleSheet);
 }
 
 void MainWindow::runCommandOnShownGraph(const QString& cmd) {

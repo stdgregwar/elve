@@ -262,9 +262,9 @@ void GraphWidget::reflect(System &sys, SharedGraph g, SharedLook lf) {
         NodeLook* ni = lf->getNode(n);
         mNodes.push_back(ni);
         Point* p = sys.point(n.id());
+        p->clearMovables();
         p->addMovable(ni);
         mScene->addItem(ni);
-
     }
 
     /*for(auto& nbi : g->nodes()) {
@@ -306,9 +306,9 @@ bool GraphWidget::BorderSelect::mouseReleaseEvent(QMouseEvent *event) {
     QList<QGraphicsItem*> items = gw.mScene->items(mRectangle->sceneBoundingRect());
     NodeIDSet names;
     for(QGraphicsItem* i : items) {
-        NodeItem* n = dynamic_cast<NodeItem*>(i);
+        NodeLook* n = dynamic_cast<NodeLook*>(i);
         if(n) {
-            names.insert(n->id());
+            names.insert(n->node().id());
         }
     }
     gw.mGraph->currentSelection().clear();
@@ -324,11 +324,9 @@ void GraphWidget::updateSelectionColor() {
     Selection& s = mGraph->currentSelection();
     for(NodeLook* i : mNodes) {
         if(s.count(i->node().id())) {
-           QGraphicsColorizeEffect* eff = new QGraphicsColorizeEffect(this);
-           eff->setColor(mSelectionColors[mGraph->mask()]);
-           i->setGraphicsEffect(eff);
+           i->setColor(mSelectionColors[mGraph->mask()]);
         } else {
-
+           i->resetColor();
         }
     }
 }

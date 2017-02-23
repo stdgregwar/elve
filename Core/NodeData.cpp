@@ -114,7 +114,7 @@ int NodeData::outputCount() const {
 
 inline Name base26(int i) {
     static Name alph = "abcdefghijklmnopqrstuvwxyz";
-    Name n = "";
+    Name n = i==0 ? "a" : "";
     while(i != 0) {
         n += alph.at(i%26);
         i/=26;

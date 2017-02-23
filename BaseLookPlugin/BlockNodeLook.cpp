@@ -3,21 +3,52 @@
 #include <QPen>
 #include <QDebug>
 
+static QColor baseColor(34,34,34);
+
 BlockNodeLook::BlockNodeLook(const Node& node) : NodeLook(node)
 {
     QPen p;
-    p.setWidth(0);
-    QBrush b(QColor(128,128,128));
+    p.setCosmetic(true);
+    p.setColor(Qt::transparent);
+    QBrush b(baseColor);
 
     size_t io_count = std::max(node.inputCount(),node.outputCount());
 
-    mMainRect = new QGraphicsRectItem(0,0,200,io_count*20+20,this);
+    mMainRect = new QGraphicsRectItem(0,0,70,io_count*20+20,this);
     addToGroup(mMainRect);
 
     mMainRect->setPen(p);
     mMainRect->setBrush(b);
 
-    addToGroup(new QGraphicsSimpleTextItem(node.name().c_str(),mMainRect));
+    QBrush tb(Qt::white);
+    QGraphicsSimpleTextItem* maintext = new QGraphicsSimpleTextItem(node.name().c_str(),mMainRect);
+    maintext->setPos(5,5);
+    maintext->setBrush(tb);
+    addToGroup(maintext);
+
+    QBrush ib(QColor(12,128,12));
+    for(int i = 0; i < node.inputCount(); i++) {
+        Name name = node.inputName(i);
+        QGraphicsSimpleTextItem* text = new QGraphicsSimpleTextItem(name.c_str(),mMainRect);
+        QGraphicsRectItem* rect = new QGraphicsRectItem(0,24+i*20,30,15,mMainRect);
+        rect->setBrush(ib);
+        rect->setPen(p);
+        addToGroup(rect);
+        text->setPos(5,20+i*20);
+        addToGroup(text);
+    }
+
+    QBrush ob(QColor(128,12,12));
+    for(int i = 0; i < node.outputCount(); i++) {
+        Name name = node.outputName(i);
+        QGraphicsSimpleTextItem* text = new QGraphicsSimpleTextItem(name.c_str(),mMainRect);
+        text->setPos(40,20+i*20);
+        QGraphicsRectItem* rect = new QGraphicsRectItem(40,24+i*20,30,15,mMainRect);
+        rect->setBrush(ob);
+        rect->setPen(p);
+        addToGroup(rect);
+        addToGroup(text);
+    }
 }
 
 QPointF BlockNodeLook::inputPos(int index) {
@@ -29,11 +60,13 @@ QPointF BlockNodeLook::outputPos(int index) {
 }
 
 void BlockNodeLook::setColor(const QColor& col) {
-    QBrush b = mMainRect->brush();
-    b.setColor(col);
-    mMainRect->setBrush(b);
+    QPen p = mMainRect->pen();
+    p.setColor(col);
+    mMainRect->setPen(p);
 }
 
 void BlockNodeLook::resetColor() {
-    //Todo
+    QPen p = mMainRect->pen();
+    p.setColor(Qt::transparent);
+    mMainRect->setPen(p);
 }

@@ -29,15 +29,11 @@ public:
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *event) override;
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event) override;
     void onStateChange(const QVector2D& pos, const QVector2D& speed) override;
-    const Node& node() const;
 
-    const QTransform& orientationTransform() const;
-    const QTransform& inverseOrientationTransform() const;
-    void setOrientationTransform(const QTransform* transform, const QTransform* inverse);
+    const Node& node() const;
 private:
     const Node& mNode;
-    const QTransform* mTransform;
-    const QTransform* mInverseTransform;
+    QPointF mOffset;
     bool mDraged;
 };
 

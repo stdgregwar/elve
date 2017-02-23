@@ -28,10 +28,6 @@ public:
     NodeLook* getNode(const Node& n);
     EdgeLook* getEdge(const NodeLook& ancestor, const NodeLook& children);
     virtual OrientationHint orientationHint() const;
-    void updateTransforms();
-private:
-    QTransform mOrientationTransform;
-    QTransform mInverseOrientationTransform;
 };
 
 Q_DECLARE_INTERFACE(LookFactoryPlugin,LookFactoryPlugin_iid)

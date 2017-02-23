@@ -35,6 +35,7 @@ public slots:
     void on_layout_trigerred(LayoutPlugin *layout);
     void on_transform_triggered(GraphTransformPlugin* trans);
     void on_tab_change(QMdiSubWindow* tab);
+    void applyQSSTheme();
 private slots:
     void on_group();
     void on_toggle();
