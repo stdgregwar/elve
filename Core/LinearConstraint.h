@@ -1,11 +1,24 @@
-#ifndef HORIZONTALCONSTRAINT_H
-#define HORIZONTALCONSTRAINT_H
+#pragma once
 
+#include "Constraint.h"
+#include "QVector2D"
+#include "functional"
 
-class HorizontalConstraint
+class LinearConstraint : public Constraint
 {
-public:
-    HorizontalConstraint();
-};
 
-#endif // HORIZONTALCONSTRAINT_H
+public:
+    enum Dir{
+        VERTICAL,
+        HORIZONTAL
+    };
+
+    LinearConstraint(qreal position, qreal hardness,Dir direction);
+    void constrain(Point &mass) override;
+    void constrainVert(Point & mass);
+    void constrainHor(Point &mass);
+private:
+    std::function<void(LinearConstraint*,Point& mass)> mConst;
+    qreal mPosition;
+    qreal mHardness;
+};

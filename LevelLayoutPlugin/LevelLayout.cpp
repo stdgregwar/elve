@@ -31,7 +31,7 @@ void LevelLayout::setGraph(SharedGraph graph)
     system().setSizeHint(rect);
 
     for(const auto& p : graph->nodes()) {
-        QVector2D pos = startPosition(p.first,rect);
+        QVector2D pos = startPosition(p.first);
 
         Point* m = system().addPoint(1,p.second.id(),pos,damp,FULL);
 

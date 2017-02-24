@@ -57,7 +57,8 @@ SOURCES +=\
     interfaces/NodeLook.cpp \
     interfaces/EdgeLook.cpp \
     BoxConstraint.cpp \
-    interfaces/GraphWidgetListener.cpp
+    interfaces/GraphWidgetListener.cpp \
+    LinearConstraint.cpp
 
 RESOURCES += \
     coreresources.qrc
@@ -101,4 +102,5 @@ HEADERS += \
     interfaces/NodeLook.h \
     interfaces/EdgeLook.h \
     BoxConstraint.h \
-    interfaces/GraphWidgetListener.h
+    interfaces/GraphWidgetListener.h \
+    LinearConstraint.h

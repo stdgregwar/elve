@@ -31,8 +31,10 @@ DEPENDPATH += $$PWD/../Core
 
 HEADERS += \
     BaseLookPlugin.h \
-    BlockNodeLook.h
+    BlockNodeLook.h \
+    BlockEdgeLook.h
 
 SOURCES += \
     BaseLookPlugin.cpp \
-    BlockNodeLook.cpp
+    BlockNodeLook.cpp \
+    BlockEdgeLook.cpp

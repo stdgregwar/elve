@@ -15,3 +15,7 @@ NodeLook* BaseLookPlugin::node(const Node &n) {
 EdgeLook* BaseLookPlugin::edge(const NodeLook &ancestor, const NodeLook &children) {
 
 }
+
+OrientationHint BaseLookPlugin::orientationHint() const {
+    return LEFTRIGHT;
+}

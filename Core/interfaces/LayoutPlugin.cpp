@@ -3,6 +3,7 @@
 #include <chrono>
 #include <QDebug>
 #include <Graph.h>
+#include <EGraph.h>
 
 using namespace std;
 
@@ -17,8 +18,9 @@ LayoutPlugin::LayoutPlugin(const LayoutPlugin& other) :
 
 }
 
-QVector2D LayoutPlugin::startPosition(const NodeID& id,QRectF rect) {
+QVector2D LayoutPlugin::startPosition(const NodeID& id) {
     static default_random_engine gen;
+    const QRectF& rect = mSystem.sizeHint();
 
     auto it = mStartPositions.find(id);
     if(it != mStartPositions.end()) {
@@ -32,10 +34,11 @@ QVector2D LayoutPlugin::startPosition(const NodeID& id,QRectF rect) {
     }
 }
 
-void LayoutPlugin::setGraph(SharedGraph g,const NodePositions& positions)
+void LayoutPlugin::setGraph(SharedEGraph g,const NodePositions& positions)
 {
+    mSystem.setOrientationHint(g->look()->orientationHint());
     mStartPositions = positions;
-    setGraph(g);
+    setGraph(g->graph());
 }
 
 void LayoutPlugin::clear(){

@@ -8,6 +8,7 @@
 #include "Constraint.h"
 #include "Graph.h"
 #include "BoxConstraint.h"
+#include "interfaces/NodeLook.h"
 
 #include <vector>
 #include <unordered_map>
@@ -31,6 +32,7 @@ public:
     void addSpring(unsigned i, unsigned j, qreal k, qreal l0);
     void addSpring(Point* mi, Point* mj, qreal k, qreal l0);
     void addVConstraint(Point* m, qreal height);
+    void addHConstraint(Point* m, qreal pos);
     void addPConstrain(Point* m, const QVector2D& p);
     void clear();
     void clearMovables();
@@ -41,10 +43,15 @@ public:
     const PointsByID& pointsByID() const;
     void debug(QPainter* p) const;
     void setSizeHint(const QRectF& rect);
+    void setOrientationHint(OrientationHint hint);
+    OrientationHint orientationHint() const;
+    QVector2D transformPoint(const QVector2D& p) const;
     const QRectF& sizeHint() const;
     ~System();
 private:
     QRectF mSizeHint;
+    QRectF mGSizeHint;
+    OrientationHint mOrHint;
     void computeForces(size_t from,size_t until);
     Gravity mGravity;
     BoxConstraint mBox;

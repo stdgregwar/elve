@@ -1,11 +1,12 @@
 #ifndef BLOCKEDGELOOK_H
 #define BLOCKEDGELOOK_H
 
+#include <interfaces/EdgeLook.h>
 
-class BlockEdgeLook
+class BlockEdgeLook : public EdgeLook
 {
 public:
-    BlockEdgeLook();
+    BlockEdgeLook(const NodeLook& from, const NodeLook& to);
 };
 
 #endif // BLOCKEDGELOOK_H

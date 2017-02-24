@@ -190,7 +190,7 @@ EGraph::~EGraph()
 
 void EGraph::applyLayout(const NodePositions &p) {
     if(mLayout) {
-        mLayout->setGraph(mGraph,p);
+        mLayout->setGraph(shared_from_this(),p);
     }
 }
 
@@ -233,13 +233,14 @@ void EGraph::setLayout(const SharedLayout &l)
 {
     if(!l) return;
     mPosDirty = true;
-    l->setGraph(mGraph,positions());
+    if(mLook) l->setGraph(shared_from_this(),positions());
     mLayout = l;
     if(mView && mLook) mView->reflect(l->system(),mGraph,mLook);
 }
 
 void EGraph::setLook(const SharedLook& l) {
     mLook = l;
+    if(mLayout) mLayout->setGraph(shared_from_this(),positions());
     if(mView && mLayout) mView->reflect(mLayout->system(),mGraph,mLook);
 }
 

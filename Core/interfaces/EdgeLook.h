@@ -6,13 +6,18 @@
 class EdgeLook
 {
 public:
-    EdgeLook(NodeLook* from, NodeLook* to);
+    EdgeLook(const NodeLook& from,const NodeLook& to);
     virtual void addToPath(QPainterPath& path) = 0;
-    NodeLook* from();
-    NodeLook* to();
+    virtual QPen pen() = 0;
+    const NodeLook& from() const;
+    const NodeLook& to() const;
+    Index iFrom() const;
+    Index iTo() const;
 private:
-    NodeLook* mAncestor;
-    NodeLook* mChild;
+    const NodeLook& mFrom;
+    const NodeLook& mTo;
+    Index mIFrom;
+    Index mITo;
 };
 
 #endif // EDGELOOK_H

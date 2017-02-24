@@ -11,4 +11,5 @@ public:
     ELVE_LOOK(BaseLookPlugin,"Basic","basic")
     NodeLook* node(const Node& n) override;
     EdgeLook* edge(const NodeLook& ancestor, const NodeLook& children) override;
+    OrientationHint orientationHint() const override;
 };
