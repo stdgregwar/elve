@@ -46,6 +46,7 @@ public:
     void applyLayout(const NodePositions& p = NodePositions());
     void setView(GraphWidget* view);
     GraphWidget* view();
+    SharedEGraph clone(const SharedGraph& graph, const NodePositions& positions = {}) const;
     ~EGraph();
 private:
     mutable bool mPosDirty;

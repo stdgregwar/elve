@@ -16,7 +16,7 @@ Graph::Graph(const SharedData &data) : mData(data)
     }
     for(const NodeData& d : data->nodeDatas()) {
         for(const Dependency& dep : d.dependencies()) {
-            addEdge(dep.id,d.id());
+            addEdge(dep.id,dep.from,d.id(),dep.to);
         }
     }
 }
@@ -46,7 +46,7 @@ Graph::Graph(const SharedData& data, const SparseData &extraData, const Aliases 
             for(const Dependency& dep : d.dependencies()) {
                 NodeID tpid = alias(dep.id);
                 if(!mExcluded.count(tpid)) {
-                    addEdge(tpid,tid);
+                    addEdge(tpid,dep.from,tid,dep.to);
                 }
             }
         }
@@ -94,9 +94,9 @@ Node* Graph::addNode(const NodeData& d) {
     return n;
 }
 
-void Graph::addEdge(const NodeID& from, const NodeID& to) {
+void Graph::addEdge(const NodeID& from, Index fi, const NodeID& to, Index ti) {
     if(from != to) {
-        mNodes.at(from).addChild(&mNodes.at(to),0,0);
+        mNodes.at(from).addChild(&mNodes.at(to),fi,ti);
     }
 }
 

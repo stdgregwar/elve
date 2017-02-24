@@ -160,7 +160,9 @@ public:
 
     bool execute() override {
         auto& graphs = env->store<SharedEGraph>();
-        graphs.push(std::make_shared<EGraph>(mLoader->load(QString::fromStdString(mFilename))));
+        SharedEGraph eg = std::make_shared<EGraph>(mLoader->load(QString::fromStdString(mFilename)));
+        eg->setLook(PluginManager::get().defaultLook());
+        graphs.push(eg);
         return true;
     }
 private:

@@ -51,12 +51,12 @@ BlockNodeLook::BlockNodeLook(const Node& node) : NodeLook(node)
     }
 }
 
-QPointF BlockNodeLook::inputPos(int index) {
-
+QPointF BlockNodeLook::inputPos(int index) const {
+    return pos() + QPointF(0,30+20*index);
 }
 
-QPointF BlockNodeLook::outputPos(int index) {
-
+QPointF BlockNodeLook::outputPos(int index) const {
+    return pos() + QPointF(70,30+20*index);
 }
 
 void BlockNodeLook::setColor(const QColor& col) {

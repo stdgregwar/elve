@@ -44,7 +44,7 @@ public:
     const QString &filename() const;
 private:
     Node* addNode(const NodeData &d);
-    void addEdge(const NodeID& from, const NodeID& to);
+    void addEdge(const NodeID& from, Index fi, const NodeID& to, Index ti);
     Aliases aliasesWithout(const NodeID& repl) const;
     NodeIDSet excludedWithout(const Dependencies &ids) const;
     NodePtrs mInputs;

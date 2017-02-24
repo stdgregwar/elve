@@ -257,9 +257,12 @@ void GraphWidget::clearScene() {
 void GraphWidget::reflect(System &sys, SharedGraph g, SharedLook lf) {
     clearScene();
 
+    unordered_map<NodeID,NodeLook*> looks;
+
     for(auto& nbi : g->nodes()) {
         const Node& n = nbi.second;
         NodeLook* ni = lf->getNode(n);
+        looks[n.id()] = ni;
         mNodes.push_back(ni);
         Point* p = sys.point(n.id());
         p->clearMovables();
@@ -267,15 +270,16 @@ void GraphWidget::reflect(System &sys, SharedGraph g, SharedLook lf) {
         mScene->addItem(ni);
     }
 
-    /*for(auto& nbi : g->nodes()) {
+    for(auto& nbi : g->nodes()) {
+        const Node& n = nbi.second;
         for(const Node* an : n.ancestors()) {
-            EdgeLook* ei = lf->edge();
+            const NodeLook& al = *looks.at(an->id());
+            const NodeLook& ll = *looks.at(n.id());
+            EdgeLook* ei = lf->edge(al,ll);
             Point* ep = sys.point(an->id());
-            p->addMovable(ei->getHandle(0));
-            ep->addMovable(ei->getHandle(1));
             mEdges.push_back(ei);
         }
-    }*/
+    }
 }
 
 /*

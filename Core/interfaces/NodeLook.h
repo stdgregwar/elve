@@ -18,10 +18,8 @@ public:
     NodeLook(const Node& n);
 
     //To override when creating looks
-    virtual QPointF inputPos(int index);
-    virtual QPointF outputPos(int index);
-    virtual QPointF inputPos(const NodeID& from);
-    virtual QPointF outputPos(const NodeID& to);
+    virtual QPointF inputPos(int index) const ;
+    virtual QPointF outputPos(int index) const ;
     virtual void setColor(const QColor& col) = 0;
     virtual void resetColor() = 0;
 

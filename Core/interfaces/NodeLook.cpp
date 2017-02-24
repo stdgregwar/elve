@@ -51,34 +51,12 @@ void NodeLook::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
     }
 }
 
-QPointF NodeLook::inputPos(int index) {
+QPointF NodeLook::inputPos(int index) const {
     return pos();
 }
 
-QPointF NodeLook::outputPos(int index) {
+QPointF NodeLook::outputPos(int index) const {
     return pos();
-}
-
-QPointF NodeLook::inputPos(const NodeID& from) {
-    int i = 0;
-    for(Node* n : mNode.ancestors()) {
-        if(n->id() == from) {
-            return inputPos(i);
-        }
-        i++;
-    }
-    return inputPos(0);
-}
-
-QPointF NodeLook::outputPos(const NodeID& to) {
-    int i = 0;
-    for(Node* n : mNode.children()) {
-        if(n->id() == to) {
-            return outputPos(i);
-        }
-        i++;
-    }
-    return inputPos(0);
 }
 
 const Node &NodeLook::node() const {

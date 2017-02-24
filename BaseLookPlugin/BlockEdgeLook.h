@@ -7,6 +7,8 @@ class BlockEdgeLook : public EdgeLook
 {
 public:
     BlockEdgeLook(const NodeLook& from, const NodeLook& to);
+    void addToPath(QPainterPath& path) override;
+    QPen pen() override;
 };
 
 #endif // BLOCKEDGELOOK_H

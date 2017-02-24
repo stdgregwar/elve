@@ -143,9 +143,8 @@ SharedEGraph EGraph::group(const NodeIDSet& names, const NodeName &groupName)
     groupCenter /= names.size();
 
     poss[nid] = groupCenter;
-    SharedEGraph eg = std::make_shared<EGraph>(mGraph->group(names,nid,groupName),poss);
-    eg->setLayout(mLayout->create());
-    eg->setView(mView);
+    SharedEGraph eg = clone(mGraph->group(names,nid,groupName),poss);
+
     for(int i = 0; i < 10; i++) {
         for(const NodeID& id : selection(i)) {
             eg->selection(i).add(eg->graph()->alias(i));
@@ -169,7 +168,12 @@ SharedEGraph EGraph::ungroup(const NodeIDSet & names) const
         }
         g = g->ungroup(name);
     }
-    SharedEGraph eg =std::make_shared<EGraph>(g,poss);
+    return clone(g,poss);
+}
+
+SharedEGraph EGraph::clone(const SharedGraph& graph, const NodePositions& positions) const {
+    SharedEGraph eg =std::make_shared<EGraph>(graph,positions);
+    eg->setLook(mLook);
     eg->setLayout(mLayout->create());
     eg->setView(mView);
     return eg;
