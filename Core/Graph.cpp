@@ -213,18 +213,27 @@ SharedGraph Graph::fastGroup(const vector<NodeIDSet>& groups, const NodeName& ba
         if(group.size() < 2) { //Ignore groups of one or less elements
             continue;
         }
+        Names inputs;
+        Names outputs;
         Dependencies deps; deps.reserve(group.size());
         deps.insert(deps.end(),group.begin(),group.end());
 
         float av_index = 0;
         for(const NodeID& id : group) {
+            const NodeData& nd = data(id);
+            for(const Dependency& dep : nd.dependencies()) {
+                if(!group.count(dep.id)) { //Ancestor is outside of the group
+                    //Add input to node
+                    inputs.push_back(data(dep.id).name());
+                }
+            }
             aliases.emplace(id,i);
             excluded.insert(id);
             av_index += data(id).ioIndex();
         }
         av_index /= group.size();
 
-        extra.emplace(i,NodeData(i,basename + to_string(i),deps,CLUSTER,{},av_index));
+        extra.emplace(i,NodeData(i,basename + to_string(i),deps,CLUSTER,{},av_index,inputs.size(),outputs.size(),inputs,outputs));
         //i++;
     }
     return make_shared<Graph>(mData,extra,aliases,excluded);

@@ -353,6 +353,7 @@ public:
         SharedEGraph eg = env->store<SharedEGraph>().current();
         SharedGraph ng = eg->graph()->clusterize(level);
         SharedEGraph neg = std::make_shared<EGraph>(ng,eg->positions());
+        neg->setLook(eg->look());
         neg->setLayout(eg->layout());
         neg->setView(eg->view());
         env->store<SharedEGraph>().current() = neg;

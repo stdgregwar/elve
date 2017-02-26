@@ -32,8 +32,10 @@ void LevelLayout::setGraph(SharedGraph graph)
 
     for(const auto& p : graph->nodes()) {
         QVector2D pos = startPosition(p.first);
+        const Node& n = p.second;
 
-        Point* m = system().addPoint(1,p.second.id(),pos,damp,FULL);
+        qreal mass = n.isCluster() ? n.data().dependencies().size()*0.5 : 1;
+        Point* m = system().addPoint(mass,p.second.id(),pos,damp,FULL);
 
         if(p.second.isInput()) {
             //mSystem.addVConstraint(m,1024*SS);
