@@ -35,7 +35,9 @@ public:
     size_t maxInputIndex() const;
     size_t maxOutputIndex() const;
     NodeID newID() const;
+
     const NodeData& data(const NodeID& id) const;
+    const Node& node(const NodeID& id) const;
 
     const NodePtrs& inputs();
     const NodePtrs& outputs();

@@ -31,7 +31,7 @@ BlockNodeLook::BlockNodeLook(const Node& node) : NodeLook(node)
         Name name = node.inputName(i);
         QGraphicsSimpleTextItem* text = new QGraphicsSimpleTextItem(name.c_str(),mMainRect);
         text->setScale(0.7);
-        text->setPos(5,23+i*20);
+        text->setPos(5,25+i*20);
         QGraphicsRectItem* rect = new QGraphicsRectItem(0,24+i*20,30,15,mMainRect);
         rect->setBrush(ib);
         rect->setPen(p);
@@ -43,7 +43,8 @@ BlockNodeLook::BlockNodeLook(const Node& node) : NodeLook(node)
     for(int i = 0; i < node.outputCount(); i++) {
         Name name = node.outputName(i);
         QGraphicsSimpleTextItem* text = new QGraphicsSimpleTextItem(name.c_str(),mMainRect);
-        text->setPos(40,20+i*20);
+        text->setScale(0.7);
+        text->setPos(40,25+i*20);
         QGraphicsRectItem* rect = new QGraphicsRectItem(40,24+i*20,30,15,mMainRect);
         rect->setBrush(ob);
         rect->setPen(p);

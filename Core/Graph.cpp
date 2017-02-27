@@ -177,6 +177,9 @@ NodeName Graph::uniqueName(const NodeName& base) const {
     return current;
 }
 
+const Node& Graph::node(const NodeID& id) const {
+    return mNodes.at(id);
+}
 
 SharedGraph Graph::ungroup(const NodeID &cluster) {
     if(!mExtraData.count(cluster)) {
@@ -220,13 +223,21 @@ SharedGraph Graph::fastGroup(const vector<NodeIDSet>& groups, const NodeName& ba
 
         float av_index = 0;
         for(const NodeID& id : group) {
-            const NodeData& nd = data(id);
-            for(const Dependency& dep : nd.dependencies()) {
-                if(!group.count(dep.id)) { //Ancestor is outside of the group
+            const Node& n = node(id);
+            const NodeData& nd = n.data();
+            for(const Node::Connexion& c : n.fanIn()) {
+                if(!group.count(c.node->id())) { //Ancestor is outside of the group
                     //Add input to node
-                    inputs.push_back(data(dep.id).name());
+                    inputs.push_back(data(c.node->id()).name());
                 }
             }
+            for(const Node::Connexion& c : n.fanOut()) {
+                if(!group.count(c.node->id())) { //Ancestor is outside of the group
+                    //Add input to node
+                    outputs.push_back(data(c.node->id()).name());
+                }
+            }
+
             aliases.emplace(id,i);
             excluded.insert(id);
             av_index += data(id).ioIndex();
