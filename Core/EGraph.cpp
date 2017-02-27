@@ -147,7 +147,7 @@ SharedEGraph EGraph::group(const NodeIDSet& names, const NodeName &groupName)
 
     for(int i = 0; i < 10; i++) {
         for(const NodeID& id : selection(i)) {
-            eg->selection(i).add(eg->graph()->alias(i));
+            eg->selection(i).add(eg->graph()->alias(i).id);
         }
     }
     return eg;

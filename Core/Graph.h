@@ -11,9 +11,28 @@
 typedef std::vector<Node*> NodePtrs;
 typedef std::unordered_map<NodeID,Node> NodesByID;
 
-typedef std::unordered_map<NodeID,NodeID> Aliases;
+struct Pin{
+    Pin(const NodeID& id) : id(id),index(0){}
+    Pin(const NodeID &id,const Index& index) : id(id), index(index) {}
+    NodeID id;
+    Index  index;
+};
+
+inline bool operator==(const Pin& a,const Pin& b) {
+    return a.id == b.id && a.index == b.index;
+}
+
+struct Pin_hash {
+    std::size_t operator () (const Pin& p) const {
+            return p.id;
+        }
+};
+
+typedef std::unordered_map<Pin,Pin,Pin_hash> Aliases;
 typedef std::pair<NodeID,NodeID> Edge;
 typedef std::vector<Edge> AdjacencyList;
+
+
 
 class Graph : public std::enable_shared_from_this<Graph>
 {
@@ -22,7 +41,7 @@ public:
     Graph(const SharedData& data, const SparseData &extraData, const Aliases& aliases, const NodeIDSet &excluded = {});
 
     const NodesByID& nodes() const;
-    const NodeID& alias(const NodeID& id) const;
+    const Pin& alias(const Pin& id) const;
     size_t nodeCount() const;
     SharedGraph clusterize(size_t level);
     SharedGraph group(const NodeIDSet& toGroup, const NodeID &i, const NodeName &groupName);

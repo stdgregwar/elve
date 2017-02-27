@@ -41,12 +41,12 @@ Graph::Graph(const SharedData& data, const SparseData &extraData, const Aliases 
     }
 
     for(const NodeData& d : data->nodeDatas()) {
-        NodeID tid = alias(d.id());
-        if(!mExcluded.count(tid)) {
+        const Pin& pin = alias(d.id());
+        if(!mExcluded.count(pin.id)) {
             for(const Dependency& dep : d.dependencies()) {
-                NodeID tpid = alias(dep.id);
-                if(!mExcluded.count(tpid)) {
-                    addEdge(tpid,dep.from,tid,dep.to);
+                const Pin& dpin = alias({dep.id,dep.from});
+                if(!mExcluded.count(dpin.id)) {
+                    addEdge(dpin.id,dpin.index,pin.id,pin.index);
                 }
             }
         }
@@ -75,7 +75,7 @@ size_t Graph::nodeCount() const {
     return mNodes.size();
 }
 
-const NodeID& Graph::alias(const NodeID& id) const {
+const Pin &Graph::alias(const Pin &id) const {
     auto it = mAliases.find(id);
     if(it != mAliases.end()) return alias(it->second);
     return id;
@@ -205,10 +205,8 @@ SharedGraph Graph::fastGroup(const vector<NodeIDSet>& groups, const NodeName& ba
         extra.emplace(p.first,p.second);
     }
 
-    Aliases aliases(mAliases);
+    Aliases aliases(mAliases); aliases.reserve(aliases.size()+contentSize);
     NodeIDSet excluded(mExcluded); excluded.reserve(mExcluded.size()+contentSize);
-    aliases.reserve(aliases.size()+contentSize);
-
 
 
     for(const NodeIDSet& group : groups) {
@@ -228,17 +226,19 @@ SharedGraph Graph::fastGroup(const vector<NodeIDSet>& groups, const NodeName& ba
             for(const Node::Connexion& c : n.fanIn()) {
                 if(!group.count(c.node->id())) { //Ancestor is outside of the group
                     //Add input to node
+                    aliases.emplace(Pin(id,c.to),Pin(i,inputs.size()));
                     inputs.push_back(data(c.node->id()).name());
                 }
+
             }
             for(const Node::Connexion& c : n.fanOut()) {
                 if(!group.count(c.node->id())) { //Ancestor is outside of the group
                     //Add input to node
+                    aliases.emplace(Pin(id,c.from),Pin(i,outputs.size()));
                     outputs.push_back(data(c.node->id()).name());
                 }
             }
-
-            aliases.emplace(id,i);
+            //aliases.emplace(id,i);
             excluded.insert(id);
             av_index += data(id).ioIndex();
         }
@@ -356,7 +356,7 @@ QJsonObject Graph::json() const
         QJsonArray als;
         using pair_type = Aliases::value_type;
         for(const pair_type& p : mAliases) {
-            als.append(QJsonArray{(int)p.first,(int)p.second});
+            als.append(QJsonArray{(int)p.first.id,(int)p.first.index,(int)p.second.id,(int)p.second.index});
         }
         main.insert("aliases",als);
     }
@@ -407,7 +407,7 @@ SharedGraph Graph::fromJson(const QJsonObject& obj)
 Aliases Graph::aliasesWithout(const NodeID& repl) const {
     Aliases als;
     for(const auto& p : mAliases) {
-        if(p.second != repl) {
+        if(p.second.id != repl) {
             als.insert(p);
         }
     }
