@@ -9,6 +9,10 @@
 
 using namespace std;
 
+bool operator==(const Pin& a,const Pin& b) {
+    return a.id == b.id && ((a.index == b.index));// || a.index == -1 || b.index == -1);
+}
+
 Graph::Graph(const SharedData &data) : mData(data)
 {
     for(const NodeData& d : data->nodeDatas()) {
@@ -41,12 +45,13 @@ Graph::Graph(const SharedData& data, const SparseData &extraData, const Aliases 
     }
 
     for(const NodeData& d : data->nodeDatas()) {
-        const Pin& pin = alias(d.id());
-        if(!mExcluded.count(pin.id)) {
+        const Pin& p = alias(d.id());
+        if(!mExcluded.count(p.id)) {
             for(const Dependency& dep : d.dependencies()) {
+                const Pin& cpin = alias({d.id(),dep.to});
                 const Pin& dpin = alias({dep.id,dep.from});
                 if(!mExcluded.count(dpin.id)) {
-                    addEdge(dpin.id,dpin.index,pin.id,pin.index);
+                    addEdge(dpin.id,dpin.index,cpin.id,cpin.index);
                 }
             }
         }
@@ -214,8 +219,8 @@ SharedGraph Graph::fastGroup(const vector<NodeIDSet>& groups, const NodeName& ba
         if(group.size() < 2) { //Ignore groups of one or less elements
             continue;
         }
-        Names inputs;
-        Names outputs;
+        set<Name> inputs;
+        set<Name> outputs;
         Dependencies deps; deps.reserve(group.size());
         deps.insert(deps.end(),group.begin(),group.end());
 
@@ -227,7 +232,7 @@ SharedGraph Graph::fastGroup(const vector<NodeIDSet>& groups, const NodeName& ba
                 if(!group.count(c.node->id())) { //Ancestor is outside of the group
                     //Add input to node
                     aliases.emplace(Pin(id,c.to),Pin(i,inputs.size()));
-                    inputs.push_back(data(c.node->id()).name());
+                    inputs.insert(data(c.node->id()).name());
                 }
 
             }
@@ -235,7 +240,7 @@ SharedGraph Graph::fastGroup(const vector<NodeIDSet>& groups, const NodeName& ba
                 if(!group.count(c.node->id())) { //Ancestor is outside of the group
                     //Add input to node
                     aliases.emplace(Pin(id,c.from),Pin(i,outputs.size()));
-                    outputs.push_back(data(c.node->id()).name());
+                    outputs.insert(data(c.node->id()).name());
                 }
             }
             //aliases.emplace(id,i);
@@ -243,8 +248,12 @@ SharedGraph Graph::fastGroup(const vector<NodeIDSet>& groups, const NodeName& ba
             av_index += data(id).ioIndex();
         }
         av_index /= group.size();
+        Names inputNames; inputNames.reserve(inputs.size());
+        Names outputNames;outputNames.reserve(outputs.size());
+        inputNames.insert(inputNames.begin(),inputs.begin(),inputs.end());
+        outputNames.insert(outputNames.begin(),outputs.begin(),outputs.end());
 
-        extra.emplace(i,NodeData(i,basename + to_string(i),deps,CLUSTER,{},av_index,inputs.size(),outputs.size(),inputs,outputs));
+        extra.emplace(i,NodeData(i,basename + to_string(i),deps,CLUSTER,{},av_index,inputs.size(),outputs.size(),inputNames,outputNames));
         //i++;
     }
     return make_shared<Graph>(mData,extra,aliases,excluded);
@@ -393,7 +402,8 @@ SharedGraph Graph::fromJson(const QJsonObject& obj)
     als.reserve(jals.size());
     for(const QJsonValue& v : jals) {
         QJsonArray pair = v.toArray();
-        als.emplace(pair.at(0).toInt(-1),pair.at(1).toInt(-1));
+        als.emplace(Pin(pair.at(0).toInt(-1),pair.at(1).toInt(-1)),
+                    Pin(pair.at(2).toInt(-1),pair.at(3).toInt(-1)));
     }
     NodeIDSet excl;
     QJsonArray jexcl = obj.value("excluded").toArray();

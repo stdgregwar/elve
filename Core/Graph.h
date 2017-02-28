@@ -18,9 +18,7 @@ struct Pin{
     Index  index;
 };
 
-inline bool operator==(const Pin& a,const Pin& b) {
-    return a.id == b.id && a.index == b.index;
-}
+inline bool operator==(const Pin& a,const Pin& b);
 
 struct Pin_hash {
     std::size_t operator () (const Pin& p) const {

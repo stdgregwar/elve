@@ -15,12 +15,10 @@ class Node;
 //typedef std::weak_ptr<Node> WeakNode;
 
 typedef std::vector<Node*> Nodes;
-typedef unsigned Index;
+typedef int Index;
 typedef long NodeLevel;
 class Graph;
 typedef std::shared_ptr<Graph> SharedGraph;
-
-
 
 class Node
 {

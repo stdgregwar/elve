@@ -13,7 +13,7 @@ typedef unsigned NodeID;
 typedef std::string Name;
 typedef std::vector<std::string> Names;
 typedef Name NodeName;
-typedef unsigned Index;
+typedef int Index;
 typedef std::vector<NodeID> NodeIDs;
 typedef Names NodeNames;
 typedef std::unordered_set<NodeID> NodeIDSet;

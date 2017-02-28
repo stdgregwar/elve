@@ -476,11 +476,11 @@ void CommandLine::graphChanged(SharedEGraph oldGraph, SharedEGraph newGraph) {
 
 bool CommandLine::run_command(const QString& cmd, std::ostream& out,std::ostream& cerr)
 {
-    try {
+    //try {
         mCli.run_line(cmd.toStdString(),out,cerr);
-    } catch(const std::exception& e) {
-        cerr << e.what() << std::endl;
-    }
+    //} catch(const std::exception& e) {
+    //    cerr << e.what() << std::endl;
+    //}
 }
 
 QStringList CommandLine::completion(const QString& base)
