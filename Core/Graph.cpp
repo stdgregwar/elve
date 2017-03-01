@@ -13,7 +13,7 @@ bool operator==(const Pin& a,const Pin& b) {
     return a.id == b.id && ((a.index == b.index));// || a.index == -1 || b.index == -1);
 }
 
-Graph::Graph(const SharedData &data) : mData(data)
+Graph::Graph(const SharedData &data) : mData(data), mLastId(0)
 {
     for(const NodeData& d : data->nodeDatas()) {
         addNode(d);
@@ -26,7 +26,7 @@ Graph::Graph(const SharedData &data) : mData(data)
 }
 
 Graph::Graph(const SharedData& data, const SparseData &extraData, const Aliases &aliases, const NodeIDSet& excluded)
-    : mData(data), mExtraData(extraData), mAliases(aliases), mExcluded(excluded)
+    : mData(data), mExtraData(extraData), mAliases(aliases), mExcluded(excluded), mLastId(0)
 {
     //Build groups data
     using pair_type = SparseData::value_type;
@@ -60,12 +60,6 @@ Graph::Graph(const SharedData& data, const SparseData &extraData, const Aliases 
 
 NodeID Graph::newID() const {
     return ++mLastId;
-    /*NodeID i = mData->nodeDatas().size()+mExtraData.size();
-    NodesByID::const_iterator it;
-    while((it = mNodes.find(i)) != mNodes.end()) {
-        i++;
-    }
-    return i;*/
 }
 
 const QString& Graph::filename() const {
@@ -234,7 +228,6 @@ SharedGraph Graph::fastGroup(const vector<NodeIDSet>& groups, const NodeName& ba
                     aliases.emplace(Pin(id,c.to),Pin(i,inputs.size()));
                     inputs.insert(data(c.node->id()).name());
                 }
-
             }
             for(const Node::Connexion& c : n.fanOut()) {
                 if(!group.count(c.node->id())) { //Ancestor is outside of the group

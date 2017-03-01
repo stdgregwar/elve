@@ -7,11 +7,12 @@
 
 QConsoleWidget::QConsoleWidget(QWidget *parent) : QTextEdit(parent),
     mHistory{
+        "read_graph -n ~/mul5.json; cluster; show -g",
         "read_graph -n ~/mul5.json; show -g"/*,
         "chrono -r; load_blif \"/home/ghirt/benchs/arithmetic/div.blif\"; level_layout; show -g; chrono",
         "chrono -r; load_blif \"/home/ghirt/benchs/random/dec.blif\"; cluster; level_layout; show -g; chrono"*/
         },
-    mCmdIndex(1)
+    mCmdIndex(2)
 {
     setUndoRedoEnabled(false);
     setStyleSheet("font : 11pt 'Mono';");

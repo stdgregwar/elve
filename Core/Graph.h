@@ -13,7 +13,7 @@ typedef std::unordered_map<NodeID,Node> NodesByID;
 
 struct Pin{
     Pin(const NodeID& id) : id(id),index(0){}
-    Pin(const NodeID &id,const Index& index) : id(id), index(index) {}
+    Pin(const NodeID &id,const Index& index) : id(id), index(index){}
     NodeID id;
     Index  index;
 };
