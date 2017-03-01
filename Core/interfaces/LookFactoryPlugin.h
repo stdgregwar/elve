@@ -7,6 +7,9 @@
 #include "EdgeLook.h"
 
 #define LookFactoryPlugin_iid "ch.epfl.lap.elfe.LookFactoryPugin"
+
+namespace Elve {
+
 class LookFactoryPlugin;
 
 typedef std::shared_ptr<LookFactoryPlugin> SharedLook;
@@ -30,12 +33,14 @@ public:
     virtual OrientationHint orientationHint() const;
 };
 
-Q_DECLARE_INTERFACE(LookFactoryPlugin,LookFactoryPlugin_iid)
+}
+
+Q_DECLARE_INTERFACE(Elve::LookFactoryPlugin,LookFactoryPlugin_iid)
 
 #define ELVE_LOOK(Look,full_name,cli_name)\
  public:\
     Look();\
-    inline SharedLook create() override {return std::make_shared<Look>(*this);}\
+    inline Elve::SharedLook create() override {return std::make_shared<Look>(*this);}\
     inline QString lookName() const override {return (full_name);}\
     inline std::string cliName() const override {return (cli_name);}
 

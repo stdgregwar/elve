@@ -2,7 +2,7 @@
 #include <QJsonArray>
 #include <QJsonValue>
 #include <QHash>
-
+namespace Elve {
 Dependency::Dependency(const NodeID& id) : id(id),from(0), to(0) {}
 
 Dependency::Dependency(const NodeID &id,Index from, Index to) :
@@ -159,4 +159,5 @@ const NodeType& NodeData::type() const {
 
 const Index& NodeData::ioIndex() const {
     return mIOIndex;
+}
 }

@@ -5,6 +5,9 @@
 #include <QDebug>
 #include <QKeyEvent>
 
+
+namespace Elve {
+
 QConsoleWidget::QConsoleWidget(QWidget *parent) : QTextEdit(parent),
     mHistory{
         "read_graph -n ~/mul5.json; cluster; show -g",
@@ -156,4 +159,6 @@ void QConsoleWidget::cursorPositionChanged()
     if (textCursor().position() < mFixedPosition) {
         textCursor().setPosition(mFixedPosition);
     }
+}
+
 }

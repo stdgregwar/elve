@@ -2,6 +2,9 @@
 #include <QDebug>
 #include "MainWindow.h"
 
+
+namespace Elve {
+
 StoreView::StoreView(Store& store, MainWindow *parent) : QListWidget(parent), mStore(store), mWindow(parent)
 {
     setWhatsThis(tr("<html><head/><body>"
@@ -46,4 +49,6 @@ void StoreView::showStoreIndex(QModelIndex qmi) {
     if(index == mStore.current_index()) {
         mWindow->runUiCommand(QString("show -g"));
     }
+}
+
 }

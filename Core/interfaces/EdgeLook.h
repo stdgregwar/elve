@@ -2,7 +2,7 @@
 #define EDGELOOK_H
 
 #include "NodeLook.h"
-
+namespace Elve {
 class EdgeLook
 {
 public:
@@ -19,5 +19,5 @@ private:
     Index mIFrom;
     Index mITo;
 };
-
+}
 #endif // EDGELOOK_H

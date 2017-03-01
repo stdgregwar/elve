@@ -2,6 +2,8 @@
 #include <cmath>
 #include <QDebug>
 
+using namespace Elve;
+
 SimpleLayout::SimpleLayout() {
     opts().add_options()
             ("k_const,k",po::value(&mK)->default_value(mK),"base k constant of the springs")

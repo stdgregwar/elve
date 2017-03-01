@@ -5,6 +5,7 @@
 #include <Graph.h>
 #include <EGraph.h>
 
+namespace Elve {
 using namespace std;
 
 LayoutPlugin::LayoutPlugin()
@@ -70,4 +71,5 @@ void LayoutPlugin::quickSim(size_t ticks) {
     high_resolution_clock::time_point t2 = high_resolution_clock::now();
     duration<double> time_span = duration_cast<duration<double>>(t2 - t1);
     qDebug() << "Simulating at mean of" << ticks/time_span.count() << "tps";
+}
 }

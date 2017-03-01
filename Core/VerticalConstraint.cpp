@@ -1,6 +1,8 @@
 #include "VerticalConstraint.h"
 #include "Point.h"
 
+namespace Elve {
+
 VerticalConstraint::VerticalConstraint(qreal height) : mHeight(height)
 {
 
@@ -15,4 +17,6 @@ void VerticalConstraint::constrain(Point &mass) {
 
     mass.setPos({p.x(),mHeight*hardn+p.y()*(1-hardn)});
     mass.setSpeed({speed.x(),0});
+}
+
 }

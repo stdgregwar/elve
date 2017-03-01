@@ -2,6 +2,8 @@
 #include <QJsonObject>
 #include <QJsonArray>
 
+namespace Elve {
+
 GraphData::GraphData(const NodeDatas& nodesData,QString filename)
     : mDatas(nodesData), mFilename(filename)
 {
@@ -198,4 +200,6 @@ QJsonObject GraphData::json() const {
     }
     obj.insert("nodes",nodes);
     return obj;
+}
+
 }

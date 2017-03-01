@@ -7,6 +7,8 @@
 #include <random>
 #include "GraphWidget.h"
 
+namespace Elve {
+
 using namespace std;
 
 EGraph::EGraph(const SharedGraph &g, const NodePositions &positions) :
@@ -256,4 +258,6 @@ const SharedLayout &EGraph::layout()
 const SharedLook& EGraph::look()
 {
     return mLook;
+}
+
 }

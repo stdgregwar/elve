@@ -3,6 +3,8 @@
 #include <QPen>
 #include <QDebug>
 
+using namespace Elve;
+
 static QColor baseColor(34,34,34);
 
 BlockNodeLook::BlockNodeLook(const Node& node) : NodeLook(node)

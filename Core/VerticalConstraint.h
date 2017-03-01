@@ -3,7 +3,7 @@
 
 #include "Constraint.h"
 #include <QVector2D>
-
+namespace Elve {
 class VerticalConstraint : public Constraint
 {
 public:
@@ -12,5 +12,5 @@ public:
 private:
     qreal mHeight;
 };
-
+}
 #endif // VERTICALCONSTRAINT_H

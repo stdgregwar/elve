@@ -3,15 +3,15 @@
 
 #include <interfaces/FileExporterPlugin.h>
 
-class SvgExporterPlugin : public FileExporterPlugin
+class SvgExporterPlugin : public Elve::FileExporterPlugin
 {
     Q_OBJECT
     Q_PLUGIN_METADATA(IID "ch.epfl.lap.svgexporter")
-    Q_INTERFACES(FileExporterPlugin)
+    Q_INTERFACES(Elve::FileExporterPlugin)
 public:
     ELVE_EXPORTER(SvgExporterPlugin,"SVG","SVG Files (*.svg)","svg")
     SvgExporterPlugin();
-    void exportGraph(const QString& filename, const SharedEGraph& eg) override;
+    void exportGraph(const QString& filename, const Elve::SharedEGraph& eg) override;
 };
 
 #endif // SVGEXPORTERPLUGIN_H

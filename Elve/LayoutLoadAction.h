@@ -3,6 +3,9 @@
 
 #include <QAction>
 
+
+namespace Elve {
+
 class LayoutPlugin;
 
 class LayoutLoadAction : public QAction
@@ -22,5 +25,6 @@ public slots:
 private:
     LayoutPlugin* mData;
 };
+}
 
 #endif // LAYOUTLOADACTION_H

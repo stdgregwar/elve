@@ -4,19 +4,21 @@
 #include "BlockNodeLook.h"
 #include "BlockEdgeLook.h"
 
-BaseLookPlugin::BaseLookPlugin()
+using namespace Elve;
+
+BlockLookPlugin::BlockLookPlugin()
 {
 
 }
 
-NodeLook* BaseLookPlugin::node(const Node &n) {
+NodeLook* BlockLookPlugin::node(const Node &n) {
     return new BlockNodeLook(n);
 }
 
-EdgeLook* BaseLookPlugin::edge(const NodeLook &ancestor, const NodeLook &children) {
+EdgeLook* BlockLookPlugin::edge(const NodeLook &ancestor, const NodeLook &children) {
     return new BlockEdgeLook(ancestor,children);
 }
 
-OrientationHint BaseLookPlugin::orientationHint() const {
+OrientationHint BlockLookPlugin::orientationHint() const {
     return LEFTRIGHT;
 }

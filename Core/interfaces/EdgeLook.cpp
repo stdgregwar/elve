@@ -1,5 +1,5 @@
 #include "EdgeLook.h"
-
+namespace Elve {
 EdgeLook::EdgeLook(const NodeLook &ancestor, const NodeLook &child) : mFrom(ancestor), mTo(child)
 {
     //Find connexion indice in nodes
@@ -29,4 +29,5 @@ const NodeLook& EdgeLook::from() const {
 
 const NodeLook& EdgeLook::to() const {
     return mTo;
+}
 }

@@ -5,6 +5,8 @@
 #include <QDebug>
 #include <limits>
 
+namespace Elve {
+
 using namespace std;
 #define THRESHOLD 512
 
@@ -252,4 +254,6 @@ QuadTree::~QuadTree()
     reset();
     if(mNodes)
         free((void*)mNodes);
+}
+
 }

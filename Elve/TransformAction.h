@@ -3,6 +3,8 @@
 #include <QAction>
 #include <interfaces/GraphTransformPlugin.h>
 
+namespace Elve {
+
 class TransformAction : public QAction
 {
     Q_OBJECT
@@ -20,3 +22,5 @@ public slots:
 private:
     GraphTransformPlugin* mData;
 };
+
+}

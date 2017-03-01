@@ -15,6 +15,8 @@
 #include <interfaces/GraphWidgetListener.h>
 #include <interfaces/LookFactoryPlugin.h>
 
+namespace Elve {
+
 class MainWindow;
 
 class GraphWidget : public QGraphicsView
@@ -110,5 +112,7 @@ private:
     GraphWidgetListener* mListener;
     static std::array<QColor,10> mSelectionColors;
 };
+
+}
 
 #endif // GRAPHWIDGET_H

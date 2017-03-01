@@ -3,6 +3,8 @@
 
 #include <QVector2D>
 
+namespace Elve {
+
 class Point;
 
 class Movable
@@ -16,4 +18,5 @@ private:
     Point* mPoint;
 };
 
+}
 #endif // MOVABLE_H

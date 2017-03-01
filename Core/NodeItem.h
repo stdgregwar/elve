@@ -6,6 +6,8 @@
 #include "Movable.h"
 #include "Node.h"
 
+namespace Elve {
+
 class NodeItem : public QGraphicsPixmapItem, public Movable
 {
 public:
@@ -20,5 +22,7 @@ private:
     bool mDraged;
     const NodeData& mData;
 };
+
+}
 
 #endif // NODEITEM_H

@@ -7,6 +7,8 @@
 #include <future>
 #include <QDebug>
 
+namespace Elve {
+
 using namespace std;
 
 System::System() : mGravity(75e4)
@@ -236,4 +238,6 @@ size_t System::forceCount() const
 System::~System()
 {
     clear();
+}
+
 }

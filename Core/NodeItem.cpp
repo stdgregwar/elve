@@ -10,6 +10,8 @@
 
 #define SIZE 4
 
+namespace Elve {
+
 using namespace std;
 
 NodeItem::NodeItem(const NodeData& data, QGraphicsItem *parent) : QGraphicsPixmapItem(parent), mDraged(false), mData(data)
@@ -93,4 +95,5 @@ void NodeItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
         setPos(event->scenePos());
         event->accept();
     }
+}
 }

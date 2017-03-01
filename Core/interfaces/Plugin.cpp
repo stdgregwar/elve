@@ -1,5 +1,5 @@
 #include "Plugin.h"
-
+namespace Elve {
 Plugin::Plugin() : mOpts("plugin options"), mVMap(nullptr)
 {
 
@@ -30,4 +30,5 @@ bool Plugin::is_set(const std::string& opt) const {
 po::positional_options_description& Plugin::pods()
 {
     return mPods;
+}
 }

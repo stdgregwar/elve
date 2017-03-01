@@ -25,13 +25,15 @@
 #include "LayoutLoadAction.h"
 #include "TransformAction.h"
 #include "CommandLine.h"
+#include "LookLoadAction.h"
 
 
+namespace Elve {
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), mCurrentTab(nullptr)
 {
-    Q_INIT_RESOURCE(coreresources); //Init coremodule resources
+    //Q_INIT_RESOURCE(coreresources); //Init coremodule resources
 
     PluginManager::get().load("plugins");
 
@@ -80,6 +82,13 @@ MainWindow::MainWindow(QWidget *parent)
         default: //TODO add more types
             ui.menuTransform->addAction(a); break;
         }
+    }
+
+    //Setup looks
+    for(auto& l : pluginManager.looks()) {
+        LookLoadAction* a = new LookLoadAction(l,l->lookName(),this);
+        connect(a,SIGNAL(triggered(LookFactoryPlugin*)),this,SLOT(on_look_triggered(LookFactoryPlugin*)));
+        ui.menuLook->addAction(a);
     }
 
     ui.menuHelp->addAction(QWhatsThis::createAction(this));
@@ -134,6 +143,11 @@ void MainWindow::on_transform_triggered(GraphTransformPlugin* trans) {
 
 void MainWindow::on_export_trigerred(FileExporterPlugin* exp) {
     QString filename = QFileDialog::getSaveFileName(this,"Export " + exp->formatName(),"",exp->fileFilter());
+    QString ext = filename.split(".").last();
+    QString true_ext = QString::fromStdString(exp->cliName()); //TODO fix
+    if(ext != true_ext) {
+        filename+="."+true_ext;
+    }
     if(filename != "") {
         runCommandOnShownGraph(QString("save_%1 \"%2\"").arg(exp->cliName().c_str(),filename));
     }
@@ -144,12 +158,12 @@ void MainWindow::runUiCommand(const QString& cmd) {
 }
 
 void MainWindow::on_layout_trigerred(LayoutPlugin* layout) {
-    qDebug() << "Setting layout to " + layout->name();
-    /*GraphWidget* vp = viewport();
-    if(vp) {
-        vp->setLayout(layout->create());
-    }*/
     runCommandOnShownGraph(QString("%1_layout").arg(QString::fromStdString(layout->cliName())));
+}
+
+void MainWindow::on_look_triggered(LookFactoryPlugin* factory) {
+    qDebug() << "setting look to" << factory->lookName();
+    runCommandOnShownGraph(QString("%1_look").arg(QString::fromStdString(factory->cliName())));
 }
 
 void MainWindow::on_actionOpen_triggered()
@@ -320,4 +334,6 @@ void MainWindow::on_actionFit_triggered()
     if(viewport()) {
         viewport()->fit();
     }
+}
+
 }

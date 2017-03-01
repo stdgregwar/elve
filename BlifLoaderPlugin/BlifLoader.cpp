@@ -12,6 +12,7 @@
 #include <locale>
 
 using namespace std;
+using namespace Elve;
 // trim from start
 static inline std::string &ltrim(std::string &s) {
     s.erase(s.begin(), std::find_if(s.begin(), s.end(),

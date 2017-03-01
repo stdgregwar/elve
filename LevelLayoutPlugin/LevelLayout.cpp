@@ -1,6 +1,8 @@
 #include "LevelLayout.h"
 #include <cmath>
 
+using namespace Elve;
+
 LevelLayout::LevelLayout() {
     opts().add_options()
             ("k_const,k",po::value(&mK)->default_value(mK),"base k constant of the springs")
@@ -32,7 +34,7 @@ void LevelLayout::setGraph(SharedGraph graph)
 
     for(const auto& p : graph->nodes()) {
         QVector2D pos = startPosition(p.first);
-        const Node& n = p.second;
+        const Elve::Node& n = p.second;
 
         qreal mass = n.isCluster() ? n.data().dependencies().size()*0.5 : 1;
         Point* m = system().addPoint(mass,p.second.id(),pos,damp,FULL);

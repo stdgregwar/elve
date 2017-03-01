@@ -14,6 +14,8 @@
 
 #define SS 40960000
 
+namespace Elve {
+
 using namespace std;
 
 std::array<QColor,10> GraphWidget::mSelectionColors = {
@@ -376,4 +378,4 @@ GraphWidget::~GraphWidget() {
     unsetGraph();
 }
 
-
+}

@@ -5,6 +5,8 @@
 
 #include "Constraint.h"
 
+namespace Elve {
+
 class BoxConstraint : public Constraint
 {
 public:
@@ -15,4 +17,5 @@ private:
     QRectF mBounds;
 };
 
+}
 #endif // BOXCONSTRAINT_H

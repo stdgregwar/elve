@@ -3,7 +3,7 @@
 #include <QJsonArray>
 #include <QHash>
 #include <Graph.h>
-
+namespace Elve {
 Node::Node(const NodeData &data) : mData(data),mLevel(-1)
 {
 
@@ -140,4 +140,4 @@ const Node::Children& Node::children() const
 {
     return mChildren;
 }
-
+}

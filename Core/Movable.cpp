@@ -1,6 +1,7 @@
 #include "Movable.h"
-
 #include "Point.h"
+
+namespace Elve {
 
 void Movable::setState(const QVector2D &pos, const QVector2D &speed){
     if(mPoint) {
@@ -21,4 +22,6 @@ Point* Movable::point()
 
 void Movable::setPoint(Point *m) {
     mPoint = m;
+}
+
 }

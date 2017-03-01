@@ -4,6 +4,8 @@
 #include <QPen>
 #include <QPainter>
 
+namespace Elve {
+
 using namespace std;
 
 //#define DEBUG_QUAD
@@ -202,3 +204,4 @@ QuadTreeNode::~QuadTreeNode()
     reset();
 }
 
+}

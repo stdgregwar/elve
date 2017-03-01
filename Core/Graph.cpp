@@ -7,6 +7,8 @@
 #include <QJsonArray>
 #include "utils.h"
 
+namespace Elve {
+
 using namespace std;
 
 bool operator==(const Pin& a,const Pin& b) {
@@ -402,4 +404,6 @@ NodeIDSet Graph::excludedWithout(const Dependencies& ids) const {
         excl.erase(dep.id);
     }
     return excl;
+}
+
 }

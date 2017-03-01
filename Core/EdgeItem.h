@@ -6,7 +6,7 @@
 #include <vector>
 #include "Movable.h"
 
-
+namespace Elve {
 class EdgeItem
 {
 public:
@@ -35,5 +35,6 @@ private:
     std::vector<Handle> mHandles;
     unsigned mMoveCount;
 };
+}
 
 #endif // EDGEITEM_H

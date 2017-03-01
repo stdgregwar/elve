@@ -5,6 +5,8 @@
 #include <Node.h>
 #include <Movable.h>
 
+namespace Elve {
+
 enum OrientationHint {
     BOTTOMUP,
     TOPDOWN,
@@ -34,5 +36,5 @@ private:
     QPointF mOffset;
     bool mDraged;
 };
-
+}
 #endif // NODELOOK_H

@@ -14,12 +14,11 @@
 
 #define LayoutPlugin_iid "ch.epfl.lap.elfe.LayoutPlugin"
 
+namespace Elve {
+
 class LayoutPlugin;
-
 typedef std::shared_ptr<LayoutPlugin> SharedLayout;
-
 class EGraph;
-
 typedef std::shared_ptr<EGraph> SharedEGraph;
 
 class LayoutPlugin : public QObject, public Plugin
@@ -45,12 +44,13 @@ private:
     NodePositions mStartPositions;
 };
 
+}
 
-Q_DECLARE_INTERFACE(LayoutPlugin,LayoutPlugin_iid)
+Q_DECLARE_INTERFACE(Elve::LayoutPlugin,LayoutPlugin_iid)
 
 #define ELVE_LAYOUT(Layout,full_name,cli_name)\
  public:\
-    inline SharedLayout create() override {return std::make_shared<Layout>(*this);}\
+    inline Elve::SharedLayout create() override {return std::make_shared<Layout>(*this);}\
     inline QString name() override {return (full_name);}\
     inline std::string cliName() override {return (cli_name);}
 

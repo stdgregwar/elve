@@ -3,6 +3,8 @@
 #include <QMessageBox>
 #include <QDebug>
 
+namespace Elve {
+
 PluginManager::PluginManager()
 {
     //loadPlugins(".");
@@ -90,4 +92,6 @@ void PluginManager::load(const QString& path)
     _load(path+"/transforms","Transform",mTransforms);
     //For looks
     _load(path+"/looks","Look",mLooks);
+}
+
 }

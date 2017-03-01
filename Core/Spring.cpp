@@ -1,6 +1,9 @@
 #include "Spring.h"
 #include "Point.h"
 #include <QDebug>
+
+namespace Elve {
+
 Spring::Spring(Point& first, Point& second, qreal l0, qreal k) : m1(first), m2(second), mL0(l0), mK(k)
 {
 
@@ -14,4 +17,6 @@ QVector2D Spring::force(const Point &m) const {
         return -f;
     }
     return f;
+}
+
 }

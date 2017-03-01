@@ -10,6 +10,9 @@
 #include <EGraph.h>
 #include <QString>
 
+
+namespace Elve {
+
 typedef alice::cli_store<SharedEGraph> Store;
 
 class CommandLine : public QObject, public Singleton<CommandLine>, public GraphWidgetListener
@@ -28,4 +31,5 @@ private:
     alice::cli_main<SharedEGraph> mCli;
 };
 
+}
 #endif // COMMANDLINE_H

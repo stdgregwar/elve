@@ -1,5 +1,7 @@
 #include "LookFactoryPlugin.h"
 
+namespace Elve {
+
 LookFactoryPlugin::LookFactoryPlugin()
 {
 }
@@ -19,4 +21,5 @@ NodeLook* LookFactoryPlugin::getNode(const Node& n) {
 
 EdgeLook* LookFactoryPlugin::getEdge(const NodeLook& ancestor, const NodeLook& children) {
     return edge(ancestor,children);
+}
 }

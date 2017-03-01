@@ -1,6 +1,8 @@
 #include "FileExporterPlugin.h"
 #include "GraphWidget.h"
 
+namespace Elve {
+
 FileExporterPlugin::FileExporterPlugin()
 {
 }
@@ -17,4 +19,6 @@ QGraphicsScene* FileExporterPlugin::sceneForGraph(const SharedEGraph& eg) {
             return nullptr;
         }
     }
+}
+
 }

@@ -4,6 +4,8 @@
 #include <unordered_set>
 #include <Node.h>
 
+namespace Elve {
+
 class Selection : public NodeIDSet
 {
 public:
@@ -19,4 +21,5 @@ public:
 
 QDebug operator<<(QDebug stream, const Selection& s);
 
+}
 #endif // SELECTION_H

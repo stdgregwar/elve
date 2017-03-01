@@ -9,6 +9,8 @@
 #include <QJsonObject>
 #include <QJsonArray>
 
+namespace Elve {
+
 typedef unsigned NodeID;
 typedef std::string Name;
 typedef std::vector<std::string> Names;
@@ -76,5 +78,7 @@ private:
 
 typedef std::vector<NodeData> NodeDatas;
 typedef std::unordered_map<NodeID,NodeData> SparseData;
+
+}
 
 #endif // NODEDATA_H

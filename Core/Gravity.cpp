@@ -5,6 +5,8 @@
 
 #define QSIZE 32000
 
+namespace Elve {
+
 Gravity::Gravity(qreal k) : mK(k) ,mQuadTree(QRectF(-QSIZE,-QSIZE,QSIZE*2,QSIZE*2))
 {
 
@@ -62,4 +64,6 @@ void Gravity::debug(QPainter* p) const {
 void Gravity::clear() {
     mGalaxy.clear();
     mQuadTree.clear();
+}
+
 }

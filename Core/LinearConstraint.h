@@ -3,7 +3,7 @@
 #include "Constraint.h"
 #include "QVector2D"
 #include "functional"
-
+namespace Elve {
 class LinearConstraint : public Constraint
 {
 
@@ -22,3 +22,4 @@ private:
     qreal mPosition;
     qreal mHardness;
 };
+}

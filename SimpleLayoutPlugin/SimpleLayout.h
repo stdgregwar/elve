@@ -3,15 +3,15 @@
 
 #include <LayoutPlugin.h>
 
-class SimpleLayout : public LayoutPlugin
+class SimpleLayout : public Elve::LayoutPlugin
 {
     Q_OBJECT
     Q_PLUGIN_METADATA(IID "ch.epfl.lap.simplelayout")
-    Q_INTERFACES(LayoutPlugin)
+    Q_INTERFACES(Elve::LayoutPlugin)
 
     ELVE_LAYOUT(SimpleLayout,"Simple-Force","simple")
     SimpleLayout();
-    virtual void setGraph(SharedGraph g) override;
+    virtual void setGraph(Elve::SharedGraph g) override;
     virtual void tick(float dt, bool fast) override;
 private:
     qreal mK = 2; //Plugin options with default values

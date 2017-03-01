@@ -4,6 +4,8 @@
 #include <QAction>
 #include <interfaces/GraphLoaderPlugin.h>
 
+namespace Elve {
+
 class FileLoadAction : public QAction
 {
     Q_OBJECT
@@ -21,5 +23,7 @@ public slots:
 private:
     GraphLoaderPlugin* mData;
 };
+
+}
 
 #endif // FILELOADACTION_H

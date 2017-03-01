@@ -6,6 +6,8 @@
 
 namespace po = boost::program_options; //Find more elegant way
 
+namespace Elve {
+
 class Plugin
 {
 public:
@@ -22,5 +24,7 @@ private:
     po::positional_options_description mPods;
     const po::variables_map* mVMap;
 };
+
+}
 
 #endif // PLUGIN_H

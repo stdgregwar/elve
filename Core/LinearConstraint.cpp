@@ -1,6 +1,8 @@
 #include "LinearConstraint.h"
 #include "Point.h"
 
+namespace Elve {
+
 LinearConstraint::LinearConstraint(qreal position, qreal hardness, Dir direction) : mPosition(position), mHardness(hardness)
 {
     mConst = direction == VERTICAL ? &LinearConstraint::constrainVert : &LinearConstraint::constrainHor;
@@ -24,4 +26,6 @@ void LinearConstraint::constrainHor(Point &mass) {
 
     mass.setPos({mPosition*mHardness+p.x()*(1-mHardness),p.y()});
     mass.setSpeed({0,speed.y()});
+}
+
 }

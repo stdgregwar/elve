@@ -3,6 +3,8 @@
 
 #include "NodeData.h"
 
+namespace Elve {
+
 class GraphData;
 typedef std::shared_ptr<GraphData> SharedData;
 
@@ -64,5 +66,7 @@ private:
     QString mFilename;
     NodeDatas mDatas;
 };
+
+}
 
 #endif // GRAPHDATA_H

@@ -4,6 +4,8 @@
 #include "Constraint.h"
 #include <QVector2D>
 
+namespace Elve {
+
 class PointConstraint : public Constraint
 {
 public:
@@ -13,4 +15,5 @@ private:
     QVector2D mPoint;
 };
 
+}
 #endif // POINTCONSTRAINT_H

@@ -9,6 +9,8 @@
 
 #include "NodeData.h"
 
+namespace Elve {
+
 class Node;
 
 //typedef std::shared_ptr<Node> SharedNode;
@@ -73,5 +75,7 @@ private:
     Fan mFanOut;
     const NodeData& mData;
 };
+
+}
 
 #endif // GATE_H

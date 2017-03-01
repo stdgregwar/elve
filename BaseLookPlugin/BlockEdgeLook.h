@@ -3,10 +3,10 @@
 
 #include <interfaces/EdgeLook.h>
 
-class BlockEdgeLook : public EdgeLook
+class BlockEdgeLook : public Elve::EdgeLook
 {
 public:
-    BlockEdgeLook(const NodeLook& from, const NodeLook& to);
+    BlockEdgeLook(const Elve::NodeLook& from, const Elve::NodeLook& to);
     void addToPath(QPainterPath& path) override;
     QPen pen() override;
 };

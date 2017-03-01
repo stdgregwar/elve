@@ -8,6 +8,8 @@
 #include <QVector2D>
 #include <QGraphicsItem>
 
+namespace Elve {
+
 constexpr unsigned long QUADTREESIZE = (1UL+2UL*2UL+4UL*4UL+8UL*8UL+16UL*16UL+32UL*32UL+64UL*64UL+128UL*128UL);
 
 class QuadTree
@@ -59,5 +61,6 @@ inline QRectF unionRectVec(const QRectF& rect, const QVector2D& pos) {
                 );
 }
 
+}
 
 #endif // INSTANTQUADTREE_H

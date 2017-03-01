@@ -3,6 +3,8 @@
 #include <QBrush>
 #include <QPen>
 
+namespace Elve {
+
 EdgeItem::EdgeItem(size_t segments)
 {
     mHandles.resize(segments+1,this);
@@ -54,4 +56,6 @@ void EdgeItem::doPath(QPainterPath& p) {
     }
     //p.addPath(sp);
     //setPath(p);
+}
+
 }

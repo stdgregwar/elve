@@ -2,6 +2,8 @@
 #include <QPainterPath>
 #include <QPen>
 
+using namespace Elve;
+
 BlockEdgeLook::BlockEdgeLook(const NodeLook &from, const NodeLook &to) : EdgeLook(from,to)
 {
 

@@ -8,6 +8,9 @@
 #include "QConsoleWidget.h"
 #include "StoreView.h"
 
+
+namespace Elve {
+
 class MainWindow : public QMainWindow, public Singleton<MainWindow>
 {
     friend class Singleton<MainWindow>;
@@ -33,6 +36,7 @@ public slots:
     void on_import_trigerred(GraphLoaderPlugin* ld);
     void on_export_trigerred(FileExporterPlugin* exp);
     void on_layout_trigerred(LayoutPlugin *layout);
+    void on_look_triggered(LookFactoryPlugin* factory);
     void on_transform_triggered(GraphTransformPlugin* trans);
     void on_tab_change(QMdiSubWindow* tab);
     void applyQSSTheme();
@@ -46,4 +50,5 @@ private slots:
     void on_actionFit_triggered();
 };
 
+}
 #endif // MAINWINDOW_H

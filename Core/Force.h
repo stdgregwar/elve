@@ -3,6 +3,8 @@
 
 #include <QVector2D>
 
+namespace Elve {
+
 class Point;
 
 class Force
@@ -12,4 +14,5 @@ public:
     virtual ~Force(){}
 };
 
+}
 #endif // JEDI_H

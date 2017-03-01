@@ -13,6 +13,8 @@
 #include <vector>
 #include <unordered_map>
 
+namespace Elve {
+
 enum GravityMode {
     FULL,
     GHOST,
@@ -60,5 +62,7 @@ private:
     std::vector<Force*> mForces;
     std::vector<Constraint*> mConstraints;
 };
+
+}
 
 #endif // SYSTEM_H

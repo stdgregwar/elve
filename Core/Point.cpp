@@ -3,6 +3,8 @@
 
 #define MAX_FORCE 1e14
 
+namespace Elve {
+
 Point::Point(qreal mass, const NodeID &id) : mM(mass), mContainerData(nullptr), mID(id)
 {
     //mMovables.insert(id);
@@ -105,4 +107,6 @@ void* Point::containerData() const
 void Point::setContainerData(void* data) const
 {
     mContainerData = data;
+}
+
 }

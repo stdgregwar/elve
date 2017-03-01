@@ -12,6 +12,8 @@
 
 #include "Singleton.h"
 
+namespace Elve {
+
 typedef QList<GraphLoaderPlugin*> Loaders;
 typedef QList<GraphTransformPlugin*> Transforms;
 typedef QList<FileExporterPlugin*> Exporters;
@@ -43,4 +45,5 @@ private:
     Looks mLooks;
 };
 
+}
 #endif // PLUGINMANAGER_H

@@ -8,6 +8,8 @@
 #include "Selection.h"
 #include <memory>
 
+namespace Elve {
+
 class EGraph;
 
 typedef std::shared_ptr<EGraph> SharedEGraph;
@@ -58,5 +60,7 @@ private:
     SelectionMasks mSelections;
     int mMaskId; ///Selection mask index
 };
+
+}
 
 #endif // EGRAPH_H

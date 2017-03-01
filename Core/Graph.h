@@ -8,6 +8,8 @@
 
 #include "GraphData.h"
 
+namespace Elve {
+
 typedef std::vector<Node*> NodePtrs;
 typedef std::unordered_map<NodeID,Node> NodesByID;
 
@@ -29,8 +31,6 @@ struct Pin_hash {
 typedef std::unordered_map<Pin,Pin,Pin_hash> Aliases;
 typedef std::pair<NodeID,NodeID> Edge;
 typedef std::vector<Edge> AdjacencyList;
-
-
 
 class Graph : public std::enable_shared_from_this<Graph>
 {
@@ -76,4 +76,5 @@ private:
     mutable NodeID mLastId;
 };
 
+}
 #endif // GRAPH_H

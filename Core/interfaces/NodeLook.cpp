@@ -5,7 +5,7 @@
 #include <QPainter>
 
 #include "Point.h"
-
+namespace Elve {
 NodeLook::NodeLook(const Node &n) : mNode(n), mDraged(false)
 {
 
@@ -61,4 +61,5 @@ QPointF NodeLook::outputPos(int index) const {
 
 const Node &NodeLook::node() const {
     return mNode;
+}
 }

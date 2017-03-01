@@ -5,6 +5,8 @@
 #include "Point.h"
 #include "QuadTree.h"
 
+namespace Elve {
+
 class Gravity : public Force
 {
 public:
@@ -22,5 +24,7 @@ private:
     QuadTree mQuadTree;
     qreal mK;
 };
+
+}
 
 #endif // GRAVITY_H

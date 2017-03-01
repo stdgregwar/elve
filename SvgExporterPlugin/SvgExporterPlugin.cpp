@@ -3,6 +3,8 @@
 #include <QtSvg/QSvgGenerator>
 #include <QDebug>
 
+using namespace Elve;
+
 SvgExporterPlugin::SvgExporterPlugin()
 {
 
