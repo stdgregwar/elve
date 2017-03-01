@@ -231,14 +231,14 @@ SharedGraph Graph::fastGroup(const vector<NodeIDSet>& groups, const NodeName& ba
                 if(!group.count(c.node->id())) { //Ancestor is outside of the group
                     //Add input to node
                     aliases.emplace(Pin(id,c.to),Pin(i,inputs.size()));
-                    inputs.insert(data(c.node->id()).name());
+                    inputs.insert(n.name());
                 }
             }
             for(const Node::Connexion& c : n.fanOut()) {
                 if(!group.count(c.node->id())) { //Ancestor is outside of the group
                     //Add input to node
                     aliases.emplace(Pin(id,c.from),Pin(i,outputs.size()));
-                    outputs.insert(data(c.node->id()).name());
+                    outputs.insert(n.name());
                 }
             }
             aliases.emplace(id,i);
