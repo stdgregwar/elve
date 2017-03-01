@@ -179,7 +179,7 @@ qreal _adaptPos(QVector2D transformPoint,LinearConstraint::Dir dir) {
 
 void System::addVConstraint(Point* m, qreal height)
 {
-    qreal hardn = 0.2;
+    qreal hardn = 0.6;
     LinearConstraint::Dir newDir = _adaptDir(orientationHint(),LinearConstraint::VERTICAL);
     qreal tpos = _adaptPos(transformPoint({0,height}),newDir);
     Constraint* c = new LinearConstraint(tpos,hardn,newDir);
@@ -188,7 +188,7 @@ void System::addVConstraint(Point* m, qreal height)
 }
 
 void System::addHConstraint(Point* m, qreal pos) {
-    qreal hardn = 0.2;
+    qreal hardn = 0.6;
     Constraint* c = new LinearConstraint(transformPoint({pos,0}).x(),hardn,
                                          _adaptDir(orientationHint(),LinearConstraint::HORIZONTAL));
     m->addConstraint(c);

@@ -65,6 +65,7 @@ void GraphWidget::showEvent(QShowEvent *event)
 
 void GraphWidget::clear() {
     mEdges.clear();
+    mNodes.clear();
 }
 
 void GraphWidget::setGraph(SharedEGraph graph, unsigned quickTicks) {

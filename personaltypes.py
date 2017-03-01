@@ -59,11 +59,11 @@
 
 from dumper import *
 
-def qdump__Pin(d,value):
-    d.putValue('%s %s' % (value['id'].integer(), value['index'].integer()))
-    d.putNumChild(2)
-    if d.isExpanded():
-        with Children(d):
-            d.putSubItem("id",value["id"])
-            d.putSubItem("index",value["index"])
+#def qdump__Pin(d,value):
+#    d.putValue('%s %s' % (value['id'].integer(), value['index'].integer()))
+#    d.putNumChild(2)
+#    if d.isExpanded():
+#        with Children(d):
+#            d.putSubItem("id",value["id"])
+#            d.putSubItem("index",value["index"])
 ######################## Your code below #######################

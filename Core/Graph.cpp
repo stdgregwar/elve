@@ -10,7 +10,7 @@
 using namespace std;
 
 bool operator==(const Pin& a,const Pin& b) {
-    return a.id == b.id && ((a.index == b.index));// || a.index == -1 || b.index == -1);
+    return a.id == b.id && ((a.index == b.index) || a.index == -1 || b.index == -1);
 }
 
 Graph::Graph(const SharedData &data) : mData(data), mLastId(0)
@@ -49,6 +49,9 @@ Graph::Graph(const SharedData& data, const SparseData &extraData, const Aliases 
         if(!mExcluded.count(p.id)) {
             for(const Dependency& dep : d.dependencies()) {
                 const Pin& cpin = alias({d.id(),dep.to});
+                if(mExcluded.count(cpin.id)) {
+                    continue;
+                }
                 const Pin& dpin = alias({dep.id,dep.from});
                 if(!mExcluded.count(dpin.id)) {
                     addEdge(dpin.id,dpin.index,cpin.id,cpin.index);
@@ -236,7 +239,7 @@ SharedGraph Graph::fastGroup(const vector<NodeIDSet>& groups, const NodeName& ba
                     outputs.insert(data(c.node->id()).name());
                 }
             }
-            //aliases.emplace(id,i);
+            aliases.emplace(id,i);
             excluded.insert(id);
             av_index += data(id).ioIndex();
         }
@@ -246,7 +249,22 @@ SharedGraph Graph::fastGroup(const vector<NodeIDSet>& groups, const NodeName& ba
         inputNames.insert(inputNames.begin(),inputs.begin(),inputs.end());
         outputNames.insert(outputNames.begin(),outputs.begin(),outputs.end());
 
-        extra.emplace(i,NodeData(i,basename + to_string(i),deps,CLUSTER,{},av_index,inputs.size(),outputs.size(),inputNames,outputNames));
+        const NodeData& first = data(*group.begin());
+        NodeType t = CLUSTER;
+        switch (first.type()) {
+        case INPUT:
+        case INPUT_CLUSTER:
+            t = INPUT_CLUSTER;
+            break;
+        case OUTPUT:
+        case OUTPUT_CLUSTER:
+            t = OUTPUT_CLUSTER;
+            break;
+        default:
+            break;
+        }
+
+        extra.emplace(i,NodeData(i,basename + to_string(i),deps,t,{},av_index,inputs.size(),outputs.size(),inputNames,outputNames));
         //i++;
     }
     return make_shared<Graph>(mData,extra,aliases,excluded);
@@ -257,46 +275,7 @@ SharedGraph Graph::group(const NodeIDSet &toGroup, const NodeID& i,const NodeNam
         return shared_from_this();
     }
 
-    const NodeName& trueName = groupName;//uniqueName(groupName);
-
-    SparseData extra; extra.reserve(mExtraData.size()+1);
-    Aliases aliases(mAliases);
-    NodeIDSet excluded(mExcluded); excluded.reserve(mExcluded.size()+toGroup.size());
-    aliases.reserve(aliases.size()+toGroup.size());
-    Dependencies deps; deps.reserve(toGroup.size());
-    deps.insert(deps.end(),toGroup.begin(),toGroup.end());
-
-    float av_index = 0;
-    for(const NodeID& id : toGroup) {
-        aliases.emplace(id,i);
-        excluded.insert(id);
-        av_index += data(id).ioIndex();
-    }
-    av_index /= toGroup.size();
-
-    using pair_type = SparseData::value_type;
-    for(const pair_type& p : mExtraData) {
-        extra.emplace(p.first,p.second);
-    }
-
-    //Handle cluster types
-    const NodeData& first = data(*toGroup.begin());
-    NodeType t = CLUSTER;
-    switch (first.type()) {
-    case INPUT:
-    case INPUT_CLUSTER:
-        t = INPUT_CLUSTER;
-        break;
-    case OUTPUT:
-    case OUTPUT_CLUSTER:
-        t = OUTPUT_CLUSTER;
-        break;
-    default:
-        break;
-    }
-
-    extra.emplace(i,NodeData(i,trueName,deps,t,{},av_index));
-    return make_shared<Graph>(mData,extra,aliases,excluded);
+    return fastGroup({toGroup},groupName);
 }
 
 const NodePtrs& Graph::inputs() {
