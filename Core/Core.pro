@@ -30,16 +30,13 @@ unix {
 SOURCES +=\
     Constraint.cpp \
     Damp.cpp \
-    EdgeItem.cpp \
     Graph.cpp \
     Gravity.cpp \
     Movable.cpp \
     Node.cpp \
-    NodeItem.cpp \
     PointConstraint.cpp \
     Spring.cpp \
     System.cpp \
-    VerticalConstraint.cpp \
     Force.cpp \
     interfaces/LayoutPlugin.cpp \
     Point.cpp \
@@ -71,16 +68,13 @@ DISTFILES += \
 HEADERS += \
     Constraint.h \
     Damp.h \
-    EdgeItem.h \
     Graph.h \
     Gravity.h \
     Movable.h \
     Node.h \
-    NodeItem.h \
     PointConstraint.h \
     Spring.h \
     System.h \
-    VerticalConstraint.h \
     Force.h \
     interfaces/LayoutPlugin.h \
     interfaces/GraphLoaderPlugin.h \

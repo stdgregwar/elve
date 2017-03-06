@@ -32,7 +32,7 @@ void setBodyColor(QDomElement elem, const QColor& color)
     if (id == "body")
     {
         QString style = elem.attribute("style");
-        style.replace(QRegularExpression("#([0-9a-fA-F]{3}){1,2}")
+        style.replace(QRegularExpression("#([0-9a-fA-F]{3}){1,2}") //Find all colors
                       ,color.name());
         elem.setAttribute("style", style);
     }

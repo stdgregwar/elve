@@ -7,8 +7,6 @@
 #include <QColor>
 
 #include "System.h"
-#include "NodeItem.h"
-#include "EdgeItem.h"
 #include "Graph.h"
 #include "EGraph.h"
 #include <interfaces/LayoutPlugin.h>

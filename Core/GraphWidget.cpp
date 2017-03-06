@@ -146,9 +146,9 @@ void GraphWidget::mouseDoubleClickEvent(QMouseEvent* event) { //TEMP ungroup fea
     QList<QGraphicsItem*> items = mScene->items(mapToScene(event->pos()));
     NodeIDSet names;
     for(QGraphicsItem* i : items) {
-        NodeItem* n = dynamic_cast<NodeItem*>(i);
+        NodeLook* n = dynamic_cast<NodeLook*>(i);
         if(n) {
-            names.insert(n->id());
+            names.insert(n->node().id());
         }
     }
     ungroup(names);

@@ -20,7 +20,6 @@
   <defs
      id="defs4170">
     <linearGradient
-       inkscape:collect="always"
        id="linearGradient6152"
        osb:paint="gradient">
       <stop
@@ -41,14 +40,14 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="9.1606236"
-     inkscape:cx="8.4266284"
-     inkscape:cy="23.891066"
+     inkscape:cx="-16.353344"
+     inkscape:cy="23.67274"
      inkscape:current-layer="layer1"
      showgrid="true"
      inkscape:document-units="px"
      inkscape:grid-bbox="true"
-     inkscape:window-width="3440"
-     inkscape:window-height="1376"
+     inkscape:window-width="1920"
+     inkscape:window-height="1173"
      inkscape:window-x="0"
      inkscape:window-y="27"
      inkscape:window-maximized="1"
@@ -71,7 +70,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -80,8 +79,9 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer">
     <g
-       id="g6196"
-       transform="matrix(-1,0,0,-1,66.80778,65.013117)">
+       id="body"
+       transform="matrix(-1,0,0,-1,66.80778,65.013117)"
+       inkscape:label="#g6196">
       <path
          sodipodi:nodetypes="cccc"
          inkscape:connector-curvature="0"

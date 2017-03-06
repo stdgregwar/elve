@@ -6,8 +6,6 @@
 #include <QVector2D>
 #include <QtPlugin>
 
-#include <EdgeItem.h>
-#include <NodeItem.h>
 #include <System.h>
 
 #include "Plugin.h"
