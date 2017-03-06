@@ -12,6 +12,7 @@
 #include <locale>
 
 using namespace std;
+using namespace Elve;
 // trim from start
 static inline std::string &ltrim(std::string &s) {
     s.erase(s.begin(), std::find_if(s.begin(), s.end(),
@@ -137,17 +138,36 @@ SharedGraph BlifLoader::load(const QString &filepath) {
                 lss >> last;
 
                 QJsonObject tt;
-                if(b.properties(lastname)["truthtable"].isUndefined()) {
-                    QJsonObject tt = b.properties(lastname)["truthtable"].toObject();
+                if(!b.properties(lastname)["truthtable"].isUndefined()) {
+                    tt = b.properties(lastname)["truthtable"].toObject();
                 }
                 tt[com.c_str()] = last.c_str();
                 b.properties(lastname)["truthtable"] = tt;
             }
         }
     }
+
+    //Replace outputs with dummies if needed
+    for(NodeID id : b.outputs()) {
+        Dependencies deps = b.dependencies(id);
+        if(deps.size() > 1) { //Replace by a extra top node
+            NodeName oName = b.name(id);
+
+            //Create new node
+            NodeName nName = oName+"_and";
+            b.setDependencies(nName,deps);
+            b.setProperties(nName,b.properties(oName));
+
+            //Edit output
+            b.setDependencies(oName,{nName});
+            QJsonObject tt;
+            tt["1"] = "1";
+            b.properties(oName)["truthtable"] = tt;
+        }
+    }
     qDebug() <<"file loaded";
     SharedData sdata = b.build(filepath);
-    return make_shared<Graph>(sdata);
+    return make_shared<Graph>(sdata);//->clusterize(1);
 }
 
 

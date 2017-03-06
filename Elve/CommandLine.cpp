@@ -6,12 +6,26 @@
 
 #include <alice/commands/show.hpp>
 #include <interfaces/LayoutPlugin.h>
+#include <chrono>
+
+#include "commands/Chrono.h"
+#include "commands/ClearAll.h"
+#include "commands/Cluster.h"
+#include "commands/Export.h"
+#include "commands/Group.h"
+#include "commands/Layout.h"
+#include "commands/Loader.h"
+#include "commands/Select.h"
+#include "commands/Transform.h"
+#include "commands/Ungroup.h"
+#include "commands/Look.h"
 
 #include "MainWindow.h"
 
 //ALICE ==================================================
 namespace alice {
 
+using namespace Elve;
 
 template<>
 struct store_info<SharedEGraph>
@@ -29,6 +43,7 @@ template<>
 inline std::string store_entry_to_string<SharedEGraph>( SharedEGraph const& eg )
 {
     const SharedGraph& g = eg->graph();
+    qDebug() << "node count" << g->nodeCount();
     return boost::str( boost::format( "%s i/o = %d/%d, nodecount = %d" ) % g->filename().toStdString() % g->inputCount() % g->outputCount() % g->nodeCount());
 }
 
@@ -87,166 +102,12 @@ struct show_store_entry<SharedEGraph>
     }
 };
 
-
-class PluginCommand : public command
-{
-public : PluginCommand(Plugin* pl,const environment::ptr& env,const std::string& name) : command(env,name)
-    {
-        pl->set_vmap(&vm);
-    }
-};
-
-//Layout command
-class LayoutCommand : public PluginCommand
-{
-public:
-    LayoutCommand(LayoutPlugin* pl, const environment::ptr& env) : PluginCommand(pl,env, (pl->name() + " Layout").toStdString()),
-      mLayout(pl)
-    {
-        pod.add("index",1);
-        opts.add_options()
-                ("index,i",po::value(&id),
-                 ("id of the graph to set Layout " + pl->name() + " on.").toStdString().c_str());
-
-        opts.add(pl->opts()); //Add plugin options themselves
-    }
-
-    rules_t validity_rules() const override {
-        Store& graphs = env->store<SharedEGraph>();
-        return {
-            {[this,&graphs] {return (!is_set("id") && !graphs.empty()) || (id<graphs.size() && id > -1);},
-                "if set id must be in store range, store must not be empty"}
-        };
-    }
-
-    bool execute() override {
-        auto& graphs = env->store<SharedEGraph>();
-        SharedEGraph eg;
-        if(is_set("index")){
-            eg = graphs[id];
-        } else {
-            eg = graphs.current();
-        }
-        eg->setLayout(mLayout->create());
-        return true;
-    }
-private:
-    unsigned id = 0;
-    LayoutPlugin* mLayout;
-};
-
-//Loader command
-class LoaderCommand : public PluginCommand
-{
-public:
-    LoaderCommand(GraphLoaderPlugin* pl, const environment::ptr& env) : PluginCommand(pl,env, (pl->formatName() + " Loader").toStdString()),
-      mLoader(pl)
-    {
-        pod.add("filename",1);
-        opts.add_options()
-                ("filename,f",po::value(&mFilename),
-                 ("filename of the " + pl->formatName() + " file to load").toStdString().c_str());
-
-        opts.add(pl->opts()); //Add plugin options themselves
-    }
-
-    rules_t validity_rules() const override {
-        return  {
-            file_exists_if_set( *this, process_filename( mFilename ),"filename")
-        };
-    }
-
-    bool execute() override {
-        auto& graphs = env->store<SharedEGraph>();
-        graphs.push(std::make_shared<EGraph>(mLoader->load(QString::fromStdString(mFilename))));
-        return true;
-    }
-private:
-    std::string mFilename;
-    GraphLoaderPlugin* mLoader;
-};
-
-//Export command
-class ExportCommand : public PluginCommand
-{
-public:
-    ExportCommand(FileExporterPlugin* pl, const environment::ptr& env) : PluginCommand(pl,env, (pl->formatName() + " Saver").toStdString()),
-      mSaver(pl)
-    {
-        pod.add("filename",1);
-        opts.add_options()
-                ("filename,f",po::value(&mFilename),
-                 ("filename of the " + pl->formatName() + " file to save").toStdString().c_str());
-
-        opts.add(pl->opts()); //Add plugin options themselves
-    }
-
-    rules_t validity_rules() const override {
-        return  {
-            //file_exists_if_set( *this, process_filename( mFilename ),"filename")
-        };
-    }
-
-    bool execute() override {
-        auto& graph = env->store<SharedEGraph>().current();
-        //Todo make sure scene is available, or find better way
-        mSaver->exportGraph(QString::fromStdString(mFilename),graph);
-        return true;
-    }
-
-private:
-    std::string mFilename;
-    FileExporterPlugin* mSaver;
-};
-
-//Transform command
-class TransformCommand : public PluginCommand
-{
-public:
-    TransformCommand(GraphTransformPlugin* pl, const environment::ptr& env) : PluginCommand(pl,env, (pl->name()).toStdString()),
-      mTrans(pl)
-    {
-        opts.add_options()
-                ("input,i",po::value(&mInput),
-                 "index of the graph to transform (default : current)")
-                ("output,o",po::value(&mOutput),"output index for the graph (opt)");
-
-        opts.add(pl->opts()); //Add plugin options themselves
-    }
-
-    rules_t validity_rules() const override {
-        return  {
-            //file_exists_if_set( *this, process_filename( mFilename ),"filename")
-        };
-    }
-
-    bool execute() override {
-        SharedEGraph input;
-        if(is_set("input")) {
-            input = env->store<SharedEGraph>()[mInput];
-        } else {
-            input = env->store<SharedEGraph>().current();
-        }
-        SharedEGraph output = mTrans->transform(input);
-        if(is_set("output")) {
-            env->store<SharedEGraph>()[mOutput] = output;
-        } else {
-            env->store<SharedEGraph>().current() = output;
-        }
-        env->store<SharedEGraph>().notify();
-        if(output->view() && mTrans->type() == SELECTION) {
-            output->view()->updateSelectionColor();
-        }
-    }
-private:
-    GraphTransformPlugin* mTrans;
-    int mInput;
-    int mOutput;
-};
-
 }
 
 //=================================================================================================================================
+
+
+namespace Elve {
 
 using namespace std;
 using namespace alice;
@@ -259,11 +120,20 @@ CommandLine::CommandLine() : mCli("elve")
 void CommandLine::init()
 {
     using namespace alice;
+    using namespace Elve;
     auto& cli = mCli;
     mCli.set_category("I/0");
     ADD_READ_COMMAND(graph,"Graph");
     ADD_WRITE_COMMAND(graph,"Graph");
     mCli.init(0,{},std::cout);
+    mCli.set_category("Selection");
+    mCli.insert_command("select",make_shared<SelectCommand>(mCli.env));
+    mCli.insert_command("group",make_shared<GroupCommand>(mCli.env));
+    mCli.insert_command("ungroup",make_shared<UngroupCommand>(mCli.env));
+    mCli.insert_command("cluster",make_shared<ClusterCommand>(mCli.env));
+    mCli.set_category("utils");
+    mCli.insert_command("chrono",make_shared<ChronoCommand>(mCli.env));
+    mCli.insert_command("clearall",make_shared<ClearAllCommand>(mCli.env));
     setupPluginsCommands();
 }
 
@@ -287,22 +157,44 @@ void CommandLine::setupPluginsCommands() {
     for(GraphTransformPlugin* pl : PluginManager::get().transforms()) {
         mCli.insert_command(pl->cliName(), make_shared<TransformCommand>(pl,mCli.env));
     }
+
+    mCli.set_category("Looks");
+    for(LookFactoryPlugin* pl : PluginManager::get().looks()) {
+        mCli.insert_command(pl->cliName()+"_look", make_shared<LookCommand>(pl,mCli.env));
+    }
 }
 
 Store &CommandLine::store() {
     return mCli.env->store<SharedEGraph>();
 }
 
+void CommandLine::graphChanged(SharedEGraph oldGraph, SharedEGraph newGraph) {
+    Store& st = mCli.env->store<SharedEGraph>();
+
+    qDebug() << "Graph modified";
+    for(int i = 0; i < st.data().size(); i ++) {
+        if(st.data()[i] == oldGraph) {
+            st.set_current_index(i);
+            st.current() = newGraph;
+            qDebug() << "previous found";
+            break;
+        }
+    }
+    st.notify(Store::ALL);
+}
+
 bool CommandLine::run_command(const QString& cmd, std::ostream& out,std::ostream& cerr)
 {
-    try {
+    //try {
         mCli.run_line(cmd.toStdString(),out,cerr);
-    } catch(const std::exception& e) {
-        cerr << e.what() << std::endl;
-    }
+    //} catch(const std::exception& e) {
+    //    cerr << e.what() << std::endl;
+    //}
 }
 
 QStringList CommandLine::completion(const QString& base)
 {
     return QStringList();
+}
+
 }

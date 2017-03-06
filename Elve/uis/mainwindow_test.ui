@@ -24,6 +24,18 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">
+    <property name="leftMargin">
+     <number>0</number>
+    </property>
+    <property name="topMargin">
+     <number>0</number>
+    </property>
+    <property name="rightMargin">
+     <number>0</number>
+    </property>
+    <property name="bottomMargin">
+     <number>0</number>
+    </property>
     <item>
      <widget class="QMdiArea" name="mdiArea">
       <property name="whatsThis">
@@ -109,6 +121,7 @@
     <addaction name="actionRectangle"/>
     <addaction name="actionToggle"/>
     <addaction name="actionGroup"/>
+    <addaction name="actionUngroup"/>
     <addaction name="separator"/>
    </widget>
    <widget class="QMenu" name="menuLayout">
@@ -127,7 +140,12 @@
    </widget>
    <widget class="QMenu" name="menuTransform">
     <property name="title">
-     <string>Transform</string>
+     <string>T&amp;ransform</string>
+    </property>
+   </widget>
+   <widget class="QMenu" name="menuLook">
+    <property name="title">
+     <string>Loo&amp;k</string>
     </property>
    </widget>
    <addaction name="menuFile"/>
@@ -135,6 +153,7 @@
    <addaction name="menuSelect"/>
    <addaction name="menuTransform"/>
    <addaction name="menuLayout"/>
+   <addaction name="menuLook"/>
    <addaction name="menuHelp"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
@@ -178,7 +197,7 @@
   </action>
   <action name="actionFit">
    <property name="text">
-    <string>Fit</string>
+    <string>&amp;Fit</string>
    </property>
    <property name="whatsThis">
     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Reset the viewport, if any, to fit the visualized graph.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -189,7 +208,7 @@
   </action>
   <action name="actionRectangle">
    <property name="text">
-    <string>Rectangle</string>
+    <string>&amp;Rectangle</string>
    </property>
    <property name="whatsThis">
     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Start a rectangle selection micro-state. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -200,7 +219,7 @@
   </action>
   <action name="actionToggle">
    <property name="text">
-    <string>Toggle</string>
+    <string>&amp;Toggle</string>
    </property>
    <property name="whatsThis">
     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;quot;Toggle current selection&amp;quot;. Meaning that if anything is selected then it clears the selection. And if none is selected then it select all.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -211,13 +230,21 @@
   </action>
   <action name="actionGroup">
    <property name="text">
-    <string>Group</string>
+    <string>&amp;Group</string>
    </property>
    <property name="whatsThis">
     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Group currently selected nodes together.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
    <property name="shortcut">
     <string>G</string>
+   </property>
+  </action>
+  <action name="actionUngroup">
+   <property name="text">
+    <string>&amp;Ungroup</string>
+   </property>
+   <property name="shortcut">
+    <string>U</string>
    </property>
   </action>
  </widget>

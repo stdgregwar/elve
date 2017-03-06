@@ -18,31 +18,35 @@
 #include <QMdiSubWindow>
 #include <QMainWindow>
 #include <QDockWidget>
+#include <QShortcut>
 
 #include "FileLoadAction.h"
 #include "FileExportAction.h"
 #include "LayoutLoadAction.h"
 #include "TransformAction.h"
 #include "CommandLine.h"
+#include "LookLoadAction.h"
 
 
+namespace Elve {
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), mCurrentTab(nullptr)
 {
-    Q_INIT_RESOURCE(coreresources); //Init coremodule resources
+    //Q_INIT_RESOURCE(coreresources); //Init coremodule resources
 
     PluginManager::get().load("plugins");
 
-    QFile File(":skin/darkorange.stylesheet");
-    File.open(QFile::ReadOnly);
-    QString StyleSheet = QLatin1String(File.readAll());
-
-    qApp->setStyleSheet(StyleSheet);
+    QObject::connect(new QShortcut(QKeySequence("F12"), this), SIGNAL(activated()), this, SLOT(applyQSSTheme()));
+    applyQSSTheme();
 
     ui.setupUi(this);
 
     connect(ui.mdiArea,SIGNAL(subWindowActivated(QMdiSubWindow*)),this,SLOT(on_tab_change(QMdiSubWindow*)));
+
+    /*connect(ui.actionRectangle,SIGNAL(triggered()),this,SLOT(borderSelect()));
+    connect(ui.actionToggle,SIGNAL(triggered()),this,SLOT(toggleSelection()));
+    connect(ui.actionGroup,SIGNAL(triggered()),this,SLOT(group()));*/
 
     PluginManager& pluginManager = PluginManager::get();
 
@@ -80,6 +84,13 @@ MainWindow::MainWindow(QWidget *parent)
         }
     }
 
+    //Setup looks
+    for(auto& l : pluginManager.looks()) {
+        LookLoadAction* a = new LookLoadAction(l,l->lookName(),this);
+        connect(a,SIGNAL(triggered(LookFactoryPlugin*)),this,SLOT(on_look_triggered(LookFactoryPlugin*)));
+        ui.menuLook->addAction(a);
+    }
+
     ui.menuHelp->addAction(QWhatsThis::createAction(this));
 
     //Setup terminal
@@ -106,6 +117,10 @@ MainWindow::~MainWindow()
 
 }
 
+void MainWindow::closeAllTabs() {
+    ui.mdiArea->closeAllSubWindows();
+}
+
 void MainWindow::on_import_trigerred(GraphLoaderPlugin* ld) {
     QString filename = QFileDialog::getOpenFileName(this,"Open " + ld->formatName(),"",ld->fileFilter());
     if(filename != "") {
@@ -128,8 +143,13 @@ void MainWindow::on_transform_triggered(GraphTransformPlugin* trans) {
 
 void MainWindow::on_export_trigerred(FileExporterPlugin* exp) {
     QString filename = QFileDialog::getSaveFileName(this,"Export " + exp->formatName(),"",exp->fileFilter());
+    QString ext = filename.split(".").last();
+    QString true_ext = QString::fromStdString(exp->cliName()); //TODO fix
+    if(ext != true_ext) {
+        filename+="."+true_ext;
+    }
     if(filename != "") {
-        runUiCommand(QString("save_%1 \"%2\"").arg(exp->cliName().c_str(),filename));
+        runCommandOnShownGraph(QString("save_%1 \"%2\"").arg(exp->cliName().c_str(),filename));
     }
 }
 
@@ -138,12 +158,12 @@ void MainWindow::runUiCommand(const QString& cmd) {
 }
 
 void MainWindow::on_layout_trigerred(LayoutPlugin* layout) {
-    qDebug() << "Setting layout to " + layout->name();
-    /*GraphWidget* vp = viewport();
-    if(vp) {
-        vp->setLayout(layout->create());
-    }*/
-    runUiCommand(QString("%1_layout").arg(QString::fromStdString(layout->cliName())));
+    runCommandOnShownGraph(QString("%1_layout").arg(QString::fromStdString(layout->cliName())));
+}
+
+void MainWindow::on_look_triggered(LookFactoryPlugin* factory) {
+    qDebug() << "setting look to" << factory->lookName();
+    runCommandOnShownGraph(QString("%1_look").arg(QString::fromStdString(factory->cliName())));
 }
 
 void MainWindow::on_actionOpen_triggered()
@@ -194,7 +214,26 @@ void MainWindow::connectTab(QMdiSubWindow* tab) {
     connect(ui.actionRectangle,SIGNAL(triggered()),gw,SLOT(borderSelect()));
     connect(ui.actionToggle,SIGNAL(triggered()),gw,SLOT(toggleSelection()));
     connect(ui.actionGroup,SIGNAL(triggered()),gw,SLOT(group()));
+    connect(ui.actionUngroup,SIGNAL(triggered()),gw,SLOT(ungroup()));
     mCurrentTab = tab;
+}
+
+void MainWindow::on_group() {
+    runCommandOnShownGraph(QString("group %1")
+                           .arg(QString::number(
+                                    viewport()->graph()->mask())));
+}
+
+void MainWindow::on_toggle() {
+    runCommandOnShownGraph(QString("select -a %1")
+                           .arg(QString::number(
+                                    viewport()->graph()->mask())));
+}
+
+void MainWindow::on_ungroup() {
+    runCommandOnShownGraph(QString("ungroup %1")
+                           .arg(QString::number(
+                                    viewport()->graph()->mask())));
 }
 
 void MainWindow::disconnectTab(QMdiSubWindow* tab) {
@@ -224,7 +263,7 @@ GraphWidget* MainWindow::viewport() {
 }
 
 void MainWindow::newWindowWithFile(SharedEGraph g, QString filename) {
-    GraphWidget* gw = new GraphWidget(this,filename.split("/").last());
+    GraphWidget* gw = new GraphWidget(this,&CommandLine::get());
     QMainWindow* cw = new QMainWindow(ui.mdiArea);
 
     cw->setCentralWidget(gw);
@@ -268,9 +307,33 @@ void MainWindow::on_actionSave_triggered()
     }
 }
 
+void MainWindow::applyQSSTheme() {
+    QFile File(":skin/darkorange.css");
+    File.open(QFile::ReadOnly);
+    QString StyleSheet = QLatin1String(File.readAll());
+
+    qApp->setStyleSheet(StyleSheet);
+}
+
+void MainWindow::runCommandOnShownGraph(const QString& cmd) {
+    if(viewport()) {
+        SharedEGraph eg = viewport()->graph();
+        Store& st = CommandLine::get().store();
+        for(int i = 0; i < st.data().size(); i ++) {
+            if(st.data()[i] == eg) {
+                st.set_current_index(i);
+                break;
+            }
+        }
+    }
+    runUiCommand(cmd);
+}
+
 void MainWindow::on_actionFit_triggered()
 {
     if(viewport()) {
         viewport()->fit();
     }
+}
+
 }

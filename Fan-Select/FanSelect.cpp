@@ -3,6 +3,8 @@
 #include <QtSvg/QSvgGenerator>
 #include <QDebug>
 
+using namespace Elve;
+
 FanSelect::FanSelect()
 {
     opts().add_options()

@@ -1,6 +1,10 @@
 #include "Point.h"
 #include <QDebug>
 
+#define MAX_FORCE 1e14
+
+namespace Elve {
+
 Point::Point(qreal mass, const NodeID &id) : mM(mass), mContainerData(nullptr), mID(id)
 {
     //mMovables.insert(id);
@@ -54,7 +58,7 @@ void Point::computeForce()
 {
     for(const Force* j : mForces) {
         QVector2D force = j->force(*this);
-        if(true) {
+        if(force.length() < MAX_FORCE) {
             mForce += force;
         }
     }
@@ -103,4 +107,6 @@ void* Point::containerData() const
 void Point::setContainerData(void* data) const
 {
     mContainerData = data;
+}
+
 }

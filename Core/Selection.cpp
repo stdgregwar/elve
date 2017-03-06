@@ -3,6 +3,8 @@
 #include <QJsonArray>
 #include <QDebug>
 
+namespace Elve {
+
 Selection::Selection(const NodeIDSet &set) : NodeIDSet(set)
 {
 
@@ -57,4 +59,6 @@ QDebug operator<<(QDebug stream, const Selection& s) {
        stream << QVariant(i);
    }
    return stream;
+}
+
 }

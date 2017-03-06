@@ -9,6 +9,8 @@
 
 #define GraphLoaderPlugin_iid "ch.epfl.lap.elfe.GraphLoaderPlugin"
 
+namespace Elve {
+
 class GraphLoaderPlugin : public Plugin
 {
     public:
@@ -19,12 +21,13 @@ class GraphLoaderPlugin : public Plugin
         virtual std::string cliName() = 0;
 };
 
-Q_DECLARE_INTERFACE(GraphLoaderPlugin,GraphLoaderPlugin_iid)
+}
+
+Q_DECLARE_INTERFACE(Elve::GraphLoaderPlugin,GraphLoaderPlugin_iid)
 
 #define ELVE_LOADER(Loader,full_name,filter,cli_name)\
  public:\
     inline QString formatName() override {return (full_name);}\
     inline QString fileFilter() override {return filter;}\
     inline std::string cliName() override {return (cli_name);}
-
 #endif // LOADERINTERFACE_H

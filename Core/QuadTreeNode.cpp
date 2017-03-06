@@ -4,6 +4,8 @@
 #include <QPen>
 #include <QPainter>
 
+namespace Elve {
+
 using namespace std;
 
 //#define DEBUG_QUAD
@@ -11,7 +13,9 @@ using namespace std;
 QuadTreeNode::QuadTreeNode()
 {
     reset();
-    mPoints.reserve(20); //Should be enough
+    mPoints.reserve(100); //Should be enough
+    for(int i = 0; i < 4; i++)
+        mChildren[i] = nullptr;
     //pen().setColor(Qt::red);
 }
 
@@ -32,6 +36,7 @@ void QuadTreeNode::debug(QPainter* p) const
     if(leaf() && mPoints.size()) {
         p->drawRect(mCenter.x()-mRadius,mCenter.y()-mRadius,2*mRadius,2*mRadius);
         QPointF c = CoM().toPointF();
+        //p->drawEllipse(c,4096,4096);
         p->drawEllipse(c,32,32);
         p->drawText(c,QString::number(mMass));
     }
@@ -110,8 +115,6 @@ void QuadTreeNode::reset()
     mMC = {0,0};
     mParent = nullptr;
     mPoints.clear();
-    /*for(int i = 0; i < 4; i++)
-        mChildren[i] = nullptr;*/
 }
 
 const QVector2D& QuadTreeNode::getCenter() const
@@ -133,9 +136,19 @@ QVector2D QuadTreeNode::gravityFor(const Point& m, const QuadTreeParams& params)
 {
     QVector2D f;
     QVector2D r = (CoM() - m.pos());
-    qreal lr = r.lengthSquared();
-    if(lr > params.gravDistSquare && mRadius*2 < lr) {
-        return r.normalized() * ((mMass*m.mass()) / lr);
+    qreal l = r.length();
+
+    qreal ratio = (mRadius*2) / l;
+    if(ratio < params.theta) {
+        /*if(leaf()) {
+            return r.normalized() * ((mMass*m.mass()) / lr);
+        } else {
+            for(int i = 0; i < 4; i++) {
+                f += mChildren[i]->gravityFor(m,params);
+            }
+        }*/
+        qreal lr = l*l;
+        return -(r / l) * ((mMass*m.mass()) / lr);
     } else {
         if(leaf()) {
             return trueGravity(m);
@@ -191,3 +204,4 @@ QuadTreeNode::~QuadTreeNode()
     reset();
 }
 
+}

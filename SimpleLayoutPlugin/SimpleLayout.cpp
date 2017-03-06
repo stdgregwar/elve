@@ -2,13 +2,15 @@
 #include <cmath>
 #include <QDebug>
 
+using namespace Elve;
+
 SimpleLayout::SimpleLayout() {
     opts().add_options()
             ("k_const,k",po::value(&mK)->default_value(mK),"base k constant of the springs")
-            ("l_zero,l",po::value(&mL0)->default_value(mL0),"lenght of the springs at rest")
+            ("l_zero,l",po::value(&mL0)->default_value(mL0),"length of the springs at rest")
             ("damp,d",po::value(&mDamp)->default_value(mDamp),"damping factor of the points")
-            ("unitLenght,u",po::value(&mMinUnit)->default_value(mMinUnit),"minimal level unit lenght in pixels")
-            ("iosUnitLenght,o",po::value(&mMinIOUnit)->default_value(mMinIOUnit), "minimal space between two I/Os")
+            ("unitLength,u",po::value(&mMinUnit)->default_value(mMinUnit),"minimal level unit length in pixels")
+            ("iosUnitLength,o",po::value(&mMinIOUnit)->default_value(mMinIOUnit), "minimal space between two I/Os")
             ;
 }
 
@@ -24,11 +26,15 @@ void SimpleLayout::setGraph(SharedGraph graph)
     qreal inputHeight = totHeight/2;
     qreal outputHeight = -totHeight/2;
 
+    qreal maxOut = graph->maxOutputIndex();
+    qreal maxIn = graph->maxInputIndex();
     qreal ioFactor = (qreal)(graph->maxOutputIndex()) / graph->maxInputIndex();
     qreal ioUnit = std::max(totHeight/graph->maxOutputIndex(),mMinIOUnit);
 
-    for(const auto& p : graph->nodes()) {
+    QRectF rect(0,outputHeight,graph->maxOutputIndex()*ioUnit,totHeight);
+    system().setSizeHint(rect);
 
+    for(const auto& p : graph->nodes()) {
         QVector2D pos = startPosition(p.first);
         Point* m = system().addPoint(1,p.second.id(),pos,damp,FULL);
 
@@ -39,7 +45,7 @@ void SimpleLayout::setGraph(SharedGraph graph)
             int index = p.second.IOIndex();
             int index1 = index*2;
             int index2 = (index-(graph->inputCount()/2))*2+1;
-            int t_index = index > (graph->inputCount()/2) ? index2 : index1;
+            int t_index = index;// > (graph->inputCount()/2) ? index2 : index1;
             system().addPConstrain(m,{t_index*ioUnit*ioFactor,inputHeight});
         } else if(p.second.isOutput()) {
             //mSystem.addVConstraint(m,-1024*SS);

@@ -6,6 +6,8 @@
 
 #define GraphTransformPlugin_iid "ch.epfl.lap.elfe.GraphTransformPlugin"
 
+namespace Elve {
+
 enum TransformType {
     SELECTION,
     OTHER
@@ -21,11 +23,13 @@ public:
     virtual SharedEGraph transform(const SharedEGraph& graph) = 0;
 };
 
-Q_DECLARE_INTERFACE(GraphTransformPlugin,GraphTransformPlugin_iid)
+}
+
+Q_DECLARE_INTERFACE(Elve::GraphTransformPlugin,GraphTransformPlugin_iid)
 
 #define ELVE_TRANSFORM(Transform,aname,acliname,atype) \
     public: \
-        inline TransformType type() const override {return (atype);} \
+        inline Elve::TransformType type() const override {return (atype);} \
         inline QString name() const override {return (aname);} \
         inline std::string cliName() const override {return (acliname);}
 

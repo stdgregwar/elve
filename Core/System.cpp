@@ -1,15 +1,17 @@
 #include "System.h"
 #include "Damp.h"
-#include "VerticalConstraint.h"
+#include "LinearConstraint.h"
 #include "PointConstraint.h"
 
 #include <limits>
 #include <future>
 #include <QDebug>
 
+namespace Elve {
+
 using namespace std;
 
-System::System() : mGravity(7e4)
+System::System() : mGravity(75e4)
 {
 
 }
@@ -50,6 +52,10 @@ void System::computeForces(size_t from,size_t until)
         mPoints[i]->resetForce();
         mPoints[i]->computeForce();
     }
+}
+
+const QRectF& System::sizeHint() const {
+    return mSizeHint;
 }
 
 Point* System::point(const NodeID& id) {
@@ -95,6 +101,7 @@ Point* System::addPoint(qreal mass, const NodeID &id, QVector2D pos, qreal damp,
     }
     Damp* d = new Damp(damp);
     nm->addForce(d);
+    nm->addConstraint(&mBox);
     return nm;
 }
 
@@ -140,18 +147,82 @@ const Point* System::nearest(const QVector2D& p) const
     return ml;
 }
 
+void System::setSizeHint(const QRectF& rect) {
+    mGSizeHint = rect.adjusted(-512,-512,512,512);
+    switch(orientationHint()) {
+    case LEFTRIGHT:
+    case RIGHTLEFT:
+        mSizeHint = QRectF(mGSizeHint.top(),mGSizeHint.left(),mGSizeHint.height(),mGSizeHint.width());
+        break;
+    case TOPDOWN:
+    default:
+        mSizeHint = mGSizeHint;
+        break;
+    }
+
+    mGravity.setQuadTreeBounds(mSizeHint);
+    mBox.setBounds(mSizeHint);
+}
+
+LinearConstraint::Dir _adaptDir(OrientationHint hint, LinearConstraint::Dir dir) {
+    switch(hint) {
+    case RIGHTLEFT:
+    case LEFTRIGHT:
+        return (LinearConstraint::Dir)((dir+1)%2); //TODO explicit this
+    case TOPDOWN:
+    default:
+       return dir;
+    }
+}
+
+qreal _adaptPos(QVector2D transformPoint,LinearConstraint::Dir dir) {
+    return dir == LinearConstraint::VERTICAL ? transformPoint.y() : transformPoint.x();
+}
+
 void System::addVConstraint(Point* m, qreal height)
 {
-    Constraint* vc = new VerticalConstraint(height);
-    m->addConstraint(vc);
-    mConstraints.push_back(vc);
+    qreal hardn = 0.2;
+    LinearConstraint::Dir newDir = _adaptDir(orientationHint(),LinearConstraint::VERTICAL);
+    qreal tpos = _adaptPos(transformPoint({0,height}),newDir);
+    Constraint* c = new LinearConstraint(tpos,hardn,newDir);
+    m->addConstraint(c);
+    mConstraints.push_back(c);
+}
+
+void System::addHConstraint(Point* m, qreal pos) {
+    qreal hardn = 0.2;
+    Constraint* c = new LinearConstraint(transformPoint({pos,0}).x(),hardn,
+                                         _adaptDir(orientationHint(),LinearConstraint::HORIZONTAL));
+    m->addConstraint(c);
+    mConstraints.push_back(c);
+}
+
+QVector2D System::transformPoint(const QVector2D& p) const {
+    switch(orientationHint()) {
+    case TOPDOWN:
+        return {p.x(), mGSizeHint.bottom() - (p.y() - mGSizeHint.top())};
+    case LEFTRIGHT:
+        return {mGSizeHint.bottom() - (p.y() - mGSizeHint.top()),p.x()};
+    case RIGHTLEFT:
+        return {p.y(),p.x()};
+    default:
+       return p;
+    }
 }
 
 void System::addPConstrain(Point* m, const QVector2D& p)
 {
-    Constraint* pc = new PointConstraint(p);
+    Constraint* pc = new PointConstraint(transformPoint(p));
     m->addConstraint(pc);
     mConstraints.push_back(pc);
+}
+
+void System::setOrientationHint(OrientationHint hint) {
+    mOrHint = hint;
+}
+
+OrientationHint System::orientationHint() const {
+    return mOrHint;
 }
 
 size_t System::massCount() const
@@ -167,4 +238,6 @@ size_t System::forceCount() const
 System::~System()
 {
     clear();
+}
+
 }

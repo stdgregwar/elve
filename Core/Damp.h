@@ -3,6 +3,7 @@
 
 #include "Force.h"
 
+namespace Elve {
 
 class Damp : public Force
 {
@@ -13,4 +14,5 @@ private:
     qreal mB;
 };
 
+}
 #endif // DAMP_H

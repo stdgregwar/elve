@@ -4,8 +4,11 @@
 #include "Graph.h"
 #include <array>
 #include "interfaces/LayoutPlugin.h"
+#include "interfaces/LookFactoryPlugin.h"
 #include "Selection.h"
 #include <memory>
+
+namespace Elve {
 
 class EGraph;
 
@@ -25,7 +28,7 @@ public:
     void toFile(const QString& filename);
 
     SharedEGraph group(const NodeIDSet &names, const NodeName &groupName);
-    SharedEGraph ungroup(const NodeIDs & names) const;
+    SharedEGraph ungroup(const NodeIDSet &names) const;
 
     SelectionMasks& selections();
     Selection& selection(size_t i);
@@ -36,21 +39,28 @@ public:
     const SharedGraph& graph() const;
 
     void setLayout(const SharedLayout& l);
+    void setLook(const SharedLook& l);
+
     void setMask(int id);
     int mask() const;
     const SharedLayout& layout();
+    const SharedLook& look();
     void applyLayout(const NodePositions& p = NodePositions());
     void setView(GraphWidget* view);
     GraphWidget* view();
+    SharedEGraph clone(const SharedGraph& graph, const NodePositions& positions = {}) const;
     ~EGraph();
 private:
     mutable bool mPosDirty;
     SharedGraph mGraph;
     mutable NodePositions mPositions; //Defining last saved node positions
     SharedLayout mLayout;
+    SharedLook mLook;
     GraphWidget* mView;
     SelectionMasks mSelections;
     int mMaskId; ///Selection mask index
 };
+
+}
 
 #endif // EGRAPH_H

@@ -4,6 +4,9 @@
 #include <QTextEdit>
 #include <QDir>
 
+
+namespace Elve {
+
 class QConsoleWidget : public QTextEdit
 {
     Q_OBJECT
@@ -28,5 +31,7 @@ public slots:
     void OnChildStdOutWrite(QString szOutput);
     void cursorPositionChanged();
 };
+
+}
 
 #endif // QCONSOLEWIDGET_H

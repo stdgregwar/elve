@@ -15,6 +15,12 @@ DEFINES += ELFE_LIBRARY
 
 CONFIG += c++11
 
+QMAKE_CXXFLAGS_RELEASE -= -O2
+QMAKE_CXXFLAGS_RELEASE += -O3
+
+QMAKE_LFLAGS_RELEASE -= -O1
+QMAKE_LFLAGS_RELEASE += -O3
+
 unix {
     target.path = /usr/lib
     INSTALLS += target
@@ -24,16 +30,13 @@ unix {
 SOURCES +=\
     Constraint.cpp \
     Damp.cpp \
-    EdgeItem.cpp \
     Graph.cpp \
     Gravity.cpp \
     Movable.cpp \
     Node.cpp \
-    NodeItem.cpp \
     PointConstraint.cpp \
     Spring.cpp \
     System.cpp \
-    VerticalConstraint.cpp \
     Force.cpp \
     interfaces/LayoutPlugin.cpp \
     Point.cpp \
@@ -46,7 +49,13 @@ SOURCES +=\
     GraphData.cpp \
     interfaces/Plugin.cpp \
     interfaces/FileExporterPlugin.cpp \
-    Selection.cpp
+    Selection.cpp \
+    interfaces/LookFactoryPlugin.cpp \
+    interfaces/NodeLook.cpp \
+    interfaces/EdgeLook.cpp \
+    BoxConstraint.cpp \
+    interfaces/GraphWidgetListener.cpp \
+    LinearConstraint.cpp
 
 RESOURCES += \
     coreresources.qrc
@@ -59,16 +68,13 @@ DISTFILES += \
 HEADERS += \
     Constraint.h \
     Damp.h \
-    EdgeItem.h \
     Graph.h \
     Gravity.h \
     Movable.h \
     Node.h \
-    NodeItem.h \
     PointConstraint.h \
     Spring.h \
     System.h \
-    VerticalConstraint.h \
     Force.h \
     interfaces/LayoutPlugin.h \
     interfaces/GraphLoaderPlugin.h \
@@ -85,4 +91,10 @@ HEADERS += \
     interfaces/Plugin.h \
     interfaces/FileExporterPlugin.h \
     Selection.h \
-    interfaces/GraphTransformPlugin.h
+    interfaces/GraphTransformPlugin.h \
+    interfaces/LookFactoryPlugin.h \
+    interfaces/NodeLook.h \
+    interfaces/EdgeLook.h \
+    BoxConstraint.h \
+    interfaces/GraphWidgetListener.h \
+    LinearConstraint.h

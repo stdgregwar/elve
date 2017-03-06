@@ -7,6 +7,8 @@
 
 #define ExporterPlugin_iid "ch.epfl.lap.elfe.LayoutPlugin"
 
+namespace Elve {
+
 class FileExporterPlugin : public QObject, public Plugin
 {
     Q_OBJECT
@@ -19,7 +21,8 @@ public:
     virtual std::string cliName() = 0;
 };
 
-Q_DECLARE_INTERFACE(FileExporterPlugin,ExporterPlugin_iid)
+}
+Q_DECLARE_INTERFACE(Elve::FileExporterPlugin,ExporterPlugin_iid)
 
 #define ELVE_EXPORTER(Exporter,full_name,filter,cli_name)\
  public:\

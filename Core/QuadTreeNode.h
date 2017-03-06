@@ -8,10 +8,12 @@
 #include <QGraphicsRectItem>
 #include <QGraphicsEllipseItem>
 
+namespace Elve {
+
 typedef std::vector<Point*> Masses;
 
 struct QuadTreeParams {
-    qreal gravDistSquare;
+    qreal theta;
     size_t depth;
     size_t maxMasses;
 };
@@ -53,4 +55,6 @@ private:
     size_t mCount;
     QVector2D mMC; ///Center of mass (not divided)
 };
+
+}
 #endif // QUADTREENODE_H

@@ -3,6 +3,10 @@
 
 #include <QListWidget>
 #include "CommandLine.h"
+
+
+namespace Elve {
+
 class MainWindow;
 class StoreView : public QListWidget
 {
@@ -18,4 +22,5 @@ private:
     MainWindow* mWindow;
 };
 
+}
 #endif // STOREVIEW_H

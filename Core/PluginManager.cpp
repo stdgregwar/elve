@@ -3,6 +3,8 @@
 #include <QMessageBox>
 #include <QDebug>
 
+namespace Elve {
+
 PluginManager::PluginManager()
 {
     //loadPlugins(".");
@@ -25,6 +27,10 @@ const Transforms& PluginManager::transforms() const {
     return mTransforms;
 }
 
+const Looks& PluginManager::looks() const {
+    return mLooks;
+}
+
 template <class T>
 void _load(const QString& path, const QString& type, QList<T*>& toFill) {
     QDir dir(path);
@@ -43,7 +49,9 @@ void _load(const QString& path, const QString& type, QList<T*>& toFill) {
                     if(dir.exists(info.baseName()+".ini")) {
                         qDebug() << "found config file for plugin" << info.baseName();
                         //TODO link config file path with plugin
+                        interface->configPath((info.baseName()+".ini").toStdString());
                     }
+                    interface->basePath(info.path());
                     toFill.push_back(interface);
                 } else {
                     QMessageBox("Warning","Could not load " + info.baseName() + " : \n Plugin is not a " + type,QMessageBox::Warning,0,0,0).exec();
@@ -67,7 +75,11 @@ SharedLayout PluginManager::getLayout(const QString& name) const
 
 SharedLayout PluginManager::defaultLayout() const
 {
-    return getLayout("Simple-Force"); //TODO fallbacks
+    return mLayouts.first()->create();
+}
+
+SharedLook PluginManager::defaultLook() const {
+    return mLooks.first()->create();
 }
 
 void PluginManager::load(const QString& path)
@@ -80,4 +92,8 @@ void PluginManager::load(const QString& path)
     _load(path+"/exporters","Exporter",mExporters);
     //For transforms
     _load(path+"/transforms","Transform",mTransforms);
+    //For looks
+    _load(path+"/looks","Look",mLooks);
+}
+
 }

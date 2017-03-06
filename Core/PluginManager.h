@@ -5,16 +5,20 @@
 #include <interfaces/LayoutPlugin.h>
 #include <interfaces/FileExporterPlugin.h>
 #include <interfaces/GraphTransformPlugin.h>
+#include <interfaces/LookFactoryPlugin.h>
 #include <QPluginLoader>
 #include <QMap>
 #include <QList>
 
 #include "Singleton.h"
 
+namespace Elve {
+
 typedef QList<GraphLoaderPlugin*> Loaders;
 typedef QList<GraphTransformPlugin*> Transforms;
 typedef QList<FileExporterPlugin*> Exporters;
 typedef QList<LayoutPlugin*> Layouts;
+typedef QList<LookFactoryPlugin*> Looks;
 
 /**
  * @brief Class responsible for collecting and storing all the plugins present in the given folder
@@ -27,8 +31,10 @@ public:
     const Exporters& exporters() const;
     const Layouts& layouts() const;
     const Transforms& transforms() const;
+    const Looks& looks() const;
     SharedLayout getLayout(const QString& name) const;
     SharedLayout defaultLayout() const;
+    SharedLook defaultLook() const;
     void load(const QString& path);
 private:
     PluginManager();
@@ -36,6 +42,8 @@ private:
     Layouts mLayouts;
     Exporters mExporters;
     Transforms mTransforms;
+    Looks mLooks;
 };
 
+}
 #endif // PLUGINMANAGER_H

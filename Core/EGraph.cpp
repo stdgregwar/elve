@@ -7,6 +7,8 @@
 #include <random>
 #include "GraphWidget.h"
 
+namespace Elve {
+
 using namespace std;
 
 EGraph::EGraph(const SharedGraph &g, const NodePositions &positions) :
@@ -47,6 +49,7 @@ SharedEGraph EGraph::fromJSON(const QJsonObject &obj)
     eg->selections() = masks;
     eg->setMask(obj["mask"].toInt());
     eg->setLayout(PluginManager::get().getLayout(layoutName));
+    eg->setLook(PluginManager::get().defaultLook());
     return eg;
 }
 
@@ -142,35 +145,41 @@ SharedEGraph EGraph::group(const NodeIDSet& names, const NodeName &groupName)
     groupCenter /= names.size();
 
     poss[nid] = groupCenter;
-    SharedEGraph eg = std::make_shared<EGraph>(mGraph->group(names,nid,groupName),poss);
-    eg->setLayout(mLayout->create());
-    eg->setView(mView);
+    SharedEGraph eg = clone(mGraph->group(names,nid,groupName),poss);
+
     for(int i = 0; i < 10; i++) {
         for(const NodeID& id : selection(i)) {
-            eg->selection(i).add(eg->graph()->alias(i));
+            eg->selection(i).add(eg->graph()->alias(i).id);
         }
     }
     return eg;
 }
 
-SharedEGraph EGraph::ungroup(const NodeIDs & names) const
+SharedEGraph EGraph::ungroup(const NodeIDSet & names) const
 {
     mPosDirty = true;
     NodePositions poss = positions();
     SharedGraph g = mGraph;
     for(const NodeID& name : names) {
         QVector2D base = poss.at(name);
-        const NodeIDs& ids = g->data(name).dependencies();
+        const Dependencies& ids = g->data(name).dependencies();
         static qreal radius = 128;
         for(size_t i = 0; i < ids.size(); ++i) {
             qreal p = M_PI*((qreal)i)/ids.size();
-            poss[ids[i]] = base + QVector2D(radius*cos(p),radius*sin(p));
+            poss[ids[i].id] = base + QVector2D(radius*cos(p),radius*sin(p));
         }
         g = g->ungroup(name);
     }
-    SharedEGraph eg =std::make_shared<EGraph>(g,poss);
+    return clone(g,poss);
+}
+
+SharedEGraph EGraph::clone(const SharedGraph& graph, const NodePositions& positions) const {
+    SharedEGraph eg =std::make_shared<EGraph>(graph,positions);
+    eg->setLook(mLook);
     eg->setLayout(mLayout->create());
     eg->setView(mView);
+    //eg->mMaskId = mMaskId;
+    //eg->mSelections = mSelections;
     return eg;
 }
 
@@ -189,7 +198,7 @@ EGraph::~EGraph()
 
 void EGraph::applyLayout(const NodePositions &p) {
     if(mLayout) {
-        mLayout->setGraph(mGraph,p);
+        mLayout->setGraph(shared_from_this(),p);
     }
 }
 
@@ -230,13 +239,27 @@ Selection& EGraph::currentSelection() {
 
 void EGraph::setLayout(const SharedLayout &l)
 {
+    if(!l) return;
     mPosDirty = true;
-    l->setGraph(mGraph,positions());
+    if(mLook) l->setGraph(shared_from_this(),positions());
     mLayout = l;
-    if(mView) mView->reflect(l->system(),mGraph);
+    if(mView && mLook) mView->reflect(l->system(),mGraph,mLook);
+}
+
+void EGraph::setLook(const SharedLook& l) {
+    mLook = l;
+    if(mLayout) mLayout->setGraph(shared_from_this(),positions());
+    if(mView && mLayout) mView->reflect(mLayout->system(),mGraph,mLook);
 }
 
 const SharedLayout &EGraph::layout()
 {
     return mLayout;
+}
+
+const SharedLook& EGraph::look()
+{
+    return mLook;
+}
+
 }

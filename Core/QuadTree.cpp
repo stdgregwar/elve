@@ -5,10 +5,12 @@
 #include <QDebug>
 #include <limits>
 
-using namespace std;
-#define THRESHOLD 4096
+namespace Elve {
 
-QuadTree::QuadTree(const QRectF &bounds) : mParams{THRESHOLD*THRESHOLD,7,10}
+using namespace std;
+#define THRESHOLD 512
+
+QuadTree::QuadTree(const QRectF &bounds) : mParams{0.5,6,10}
 {
     mNodes = nullptr;
     init(bounds);
@@ -20,6 +22,11 @@ QuadTree& QuadTree::operator=(QuadTree&& other) {
     init(other.bounds());
 }
 
+void QuadTree::setBounds(const QRectF& bounds) {
+    initLite(bounds);
+    reinsertAll();
+}
+
 bool QuadTree::init(const QRectF &bounds)
 {
     reset();
@@ -27,6 +34,7 @@ bool QuadTree::init(const QRectF &bounds)
     if(!mNodes) {
         mNodes = reinterpret_cast<QuadTreeNode*>(new unsigned char[QUADTREESIZE*sizeof(QuadTreeNode)]);
     }
+
     if(!mNodes) {return false;}
     QuadTreeNode* root = rootNode();
 
@@ -175,7 +183,7 @@ void QuadTree::reinsertAll()
         mNodes[i].reset();
     }
 
-    if(count > 200) {
+    if(count > 400) {
         QRectF rect = computeMinRect();
         initNodesPos(computeMinRect());
         count = 0;
@@ -246,4 +254,6 @@ QuadTree::~QuadTree()
     reset();
     if(mNodes)
         free((void*)mNodes);
+}
+
 }

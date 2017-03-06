@@ -4,6 +4,9 @@
 #include <QAction>
 #include <interfaces/FileExporterPlugin.h>
 
+
+namespace Elve {
+
 class FileExportAction : public QAction
 {
     Q_OBJECT
@@ -22,4 +25,5 @@ private:
     FileExporterPlugin* mData;
 };
 
+}
 #endif // FILEEXPORTACTION_H

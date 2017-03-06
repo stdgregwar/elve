@@ -5,6 +5,8 @@
 #include "Point.h"
 #include "QuadTree.h"
 
+namespace Elve {
+
 class Gravity : public Force
 {
 public:
@@ -12,6 +14,7 @@ public:
     virtual QVector2D force(const Point &m) const override;
     QVector2D plainOldGravity(const Point& m) const;
     QVector2D quadGravity(const Point& m) const;
+    void setQuadTreeBounds(const QRectF bounds);
     void updateQuadTree();
     void addPoint(const Point* m);
     void clear();
@@ -21,5 +24,7 @@ private:
     QuadTree mQuadTree;
     qreal mK;
 };
+
+}
 
 #endif // GRAVITY_H

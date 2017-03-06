@@ -56,7 +56,20 @@ HEADERS += \
     alice/rules.hpp \
     StoreView.h \
     FileExportAction.h \
-    TransformAction.h
+    TransformAction.h \
+    LookLoadAction.h \
+    commands/Cluster.h \
+    commands/Export.h \
+    commands/Group.h \
+    commands/Layout.h \
+    commands/Loader.h \
+    commands/Plugin.h \
+    commands/Select.h \
+    commands/Transform.h \
+    commands/Ungroup.h \
+    commands/Chrono.h \
+    commands/ClearAll.h \
+    commands/Look.h
 
 FORMS += \
     uis/mainwindow_test.ui

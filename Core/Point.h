@@ -9,6 +9,8 @@
 #include <Constraint.h>
 #include <Node.h>
 
+namespace Elve {
+
 class Point
 {
     friend class Movable;
@@ -43,5 +45,7 @@ private:
     qreal mM;
     mutable void* mContainerData;
 };
+
+}
 
 #endif // MASS_H

@@ -4,6 +4,7 @@
 #include <QVector2D>
 #include "Force.h"
 
+namespace Elve {
 class Point;
 
 class Spring : public Force
@@ -17,5 +18,5 @@ private:
     Point& m1;
     Point& m2;
 };
-
+}
 #endif // SPRING_H

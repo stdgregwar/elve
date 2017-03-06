@@ -6,17 +6,18 @@
 #include <QVector2D>
 #include <QtPlugin>
 
-#include <EdgeItem.h>
-#include <NodeItem.h>
 #include <System.h>
 
 #include "Plugin.h"
 
 #define LayoutPlugin_iid "ch.epfl.lap.elfe.LayoutPlugin"
 
-class LayoutPlugin;
+namespace Elve {
 
+class LayoutPlugin;
 typedef std::shared_ptr<LayoutPlugin> SharedLayout;
+class EGraph;
+typedef std::shared_ptr<EGraph> SharedEGraph;
 
 class LayoutPlugin : public QObject, public Plugin
 {
@@ -26,8 +27,8 @@ public:
     LayoutPlugin(const LayoutPlugin& other);
     void clear();
     virtual void setGraph(SharedGraph graph) = 0;
-    QVector2D startPosition(const NodeID& id, QRectF rect = QRectF(0,0,1024,1024));
-    void setGraph(SharedGraph g,const NodePositions& positions);
+    QVector2D startPosition(const NodeID& id);
+    void setGraph(SharedEGraph g, const NodePositions& positions);
     virtual void quickSim(size_t ticks);
     virtual void tick(float dt, bool fast);
     virtual SharedLayout create() = 0;
@@ -41,12 +42,13 @@ private:
     NodePositions mStartPositions;
 };
 
+}
 
-Q_DECLARE_INTERFACE(LayoutPlugin,LayoutPlugin_iid)
+Q_DECLARE_INTERFACE(Elve::LayoutPlugin,LayoutPlugin_iid)
 
 #define ELVE_LAYOUT(Layout,full_name,cli_name)\
  public:\
-    inline SharedLayout create() override {return std::make_shared<Layout>(*this);}\
+    inline Elve::SharedLayout create() override {return std::make_shared<Layout>(*this);}\
     inline QString name() override {return (full_name);}\
     inline std::string cliName() override {return (cli_name);}
 
