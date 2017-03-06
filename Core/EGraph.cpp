@@ -178,6 +178,8 @@ SharedEGraph EGraph::clone(const SharedGraph& graph, const NodePositions& positi
     eg->setLook(mLook);
     eg->setLayout(mLayout->create());
     eg->setView(mView);
+    //eg->mMaskId = mMaskId;
+    //eg->mSelections = mSelections;
     return eg;
 }
 

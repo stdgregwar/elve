@@ -53,7 +53,7 @@ QSvgRenderer* BasicLookPlugin::renderer(const QString& filename, const QColor& c
     if(it != mRenderers.end()) {
         return it.value();
     } else {
-        if(color == Qt::white) {
+        if(!color.isValid()) {
             //Use default colors
             QSvgRenderer* rend = new QSvgRenderer(filename,this);
             return mRenderers.insert({filename,color},rend).value();

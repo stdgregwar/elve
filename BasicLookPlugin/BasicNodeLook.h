@@ -12,8 +12,8 @@ public:
     BasicNodeLook(BasicLookPlugin& look,const Elve::Node& node);
     //QPointF inputPos(int index) const override;
     //QPointF outputPos(int index) const override;
-    void setColor(const QColor& col);
-    void resetColor();
+    void onColorChange(const QColor& col);
+    void onColorReset();
 private:
     QGraphicsSvgItem* mItem;
     BasicLookPlugin& mLook;

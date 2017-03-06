@@ -36,7 +36,7 @@ GraphWidget::GraphWidget(QWidget* parent, GraphWidgetListener* listener) : QGrap
     mDrag(false),
     mScale(1),
     mBehaviour(new Behaviour(this)),
-    mEdgesPath(new QGraphicsPathItem()),
+    //mEdgesPath(new QGraphicsPathItem()),
     mListener(listener)
 {
     setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
@@ -45,10 +45,6 @@ GraphWidget::GraphWidget(QWidget* parent, GraphWidgetListener* listener) : QGrap
     setScene(mScene);
     setBackgroundBrush(QBrush(QColor(59,58,58), Qt::SolidPattern));
     startTimer(1000/60);
-
-    QPen p(QColor(100,100,100), 1, Qt::SolidLine, Qt::FlatCap, Qt::MiterJoin);
-    p.setCosmetic(true);
-    mEdgesPath->setPen(p);
 }
 
 void GraphWidget::fit() {
@@ -221,11 +217,12 @@ void GraphWidget::tick(float dt, bool update)
 {
     if(mGraph->layout()) {
         mGraph->layout()->tick(dt,update);
-        QPainterPath p;
+        /*QPainterPath p;
         std::for_each(mEdges.begin(),mEdges.end(),[&p](EdgeLook*& e){
             e->addToPath(p);
         });
-        mEdgesPath->setPath(p);
+        mEdgesPath->setPath(p);*/
+        updateEdges();
     }
 }
 
@@ -249,9 +246,9 @@ void GraphWidget::setLayout(const SharedLayout& l) {
 }
 
 void GraphWidget::clearScene() {
-    mScene->removeItem(mEdgesPath);
+    clearEdgesPaths();
     mScene->clear();
-    mScene->addItem(mEdgesPath);
+    //mScene->addItem(mEdgesPath);
     for_each(mEdges.begin(),mEdges.end(),[](EdgeLook* e){delete e;});
     mEdges.clear();
     mNodes.clear();
@@ -331,11 +328,45 @@ void GraphWidget::updateSelectionColor() {
     Selection& s = mGraph->currentSelection();
     for(NodeLook* i : mNodes) {
         if(s.count(i->node().id())) {
-           i->setColor(mSelectionColors[mGraph->mask()]);
+           i->color(mSelectionColors[mGraph->mask()]);
         } else {
-           i->resetColor();
+           i->color(QColor());
         }
     }
+}
+
+void GraphWidget::flushPen(QPen& pen, QPainterPath& path, const QPen &newPen) {
+    //Flush in pathitem
+    if(path.length() > 0.f) {
+        QGraphicsPathItem* pitem = new QGraphicsPathItem(path);
+        mScene->addItem(pitem);
+        pitem->setPen(pen);
+        mEdgesPaths.push_back(pitem);
+        path = QPainterPath(); //clear path
+    }
+    pen = newPen;
+}
+
+void GraphWidget::clearEdgesPaths() {
+    for(QGraphicsPathItem* p : mEdgesPaths) {
+        mScene->removeItem(p);
+        delete p;
+    }
+    mEdgesPaths.clear();
+}
+
+void GraphWidget::updateEdges() {
+    clearEdgesPaths();
+
+    QPen pen;
+    QPainterPath path;
+    for(EdgeLook* e : mEdges) {
+        if(pen != e->pen()) {
+            flushPen(pen,path,e->pen());
+        }
+        e->addToPath(path);
+    }
+    flushPen(pen,path,QPen());
 }
 
 bool GraphWidget::BorderSelect::mouseMoveEvent(QMouseEvent *event) {

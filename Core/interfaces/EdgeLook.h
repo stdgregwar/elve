@@ -8,7 +8,7 @@ class EdgeLook
 public:
     EdgeLook(const NodeLook& from,const NodeLook& to);
     virtual void addToPath(QPainterPath& path) = 0;
-    virtual QPen pen() = 0;
+    virtual QPen pen() const = 0;
     const NodeLook& from() const;
     const NodeLook& to() const;
     Index iFrom() const;

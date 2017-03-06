@@ -4,13 +4,26 @@
 
 using namespace Elve;
 
+static const QColor base = QColor(128,128,128);
+
 BasicEdgeLook::BasicEdgeLook(const NodeLook &from, const NodeLook &to) : EdgeLook(from,to)
 {
 
 }
 
-QPen BasicEdgeLook::pen() {
-    return QPen(Qt::white);
+const QColor& _tcol(const QColor& col, const QColor& def) {
+    return col.isValid() ? col : def;
+}
+
+QPen BasicEdgeLook::pen() const {
+    const QColor& c1 = _tcol(from().color(),base);
+    const QColor& c2 = _tcol(to().color(),base);
+
+    QPen p(QColor((c1.red()+c2.red())/2,
+                       (c1.green()+c2.green())/2,
+                       (c1.blue()+c2.blue())/2));
+    p.setCosmetic(true);
+    return p;
 }
 
 void BasicEdgeLook::addToPath(QPainterPath& p) {

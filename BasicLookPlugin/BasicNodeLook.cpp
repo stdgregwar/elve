@@ -43,7 +43,7 @@ BasicNodeLook::BasicNodeLook(BasicLookPlugin& look,const Node& node) : mLook(loo
 
     setZValue(1);
 
-    QSvgRenderer* r = look.renderer(pixmaps[node.type()],Qt::white);
+    QSvgRenderer* r = look.renderer(pixmaps[node.type()],QColor());
     mItem = new QGraphicsSvgItem(this);
     mItem->setSharedRenderer(r);
     mItem->setPos(-r->defaultSize().width()/2,-r->defaultSize().height()/2);
@@ -52,10 +52,10 @@ BasicNodeLook::BasicNodeLook(BasicLookPlugin& look,const Node& node) : mLook(loo
     setAcceptedMouseButtons(Qt::MouseButton::AllButtons);
 }
 
-void BasicNodeLook::setColor(const QColor& col) {
+void BasicNodeLook::onColorChange(const QColor& col) {
     mItem->setSharedRenderer(mLook.renderer(pixmaps[node().type()],col));
 }
 
-void BasicNodeLook::resetColor() {
-    mItem->setSharedRenderer(mLook.renderer(pixmaps[node().type()],Qt::white));
+void BasicNodeLook::onColorReset() {
+    mItem->setSharedRenderer(mLook.renderer(pixmaps[node().type()],QColor()));
 }

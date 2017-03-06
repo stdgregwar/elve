@@ -4,16 +4,16 @@
 
 using namespace Elve;
 
-BasicEdgeLook::BasicEdgeLook(const NodeLook &from, const NodeLook &to) : EdgeLook(from,to)
+BlockEdgeLook::BlockEdgeLook(const NodeLook &from, const NodeLook &to) : EdgeLook(from,to)
 {
 
 }
 
-QPen BasicEdgeLook::pen() {
+QPen BlockEdgeLook::pen() const {
     return QPen(Qt::white);
 }
 
-void BasicEdgeLook::addToPath(QPainterPath& p) {
+void BlockEdgeLook::addToPath(QPainterPath& p) {
     QPointF p1 = from().outputPos(iFrom());
     QPointF p2 = to().inputPos(iTo());
 

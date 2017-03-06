@@ -42,6 +42,15 @@ void NodeLook::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
     }
 }
 
+void NodeLook::color(const QColor& color) {
+    mSelectionColor = color;
+    color.isValid() ? onColorChange(color) : onColorReset();
+}
+
+const QColor& NodeLook::color() const {
+    return mSelectionColor;
+}
+
 void NodeLook::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
     if(mDraged) {

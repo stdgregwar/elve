@@ -19,7 +19,7 @@ class MainWindow;
 
 class GraphWidget : public QGraphicsView
 {
-    Q_OBJECT;
+    Q_OBJECT
 public:
     GraphWidget(QWidget *parent = nullptr, GraphWidgetListener* listener = new GraphWidgetListener());
 
@@ -96,6 +96,9 @@ private:
     void clear();
     void clearScene();
     void unsetGraph();
+    void clearEdgesPaths();
+    void flushPen(QPen& pen, QPainterPath& path, const QPen& newPen);
+    void updateEdges();
 
     QGraphicsScene* mScene;
     bool mDrag;
@@ -106,7 +109,7 @@ private:
     //temp
     std::vector<EdgeLook*> mEdges;
     std::vector<NodeLook*> mNodes;
-    QGraphicsPathItem* mEdgesPath;
+    QList<QGraphicsPathItem*> mEdgesPaths;
     GraphWidgetListener* mListener;
     static std::array<QColor,10> mSelectionColors;
 };

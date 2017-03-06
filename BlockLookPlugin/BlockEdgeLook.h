@@ -3,12 +3,12 @@
 
 #include <interfaces/EdgeLook.h>
 
-class BasicEdgeLook : public Elve::EdgeLook
+class BlockEdgeLook : public Elve::EdgeLook
 {
 public:
-    BasicEdgeLook(const Elve::NodeLook& from, const Elve::NodeLook& to);
+    BlockEdgeLook(const Elve::NodeLook& from, const Elve::NodeLook& to);
     void addToPath(QPainterPath& path) override;
-    QPen pen() override;
+    QPen pen() const override;
 };
 
 #endif // BLOCKEDGELOOK_H

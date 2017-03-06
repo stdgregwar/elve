@@ -6,19 +6,19 @@
 
 using namespace Elve;
 
-BasicLookPlugin::BasicLookPlugin()
+BlockLookPlugin::BlockLookPlugin()
 {
 
 }
 
-NodeLook* BasicLookPlugin::node(const Node &n) {
-    return new BasicNodeLook(n);
+NodeLook* BlockLookPlugin::node(const Node &n) {
+    return new BlockNodeLook(n);
 }
 
-EdgeLook* BasicLookPlugin::edge(const NodeLook &ancestor, const NodeLook &children) {
-    return new BasicEdgeLook(ancestor,children);
+EdgeLook* BlockLookPlugin::edge(const NodeLook &ancestor, const NodeLook &children) {
+    return new BlockEdgeLook(ancestor,children);
 }
 
-OrientationHint BasicLookPlugin::orientationHint() const {
+OrientationHint BlockLookPlugin::orientationHint() const {
     return LEFTRIGHT;
 }
