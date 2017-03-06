@@ -4,7 +4,8 @@ CONFIG += c++11
 
 SUBDIRS += \
     Core \
-    BaseLookPlugin \
+    BlockLookPlugin \
+    BasicLookPlugin \
     BlifLoaderPlugin \
     LevelLayoutPlugin \
     SimpleLayoutPlugin \

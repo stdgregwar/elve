@@ -6,7 +6,7 @@
 
 QT       += core gui widgets svg
 
-TARGET = BaseLookPlugin
+TARGET = BlockLookPlugin
 TEMPLATE = lib
 CONFIG += plugin c++11
 
@@ -30,11 +30,11 @@ INCLUDEPATH += $$PWD/../Core
 DEPENDPATH += $$PWD/../Core
 
 HEADERS += \
-    BaseLookPlugin.h \
     BlockNodeLook.h \
-    BlockEdgeLook.h
+    BlockEdgeLook.h \
+    BlockLookPlugin.h
 
 SOURCES += \
-    BaseLookPlugin.cpp \
     BlockNodeLook.cpp \
-    BlockEdgeLook.cpp
+    BlockEdgeLook.cpp \
+    BlockLookPlugin.cpp

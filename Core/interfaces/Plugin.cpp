@@ -1,4 +1,5 @@
 #include "Plugin.h"
+
 namespace Elve {
 Plugin::Plugin() : mOpts("plugin options"), mVMap(nullptr)
 {
@@ -13,6 +14,14 @@ void Plugin::configPath(const std::string& path)
 const std::string& Plugin::configPath() const
 {
     return mConfigPath;
+}
+
+void Plugin::basePath(const QString& path) {
+    mBasePath = path;
+}
+
+const QString& Plugin::basePath()const {
+    return mBasePath;
 }
 
 po::options_description& Plugin::opts() {

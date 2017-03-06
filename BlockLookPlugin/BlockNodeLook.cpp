@@ -7,7 +7,7 @@ using namespace Elve;
 
 static QColor baseColor(34,34,34);
 
-BlockNodeLook::BlockNodeLook(const Node& node) : NodeLook(node)
+BasicNodeLook::BasicNodeLook(const Node& node) : NodeLook(node)
 {
     QPen p;
     p.setCosmetic(true);
@@ -56,21 +56,21 @@ BlockNodeLook::BlockNodeLook(const Node& node) : NodeLook(node)
     }
 }
 
-QPointF BlockNodeLook::inputPos(int index) const {
+QPointF BasicNodeLook::inputPos(int index) const {
     return pos() + QPointF(0,30+20*index);
 }
 
-QPointF BlockNodeLook::outputPos(int index) const {
+QPointF BasicNodeLook::outputPos(int index) const {
     return pos() + QPointF(70,30+20*index);
 }
 
-void BlockNodeLook::setColor(const QColor& col) {
+void BasicNodeLook::setColor(const QColor& col) {
     QPen p = mMainRect->pen();
     p.setColor(col);
     mMainRect->setPen(p);
 }
 
-void BlockNodeLook::resetColor() {
+void BasicNodeLook::resetColor() {
     QPen p = mMainRect->pen();
     p.setColor(Qt::transparent);
     mMainRect->setPen(p);

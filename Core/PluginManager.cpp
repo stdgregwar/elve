@@ -49,7 +49,9 @@ void _load(const QString& path, const QString& type, QList<T*>& toFill) {
                     if(dir.exists(info.baseName()+".ini")) {
                         qDebug() << "found config file for plugin" << info.baseName();
                         //TODO link config file path with plugin
+                        interface->configPath((info.baseName()+".ini").toStdString());
                     }
+                    interface->basePath(info.path());
                     toFill.push_back(interface);
                 } else {
                     QMessageBox("Warning","Could not load " + info.baseName() + " : \n Plugin is not a " + type,QMessageBox::Warning,0,0,0).exec();
@@ -73,7 +75,7 @@ SharedLayout PluginManager::getLayout(const QString& name) const
 
 SharedLayout PluginManager::defaultLayout() const
 {
-    return getLayout("Simple-Force"); //TODO fallbacks
+    return mLayouts.first()->create();
 }
 
 SharedLook PluginManager::defaultLook() const {

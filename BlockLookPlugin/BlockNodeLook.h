@@ -4,10 +4,10 @@
 
 #include <QGraphicsRectItem>
 
-class BlockNodeLook : public Elve::NodeLook
+class BasicNodeLook : public Elve::NodeLook
 {
 public:
-    BlockNodeLook(const Elve::Node& node);
+    BasicNodeLook(const Elve::Node& node);
     QPointF inputPos(int index) const override;
     QPointF outputPos(int index) const override;
     void setColor(const QColor& col);

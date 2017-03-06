@@ -37,4 +37,4 @@ Makefile*
 CMakeLists.txt.user*
 
 #pycache
-#*__pycache__/*
+#*__pycache__*
