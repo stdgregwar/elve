@@ -3,7 +3,7 @@
 #include <chrono>
 #include <QDebug>
 #include <Graph.h>
-#include <EGraph.h>
+#include <ExtendedGraph.h>
 
 namespace Elve {
 using namespace std;
@@ -66,7 +66,7 @@ void LayoutPlugin::quickSim(size_t ticks) {
 
     high_resolution_clock::time_point t1 = high_resolution_clock::now();
     for(int i = 0; i < ticks; i++) {
-        tick(0.4,false);
+        tick(0.25,false);
     }
     high_resolution_clock::time_point t2 = high_resolution_clock::now();
     duration<double> time_span = duration_cast<duration<double>>(t2 - t1);

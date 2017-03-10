@@ -8,7 +8,7 @@
 
 #include "System.h"
 #include "Graph.h"
-#include "EGraph.h"
+#include "ExtendedGraph.h"
 #include <interfaces/LayoutPlugin.h>
 #include <interfaces/GraphWidgetListener.h>
 #include <interfaces/LookFactoryPlugin.h>

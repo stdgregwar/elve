@@ -1,7 +1,7 @@
 #ifndef GRAPHTRANSFORM_H
 #define GRAPHTRANSFORM_H
 
-#include <EGraph.h>
+#include <ExtendedGraph.h>
 #include "Plugin.h"
 
 #define GraphTransformPlugin_iid "ch.epfl.lap.elfe.GraphTransformPlugin"

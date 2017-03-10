@@ -3,7 +3,7 @@
 
 #include <QGenericPlugin>
 #include "Plugin.h"
-#include <EGraph.h>
+#include <ExtendedGraph.h>
 
 #define ExporterPlugin_iid "ch.epfl.lap.elfe.LayoutPlugin"
 

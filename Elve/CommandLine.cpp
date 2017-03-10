@@ -67,7 +67,7 @@ inline bool store_can_read_io_type<SharedEGraph, io_graph_tag_t>( command& cmd )
 template<>
 inline SharedEGraph store_read_io_type<SharedEGraph, io_graph_tag_t>( const std::string& file, const command& cmd )
 {
-    return EGraph::fromFile(QString::fromStdString(file));
+    return ExtendedGraph::fromFile(QString::fromStdString(file));
 }
 
 /* enable `write Graphs`*/
@@ -187,6 +187,7 @@ bool CommandLine::run_command(const QString& cmd, std::ostream& out,std::ostream
 {
     //try {
         mCli.run_line(cmd.toStdString(),out,cerr);
+        store().current()->history().add(cmd.toStdString());
     //} catch(const std::exception& e) {
     //    cerr << e.what() << std::endl;
     //}

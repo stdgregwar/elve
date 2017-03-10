@@ -18,10 +18,7 @@ public:
     bool execute() override {
         SharedEGraph eg = env->store<SharedEGraph>().current();
         SharedGraph ng = eg->graph()->clusterize(level);
-        SharedEGraph neg = std::make_shared<EGraph>(ng,eg->positions());
-        neg->setLook(eg->look());
-        neg->setLayout(eg->layout());
-        neg->setView(eg->view());
+        SharedEGraph neg = eg->clone(ng,eg->positions());
         env->store<SharedEGraph>().current() = neg;
         if(neg->view()) neg->view()->setGraph(neg);
         return true;

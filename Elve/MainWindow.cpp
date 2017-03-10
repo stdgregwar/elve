@@ -14,7 +14,7 @@
 
 #include <interfaces/GraphLoaderPlugin.h>
 #include <Graph.h>
-#include <EGraph.h>
+#include <ExtendedGraph.h>
 #include <QMdiSubWindow>
 #include <QMainWindow>
 #include <QDockWidget>
@@ -195,7 +195,7 @@ void MainWindow::onFileOpen(const QString& filename){
         } else { //Assume it's json
             doc = QJsonDocument::fromJson(file.readAll());
         }
-        SharedEGraph eg = EGraph::fromJSON(doc.object());
+        SharedEGraph eg = ExtendedGraph::fromJSON(doc.object());
         CommandLine::get().store().push(eg);
         newWindowWithFile(eg,filename);
     } else {

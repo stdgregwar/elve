@@ -42,7 +42,6 @@ SOURCES +=\
     Point.cpp \
     QuadTree.cpp \
     QuadTreeNode.cpp \
-    EGraph.cpp \
     PluginManager.cpp \
     GraphWidget.cpp \
     NodeData.cpp \
@@ -55,7 +54,9 @@ SOURCES +=\
     interfaces/EdgeLook.cpp \
     BoxConstraint.cpp \
     interfaces/GraphWidgetListener.cpp \
-    LinearConstraint.cpp
+    LinearConstraint.cpp \
+    CommandHistory.cpp \
+    ExtendedGraph.cpp
 
 RESOURCES += \
     coreresources.qrc
@@ -81,7 +82,6 @@ HEADERS += \
     Point.h \
     QuadTree.h \
     QuadTreeNode.h \
-    EGraph.h \
     PluginManager.h \
     GraphWidget.h \
     Singleton.h \
@@ -97,4 +97,6 @@ HEADERS += \
     interfaces/EdgeLook.h \
     BoxConstraint.h \
     interfaces/GraphWidgetListener.h \
-    LinearConstraint.h
+    LinearConstraint.h \
+    CommandHistory.h \
+    ExtendedGraph.h

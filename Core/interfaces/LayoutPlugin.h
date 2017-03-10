@@ -16,8 +16,8 @@ namespace Elve {
 
 class LayoutPlugin;
 typedef std::shared_ptr<LayoutPlugin> SharedLayout;
-class EGraph;
-typedef std::shared_ptr<EGraph> SharedEGraph;
+class ExtendedGraph;
+typedef std::shared_ptr<ExtendedGraph> SharedEGraph;
 
 class LayoutPlugin : public QObject, public Plugin
 {

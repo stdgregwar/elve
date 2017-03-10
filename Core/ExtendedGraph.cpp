@@ -1,4 +1,4 @@
-#include "EGraph.h"
+#include "ExtendedGraph.h"
 #include <memory>
 #include <QJsonDocument>
 #include <QJsonArray>
@@ -11,7 +11,7 @@ namespace Elve {
 
 using namespace std;
 
-EGraph::EGraph(const SharedGraph &g, const NodePositions &positions) :
+ExtendedGraph::ExtendedGraph(const SharedGraph &g, const NodePositions &positions) :
     mGraph(g),
     mPositions(positions),
     mPosDirty(false),
@@ -21,7 +21,7 @@ EGraph::EGraph(const SharedGraph &g, const NodePositions &positions) :
 
 }
 
-SharedEGraph EGraph::fromJSON(const QJsonObject &obj)
+SharedEGraph ExtendedGraph::fromJSON(const QJsonObject &obj)
 {
     SharedGraph g = Graph::fromJson(obj.value("graph").toObject());
     //positions
@@ -45,22 +45,24 @@ SharedEGraph EGraph::fromJSON(const QJsonObject &obj)
     for(Selection& s : masks) {
         s = Selection::fromJson(selections.value(QString::number(i++)).toArray());
     }
-    SharedEGraph eg = std::make_shared<EGraph>(g,positions);
+    CommandHistory ch(obj["history"]);
+    SharedEGraph eg = std::make_shared<ExtendedGraph>(g,positions);
+    eg->mHistory = ch;
     eg->selections() = masks;
     eg->setMask(obj["mask"].toInt());
-    eg->setLayout(PluginManager::get().getLayout(layoutName));
     eg->setLook(PluginManager::get().defaultLook());
+    eg->setLayout(PluginManager::get().getLayout(layoutName));
     return eg;
 }
 
-SharedEGraph EGraph::fromGraph(const SharedGraph& g)
+SharedEGraph ExtendedGraph::fromGraph(const SharedGraph& g)
 {
-    SharedEGraph eg =  std::make_shared<EGraph>(g);
+    SharedEGraph eg =  std::make_shared<ExtendedGraph>(g);
     eg->setLayout(PluginManager::get().defaultLayout());
     return eg;
 }
 
-QJsonObject EGraph::json() const
+QJsonObject ExtendedGraph::json() const
 {
     if(!mGraph) {
         return QJsonObject();
@@ -93,10 +95,11 @@ QJsonObject EGraph::json() const
         selections.insert(QString::number(i++),s.json());
     }
     main.insert("selections",selections);
+    main.insert("history",mHistory.json());
     return main;
 }
 
-SharedEGraph EGraph::fromFile(const QString& filename)
+SharedEGraph ExtendedGraph::fromFile(const QString& filename)
 {
     QString ext = filename.split(".").last();
     QFile file(filename);
@@ -115,7 +118,7 @@ SharedEGraph EGraph::fromFile(const QString& filename)
     }
 }
 
-void EGraph::toFile(const QString& filename) {
+void ExtendedGraph::toFile(const QString& filename) {
     QString suffix = filename.split(".").last();
     QJsonDocument doc(json());
 
@@ -132,7 +135,11 @@ void EGraph::toFile(const QString& filename) {
     }
 }
 
-SharedEGraph EGraph::group(const NodeIDSet& names, const NodeName &groupName)
+CommandHistory& ExtendedGraph::history() {
+    return mHistory;
+}
+
+SharedEGraph ExtendedGraph::group(const NodeIDSet& names, const NodeName &groupName)
 {
     if(names.size() == 0) return shared_from_this();
     mPosDirty = true;
@@ -155,7 +162,7 @@ SharedEGraph EGraph::group(const NodeIDSet& names, const NodeName &groupName)
     return eg;
 }
 
-SharedEGraph EGraph::ungroup(const NodeIDSet & names) const
+SharedEGraph ExtendedGraph::ungroup(const NodeIDSet & names) const
 {
     mPosDirty = true;
     NodePositions poss = positions();
@@ -173,36 +180,37 @@ SharedEGraph EGraph::ungroup(const NodeIDSet & names) const
     return clone(g,poss);
 }
 
-SharedEGraph EGraph::clone(const SharedGraph& graph, const NodePositions& positions) const {
-    SharedEGraph eg =std::make_shared<EGraph>(graph,positions);
+SharedEGraph ExtendedGraph::clone(const SharedGraph& graph, const NodePositions& positions) const {
+    SharedEGraph eg =std::make_shared<ExtendedGraph>(graph,positions);
     eg->setLook(mLook);
     eg->setLayout(mLayout->create());
     eg->setView(mView);
-    //eg->mMaskId = mMaskId;
+    eg->history() = mHistory;
+    eg->mMaskId = mMaskId;
     //eg->mSelections = mSelections;
     return eg;
 }
 
-SelectionMasks& EGraph::selections() {
+SelectionMasks& ExtendedGraph::selections() {
     return mSelections;
 }
 
-Selection& EGraph::selection(size_t i) {
+Selection& ExtendedGraph::selection(size_t i) {
     return mSelections[i];
 }
 
 
-EGraph::~EGraph()
+ExtendedGraph::~ExtendedGraph()
 {
 }
 
-void EGraph::applyLayout(const NodePositions &p) {
+void ExtendedGraph::applyLayout(const NodePositions &p) {
     if(mLayout) {
         mLayout->setGraph(shared_from_this(),p);
     }
 }
 
-const NodePositions& EGraph::positions() const
+const NodePositions& ExtendedGraph::positions() const
 {
     if(mPosDirty && mLayout) {
         mPositions = mLayout->system().positions();
@@ -212,32 +220,32 @@ const NodePositions& EGraph::positions() const
     return mPositions;
 }
 
-void EGraph::setView(GraphWidget *view) {
+void ExtendedGraph::setView(GraphWidget *view) {
     mView = view;
 }
 
-GraphWidget* EGraph::view() {
+GraphWidget* ExtendedGraph::view() {
     return mView;
 }
 
-const SharedGraph& EGraph::graph() const
+const SharedGraph& ExtendedGraph::graph() const
 {
     return mGraph;
 }
 
-void EGraph::setMask(int id) {
+void ExtendedGraph::setMask(int id) {
     mMaskId = id;
 }
 
-int EGraph::mask() const {
+int ExtendedGraph::mask() const {
     return mMaskId;
 }
 
-Selection& EGraph::currentSelection() {
+Selection& ExtendedGraph::currentSelection() {
     return selection(mMaskId);
 }
 
-void EGraph::setLayout(const SharedLayout &l)
+void ExtendedGraph::setLayout(const SharedLayout &l)
 {
     if(!l) return;
     mPosDirty = true;
@@ -246,18 +254,18 @@ void EGraph::setLayout(const SharedLayout &l)
     if(mView && mLook) mView->reflect(l->system(),mGraph,mLook);
 }
 
-void EGraph::setLook(const SharedLook& l) {
+void ExtendedGraph::setLook(const SharedLook& l) {
     mLook = l;
     if(mLayout) mLayout->setGraph(shared_from_this(),positions());
     if(mView && mLayout) mView->reflect(mLayout->system(),mGraph,mLook);
 }
 
-const SharedLayout &EGraph::layout()
+const SharedLayout &ExtendedGraph::layout()
 {
     return mLayout;
 }
 
-const SharedLook& EGraph::look()
+const SharedLook& ExtendedGraph::look()
 {
     return mLook;
 }

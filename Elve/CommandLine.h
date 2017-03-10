@@ -7,7 +7,7 @@
 #include "Singleton.h"
 #include <interfaces/GraphWidgetListener.h>
 
-#include <EGraph.h>
+#include <ExtendedGraph.h>
 #include <QString>
 
 

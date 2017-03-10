@@ -31,7 +31,7 @@ public:
 
     bool execute() override {
         auto& graphs = env->store<SharedEGraph>();
-        SharedEGraph eg = std::make_shared<EGraph>(mLoader->load(QString::fromStdString(mFilename)));
+        SharedEGraph eg = std::make_shared<ExtendedGraph>(mLoader->load(QString::fromStdString(mFilename)));
         eg->setLook(PluginManager::get().defaultLook());
         graphs.push(eg);
         return true;
