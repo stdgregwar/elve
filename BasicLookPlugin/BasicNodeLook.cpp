@@ -45,6 +45,7 @@ BasicNodeLook::BasicNodeLook(BasicLookPlugin& look,const Node& node) : mLook(loo
 
     QSvgRenderer* r = look.renderer(pixmaps[node.type()],QColor());
     mItem = new QGraphicsSvgItem(this);
+    mItem->setCachingEnabled(false);
     mItem->setSharedRenderer(r);
     mItem->setPos(-r->defaultSize().width()/2,-r->defaultSize().height()/2);
     addToGroup(mItem);

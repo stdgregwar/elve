@@ -36,7 +36,7 @@ void LevelLayout::setGraph(SharedGraph graph)
         QVector2D pos = startPosition(p.first);
         const Elve::Node& n = p.second;
 
-        qreal mass = n.isCluster() ? n.data().dependencies().size()*0.5 : 1;
+        qreal mass = 1;//n.isCluster() ? n.data().dependencies().size()*0.5 : 1;
         Point* m = system().addPoint(mass,p.second.id(),pos,damp,FULL);
 
         if(p.second.isInput()) {
