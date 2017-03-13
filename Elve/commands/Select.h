@@ -43,6 +43,7 @@ public:
         if(eg->view()) {
             eg->view()->updateSelectionColor();
         }
+        ids.clear();
         return true;
     }
 private:

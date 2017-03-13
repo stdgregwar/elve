@@ -15,14 +15,14 @@ namespace Elve {
 
 typedef alice::cli_store<SharedEGraph> Store;
 
-class CommandLine : public QObject, public Singleton<CommandLine>, public GraphWidgetListener
+class CommandLine : public QObject, public Singleton<CommandLine>
 {
     friend class Singleton<CommandLine>;
     Q_OBJECT
 public:
     bool run_command(const QString& cmd, std::ostream& out, std::ostream &cerr);
     QStringList completion(const QString& base);
-    void graphChanged(SharedEGraph oldGraph, SharedEGraph newGraph) override;
+    void graphChanged(SharedEGraph oldGraph, SharedEGraph newGraph);
     Store& store();
 private:
     CommandLine(); //Private constructor for singleton

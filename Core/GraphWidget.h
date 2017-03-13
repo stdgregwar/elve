@@ -17,11 +17,18 @@ namespace Elve {
 
 class MainWindow;
 
+enum SelectionMode {
+    CLEAR,
+    ADD,
+    SUB,
+    MULT
+};
+
 class GraphWidget : public QGraphicsView
 {
     Q_OBJECT
 public:
-    GraphWidget(QWidget *parent = nullptr, GraphWidgetListener* listener = new GraphWidgetListener());
+    GraphWidget(QWidget *parent = nullptr, GraphWidgetListener* listener = new DummyListener());
 
     void setGraph(SharedEGraph graph, unsigned quickTicks = 500);
     //void setGraph(SharedGraph graph, const NodePositions& positions);
@@ -47,6 +54,8 @@ public:
     void quickSim(unsigned ticks);
     void setLayout(const SharedLayout &l);
     void reflect(System &sys, SharedGraph g, SharedLook lf);
+
+    void select(const NodeIDSet& names, SelectionMode mode);
 
     void drawBackground(QPainter *painter, const QRectF &rect) override;
     void fit();

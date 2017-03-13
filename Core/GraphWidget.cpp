@@ -173,14 +173,16 @@ void GraphWidget::ungroup() {
 
 void GraphWidget::toggleSelection() {
     Selection& s = mGraph->currentSelection();
+    QString cmd = QString("select %1").arg(QString::number(mGraph->mask()));
     if(s.size() == 0) {
-        for(const auto& p : mGraph->graph()->nodes()) {
-            s.add(p.first);
-        }
+        cmd += " -a";
     } else {
-        s.clear();
+        //s.clear();
+        cmd += " -c";
+
     }
-    updateSelectionColor();
+    mListener->runCommand(cmd);
+    //updateSelectionColor();
 }
 
 void GraphWidget::ungroup(const NodeIDSet& names) {
@@ -315,13 +317,37 @@ bool GraphWidget::BorderSelect::mouseReleaseEvent(QMouseEvent *event) {
             names.insert(n->node().id());
         }
     }
-    gw.mGraph->currentSelection().clear();
-    gw.mGraph->currentSelection().add(names);
-    gw.updateSelectionColor();
+    SelectionMode mode = CLEAR;
+    if(event->modifiers() & Qt::ShiftModifier) mode = ADD;
+    if(event->modifiers() & Qt::ControlModifier) mode = SUB;
+    gw.select(names,mode);
     //gw.group(names);
     gw.setBehaviour(new Behaviour(&gw));
     gw.mScene->removeItem(mRectangle);
     return true;
+}
+
+void GraphWidget::select(const NodeIDSet& names, SelectionMode mode) {
+    QString cmd = QString("select");
+    switch(mode) {
+        case CLEAR:
+            cmd += " -c";
+        break;
+        case ADD:
+            cmd += " --add";
+        break;
+        case SUB:
+            cmd += " --sub";
+        break;
+    default:
+        break;
+    }
+
+    cmd += QString(" %1").arg(QString::number(mGraph->mask()));
+    for(const NodeID& id : names) {
+        cmd += " " + QString::number(id);
+    }
+    mListener->runCommand(cmd);
 }
 
 void GraphWidget::updateSelectionColor() {

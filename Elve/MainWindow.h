@@ -11,7 +11,7 @@
 
 namespace Elve {
 
-class MainWindow : public QMainWindow, public Singleton<MainWindow>
+class MainWindow : public QMainWindow, public Singleton<MainWindow>, public GraphWidgetListener
 {
     friend class Singleton<MainWindow>;
     Q_OBJECT
@@ -24,6 +24,10 @@ public:
     void runUiCommand(const QString& cmd);
     void runCommandOnShownGraph(const QString& cmd);
     void closeAllTabs();
+
+    void graphChanged(SharedEGraph old, SharedEGraph newg) override;
+    void runCommand(const QString& cmd) override;
+
     GraphWidget* viewport();
     ~MainWindow();
 private:

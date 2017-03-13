@@ -264,7 +264,7 @@ GraphWidget* MainWindow::viewport() {
 }
 
 void MainWindow::newWindowWithFile(SharedEGraph g, QString filename) {
-    GraphWidget* gw = new GraphWidget(this,&CommandLine::get());
+    GraphWidget* gw = new GraphWidget(this,this);
     QMainWindow* cw = new QMainWindow(ui.mdiArea);
 
     cw->setCentralWidget(gw);
@@ -314,6 +314,14 @@ void MainWindow::applyQSSTheme() {
     QString StyleSheet = QLatin1String(File.readAll());
 
     qApp->setStyleSheet(StyleSheet);
+}
+
+void MainWindow::graphChanged(SharedEGraph old, SharedEGraph newg) {
+    CommandLine::get().graphChanged(old,newg);
+}
+
+void MainWindow::runCommand(const QString& cmd) {
+    runCommandOnShownGraph(cmd);
 }
 
 void MainWindow::runCommandOnShownGraph(const QString& cmd) {
