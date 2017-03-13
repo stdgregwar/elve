@@ -245,6 +245,17 @@ Selection& ExtendedGraph::currentSelection() {
     return selection(mMaskId);
 }
 
+Selection ExtendedGraph::invertedSelection(size_t i) const {
+    const Selection& sel = mSelections.at(i);
+    Selection isel;
+    for(const auto& pn : mGraph->nodes()) {
+        if(!sel.count(pn.first)) {
+            isel.insert(pn.first);
+        }
+    }
+    return isel;
+}
+
 void ExtendedGraph::setLayout(const SharedLayout &l)
 {
     if(!l) return;

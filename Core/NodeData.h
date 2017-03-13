@@ -50,6 +50,7 @@ public:
     NodeData(const NodeID& id = -1, const NodeName& name = "unnamed",const Dependencies& dependencies = {},
              const NodeType& type = NODE, const NodeProperties& props = {}, const Index& ioindex = 0,
              int inputCount = 2, int outputCount = 1, const Names& inputNames = {}, const Names& outputNames = {});
+
     NodeData(const QJsonObject& obj);
     const NodeProperties& properties() const;
     NodeProperties& properties();
@@ -63,6 +64,8 @@ public:
     int outputCount() const;
     Name inputName(const Index& i) const;
     Name outputName(const Index& i) const;
+    NodeData asInput(const NodeID& newId, const Index &io) const ;
+    NodeData asOutput(const NodeID& newID, const Index& io) const;
 private:
     NodeProperties mProperties;
     NodeID mId;

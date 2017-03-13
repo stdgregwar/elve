@@ -33,6 +33,7 @@ public:
 
     SelectionMasks& selections();
     Selection& selection(size_t i);
+    Selection invertedSelection(size_t i) const;
     Selection& currentSelection();
 
     QJsonObject json() const;

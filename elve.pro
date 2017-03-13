@@ -7,6 +7,7 @@ SUBDIRS += \
     BlockLookPlugin \
     BasicLookPlugin \
     BlifLoaderPlugin \
+    Extract \
     LevelLayoutPlugin \
     SimpleLayoutPlugin \
     Elve \

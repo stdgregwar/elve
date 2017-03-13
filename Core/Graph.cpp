@@ -288,6 +288,20 @@ const NodePtrs& Graph::outputs() {
     return mOutputs;
 }
 
+const SharedData& Graph::datas() const {
+    return mData;
+}
+const SparseData& Graph::extraData() const {
+    return mExtraData;
+}
+const Aliases& Graph::aliases() const {
+    return mAliases;
+}
+
+const NodeIDSet Graph::excluded() const {
+    return mExcluded;
+}
+
 size_t Graph::inputCount() const
 {
     return mInputs.size();

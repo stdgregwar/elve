@@ -53,6 +53,11 @@ public:
     size_t maxOutputIndex() const;
     NodeID newID() const;
 
+    const SharedData & datas() const;
+    const SparseData& extraData() const;
+    const Aliases& aliases() const;
+    const NodeIDSet excluded() const;
+
     const NodeData& data(const NodeID& id) const;
     const Node& node(const NodeID& id) const;
 

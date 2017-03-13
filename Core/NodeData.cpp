@@ -35,6 +35,14 @@ NodeData::NodeData(const NodeID& id, const NodeName &name, const Dependencies &d
 {
 }
 
+NodeData NodeData::asInput(const NodeID& newId, const Index& io) const {
+    return NodeData(newId,mName,{},INPUT,mProperties,io,0,mOutputCount,{},mOutputNames);
+}
+
+NodeData NodeData::asOutput(const NodeID& newId, const Index &io) const {
+    return NodeData(newId,mName,mDependencies,OUTPUT,mProperties,io,mInputCount,0,mInputNames,{});
+}
+
 const NodeName& NodeData::name() const {
     return mName;
 }

@@ -74,7 +74,7 @@ MainWindow::MainWindow(QWidget *parent)
     //Setup transforms
     for(auto& l : pluginManager.transforms()) {
         TransformAction* a = new TransformAction(l,l->name(),this);
-        connect(a,SIGNAL(triggered(GraphTransformPlugin*)),this,SLOT(on_transform_trigerred(GraphTransformPlugin*)));
+        connect(a,SIGNAL(triggered(GraphTransformPlugin*)),this,SLOT(on_transform_triggered(GraphTransformPlugin*)));
         switch(l->type()) {
         case SELECTION:
             ui.menuSelect->addAction(a);
@@ -139,6 +139,7 @@ void MainWindow::on_import_trigerred(GraphLoaderPlugin* ld) {
 }
 
 void MainWindow::on_transform_triggered(GraphTransformPlugin* trans) {
+    runCommandOnShownGraph((trans->cliName() + " -n").c_str());
 }
 
 void MainWindow::on_export_trigerred(FileExporterPlugin* exp) {
