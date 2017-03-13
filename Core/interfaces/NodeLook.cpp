@@ -54,7 +54,7 @@ const QColor& NodeLook::color() const {
 void NodeLook::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
     if(mDraged) {
-        setState({event->scenePos().x(),event->scenePos().y()},{0,0});
+        setState({event->scenePos().x()+mOffset.x(),event->scenePos().y()+mOffset.y()},{0,0});
         setPos(event->scenePos()+mOffset);
         event->accept();
     }
