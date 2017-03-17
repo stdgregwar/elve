@@ -1,5 +1,8 @@
 #include "LevelLayout.h"
+#include "Dialog.h"
 #include <cmath>
+
+#include <interfaces/GraphWidgetListener.h>
 
 using namespace Elve;
 
@@ -10,8 +13,14 @@ LevelLayout::LevelLayout() {
             ("damp,d",po::value(&mDamp)->default_value(mDamp),"damping factor of the points")
             ("unitLength,u",po::value(&mMinUnit)->default_value(mMinUnit),"minimal level unit length in pixels")
             ("iosUnitLength,o",po::value(&mMinIOUnit)->default_value(mMinIOUnit), "minimal space between two I/Os")
+            ("repulsion,r",po::value(&mRepulsion)->default_value(mRepulsion),"repulsion force between nodes")
             ("interleave,i","input node interleaving")
             ;
+}
+
+void LevelLayout::uiStart(GraphWidgetListener* listener,const SharedEGraph& graph) {
+    Dialog* d = new Dialog(this,listener);
+    d->show();
 }
 
 void LevelLayout::setGraph(SharedGraph graph)
@@ -31,6 +40,7 @@ void LevelLayout::setGraph(SharedGraph graph)
 
     QRectF rect = {0,outputHeight,graph->maxOutputIndex()*ioUnit,totHeight};
     system().setSizeHint(rect);
+    system().setRepulsionForce(mRepulsion*1e4);
 
     for(const auto& p : graph->nodes()) {
         QVector2D pos = startPosition(p.first);

@@ -10,7 +10,7 @@ QToolTip
 
 QWidget
 {
-    color: #b1b1b1;
+    color: white;
     background-color: #323232;
 }
 
@@ -22,7 +22,8 @@ QWidget:item:hover
 
 QWidget:item:selected
 {
-    background-color: #555;
+    background-color: #00aaff;
+
 }
 
 QMenuBar::item
@@ -32,13 +33,14 @@ QMenuBar::item
 
 QMenuBar::item:selected
 {
-    background: #555;
+    background: #00aaff;
+    color : white;
     /*border: 1px solid #aaaaaa;*/
 }
 
 QMenuBar::item:pressed
 {
-    background: #555;
+    background: #00aaff;
     /*border: 1px solid #000;
     background-color: #999999*/
     margin-bottom:-1px;
@@ -86,14 +88,24 @@ QLineEdit
     border-radius: 5;
 }
 
+QDoubleSpinBox
+{
+    selection-background-color: #ffaa00;
+    background-color: #646464;
+    color : white;
+    border-style: solid;
+    border: 0px solid #1e1e1e;
+    border-radius: 5;
+}
+
 QPushButton
 {
     color: #b1b1b1;
-    background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #565656, stop: 0.1 #525252, stop: 0.5 #4e4e4e, stop: 0.9 #4a4a4a, stop: 1 #464646);
-    border-width: 1px;
+    background-color: #646464;
+    border-width: 0px;
     border-color: #1e1e1e;
     border-style: solid;
-    border-radius: 6;
+    border-radius: 3;
     padding: 3px;
     font-size: 12px;
     padding-left: 5px;
@@ -108,15 +120,16 @@ QPushButton:pressed
 QComboBox
 {
     selection-background-color: #ffaa00;
-    background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #565656, stop: 0.1 #525252, stop: 0.5 #4e4e4e, stop: 0.9 #4a4a4a, stop: 1 #464646);
+    background-color: #646464;
+    color : white;
     border-style: solid;
-    border: 1px solid #1e1e1e;
+    border: 0px solid #1e1e1e;
     border-radius: 5;
 }
 
 QComboBox:hover,QPushButton:hover
 {
-    border: 2px solid QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #ffa02f, stop: 1 #d7801a);
+    border: 2px solid #00aaff;
 }
 
 
@@ -130,7 +143,8 @@ QComboBox:on
 
 QComboBox QAbstractItemView
 {
-    border: 2px solid darkgray;
+    border: 0px solid darkgray;
+    border-radius: 5px;
     selection-background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #ffa02f, stop: 1 #d7801a);
 }
 
@@ -448,7 +462,7 @@ QRadioButton::indicator:hover, QCheckBox::indicator:hover
 
 QCheckBox::indicator:checked
 {
-    image:url(:/images/checkbox.png);
+    image:url(:/skin/checkbox.png);
 }
 
 QCheckBox::indicator:disabled, QRadioButton::indicator:disabled

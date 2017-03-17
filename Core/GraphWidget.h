@@ -4,6 +4,7 @@
 #include <QGraphicsColorizeEffect>
 #include <QGraphicsView>
 #include <QPointF>
+#include <QComboBox>
 #include <QColor>
 
 #include "System.h"
@@ -58,6 +59,8 @@ public:
     void select(const NodeIDSet& names, SelectionMode mode);
 
     void drawBackground(QPainter *painter, const QRectF &rect) override;
+    void drawForeground(QPainter *painter, const QRectF &rect) override;
+
     void fit();
 
     void updateSelectionColor();
@@ -72,6 +75,9 @@ public slots:
     void toggleSelection();
     void group();
     void ungroup();
+    void setCurrentMask(int i);
+signals:
+    void maskChanged(int i);
 private:
     class Behaviour
     {
@@ -115,6 +121,7 @@ private:
     QPointF mLastPos;
     SharedEGraph mGraph;
     Behaviour* mBehaviour;
+    QComboBox* mSelectionBox;
     //temp
     std::vector<EdgeLook*> mEdges;
     std::vector<NodeLook*> mNodes;

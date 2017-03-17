@@ -16,10 +16,12 @@ INCLUDEPATH+= ../Core/interfaces
 INCLUDEPATH += ../Core
 
 SOURCES += \
-    LevelLayout.cpp
+    LevelLayout.cpp \
+    Dialog.cpp
 
 HEADERS += \
-    LevelLayout.h
+    LevelLayout.h \
+    Dialog.h
 DISTFILES += \
     libLevelLayoutPlugin.ini
 
@@ -27,3 +29,6 @@ unix {
     target.path = /usr/lib
     INSTALLS += target
 }
+
+FORMS += \
+    dialog.ui

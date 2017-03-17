@@ -19,6 +19,7 @@ public:
     void addPoint(const Point* m);
     void clear();
     void debug(QPainter* p) const;
+    void setK(qreal k);
 private:
     std::set<const Point*> mGalaxy;
     QuadTree mQuadTree;

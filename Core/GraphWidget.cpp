@@ -7,6 +7,7 @@
 #include <QOpenGLWidget>
 #include <QJsonObject>
 #include <QJsonArray>
+#include <QPaintEvent>
 
 #include <unordered_map>
 #include <random>
@@ -39,12 +40,26 @@ GraphWidget::GraphWidget(QWidget* parent, GraphWidgetListener* listener) : QGrap
     //mEdgesPath(new QGraphicsPathItem()),
     mListener(listener)
 {
+    mSelectionBox = new QComboBox(this);
+    mSelectionBox->setGeometry(20,20,100,20);
+    for(int i = 0; i < mSelectionColors.size(); i++) {
+        mSelectionBox->addItem("Mask " + QString::number(i));
+    }
+
+    connect(mSelectionBox,SIGNAL(activated(int)),this,SLOT(setCurrentMask(int)));
+    connect(this,SIGNAL(maskChanged(int)),mSelectionBox,SLOT(setCurrentIndex(int)));
+
     setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
     setDragMode(QGraphicsView::ScrollHandDrag);
     setGeometry(0,0,1280,720);
     setScene(mScene);
     setBackgroundBrush(QBrush(QColor(59,58,58), Qt::SolidPattern));
     startTimer(1000/60);
+}
+
+void GraphWidget::setCurrentMask(int i) {
+    mGraph->setMask(i);
+    updateSelectionColor();
 }
 
 void GraphWidget::fit() {
@@ -98,6 +113,10 @@ void GraphWidget::drawBackground(QPainter *painter, const QRectF &rect){
         //mGraph->layout()->system().debug(painter);
     }
     //painter->fillRect(rect,Qt::CrossPattern);
+}
+
+void GraphWidget::drawForeground(QPainter *painter, const QRectF &rect) {
+    //painter->drawText(QPointF{20,20},QString("selection : %1").arg(QString::number(mGraph->mask())));
 }
 
 void GraphWidget::wheelEvent(QWheelEvent *event)
@@ -158,6 +177,7 @@ void GraphWidget::keyPressEvent(QKeyEvent *event) {
         }
     } else if(event->key() >= Qt::Key_0 && event->key() <= Qt::Key_9) {
         mGraph->setMask(event->key()-Qt::Key_0);
+        emit maskChanged(event->key()-Qt::Key_0);
         updateSelectionColor();
     }
 }

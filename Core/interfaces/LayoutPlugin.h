@@ -7,13 +7,14 @@
 #include <QtPlugin>
 
 #include <System.h>
-
 #include "Plugin.h"
 
 #define LayoutPlugin_iid "ch.epfl.lap.elfe.LayoutPlugin"
 
-namespace Elve {
 
+
+namespace Elve {
+class GraphWidgetListener;
 class LayoutPlugin;
 typedef std::shared_ptr<LayoutPlugin> SharedLayout;
 class ExtendedGraph;
@@ -34,6 +35,7 @@ public:
     virtual SharedLayout create() = 0;
     virtual QString name() = 0;
     virtual std::string cliName() = 0;
+    virtual void uiStart(Elve::GraphWidgetListener* listener,const SharedEGraph& graph);
     System& system();
     const System& system() const;
     virtual ~LayoutPlugin(){}

@@ -159,7 +159,9 @@ void MainWindow::runUiCommand(const QString& cmd) {
 }
 
 void MainWindow::on_layout_trigerred(LayoutPlugin* layout) {
-    runCommandOnShownGraph(QString("%1_layout").arg(QString::fromStdString(layout->cliName())));
+    if(CommandLine::get().store().empty()) return;
+    layout->uiStart(this,CommandLine::get().store().current());
+    //runCommandOnShownGraph(QString("%1_layout").arg(QString::fromStdString(layout->cliName())));
 }
 
 void MainWindow::on_look_triggered(LookFactoryPlugin* factory) {
@@ -279,6 +281,7 @@ void MainWindow::newWindowWithFile(SharedEGraph g, QString filename) {
     w->setWindowState(Qt::WindowMaximized);
     w->setAttribute(Qt::WA_DeleteOnClose);
     gw->setGraph(g);
+    gw->fit();
 }
 
 void MainWindow::on_actionSave_triggered()

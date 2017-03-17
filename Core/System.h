@@ -46,6 +46,7 @@ public:
     void debug(QPainter* p) const;
     void setSizeHint(const QRectF& rect);
     void setOrientationHint(OrientationHint hint);
+    void setRepulsionForce(float f);
     OrientationHint orientationHint() const;
     QVector2D transformPoint(const QVector2D& p) const;
     const QRectF& sizeHint() const;

@@ -67,6 +67,10 @@ Point* System::point(const NodeID& id) {
     }
 }
 
+void System::setRepulsionForce(float f) {
+    mGravity.setK(f);
+}
+
 const PointsByID& System::pointsByID() const {
     return mPointsById;
 }

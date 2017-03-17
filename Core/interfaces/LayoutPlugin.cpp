@@ -4,6 +4,7 @@
 #include <QDebug>
 #include <Graph.h>
 #include <ExtendedGraph.h>
+#include "GraphWidgetListener.h"
 
 namespace Elve {
 using namespace std;
@@ -72,4 +73,9 @@ void LayoutPlugin::quickSim(size_t ticks) {
     duration<double> time_span = duration_cast<duration<double>>(t2 - t1);
     qDebug() << "Simulating at mean of" << ticks/time_span.count() << "tps";
 }
+
+void LayoutPlugin::uiStart(Elve::GraphWidgetListener* listener,const SharedEGraph& graph) {
+    listener->runCommand(QString("%1_layout").arg(cliName().c_str()));
+}
+
 }

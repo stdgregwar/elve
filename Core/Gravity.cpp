@@ -23,6 +23,10 @@ void Gravity::addPoint(const Point* m)
     mQuadTree.addPoint(m);
 }
 
+void Gravity::setK(qreal k) {
+    mK = k;
+}
+
 QVector2D Gravity::plainOldGravity(const Point& m) const
 {
     QVector2D f{0,0};

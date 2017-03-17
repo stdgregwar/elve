@@ -2,6 +2,7 @@
 #define GRAPHWIDGETLISTENER_H
 
 #include <ExtendedGraph.h>
+
 namespace Elve {
 
 class GraphWidgetListener
