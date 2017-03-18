@@ -40,6 +40,11 @@ BasicNodeLook::BasicNodeLook(BasicLookPlugin& look,const Node& node) : mLook(loo
     } //TODO move all of this to a information module or smth
 
 
+    if(node.properties().contains("color")) {
+        mBaseColor = QColor(node.properties().value("color").toString());
+    } else {
+        mBaseColor = QColor();
+    }
 
     setZValue(1);
 
@@ -54,9 +59,15 @@ BasicNodeLook::BasicNodeLook(BasicLookPlugin& look,const Node& node) : mLook(loo
 }
 
 void BasicNodeLook::onColorChange(const QColor& col) {
-    mItem->setSharedRenderer(mLook.renderer(pixmaps[node().type()],col));
+    QColor tcol = col;
+    if(mBaseColor.isValid()) {
+        tcol = QColor((col.red()+mBaseColor.red())/2,
+                      (col.green()+mBaseColor.green())/2,
+                      (col.blue()+mBaseColor.blue())/2);
+    }
+    mItem->setSharedRenderer(mLook.renderer(pixmaps[node().type()],tcol));
 }
 
 void BasicNodeLook::onColorReset() {
-    mItem->setSharedRenderer(mLook.renderer(pixmaps[node().type()],QColor()));
+    mItem->setSharedRenderer(mLook.renderer(pixmaps[node().type()],mBaseColor));
 }

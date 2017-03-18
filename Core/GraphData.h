@@ -19,8 +19,10 @@ public:
         void setDependencies(const NodeName& name, const NodeNames& dependencies);
         void setDependencies(const NodeName &name, const Dependencies &dependencies);
         void setProperties(const NodeName& name, const NodeProperties& props);
+        void addProperty(const NodeName& name, const QString& pname, const QJsonValue& val);
         void setNodeInputNames(const NodeName& name, const Names& names);
         void setNodeOutputNames(const NodeName& name, const Names& names);
+        void setNode(const NodeName& name, const Node& node);
 
         QJsonObject& properties(const NodeName& name);
         void setType(const NodeName& name, const NodeType& type);

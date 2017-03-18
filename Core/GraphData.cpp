@@ -2,6 +2,8 @@
 #include <QJsonObject>
 #include <QJsonArray>
 
+#include "Node.h"
+
 namespace Elve {
 
 GraphData::GraphData(const NodeDatas& nodesData,QString filename)
@@ -89,6 +91,21 @@ void GraphData::Builder::setDependencies(const NodeName& name, const NodeNames &
 
 void GraphData::Builder::setProperties(const NodeName& name, const NodeProperties& props) {
     mProperties[id(name)] = props;
+}
+
+void GraphData::Builder::addProperty(const NodeName& name,const QString& pname,const QJsonValue& val) {
+    properties(name).insert(pname,val);
+}
+
+void GraphData::Builder::setNode(const NodeName& name, const Node& node) {
+    setProperties(name,node.properties());
+    setIoIndex(name,node.IOIndex());
+    Dependencies deps;
+    for(const Node::Connexion& c : node.fanIn()) {
+        deps.push_back(Dependency{id(c.node->name()),c.from,c.to});
+    }
+    setDependencies(name,deps);
+    //setType(name,node.type());
 }
 
 QJsonObject& GraphData::Builder::properties(const NodeName& name) {

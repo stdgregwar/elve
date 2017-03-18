@@ -17,4 +17,5 @@ public:
 private:
     QGraphicsSvgItem* mItem;
     BasicLookPlugin& mLook;
+    QColor mBaseColor;
 };

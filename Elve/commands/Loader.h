@@ -33,6 +33,7 @@ public:
         auto& graphs = env->store<SharedEGraph>();
         SharedEGraph eg = std::make_shared<ExtendedGraph>(mLoader->load(QString::fromStdString(mFilename)));
         eg->setLook(PluginManager::get().defaultLook());
+        eg->setLayout(PluginManager::get().defaultLayout());
         graphs.push(eg);
         return true;
     }
