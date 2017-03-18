@@ -220,6 +220,11 @@ Elve::SharedGraph DivisorLoader::load(const QString &filepath) {
         NodeName name = div.value("output").toString().toStdString();
         int layer = div.value("layer").toInt();
         b.addProperty(name,"color",colorMap.value(layer));
+
+        QJsonObject toShow;
+        toShow.insert("func",div.value("func"));
+        toShow.insert("cost",div.value("cost"));
+        b.addProperty(name,"toShow",toShow);
         NodeNames deps;
         deps.push_back(div.value("input1").toString().toStdString());
         deps.push_back(div.value("input2").toString().toStdString());
@@ -229,12 +234,17 @@ Elve::SharedGraph DivisorLoader::load(const QString &filepath) {
     }
     //Rest
     SharedGraph depntk = readBlif(basePath+"/depntk.blif");
+    NodeIDSet toGroup;
     for(const NodesByID::value_type& p : depntk->nodes()) {
         const Node& n = p.second;
         if(!n.isInput()) {
             b.setNode(n.name(),n);
+            if(!n.isOutput()) {
+                toGroup.insert(b.id(n.name()));
+            }
         }
     }
     SharedData sdata = b.build(filepath);
-    return make_shared<Graph>(sdata);
+    SharedGraph g = make_shared<Graph>(sdata);
+    return g->group(toGroup,g->newID(),"Rest logic");
 }

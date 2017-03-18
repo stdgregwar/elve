@@ -18,12 +18,25 @@ static std::unordered_map<NodeType,QString> pixmaps{
 
 BasicNodeLook::BasicNodeLook(BasicLookPlugin& look,const Node& node) : mLook(look),NodeLook(node)
 {
-
-
+    QString props;
+    if(node.properties().contains("toShow")) {
+        QJsonObject toShow = node.properties().value("toShow").toObject();
+        for(QJsonObject::iterator v = toShow.begin(); v != toShow.end(); v++) {
+            props += v.key() + " : ";
+            props += v.value().toVariant().toString();
+            props += "\n";
+        }
+    }
     if(node.type() == CLUSTER) {
         setToolTip(QString("Name : %1\n"
                            "ID   : %2\n"
-                           "nodeCount : %3").arg(node.name().c_str()).arg(node.id()).arg(node.data().dependencies().size()));
+                           "nodeCount : %3\n"
+                           "others : \n"
+                           "%4")
+                   .arg(node.name().c_str())
+                   .arg(node.id())
+                   .arg(node.data().dependencies().size())
+                   .arg(props));
     } else {
         QJsonObject truthtable = node.properties()["truthtable"].toObject();
         QString table;
@@ -36,7 +49,14 @@ BasicNodeLook::BasicNodeLook(BasicLookPlugin& look,const Node& node) : mLook(loo
         setToolTip(QString("Name : %1\n"
                            "ID   : %2\n"
                            "truthtable :\n %3\n"
-                           "ancestorsCount : %4").arg(node.name().c_str()).arg(node.id()).arg(table).arg(node.data().dependencies().size()));
+                           "ancestorsCount : %4\n"
+                           "others : \n"
+                           "%5")
+                   .arg(node.name().c_str())
+                   .arg(node.id())
+                   .arg(table)
+                   .arg(node.data().dependencies().size())
+                   .arg(props));
     } //TODO move all of this to a information module or smth
 
 

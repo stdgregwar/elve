@@ -8,6 +8,7 @@
 #include <QJsonObject>
 #include <QJsonArray>
 #include <QPaintEvent>
+#include <QTimeLine>
 
 #include <unordered_map>
 #include <random>
@@ -20,22 +21,23 @@ namespace Elve {
 using namespace std;
 
 std::array<QColor,10> GraphWidget::mSelectionColors = {
-        Qt::blue,
-        Qt::red,
-        Qt::yellow,
-        Qt::green,
-        QColor(0, 102, 0), //Dark green
-        QColor(255, 153, 0), //Orange
-        QColor(255, 0, 102), //Purple
-        QColor(0, 0, 255), //Dark blue
-        QColor(255, 102, 255), //Pink
-        QColor(128, 0, 0) //Bordeaux
-    };
+    Qt::blue,
+    Qt::red,
+    Qt::yellow,
+    Qt::green,
+    QColor(0, 102, 0), //Dark green
+    QColor(255, 153, 0), //Orange
+    QColor(255, 0, 102), //Purple
+    QColor(0, 0, 255), //Dark blue
+    QColor(255, 102, 255), //Pink
+    QColor(128, 0, 0) //Bordeaux
+};
 
 GraphWidget::GraphWidget(QWidget* parent, GraphWidgetListener* listener) : QGraphicsView(parent),
     mScene(new QGraphicsScene(-SS,-SS,SS*2,SS*2,this)),
     mDrag(false),
     mScale(1),
+    mTargetScale(1),
     mBehaviour(new Behaviour(this)),
     //mEdgesPath(new QGraphicsPathItem()),
     mListener(listener)
@@ -63,7 +65,8 @@ void GraphWidget::setCurrentMask(int i) {
 }
 
 void GraphWidget::fit() {
-    fitInView(mScene->itemsBoundingRect(),Qt::KeepAspectRatio);
+    //fitInView(mScene->itemsBoundingRect(),Qt::KeepAspectRatio);
+    fitInView(mGraph->layout()->system().sizeHint(),Qt::KeepAspectRatio);
 }
 
 void GraphWidget::init()
@@ -122,14 +125,14 @@ void GraphWidget::drawForeground(QPainter *painter, const QRectF &rect) {
 void GraphWidget::wheelEvent(QWheelEvent *event)
 {
     //setTransformationAnchor(QGraphicsView::AnchorUnderMouse);
+
     const QPoint degrees = event->angleDelta()/ 8;
     const int steps = degrees.y() / 15;
     const float scalebase = sqrt(2);
     float s = pow(scalebase,steps);
-    scale(s,s);
-    mScale*=s;
+    mTargetScale*=s;
     event->accept();
-    QGraphicsView::wheelEvent(event);
+    //QGraphicsView::wheelEvent(event);
 }
 
 void GraphWidget::borderSelect() {
@@ -251,6 +254,13 @@ void GraphWidget::tick(float dt, bool update)
 void GraphWidget::timerEvent(QTimerEvent *e)
 {
     tick(0.25);
+
+    qreal oldScale= mScale;
+    mScale = 0.9*mScale+0.1*mTargetScale;
+    qreal factor = mScale/oldScale;
+    if(abs(1-factor)>1e-3) {
+        scale(factor,factor);
+    }
 }
 
 void GraphWidget::setBehaviour(Behaviour* b) {
@@ -350,14 +360,14 @@ bool GraphWidget::BorderSelect::mouseReleaseEvent(QMouseEvent *event) {
 void GraphWidget::select(const NodeIDSet& names, SelectionMode mode) {
     QString cmd = QString("select");
     switch(mode) {
-        case CLEAR:
-            cmd += " -c";
+    case CLEAR:
+        cmd += " -c";
         break;
-        case ADD:
-            cmd += " --add";
+    case ADD:
+        cmd += " --add";
         break;
-        case SUB:
-            cmd += " --sub";
+    case SUB:
+        cmd += " --sub";
         break;
     default:
         break;
@@ -374,9 +384,9 @@ void GraphWidget::updateSelectionColor() {
     Selection& s = mGraph->currentSelection();
     for(NodeLook* i : mNodes) {
         if(s.count(i->node().id())) {
-           i->color(mSelectionColors[mGraph->mask()]);
+            i->color(mSelectionColors[mGraph->mask()]);
         } else {
-           i->color(QColor());
+            i->color(QColor());
         }
     }
 }

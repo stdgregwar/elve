@@ -128,6 +128,7 @@ private:
     QList<QGraphicsPathItem*> mEdgesPaths;
     GraphWidgetListener* mListener;
     static std::array<QColor,10> mSelectionColors;
+    qreal mTargetScale;
 };
 
 }
