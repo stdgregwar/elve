@@ -50,7 +50,6 @@ BasicNodeLook::BasicNodeLook(BasicLookPlugin& look,const Node& node) : mLook(loo
                            "ID   : %2\n"
                            "truthtable :\n %3\n"
                            "ancestorsCount : %4\n"
-                           "others : \n"
                            "%5")
                    .arg(node.name().c_str())
                    .arg(node.id())

@@ -274,6 +274,7 @@ void GraphWidget::setBehaviour(Behaviour* b) {
 
 void GraphWidget::setLayout(const SharedLayout& l) {
     mGraph->setLayout(l);
+    setSceneRect(l->system().sizeHint());
     //reflect(mGraph->layout()->system(),mGraph->graph());
 }
 
@@ -288,6 +289,8 @@ void GraphWidget::clearScene() {
 
 void GraphWidget::reflect(System &sys, SharedGraph g, SharedLook lf) {
     clearScene();
+
+    setSceneRect(sys.sizeHint());
 
     unordered_map<NodeID,NodeLook*> looks;
 
