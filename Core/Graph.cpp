@@ -50,11 +50,11 @@ Graph::Graph(const SharedData& data, const SparseData &extraData, const Aliases 
         const Pin& p = alias(d.id());
         if(!mExcluded.count(p.id)) {
             for(const Dependency& dep : d.dependencies()) {
-                const Pin& cpin = alias({d.id(),dep.to});
+                const Pin cpin = alias({d.id(),dep.to});
                 if(mExcluded.count(cpin.id)) {
                     continue;
                 }
-                const Pin& dpin = alias({dep.id,dep.from});
+                const Pin dpin = alias({dep.id,dep.from});
                 if(!mExcluded.count(dpin.id)) {
                     addEdge(dpin.id,dpin.index,cpin.id,cpin.index);
                 }
@@ -79,7 +79,7 @@ size_t Graph::nodeCount() const {
     return mNodes.size();
 }
 
-const Pin &Graph::alias(const Pin &id) const {
+const Pin Graph::alias(const Pin &id) const {
     auto it = mAliases.find(id);
     if(it != mAliases.end()) return alias(it->second);
     return id;

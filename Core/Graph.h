@@ -39,7 +39,7 @@ public:
     Graph(const SharedData& data, const SparseData &extraData, const Aliases& aliases, const NodeIDSet &excluded = {});
 
     const NodesByID& nodes() const;
-    const Pin& alias(const Pin& id) const;
+    const Pin alias(const Pin& id) const;
     size_t nodeCount() const;
     SharedGraph clusterize(size_t level);
     SharedGraph group(const NodeIDSet& toGroup, const NodeID &i, const NodeName &groupName);
