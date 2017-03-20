@@ -39,6 +39,5 @@ the other required packages using the following command.
 
 ## Build and Run
 
-Either use Qt Creator to build elve.pro or build with your prefered tool
-using qmake ([qmake documentation](http://doc.qt.io/qt-4.8/qmake-
-tutorial.html)).
+Either use Qt Creator to build elve.pro or build with your preferred tool
+using qmake ([qmake documentation](http://doc.qt.io/qt-4.8/qmake-tutorial.html)).
