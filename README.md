@@ -25,8 +25,8 @@ The following software is required in order to build and use ELVE.
 * boost
 * libstdc++6
 
-To download Qt, follow the instructions on their
-[website](https://www.qt.io/download-open-source/).
+To download Qt, follow the instructions on
+[Qt website](https://www.qt.io/download-open-source/).
 
 In *Ubuntu* the other packages can be installed with the following command.
 
@@ -35,9 +35,17 @@ In *Ubuntu* the other packages can be installed with the following command.
 In *Mac*, it is recommended to use [Homebrew](http://brew.sh/) to install
 the other required packages using the following command.
 
-    brew install boost git
+    brew install git boost gcc45 --enable-cxx
 
 ## Build and Run
 
-Either use Qt Creator to build elve.pro or build with your preferred tool
+The easiest way to build and run ELVE is using **Qt Creator**.
+
+First, open the **elve.pro** project file. From the *File* menu, select
+*Open File or Project...*, and then open the file *elve.pro* from ELVE's
+folder. Next, press on *Configure Project*. Now, you can build and run
+ELVE by selecting the *Run* option from the *Build* menu.
+
+Alternatively, you can build ELVE with your preferred tool
 using qmake ([qmake documentation](http://doc.qt.io/qt-4.8/qmake-tutorial.html)).
+
