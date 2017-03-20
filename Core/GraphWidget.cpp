@@ -142,6 +142,18 @@ void GraphWidget::borderSelect() {
 void GraphWidget::mousePressEvent(QMouseEvent *event)
 {
     if(!mBehaviour || !mBehaviour->mousePressEvent(event)) {
+        QList<QGraphicsItem*> items = mScene->items(mapToScene(event->pos()));
+        NodeIDSet names;
+        for(QGraphicsItem* i : items) {
+            NodeLook* n = dynamic_cast<NodeLook*>(i);
+            if(n) {
+                names.insert(n->node().id());
+            }
+        }
+        SelectionMode mode = CLEAR;
+        if(event->modifiers() & Qt::ShiftModifier) mode = ADD;
+        if(event->modifiers() & Qt::ControlModifier) mode = SUB;
+        select(names,mode);
         QGraphicsView::mousePressEvent(event);
     }
 }
@@ -363,6 +375,7 @@ bool GraphWidget::BorderSelect::mouseReleaseEvent(QMouseEvent *event) {
 }
 
 void GraphWidget::select(const NodeIDSet& names, SelectionMode mode) {
+    if(names.empty()) return;
     QString cmd = QString("select");
     switch(mode) {
     case CLEAR:

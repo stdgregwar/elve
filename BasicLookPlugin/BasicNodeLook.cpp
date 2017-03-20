@@ -58,14 +58,17 @@ BasicNodeLook::BasicNodeLook(BasicLookPlugin& look,const Node& node) : mLook(loo
         }
         setToolTip(QString("Name : %1\n"
                            "ID   : %2\n"
-                           "truthtable :\n %3\n"
-                           "ancestorsCount : %4\n"
-                           "%5")
+                           "level: %3\n"
+                           "truthtable :\n %4\n"
+                           "ancestorsCount : %5\n"
+                           "%6")
                    .arg(node.name().c_str())
                    .arg(node.id())
+                   .arg(QString::number(node.level()))
                    .arg(table)
                    .arg(node.data().dependencies().size())
                    .arg(props));
+
     } //TODO move all of this to a information module or smth
 
 

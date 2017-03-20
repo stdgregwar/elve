@@ -227,6 +227,7 @@ Elve::SharedGraph DivisorLoader::load(const QString &filepath) {
         int layer = div.value("layer").toInt();
         if(layer > lastLayer) {
             lastDivs.clear();
+            lastLayer = layer;
         }
         lastDivs.push_back(name);
         b.addProperty(name,"color",colorMap.value(layer));
