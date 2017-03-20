@@ -181,7 +181,11 @@ Elve::SharedGraph DivisorLoader::load(const QString &filepath) {
     }
     QFileInfo infos(file);
     QString basePath = infos.absolutePath();
-    QJsonDocument doc = QJsonDocument::fromJson(file.readAll());
+    QJsonParseError error;
+    QJsonDocument doc = QJsonDocument::fromJson(file.readAll(), &error);
+    if(error.error != QJsonParseError::NoError) {
+        throw std::runtime_error("Error parsing json : \n" + error.errorString().toStdString());
+    }
 
     //Colors
     QHash<int,QString> colorMap;
@@ -213,38 +217,55 @@ Elve::SharedGraph DivisorLoader::load(const QString &filepath) {
     }
 
     //Sub graphs
+    int lastLayer = 0;
+    NodeNames lastDivs;
     QJsonArray divisors = doc.object().value("divisors").toArray();
     for(const QJsonValue& v : divisors)
     {
         QJsonObject div = v.toObject();
         NodeName name = div.value("output").toString().toStdString();
         int layer = div.value("layer").toInt();
+        if(layer > lastLayer) {
+            lastDivs.clear();
+        }
+        lastDivs.push_back(name);
         b.addProperty(name,"color",colorMap.value(layer));
 
         QJsonObject toShow;
         toShow.insert("func",div.value("func"));
         toShow.insert("cost",div.value("cost"));
+        toShow.insert("layer",div.value("layer"));
+        toShow.insert("inputs",div.value("inputs"));
         b.addProperty(name,"toShow",toShow);
         NodeNames deps;
-        deps.push_back(div.value("input1").toString().toStdString());
-        deps.push_back(div.value("input2").toString().toStdString());
-        NodeName i3 = div.value("input3").toString().toStdString();
-        if(i3 != "unused") deps.push_back(i3);
+        for(const QJsonValue& v : div.value("inputs").toArray()) {
+            deps.push_back(v.toString().toStdString());
+        }
         b.setDependencies(name,deps);
     }
     //Rest
-    SharedGraph depntk = readBlif(basePath+"/depntk.blif");
-    NodeIDSet toGroup;
-    for(const NodesByID::value_type& p : depntk->nodes()) {
-        const Node& n = p.second;
-        if(!n.isInput()) {
-            b.setNode(n.name(),n);
-            if(!n.isOutput()) {
-                toGroup.insert(b.id(n.name()));
+    if(doc.object().contains("depntk")) {
+        QString name = doc.object().value("depntk").toString();
+        SharedGraph depntk = readBlif(basePath+"/"+name);
+        NodeIDSet toGroup;
+        for(const NodesByID::value_type& p : depntk->nodes()) {
+            const Node& n = p.second;
+            if(!n.isInput()) {
+                b.setNode(n.name(),n);
+                if(!n.isOutput()) {
+                    toGroup.insert(b.id(n.name()));
+                }
             }
         }
+        SharedData sdata = b.build(filepath);
+        SharedGraph g = make_shared<Graph>(sdata);
+        return g->group(toGroup,g->newID(),"Rest logic");
+    } else {
+        b.setDependencies("depntk",lastDivs);
+        for(const NodeID& id : b.outputs()) {
+            b.setDependencies(b.name(id),{"depntk"});
+        }
+        SharedData sdata = b.build(filepath);
+        return make_shared<Graph>(sdata);
     }
-    SharedData sdata = b.build(filepath);
-    SharedGraph g = make_shared<Graph>(sdata);
-    return g->group(toGroup,g->newID(),"Rest logic");
 }

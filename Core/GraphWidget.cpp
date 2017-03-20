@@ -256,7 +256,7 @@ void GraphWidget::timerEvent(QTimerEvent *e)
     tick(0.25);
 
     qreal oldScale= mScale;
-    mScale = 0.9*mScale+0.1*mTargetScale;
+    mScale = 0.8*mScale+0.2*mTargetScale;
     qreal factor = mScale/oldScale;
     if(abs(1-factor)>1e-3) {
         scale(factor,factor);
@@ -289,6 +289,8 @@ void GraphWidget::clearScene() {
 
 void GraphWidget::reflect(System &sys, SharedGraph g, SharedLook lf) {
     clearScene();
+
+    qDebug() << "Reflecting" << lf->lookName();
 
     setSceneRect(sys.sizeHint());
 

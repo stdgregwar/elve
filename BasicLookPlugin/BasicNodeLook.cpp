@@ -23,7 +23,17 @@ BasicNodeLook::BasicNodeLook(BasicLookPlugin& look,const Node& node) : mLook(loo
         QJsonObject toShow = node.properties().value("toShow").toObject();
         for(QJsonObject::iterator v = toShow.begin(); v != toShow.end(); v++) {
             props += v.key() + " : ";
-            props += v.value().toVariant().toString();
+            if(v.value().isArray()) {
+                props += "[";
+                bool first = true;
+                for(const QJsonValue& v2 : v.value().toArray()) {
+                    props += (first ? "" : ", ") + v2.toString();
+                    first = false;
+                }
+                props += "]";
+            } else {
+                props += v.value().toVariant().toString();
+            }
             props += "\n";
         }
     }
@@ -69,7 +79,7 @@ BasicNodeLook::BasicNodeLook(BasicLookPlugin& look,const Node& node) : mLook(loo
 
     QSvgRenderer* r = look.renderer(pixmaps[node.type()],QColor());
     mItem = new QGraphicsSvgItem(this);
-    mItem->setCachingEnabled(false);
+    mItem->setCachingEnabled(true);
     mItem->setSharedRenderer(r);
     mItem->setPos(-r->defaultSize().width()/2,-r->defaultSize().height()/2);
     addToGroup(mItem);
