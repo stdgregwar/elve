@@ -22,6 +22,7 @@ typedef long NodeLevel;
 class Graph;
 typedef std::shared_ptr<Graph> SharedGraph;
 
+
 class Node
 {
 public:
