@@ -28,9 +28,9 @@ The following software is required in order to build and use ELVE.
 To download Qt, follow the instructions on
 [Qt website](https://www.qt.io/download-open-source/).
 
-In *Ubuntu* the other packages can be installed with the following command.
+In *Ubuntu* Qt and the other packages can be installed with the following command.
 
-    sudo apt-get install build-essential git g++ libboost-all-dev libstdc++6
+    sudo apt-get install build-essential git g++ libboost-all-dev libstdc++6 qt5-default qtcreator libqt5svg5-dev
 
 In *Mac*, it is recommended to use [Homebrew](http://brew.sh/) to install
 the other required packages using the following command.
