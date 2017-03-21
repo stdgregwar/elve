@@ -47,9 +47,9 @@ typedef std::vector<Edge> AdjacencyList;
  *
  * The pointer based representation is expanded from the GraphData and auxiliary
  * data passed to the graph that controls how the graph expands :
- * -extraData : add Nodes to the graph
- * -aliases : maps Pin to Pin to redirect edges to other nodes, especially extra Nodes
- * -exluded : set of excluded Id's that prevent nodes being expanded
+ * - extraData : add Nodes to the graph
+ * - aliases : maps Pin to Pin to redirect edges to other nodes, especially extra Nodes
+ * - exluded : set of excluded Id's that prevent nodes being expanded
  *
  * Layout, Selection, Looks... are stored and managed in ExtendedGraph
  */
