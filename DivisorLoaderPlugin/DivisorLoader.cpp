@@ -231,6 +231,7 @@ Elve::SharedGraph DivisorLoader::load(const QString &filepath) {
         }
         lastDivs.push_back(name);
         b.addProperty(name,"color",colorMap.value(layer));
+        b.addProperty(name,"level",layer+1);
 
         QJsonObject toShow;
         toShow.insert("func",div.value("func"));
@@ -262,9 +263,11 @@ Elve::SharedGraph DivisorLoader::load(const QString &filepath) {
         SharedGraph g = make_shared<Graph>(sdata);
         return g->group(toGroup,g->newID(),"Rest logic");
     } else {
-        b.setDependencies("depntk",lastDivs);
+        NodeName name = "depntk";
+        b.setDependencies(name,lastDivs);
+        b.addProperty(name,"level",lastLayer+2);
         for(const NodeID& id : b.outputs()) {
-            b.setDependencies(b.name(id),{"depntk"});
+            b.setDependencies(b.name(id),{name});
         }
         SharedData sdata = b.build(filepath);
         return make_shared<Graph>(sdata);

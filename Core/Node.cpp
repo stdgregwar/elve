@@ -81,9 +81,13 @@ const NodeLevel& Node::level() const { //TODO add special treatment for OUTPUTS
         return mLevel = 0;
     }
     if(mLevel == -1) { //Recursive def
-        for(const Node* an : ancestors()) {
-            if(an->level() +1 > mLevel) {
-                mLevel = an->level() + 1;
+        if(properties().contains("level")) {
+            mLevel = properties().value("level").toInt();
+        } else {
+            for(const Node* an : ancestors()) {
+                if(an->level() +1 > mLevel) {
+                    mLevel = an->level() + 1;
+                }
             }
         }
     }

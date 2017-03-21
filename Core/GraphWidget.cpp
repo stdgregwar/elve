@@ -329,6 +329,7 @@ void GraphWidget::reflect(System &sys, SharedGraph g, SharedLook lf) {
             mEdges.push_back(ei);
         }
     }
+    qDebug() << "Reflected";
 }
 
 /*
