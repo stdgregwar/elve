@@ -23,8 +23,7 @@ addons:
       - graphviz
 before_script:
  - sudo add-apt-repository ppa:ubuntu-sdk-team/ppa -y
- - sudo apt update -q
- - sudo apt-get update
+ - sudo apt-get update -q
  - sudo apt-get install build-essential g++ libboost-all-dev libstdc++6 qt5-default qtcreator libqt5svg5-dev
 
 # Build your code e.g. by calling make
