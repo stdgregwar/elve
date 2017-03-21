@@ -49,3 +49,6 @@ ELVE by selecting the *Run* option from the *Build* menu.
 Alternatively, you can build ELVE with your preferred tool
 using qmake ([qmake documentation](http://doc.qt.io/qt-4.8/qmake-tutorial.html)).
 
+## Development
+
+Writing your own plugin? Take a look at the ([online doxygen](https://stdgregwar.github.io/elve/html/)).
