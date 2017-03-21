@@ -6,34 +6,40 @@ warning: ignoring unsupported tag `GROUP_NESTED_COMPOUNDS =' at line 370, file /
 warning: ignoring unsupported tag `EXTRACT_PACKAGE        =' at line 450, file /home/travis/build/stdgregwar/elve/doc/Doxyfile
 warning: ignoring unsupported tag `HIDE_COMPOUND_REFERENCE=' at line 541, file /home/travis/build/stdgregwar/elve/doc/Doxyfile
 warning: ignoring unsupported tag `SHOW_GROUPED_MEMB_INC  =' at line 554, file /home/travis/build/stdgregwar/elve/doc/Doxyfile
-warning: ignoring unsupported tag `WARN_AS_ERROR          =' at line 765, file /home/travis/build/stdgregwar/elve/doc/Doxyfile
-warning: ignoring unsupported tag `USE_MDFILE_AS_MAINPAGE =' at line 985, file /home/travis/build/stdgregwar/elve/doc/Doxyfile
-warning: ignoring unsupported tag `SOURCE_TOOLTIPS        =' at line 1041, file /home/travis/build/stdgregwar/elve/doc/Doxyfile
-warning: ignoring unsupported tag `HTML_EXTRA_STYLESHEET  =' at line 1176, file /home/travis/build/stdgregwar/elve/doc/Doxyfile
-warning: ignoring unsupported tag `HTML_INDEX_NUM_ENTRIES =' at line 1246, file /home/travis/build/stdgregwar/elve/doc/Doxyfile
-warning: ignoring unsupported tag `MATHJAX_FORMAT         =' at line 1527, file /home/travis/build/stdgregwar/elve/doc/Doxyfile
-warning: ignoring unsupported tag `MATHJAX_CODEFILE       =' at line 1555, file /home/travis/build/stdgregwar/elve/doc/Doxyfile
-warning: ignoring unsupported tag `EXTERNAL_SEARCH        =' at line 1604, file /home/travis/build/stdgregwar/elve/doc/Doxyfile
-warning: ignoring unsupported tag `SEARCHENGINE_URL       =' at line 1615, file /home/travis/build/stdgregwar/elve/doc/Doxyfile
-warning: ignoring unsupported tag `SEARCHDATA_FILE        =' at line 1623, file /home/travis/build/stdgregwar/elve/doc/Doxyfile
-warning: ignoring unsupported tag `EXTERNAL_SEARCH_ID     =' at line 1631, file /home/travis/build/stdgregwar/elve/doc/Doxyfile
-warning: ignoring unsupported tag `EXTRA_SEARCH_MAPPINGS  =' at line 1641, file /home/travis/build/stdgregwar/elve/doc/Doxyfile
-warning: ignoring unsupported tag `LATEX_EXTRA_STYLESHEET =' at line 1743, file /home/travis/build/stdgregwar/elve/doc/Doxyfile
-warning: ignoring unsupported tag `LATEX_EXTRA_FILES      =' at line 1751, file /home/travis/build/stdgregwar/elve/doc/Doxyfile
-warning: ignoring unsupported tag `LATEX_TIMESTAMP        =' at line 1810, file /home/travis/build/stdgregwar/elve/doc/Doxyfile
-warning: ignoring unsupported tag `RTF_SOURCE_CODE        =' at line 1876, file /home/travis/build/stdgregwar/elve/doc/Doxyfile
-warning: ignoring unsupported tag `MAN_SUBDIR             =' at line 1911, file /home/travis/build/stdgregwar/elve/doc/Doxyfile
-warning: ignoring unsupported tag `GENERATE_DOCBOOK       =' at line 1957, file /home/travis/build/stdgregwar/elve/doc/Doxyfile
-warning: ignoring unsupported tag `DOCBOOK_OUTPUT         =' at line 1965, file /home/travis/build/stdgregwar/elve/doc/Doxyfile
-warning: ignoring unsupported tag `DOCBOOK_PROGRAMLISTING =' at line 1974, file /home/travis/build/stdgregwar/elve/doc/Doxyfile
-warning: ignoring unsupported tag `EXTERNAL_PAGES         =' at line 2148, file /home/travis/build/stdgregwar/elve/doc/Doxyfile
-warning: ignoring unsupported tag `DIA_PATH               =' at line 2183, file /home/travis/build/stdgregwar/elve/doc/Doxyfile
-warning: ignoring unsupported tag `UML_LIMIT_NUM_FIELDS   =' at line 2277, file /home/travis/build/stdgregwar/elve/doc/Doxyfile
-warning: ignoring unsupported tag `DIAFILE_DIRS           =' at line 2395, file /home/travis/build/stdgregwar/elve/doc/Doxyfile
-warning: ignoring unsupported tag `PLANTUML_JAR_PATH      =' at line 2403, file /home/travis/build/stdgregwar/elve/doc/Doxyfile
-warning: ignoring unsupported tag `PLANTUML_CFG_FILE      =' at line 2408, file /home/travis/build/stdgregwar/elve/doc/Doxyfile
-warning: ignoring unsupported tag `PLANTUML_INCLUDE_PATH  =' at line 2413, file /home/travis/build/stdgregwar/elve/doc/Doxyfile
-warning: failed to open layout file 'doc/DoxygenLayout.xml' for reading!
+warning: ignoring unsupported tag `WARN_AS_ERROR          =' at line 764, file /home/travis/build/stdgregwar/elve/doc/Doxyfile
+warning: ignoring unsupported tag `USE_MDFILE_AS_MAINPAGE =' at line 984, file /home/travis/build/stdgregwar/elve/doc/Doxyfile
+warning: ignoring unsupported tag `SOURCE_TOOLTIPS        =' at line 1040, file /home/travis/build/stdgregwar/elve/doc/Doxyfile
+warning: ignoring unsupported tag `HTML_EXTRA_STYLESHEET  =' at line 1175, file /home/travis/build/stdgregwar/elve/doc/Doxyfile
+warning: ignoring unsupported tag `HTML_INDEX_NUM_ENTRIES =' at line 1245, file /home/travis/build/stdgregwar/elve/doc/Doxyfile
+warning: ignoring unsupported tag `MATHJAX_FORMAT         =' at line 1526, file /home/travis/build/stdgregwar/elve/doc/Doxyfile
+warning: ignoring unsupported tag `MATHJAX_CODEFILE       =' at line 1554, file /home/travis/build/stdgregwar/elve/doc/Doxyfile
+warning: ignoring unsupported tag `EXTERNAL_SEARCH        =' at line 1603, file /home/travis/build/stdgregwar/elve/doc/Doxyfile
+warning: ignoring unsupported tag `SEARCHENGINE_URL       =' at line 1614, file /home/travis/build/stdgregwar/elve/doc/Doxyfile
+warning: ignoring unsupported tag `SEARCHDATA_FILE        =' at line 1622, file /home/travis/build/stdgregwar/elve/doc/Doxyfile
+warning: ignoring unsupported tag `EXTERNAL_SEARCH_ID     =' at line 1630, file /home/travis/build/stdgregwar/elve/doc/Doxyfile
+warning: ignoring unsupported tag `EXTRA_SEARCH_MAPPINGS  =' at line 1640, file /home/travis/build/stdgregwar/elve/doc/Doxyfile
+warning: ignoring unsupported tag `LATEX_EXTRA_STYLESHEET =' at line 1742, file /home/travis/build/stdgregwar/elve/doc/Doxyfile
+warning: ignoring unsupported tag `LATEX_EXTRA_FILES      =' at line 1750, file /home/travis/build/stdgregwar/elve/doc/Doxyfile
+warning: ignoring unsupported tag `LATEX_TIMESTAMP        =' at line 1809, file /home/travis/build/stdgregwar/elve/doc/Doxyfile
+warning: ignoring unsupported tag `RTF_SOURCE_CODE        =' at line 1875, file /home/travis/build/stdgregwar/elve/doc/Doxyfile
+warning: ignoring unsupported tag `MAN_SUBDIR             =' at line 1910, file /home/travis/build/stdgregwar/elve/doc/Doxyfile
+warning: ignoring unsupported tag `GENERATE_DOCBOOK       =' at line 1956, file /home/travis/build/stdgregwar/elve/doc/Doxyfile
+warning: ignoring unsupported tag `DOCBOOK_OUTPUT         =' at line 1964, file /home/travis/build/stdgregwar/elve/doc/Doxyfile
+warning: ignoring unsupported tag `DOCBOOK_PROGRAMLISTING =' at line 1973, file /home/travis/build/stdgregwar/elve/doc/Doxyfile
+warning: ignoring unsupported tag `EXTERNAL_PAGES         =' at line 2147, file /home/travis/build/stdgregwar/elve/doc/Doxyfile
+warning: ignoring unsupported tag `DIA_PATH               =' at line 2182, file /home/travis/build/stdgregwar/elve/doc/Doxyfile
+warning: ignoring unsupported tag `UML_LIMIT_NUM_FIELDS   =' at line 2276, file /home/travis/build/stdgregwar/elve/doc/Doxyfile
+warning: ignoring unsupported tag `DIAFILE_DIRS           =' at line 2394, file /home/travis/build/stdgregwar/elve/doc/Doxyfile
+warning: ignoring unsupported tag `PLANTUML_JAR_PATH      =' at line 2402, file /home/travis/build/stdgregwar/elve/doc/Doxyfile
+warning: ignoring unsupported tag `PLANTUML_CFG_FILE      =' at line 2407, file /home/travis/build/stdgregwar/elve/doc/Doxyfile
+warning: ignoring unsupported tag `PLANTUML_INCLUDE_PATH  =' at line 2412, file /home/travis/build/stdgregwar/elve/doc/Doxyfile
+error: Unexpected start tag `services' found in scope='class/memberdecl/'!
+error: Unexpected start tag `interfaces' found in scope='class/memberdecl/'!
+error: Unexpected start tag `services' found in scope='class/memberdef/'!
+error: Unexpected start tag `interfaces' found in scope='class/memberdef/'!
+error: Unexpected start tag `constantgroups' found in scope='namespace/memberdecl/'!
+error: Unexpected start tag `constantgroups' found in scope='file/memberdecl/'!
+Parsing layout file /home/travis/build/stdgregwar/elve/doc/DoxygenLayout.xml...
 Searching for include files...
 Searching for example files...
 Searching for images...
@@ -147,8 +153,7 @@ Parsing file /home/travis/build/stdgregwar/elve/Core/PointConstraint.cpp...
 Preprocessing /home/travis/build/stdgregwar/elve/Core/PointConstraint.h...
 Parsing file /home/travis/build/stdgregwar/elve/Core/PointConstraint.h...
 Preprocessing /home/travis/build/stdgregwar/elve/Core/QuadTree.cpp...
-Parsing file /home/travis/build/stdgregwar/elve/Core/QuadTree.cpp...
-Preprocessing /home/travis/home/travis/build/stdgregwar/elve/Core/Gravity.h:11: warning: Compound Elve::Gravity is not documented.
+Parsing file /h/home/travis/build/stdgregwar/elve/Core/Gravity.h:11: warning: Compound Elve::Gravity is not documented.
 /home/travis/build/stdgregwar/elve/Core/GraphData.h:16: warning: Compound Elve::GraphData::Builder is not documented.
 /home/travis/build/stdgregwar/elve/Core/Node.h:26: warning: Compound Elve::Node is not documented.
 /home/travis/build/stdgregwar/elve/Core/QuadTreeNode.h:22: warning: Compound Elve::QuadTreeNode is not documented.
@@ -192,7 +197,8 @@ Possible candidates:
   Elve::NodeData::NodeData(const NodeID &id=-1, const NodeName &name="unnamed", const Dependencies &dependencies={}, const NodeType &type=NODE, const NodeProperties &props={}, const Index &ioindex=0, int inputCount=2, int outputCount=1, const Names &inputNames={}, const Names &outputNames={})
   Elve::NodeData::NodeData(const QJsonObject &obj)
 
-/build/stdgregwar/elve/Core/QuadTree.h...
+ome/travis/build/stdgregwar/elve/Core/QuadTree.cpp...
+Preprocessing /home/travis/build/stdgregwar/elve/Core/QuadTree.h...
 Parsing file /home/travis/build/stdgregwar/elve/Core/QuadTree.h...
 Preprocessing /home/travis/build/stdgregwar/elve/Core/QuadTreeNode.cpp...
 Parsing file /home/travis/build/stdgregwar/elve/Core/QuadTreeNode.cpp...
@@ -322,8 +328,7 @@ Generating code for file /home/travis/build/stdgregwar/elve/Core/Selection.cpp..
 Generating code for file /home/travis/build/stdgregwar/elve/Core/Selection.h...
 Generating code for file /home/travis/build/stdgregwar/elve/Core/Singleton.h...
 Generating code for file /home/travis/build/stdgregwar/elve/Core/Spring.cpp...
-Generating code for file /home/travis/build/stdgregwar/elve/Core/Spring.h...
-Generat/home/travis/build/stdgregwar/elve/Core/Singleton.h:13: warning: Member get() (function) of class Singleton is not documented.
+Gene/home/travis/build/stdgregwar/elve/Core/Singleton.h:13: warning: Member get() (function) of class Singleton is not documented.
 /home/travis/build/stdgregwar/elve/Core/BoxConstraint.h:14: warning: Member setBounds(const QRectF &bounds) (function) of class Elve::BoxConstraint is not documented.
 /home/travis/build/stdgregwar/elve/Core/BoxConstraint.h:15: warning: Member constrain(Point &point) override (function) of class Elve::BoxConstraint is not documented.
 /home/travis/build/stdgregwar/elve/Core/CommandHistory.h:13: warning: Member CommandHistory(const QJsonValue &json) (function) of class Elve::CommandHistory is not documented.
@@ -575,7 +580,8 @@ Generat/home/travis/build/stdgregwar/elve/Core/Singleton.h:13: warning: Member g
 /home/travis/build/stdgregwar/elve/Core/System.h:50: warning: Member orientationHint() const  (function) of class Elve::System is not documented.
 /home/travis/build/stdgregwar/elve/Core/System.h:51: warning: Member transformPoint(const QVector2D &p) const  (function) of class Elve::System is not documented.
 /home/travis/build/stdgregwar/elve/Core/System.h:52: warning: Member sizeHint() const  (function) of class Elve::System is not documented.
-ing code for file /home/travis/build/stdgregwar/elve/Core/System.cpp...
+rating code for file /home/travis/build/stdgregwar/elve/Core/Spring.h...
+Generating code for file /home/travis/build/stdgregwar/elve/Core/System.cpp...
 Generating code for file /home/travis/build/stdgregwar/elve/Core/System.h...
 Generating code for file /home/travis/build/stdgregwar/elve/Core/utils.h...
 Generating file documentation...
