@@ -1,6 +1,6 @@
 #pragma once
 
-#include <NodeLook.h>
+#include <interfaces/NodeLook.h>
 
 #include <QGraphicsSvgItem>
 

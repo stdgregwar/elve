@@ -261,7 +261,7 @@ Elve::SharedGraph DivisorLoader::load(const QString &filepath) {
         }
         SharedData sdata = b.build(filepath);
         SharedGraph g = make_shared<Graph>(sdata);
-        return g->group(toGroup,g->newID(),"Rest logic");
+        return g->group(toGroup,g->newID(),"depntk");
     } else {
         NodeName name = "depntk";
         b.setDependencies(name,lastDivs);
