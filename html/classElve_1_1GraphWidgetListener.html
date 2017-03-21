@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>ELVE Logic Visualization Explorer: LevelForceLayout Class Reference</title>
+<title>ELVE: Elve::GraphWidgetListener Class Reference</title>
 
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
@@ -27,7 +27,7 @@
   
   
   <td style="padding-left: 0.5em;">
-   <div id="projectname">ELVE Logic Visualization Explorer
+   <div id="projectname">ELVE
    &#160;<span id="projectnumber">1</span>
    </div>
    <div id="projectbrief">ELVE Logic Visualization Explorer</div>
@@ -76,30 +76,65 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       <li><a href="functions.html"><span>Class&#160;Members</span></a></li>
     </ul>
   </div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a></div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+  <div id="nav-path" class="navpath">
+    <ul>
+      <li class="navelem"><b>Elve</b>      </li>
+      <li class="navelem"><a class="el" href="classElve_1_1GraphWidgetListener.html">GraphWidgetListener</a>      </li>
+    </ul>
+  </div>
 </div>
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a>  </div>
   <div class="headertitle">
-<div class="title">LevelForceLayout Class Reference</div>  </div>
+<div class="title">Elve::GraphWidgetListener Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<!-- doxytag: class="LevelForceLayout" -->
-<p><a href="classLevelForceLayout-members.html">List of all members.</a></p>
+<!-- doxytag: class="Elve::GraphWidgetListener" -->
+<p>The <a class="el" href="classElve_1_1GraphWidgetListener.html" title="The GraphWidgetListener interface reimplement this if you&#39;re using elve as a dependency.">GraphWidgetListener</a> interface reimplement this if you're using elve as a dependency.  
+ <a href="classElve_1_1GraphWidgetListener.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="GraphWidgetListener_8h_source.html">GraphWidgetListener.h</a>&gt;</code></p>
+<div class="dynheader">
+Inheritance diagram for Elve::GraphWidgetListener:</div>
+<div class="dyncontent">
+ <div class="center">
+  <img src="classElve_1_1GraphWidgetListener.png" usemap="#Elve::GraphWidgetListener_map" alt=""/>
+  <map id="Elve::GraphWidgetListener_map" name="Elve::GraphWidgetListener_map">
+<area href="classElve_1_1DummyListener.html" alt="Elve::DummyListener" shape="rect" coords="0,56,161,80"/>
+</map>
+ </div></div>
+
+<p><a href="classElve_1_1GraphWidgetListener-members.html">List of all members.</a></p>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a36492f6ea0378a0c48af3fbf9538ef07"></a><!-- doxytag: member="LevelForceLayout::LevelForceLayout" ref="a36492f6ea0378a0c48af3fbf9538ef07" args="(QGraphicsScene &amp;scene)" -->
-&#160;</td><td class="memItemRight" valign="bottom"><b>LevelForceLayout</b> (QGraphicsScene &amp;scene)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a53447e98351b6709f53d8a58ec7429be"></a><!-- doxytag: member="LevelForceLayout::setGraph" ref="a53447e98351b6709f53d8a58ec7429be" args="(SharedGraph graph, const NodePositions &amp;positions) override" -->
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setGraph</b> (SharedGraph graph, const NodePositions &amp;positions) override</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8a7bbd8f2ac99bcccee364a5d8178c54"></a><!-- doxytag: member="Elve::GraphWidgetListener::graphChanged" ref="a8a7bbd8f2ac99bcccee364a5d8178c54" args="(SharedEGraph oldGraph, SharedEGraph newGraph)=0" -->
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>graphChanged</b> (SharedEGraph oldGraph, SharedEGraph newGraph)=0</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a14177ba62d5ab66955c157e67e6759cb"></a><!-- doxytag: member="Elve::GraphWidgetListener::runCommand" ref="a14177ba62d5ab66955c157e67e6759cb" args="(const QString &amp;cmd)=0" -->
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>runCommand</b> (const QString &amp;cmd)=0</td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
-<div class="textblock">
-<p>Definition at line <a class="el" href="LevelForceLayout_8h_source.html#l00006">6</a> of file <a class="el" href="LevelForceLayout_8h_source.html">LevelForceLayout.h</a>.</p>
+<div class="textblock"><p>The <a class="el" href="classElve_1_1GraphWidgetListener.html" title="The GraphWidgetListener interface reimplement this if you&#39;re using elve as a dependency.">GraphWidgetListener</a> interface reimplement this if you're using elve as a dependency. </p>
+
+<p>Definition at line <a class="el" href="GraphWidgetListener_8h_source.html#l00013">13</a> of file <a class="el" href="GraphWidgetListener_8h_source.html">GraphWidgetListener.h</a>.</p>
 </div><hr/>The documentation for this class was generated from the following files:<ul>
-<li>/home/travis/build/stdgregwar/elve/Core/<a class="el" href="LevelForceLayout_8h_source.html">LevelForceLayout.h</a></li>
-<li>/home/travis/build/stdgregwar/elve/Core/<a class="el" href="LevelForceLayout_8cpp_source.html">LevelForceLayout.cpp</a></li>
+<li>/home/travis/build/stdgregwar/elve/Core/interfaces/<a class="el" href="GraphWidgetListener_8h_source.html">GraphWidgetListener.h</a></li>
+<li>/home/travis/build/stdgregwar/elve/Core/interfaces/<a class="el" href="GraphWidgetListener_8cpp_source.html">GraphWidgetListener.cpp</a></li>
 </ul>
 </div><!-- contents -->
 <!-- window showing the filter options -->

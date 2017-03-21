@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>ELVE Logic Visualization Explorer: /home/travis/build/stdgregwar/elve/Core/GraphWidget.h Source File</title>
+<title>ELVE: /home/travis/build/stdgregwar/elve/Core/GraphWidget.h Source File</title>
 
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
@@ -27,7 +27,7 @@
   
   
   <td style="padding-left: 0.5em;">
-   <div id="projectname">ELVE Logic Visualization Explorer
+   <div id="projectname">ELVE
    &#160;<span id="projectnumber">1</span>
    </div>
    <div id="projectbrief">ELVE Logic Visualization Explorer</div>
@@ -110,7 +110,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00029"></a>00029 {
 <a name="l00030"></a>00030     Q_OBJECT
 <a name="l00031"></a>00031 <span class="keyword">public</span>:
-<a name="l00032"></a>00032     <a class="code" href="classElve_1_1GraphWidget.html">GraphWidget</a>(QWidget *parent = <span class="keyword">nullptr</span>, GraphWidgetListener* listener = <span class="keyword">new</span> DummyListener());
+<a name="l00032"></a>00032     <a class="code" href="classElve_1_1GraphWidget.html">GraphWidget</a>(QWidget *parent = <span class="keyword">nullptr</span>, <a class="code" href="classElve_1_1GraphWidgetListener.html" title="The GraphWidgetListener interface reimplement this if you&#39;re using elve as a dependency.">GraphWidgetListener</a>* listener = <span class="keyword">new</span> <a class="code" href="classElve_1_1DummyListener.html">DummyListener</a>());
 <a name="l00033"></a>00033 
 <a name="l00034"></a>00034     <span class="keywordtype">void</span> setGraph(SharedEGraph graph, <span class="keywordtype">unsigned</span> quickTicks = 500);
 <a name="l00035"></a>00035     <span class="comment">//void setGraph(SharedGraph graph, const NodePositions&amp; positions);</span>
@@ -207,7 +207,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00126"></a>00126     std::vector&lt;EdgeLook*&gt; mEdges;
 <a name="l00127"></a>00127     std::vector&lt;NodeLook*&gt; mNodes;
 <a name="l00128"></a>00128     QList&lt;QGraphicsPathItem*&gt; mEdgesPaths;
-<a name="l00129"></a>00129     GraphWidgetListener* mListener;
+<a name="l00129"></a>00129     <a class="code" href="classElve_1_1GraphWidgetListener.html" title="The GraphWidgetListener interface reimplement this if you&#39;re using elve as a dependency.">GraphWidgetListener</a>* mListener;
 <a name="l00130"></a>00130     <span class="keyword">static</span> std::array&lt;QColor,10&gt; mSelectionColors;
 <a name="l00131"></a>00131     qreal mTargetScale;
 <a name="l00132"></a>00132 };
