@@ -110,63 +110,64 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00022"></a>00022 <span class="keyword">class </span>Graph;
 <a name="l00023"></a>00023 <span class="keyword">typedef</span> std::shared_ptr&lt;Graph&gt; SharedGraph;
 <a name="l00024"></a>00024 
-<a name="l00025"></a><a class="code" href="classElve_1_1Node.html">00025</a> <span class="keyword">class </span><a class="code" href="classElve_1_1Node.html">Node</a>
-<a name="l00026"></a>00026 {
-<a name="l00027"></a>00027 <span class="keyword">public</span>:
-<a name="l00028"></a>00028     <span class="keyword">typedef</span> Nodes Children;
-<a name="l00029"></a>00029     <span class="keyword">typedef</span> Nodes Ancestors;
-<a name="l00030"></a>00030 
-<a name="l00031"></a><a class="code" href="structElve_1_1Node_1_1Connexion.html">00031</a>     <span class="keyword">struct </span><a class="code" href="structElve_1_1Node_1_1Connexion.html">Connexion</a> {
-<a name="l00032"></a>00032         <a class="code" href="classElve_1_1Node.html">Node</a>* node;
-<a name="l00033"></a>00033         Index from;
-<a name="l00034"></a>00034         Index to;
-<a name="l00035"></a>00035     };
-<a name="l00036"></a>00036 
-<a name="l00037"></a>00037     <span class="keyword">typedef</span> std::vector&lt;Connexion&gt; Fan;
-<a name="l00038"></a>00038 
-<a name="l00039"></a>00039     <a class="code" href="classElve_1_1Node.html">Node</a>(<span class="keyword">const</span> <a class="code" href="classElve_1_1NodeData.html">NodeData</a>&amp; data);
-<a name="l00040"></a>00040     <span class="keywordtype">void</span> addChild(<a class="code" href="classElve_1_1Node.html">Node</a>* child, Index from, Index to);
-<a name="l00041"></a>00041     <span class="keywordtype">void</span> addAncestor(<a class="code" href="classElve_1_1Node.html">Node</a>* anc, Index from, Index to);
-<a name="l00042"></a>00042     <span class="keyword">const</span> Index&amp; IOIndex() <span class="keyword">const</span>;
-<a name="l00043"></a>00043     <span class="keyword">const</span> Ancestors&amp; ancestors() <span class="keyword">const</span>;
-<a name="l00044"></a>00044     <span class="keyword">const</span> Children&amp; children() <span class="keyword">const</span>;
-<a name="l00045"></a>00045     <span class="keyword">const</span> NodeID&amp; id() <span class="keyword">const</span>;
-<a name="l00046"></a>00046     <span class="keyword">const</span> NodeName&amp; name() <span class="keyword">const</span>;
-<a name="l00047"></a>00047     <span class="keywordtype">size_t</span> ancestorCount() <span class="keyword">const</span>;
-<a name="l00048"></a>00048     <span class="keywordtype">size_t</span> childCount() <span class="keyword">const</span>;
-<a name="l00049"></a>00049     <span class="keywordtype">int</span> inputCount() <span class="keyword">const</span>;
-<a name="l00050"></a>00050     <span class="keywordtype">int</span> outputCount() <span class="keyword">const</span>;
-<a name="l00051"></a>00051     Name inputName(Index i) <span class="keyword">const</span>;
-<a name="l00052"></a>00052     Name outputName(Index i) <span class="keyword">const</span>;
-<a name="l00053"></a>00053     <span class="keyword">const</span> Fan&amp; fanIn() <span class="keyword">const</span>;
-<a name="l00054"></a>00054     <span class="keyword">const</span> Fan&amp; fanOut() <span class="keyword">const</span>;
-<a name="l00055"></a>00055     <span class="keywordtype">bool</span> isInput() <span class="keyword">const</span>;
-<a name="l00056"></a>00056     <span class="keywordtype">bool</span> isOutput() <span class="keyword">const</span>;
-<a name="l00057"></a>00057     <span class="keyword">const</span> NodeType&amp; type() <span class="keyword">const</span>;
-<a name="l00058"></a>00058     <span class="keywordtype">bool</span> isCluster() <span class="keyword">const</span>;
-<a name="l00059"></a>00059     <span class="keyword">const</span> NodeLevel&amp; level() <span class="keyword">const</span>;
-<a name="l00060"></a>00060     <span class="keyword">const</span> SharedGraph getClusteredGraph() <span class="keyword">const</span>;
-<a name="l00061"></a>00061     <span class="keywordtype">void</span> setClusteredGraph(SharedGraph graph);
-<a name="l00062"></a>00062     <span class="keyword">const</span> QJsonObject&amp; properties() <span class="keyword">const</span>;
-<a name="l00063"></a>00063     QJsonObject json() <span class="keyword">const</span>;
-<a name="l00064"></a>00064     <span class="keyword">const</span> <a class="code" href="classElve_1_1NodeData.html">NodeData</a>&amp; data() <span class="keyword">const</span>;
-<a name="l00065"></a>00065     <span class="comment">//QJsonObject&amp; properties();</span>
-<a name="l00066"></a>00066 <span class="keyword">private</span>:
-<a name="l00067"></a>00067     <span class="keywordtype">void</span> _addChild(<a class="code" href="classElve_1_1Node.html">Node</a>* child,  Index from, Index to);
-<a name="l00068"></a>00068     <span class="keywordtype">void</span> _addAncestor(<a class="code" href="classElve_1_1Node.html">Node</a>* anc, Index from, Index to);
-<a name="l00069"></a>00069 
-<a name="l00070"></a>00070     <span class="keyword">mutable</span> NodeLevel mLevel;
-<a name="l00071"></a>00071     SharedGraph mGraph; <span class="comment">//Intern graph when node is a cluster</span>
-<a name="l00072"></a>00072     Ancestors mAncestors;
-<a name="l00073"></a>00073     Children mChildren;
-<a name="l00074"></a>00074     Fan mFanIn;
-<a name="l00075"></a>00075     Fan mFanOut;
-<a name="l00076"></a>00076     <span class="keyword">const</span> <a class="code" href="classElve_1_1NodeData.html">NodeData</a>&amp; mData;
-<a name="l00077"></a>00077 };
-<a name="l00078"></a>00078 
-<a name="l00079"></a>00079 }
-<a name="l00080"></a>00080 
-<a name="l00081"></a>00081 <span class="preprocessor">#endif // GATE_H</span>
+<a name="l00025"></a>00025 
+<a name="l00026"></a><a class="code" href="classElve_1_1Node.html">00026</a> <span class="keyword">class </span><a class="code" href="classElve_1_1Node.html">Node</a>
+<a name="l00027"></a>00027 {
+<a name="l00028"></a>00028 <span class="keyword">public</span>:
+<a name="l00029"></a>00029     <span class="keyword">typedef</span> Nodes Children;
+<a name="l00030"></a>00030     <span class="keyword">typedef</span> Nodes Ancestors;
+<a name="l00031"></a>00031 
+<a name="l00032"></a><a class="code" href="structElve_1_1Node_1_1Connexion.html">00032</a>     <span class="keyword">struct </span><a class="code" href="structElve_1_1Node_1_1Connexion.html">Connexion</a> {
+<a name="l00033"></a>00033         <a class="code" href="classElve_1_1Node.html">Node</a>* node;
+<a name="l00034"></a>00034         Index from;
+<a name="l00035"></a>00035         Index to;
+<a name="l00036"></a>00036     };
+<a name="l00037"></a>00037 
+<a name="l00038"></a>00038     <span class="keyword">typedef</span> std::vector&lt;Connexion&gt; Fan;
+<a name="l00039"></a>00039 
+<a name="l00040"></a>00040     <a class="code" href="classElve_1_1Node.html">Node</a>(<span class="keyword">const</span> <a class="code" href="classElve_1_1NodeData.html">NodeData</a>&amp; data);
+<a name="l00041"></a>00041     <span class="keywordtype">void</span> addChild(<a class="code" href="classElve_1_1Node.html">Node</a>* child, Index from, Index to);
+<a name="l00042"></a>00042     <span class="keywordtype">void</span> addAncestor(<a class="code" href="classElve_1_1Node.html">Node</a>* anc, Index from, Index to);
+<a name="l00043"></a>00043     <span class="keyword">const</span> Index&amp; IOIndex() <span class="keyword">const</span>;
+<a name="l00044"></a>00044     <span class="keyword">const</span> Ancestors&amp; ancestors() <span class="keyword">const</span>;
+<a name="l00045"></a>00045     <span class="keyword">const</span> Children&amp; children() <span class="keyword">const</span>;
+<a name="l00046"></a>00046     <span class="keyword">const</span> NodeID&amp; id() <span class="keyword">const</span>;
+<a name="l00047"></a>00047     <span class="keyword">const</span> NodeName&amp; name() <span class="keyword">const</span>;
+<a name="l00048"></a>00048     <span class="keywordtype">size_t</span> ancestorCount() <span class="keyword">const</span>;
+<a name="l00049"></a>00049     <span class="keywordtype">size_t</span> childCount() <span class="keyword">const</span>;
+<a name="l00050"></a>00050     <span class="keywordtype">int</span> inputCount() <span class="keyword">const</span>;
+<a name="l00051"></a>00051     <span class="keywordtype">int</span> outputCount() <span class="keyword">const</span>;
+<a name="l00052"></a>00052     Name inputName(Index i) <span class="keyword">const</span>;
+<a name="l00053"></a>00053     Name outputName(Index i) <span class="keyword">const</span>;
+<a name="l00054"></a>00054     <span class="keyword">const</span> Fan&amp; fanIn() <span class="keyword">const</span>;
+<a name="l00055"></a>00055     <span class="keyword">const</span> Fan&amp; fanOut() <span class="keyword">const</span>;
+<a name="l00056"></a>00056     <span class="keywordtype">bool</span> isInput() <span class="keyword">const</span>;
+<a name="l00057"></a>00057     <span class="keywordtype">bool</span> isOutput() <span class="keyword">const</span>;
+<a name="l00058"></a>00058     <span class="keyword">const</span> NodeType&amp; type() <span class="keyword">const</span>;
+<a name="l00059"></a>00059     <span class="keywordtype">bool</span> isCluster() <span class="keyword">const</span>;
+<a name="l00060"></a>00060     <span class="keyword">const</span> NodeLevel&amp; level() <span class="keyword">const</span>;
+<a name="l00061"></a>00061     <span class="keyword">const</span> SharedGraph getClusteredGraph() <span class="keyword">const</span>;
+<a name="l00062"></a>00062     <span class="keywordtype">void</span> setClusteredGraph(SharedGraph graph);
+<a name="l00063"></a>00063     <span class="keyword">const</span> QJsonObject&amp; properties() <span class="keyword">const</span>;
+<a name="l00064"></a>00064     QJsonObject json() <span class="keyword">const</span>;
+<a name="l00065"></a>00065     <span class="keyword">const</span> <a class="code" href="classElve_1_1NodeData.html">NodeData</a>&amp; data() <span class="keyword">const</span>;
+<a name="l00066"></a>00066     <span class="comment">//QJsonObject&amp; properties();</span>
+<a name="l00067"></a>00067 <span class="keyword">private</span>:
+<a name="l00068"></a>00068     <span class="keywordtype">void</span> _addChild(<a class="code" href="classElve_1_1Node.html">Node</a>* child,  Index from, Index to);
+<a name="l00069"></a>00069     <span class="keywordtype">void</span> _addAncestor(<a class="code" href="classElve_1_1Node.html">Node</a>* anc, Index from, Index to);
+<a name="l00070"></a>00070 
+<a name="l00071"></a>00071     <span class="keyword">mutable</span> NodeLevel mLevel;
+<a name="l00072"></a>00072     SharedGraph mGraph; <span class="comment">//Intern graph when node is a cluster</span>
+<a name="l00073"></a>00073     Ancestors mAncestors;
+<a name="l00074"></a>00074     Children mChildren;
+<a name="l00075"></a>00075     Fan mFanIn;
+<a name="l00076"></a>00076     Fan mFanOut;
+<a name="l00077"></a>00077     <span class="keyword">const</span> <a class="code" href="classElve_1_1NodeData.html">NodeData</a>&amp; mData;
+<a name="l00078"></a>00078 };
+<a name="l00079"></a>00079 
+<a name="l00080"></a>00080 }
+<a name="l00081"></a>00081 
+<a name="l00082"></a>00082 <span class="preprocessor">#endif // GATE_H</span>
 </pre></div></div><!-- contents -->
 </div>
 <!-- window showing the filter options -->

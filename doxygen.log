@@ -154,8 +154,7 @@ Preprocessing /home/travis/build/stdgregwar/elve/Core/PointConstraint.h...
 Parsing file /home/travis/build/stdgregwar/elve/Core/PointConstraint.h...
 Preprocessing /home/travis/build/stdgregwar/elve/Core/QuadTree.cpp...
 Parsing file /h/home/travis/build/stdgregwar/elve/Core/Gravity.h:11: warning: Compound Elve::Gravity is not documented.
-/home/travis/build/stdgregwar/elve/Core/GraphData.h:16: warning: Compound Elve::GraphData::Builder is not documented.
-/home/travis/build/stdgregwar/elve/Core/Node.h:26: warning: Compound Elve::Node is not documented.
+/home/travis/build/stdgregwar/elve/Core/Node.h:27: warning: Compound Elve::Node is not documented.
 /home/travis/build/stdgregwar/elve/Core/QuadTreeNode.h:22: warning: Compound Elve::QuadTreeNode is not documented.
 /home/travis/build/stdgregwar/elve/Core/Singleton.h:7: warning: Compound Singleton is not documented.
 /home/travis/build/stdgregwar/elve/Core/CommandHistory.h:10: warning: Compound Elve::CommandHistory is not documented.
@@ -166,7 +165,7 @@ Parsing file /h/home/travis/build/stdgregwar/elve/Core/Gravity.h:11: warning: Co
 /home/travis/build/stdgregwar/elve/Core/interfaces/GraphWidgetListener.h:21: warning: Compound Elve::DummyListener is not documented.
 /home/travis/build/stdgregwar/elve/Core/Selection.h:10: warning: Compound Elve::Selection is not documented.
 /home/travis/build/stdgregwar/elve/Core/BoxConstraint.h:11: warning: Compound Elve::BoxConstraint is not documented.
-/home/travis/build/stdgregwar/elve/Core/Node.h:31: warning: Compound Elve::Node::Connexion is not documented.
+/home/travis/build/stdgregwar/elve/Core/Node.h:32: warning: Compound Elve::Node::Connexion is not documented.
 /home/travis/build/stdgregwar/elve/Core/System.h:28: warning: Compound Elve::System is not documented.
 /home/travis/build/stdgregwar/elve/Core/Damp.h:9: warning: Compound Elve::Damp is not documented.
 /home/travis/build/stdgregwar/elve/Core/Movable.h:11: warning: Compound Elve::Movable is not documented.
@@ -349,33 +348,30 @@ Gene/home/travis/build/stdgregwar/elve/Core/Singleton.h:13: warning: Member get(
 /home/travis/build/stdgregwar/elve/Core/Graph.h:29: warning: Member operator()(const Pin &p) const  (function) of class Elve::Pin_hash is not documented.
 /home/travis/build/stdgregwar/elve/Core/Graph.h:65: warning: argument 'exluded' of command @param is not found in the argument list of Elve::Graph::Graph(const SharedData &data, const SparseData &extraData, const Aliases &aliases)
 /home/travis/build/stdgregwar/elve/Core/Graph.h:96: warning: argument 'xrefitem' of command @param is not found in the argument list of Elve::Graph::clusterize(size_t level)
-/home/travis/build/stdgregwar/elve/Core/GraphData.h:63: warning: Member GraphData(const QJsonObject &obj) (function) of class Elve::GraphData is not documented.
-/home/travis/build/stdgregwar/elve/Core/GraphData.h:64: warning: Member nodeDatas() const  (function) of class Elve::GraphData is not documented.
-/home/travis/build/stdgregwar/elve/Core/GraphData.h:65: warning: Member filename() const  (function) of class Elve::GraphData is not documented.
-/home/travis/build/stdgregwar/elve/Core/GraphData.h:66: warning: Member json() const  (function) of class Elve::GraphData is not documented.
-/home/travis/build/stdgregwar/elve/Core/GraphData.h:19: warning: Member setDependencies(const NodeName &name, const NodeNames &dependencies) (function) of class Elve::GraphData::Builder is not documented.
-/home/travis/build/stdgregwar/elve/Core/GraphData.h:20: warning: Member setDependencies(const NodeName &name, const Dependencies &dependencies) (function) of class Elve::GraphData::Builder is not documented.
-/home/travis/build/stdgregwar/elve/Core/GraphData.h:21: warning: Member setProperties(const NodeName &name, const NodeProperties &props) (function) of class Elve::GraphData::Builder is not documented.
-/home/travis/build/stdgregwar/elve/Core/GraphData.h:22: warning: Member addProperty(const NodeName &name, const QString &pname, const QJsonValue &val) (function) of class Elve::GraphData::Builder is not documented.
-/home/travis/build/stdgregwar/elve/Core/GraphData.h:23: warning: Member setNodeInputNames(const NodeName &name, const Names &names) (function) of class Elve::GraphData::Builder is not documented.
-/home/travis/build/stdgregwar/elve/Core/GraphData.h:24: warning: Member setNodeOutputNames(const NodeName &name, const Names &names) (function) of class Elve::GraphData::Builder is not documented.
-/home/travis/build/stdgregwar/elve/Core/GraphData.h:25: warning: Member setNode(const NodeName &name, const Node &node) (function) of class Elve::GraphData::Builder is not documented.
-/home/travis/build/stdgregwar/elve/Core/GraphData.h:27: warning: Member properties(const NodeName &name) (function) of class Elve::GraphData::Builder is not documented.
-/home/travis/build/stdgregwar/elve/Core/GraphData.h:28: warning: Member setType(const NodeName &name, const NodeType &type) (function) of class Elve::GraphData::Builder is not documented.
-/home/travis/build/stdgregwar/elve/Core/GraphData.h:29: warning: Member setIoIndex(const NodeName &name, const Index &index) (function) of class Elve::GraphData::Builder is not documented.
-/home/travis/build/stdgregwar/elve/Core/GraphData.h:30: warning: Member build(const QString &filename) (function) of class Elve::GraphData::Builder is not documented.
-/home/travis/build/stdgregwar/elve/Core/GraphData.h:32: warning: Member id(const NodeName &name) (function) of class Elve::GraphData::Builder is not documented.
-/home/travis/build/stdgregwar/elve/Core/GraphData.h:33: warning: Member type(const NodeID &id) (function) of class Elve::GraphData::Builder is not documented.
-/home/travis/build/stdgregwar/elve/Core/GraphData.h:34: warning: Member props(const NodeID &id) (function) of class Elve::GraphData::Builder is not documented.
-/home/travis/build/stdgregwar/elve/Core/GraphData.h:35: warning: Member index(const NodeID &id) (function) of class Elve::GraphData::Builder is not documented.
-/home/travis/build/stdgregwar/elve/Core/GraphData.h:36: warning: Member dependencies(const NodeID &id) (function) of class Elve::GraphData::Builder is not documented.
-/home/travis/build/stdgregwar/elve/Core/GraphData.h:37: warning: Member nodeInputNames(const NodeID &id) (function) of class Elve::GraphData::Builder is not documented.
-/home/travis/build/stdgregwar/elve/Core/GraphData.h:38: warning: Member nodeOutputNames(const NodeID &id) (function) of class Elve::GraphData::Builder is not documented.
-/home/travis/build/stdgregwar/elve/Core/GraphData.h:39: warning: Member nodeInputCount(const NodeID &id) (function) of class Elve::GraphData::Builder is not documented.
-/home/travis/build/stdgregwar/elve/Core/GraphData.h:40: warning: Member nodeOutputCount(const NodeID &id) (function) of class Elve::GraphData::Builder is not documented.
-/home/travis/build/stdgregwar/elve/Core/GraphData.h:42: warning: Member outputs() const  (function) of class Elve::GraphData::Builder is not documented.
-/home/travis/build/stdgregwar/elve/Core/GraphData.h:43: warning: Member inputs() const  (function) of class Elve::GraphData::Builder is not documented.
-/home/travis/build/stdgregwar/elve/Core/GraphData.h:44: warning: Member name(const NodeID &id) const  (function) of class Elve::GraphData::Builder is not documented.
+/home/travis/build/stdgregwar/elve/Core/GraphData.h:100: warning: Member GraphData(const QJsonObject &obj) (function) of class Elve::GraphData is not documented.
+/home/travis/build/stdgregwar/elve/Core/GraphData.h:101: warning: Member nodeDatas() const  (function) of class Elve::GraphData is not documented.
+/home/travis/build/stdgregwar/elve/Core/GraphData.h:102: warning: Member filename() const  (function) of class Elve::GraphData is not documented.
+/home/travis/build/stdgregwar/elve/Core/GraphData.h:103: warning: Member json() const  (function) of class Elve::GraphData is not documented.
+/home/travis/build/stdgregwar/elve/Core/GraphData.h:59: warning: Member addProperty(const NodeName &name, const QString &pname, const QJsonValue &val) (function) of class Elve::GraphData::Builder is not documented.
+/home/travis/build/stdgregwar/elve/Core/GraphData.h:60: warning: Member setNodeInputNames(const NodeName &name, const Names &names) (function) of class Elve::GraphData::Builder is not documented.
+/home/travis/build/stdgregwar/elve/Core/GraphData.h:61: warning: Member setNodeOutputNames(const NodeName &name, const Names &names) (function) of class Elve::GraphData::Builder is not documented.
+/home/travis/build/stdgregwar/elve/Core/GraphData.h:62: warning: Member setNode(const NodeName &name, const Node &node) (function) of class Elve::GraphData::Builder is not documented.
+/home/travis/build/stdgregwar/elve/Core/GraphData.h:64: warning: Member properties(const NodeName &name) (function) of class Elve::GraphData::Builder is not documented.
+/home/travis/build/stdgregwar/elve/Core/GraphData.h:65: warning: Member setType(const NodeName &name, const NodeType &type) (function) of class Elve::GraphData::Builder is not documented.
+/home/travis/build/stdgregwar/elve/Core/GraphData.h:66: warning: Member setIoIndex(const NodeName &name, const Index &index) (function) of class Elve::GraphData::Builder is not documented.
+/home/travis/build/stdgregwar/elve/Core/GraphData.h:67: warning: Member build(const QString &filename) (function) of class Elve::GraphData::Builder is not documented.
+/home/travis/build/stdgregwar/elve/Core/GraphData.h:69: warning: Member id(const NodeName &name) (function) of class Elve::GraphData::Builder is not documented.
+/home/travis/build/stdgregwar/elve/Core/GraphData.h:70: warning: Member type(const NodeID &id) (function) of class Elve::GraphData::Builder is not documented.
+/home/travis/build/stdgregwar/elve/Core/GraphData.h:71: warning: Member props(const NodeID &id) (function) of class Elve::GraphData::Builder is not documented.
+/home/travis/build/stdgregwar/elve/Core/GraphData.h:72: warning: Member index(const NodeID &id) (function) of class Elve::GraphData::Builder is not documented.
+/home/travis/build/stdgregwar/elve/Core/GraphData.h:73: warning: Member dependencies(const NodeID &id) (function) of class Elve::GraphData::Builder is not documented.
+/home/travis/build/stdgregwar/elve/Core/GraphData.h:74: warning: Member nodeInputNames(const NodeID &id) (function) of class Elve::GraphData::Builder is not documented.
+/home/travis/build/stdgregwar/elve/Core/GraphData.h:75: warning: Member nodeOutputNames(const NodeID &id) (function) of class Elve::GraphData::Builder is not documented.
+/home/travis/build/stdgregwar/elve/Core/GraphData.h:76: warning: Member nodeInputCount(const NodeID &id) (function) of class Elve::GraphData::Builder is not documented.
+/home/travis/build/stdgregwar/elve/Core/GraphData.h:77: warning: Member nodeOutputCount(const NodeID &id) (function) of class Elve::GraphData::Builder is not documented.
+/home/travis/build/stdgregwar/elve/Core/GraphData.h:79: warning: Member outputs() const  (function) of class Elve::GraphData::Builder is not documented.
+/home/travis/build/stdgregwar/elve/Core/GraphData.h:80: warning: Member inputs() const  (function) of class Elve::GraphData::Builder is not documented.
+/home/travis/build/stdgregwar/elve/Core/GraphData.h:81: warning: Member name(const NodeID &id) const  (function) of class Elve::GraphData::Builder is not documented.
 /home/travis/build/stdgregwar/elve/Core/GraphWidget.h:74: warning: Member borderSelect() (slot) of class Elve::GraphWidget is not documented.
 /home/travis/build/stdgregwar/elve/Core/GraphWidget.h:75: warning: Member toggleSelection() (slot) of class Elve::GraphWidget is not documented.
 /home/travis/build/stdgregwar/elve/Core/GraphWidget.h:76: warning: Member group() (slot) of class Elve::GraphWidget is not documented.
@@ -434,38 +430,38 @@ Gene/home/travis/build/stdgregwar/elve/Core/Singleton.h:13: warning: Member get(
 /home/travis/build/stdgregwar/elve/Core/Movable.h:14: warning: Member setState(const QVector2D &pos, const QVector2D &speed) (function) of class Elve::Movable is not documented.
 /home/travis/build/stdgregwar/elve/Core/Movable.h:15: warning: Member setPoint(Point *m) (function) of class Elve::Movable is not documented.
 /home/travis/build/stdgregwar/elve/Core/Movable.h:16: warning: Member point() (function) of class Elve::Movable is not documented.
-/home/travis/build/stdgregwar/elve/Core/Node.h:28: warning: Member Children (typedef) of class Elve::Node is not documented.
-/home/travis/build/stdgregwar/elve/Core/Node.h:29: warning: Member Ancestors (typedef) of class Elve::Node is not documented.
-/home/travis/build/stdgregwar/elve/Core/Node.h:37: warning: Member Fan (typedef) of class Elve::Node is not documented.
-/home/travis/build/stdgregwar/elve/Core/Node.h:39: warning: Member Node(const NodeData &data) (function) of class Elve::Node is not documented.
-/home/travis/build/stdgregwar/elve/Core/Node.h:40: warning: Member addChild(Node *child, Index from, Index to) (function) of class Elve::Node is not documented.
-/home/travis/build/stdgregwar/elve/Core/Node.h:41: warning: Member addAncestor(Node *anc, Index from, Index to) (function) of class Elve::Node is not documented.
-/home/travis/build/stdgregwar/elve/Core/Node.h:42: warning: Member IOIndex() const  (function) of class Elve::Node is not documented.
-/home/travis/build/stdgregwar/elve/Core/Node.h:43: warning: Member ancestors() const  (function) of class Elve::Node is not documented.
-/home/travis/build/stdgregwar/elve/Core/Node.h:44: warning: Member children() const  (function) of class Elve::Node is not documented.
-/home/travis/build/stdgregwar/elve/Core/Node.h:45: warning: Member id() const  (function) of class Elve::Node is not documented.
-/home/travis/build/stdgregwar/elve/Core/Node.h:46: warning: Member name() const  (function) of class Elve::Node is not documented.
-/home/travis/build/stdgregwar/elve/Core/Node.h:47: warning: Member ancestorCount() const  (function) of class Elve::Node is not documented.
-/home/travis/build/stdgregwar/elve/Core/Node.h:48: warning: Member childCount() const  (function) of class Elve::Node is not documented.
-/home/travis/build/stdgregwar/elve/Core/Node.h:49: warning: Member inputCount() const  (function) of class Elve::Node is not documented.
-/home/travis/build/stdgregwar/elve/Core/Node.h:50: warning: Member outputCount() const  (function) of class Elve::Node is not documented.
-/home/travis/build/stdgregwar/elve/Core/Node.h:51: warning: Member inputName(Index i) const  (function) of class Elve::Node is not documented.
-/home/travis/build/stdgregwar/elve/Core/Node.h:52: warning: Member outputName(Index i) const  (function) of class Elve::Node is not documented.
-/home/travis/build/stdgregwar/elve/Core/Node.h:53: warning: Member fanIn() const  (function) of class Elve::Node is not documented.
-/home/travis/build/stdgregwar/elve/Core/Node.h:54: warning: Member fanOut() const  (function) of class Elve::Node is not documented.
-/home/travis/build/stdgregwar/elve/Core/Node.h:55: warning: Member isInput() const  (function) of class Elve::Node is not documented.
-/home/travis/build/stdgregwar/elve/Core/Node.h:56: warning: Member isOutput() const  (function) of class Elve::Node is not documented.
-/home/travis/build/stdgregwar/elve/Core/Node.h:57: warning: Member type() const  (function) of class Elve::Node is not documented.
-/home/travis/build/stdgregwar/elve/Core/Node.h:58: warning: Member isCluster() const  (function) of class Elve::Node is not documented.
-/home/travis/build/stdgregwar/elve/Core/Node.h:59: warning: Member level() const  (function) of class Elve::Node is not documented.
-/home/travis/build/stdgregwar/elve/Core/Node.h:60: warning: Member getClusteredGraph() const  (function) of class Elve::Node is not documented.
-/home/travis/build/stdgregwar/elve/Core/Node.h:61: warning: Member setClusteredGraph(SharedGraph graph) (function) of class Elve::Node is not documented.
-/home/travis/build/stdgregwar/elve/Core/Node.h:62: warning: Member properties() const  (function) of class Elve::Node is not documented.
-/home/travis/build/stdgregwar/elve/Core/Node.h:63: warning: Member json() const  (function) of class Elve::Node is not documented.
-/home/travis/build/stdgregwar/elve/Core/Node.h:64: warning: Member data() const  (function) of class Elve::Node is not documented.
-/home/travis/build/stdgregwar/elve/Core/Node.h:32: warning: Member node (variable) of class Elve::Node::Connexion is not documented.
-/home/travis/build/stdgregwar/elve/Core/Node.h:33: warning: Member from (variable) of class Elve::Node::Connexion is not documented.
-/home/travis/build/stdgregwar/elve/Core/Node.h:34: warning: Member to (variable) of class Elve::Node::Connexion is not documented.
+/home/travis/build/stdgregwar/elve/Core/Node.h:29: warning: Member Children (typedef) of class Elve::Node is not documented.
+/home/travis/build/stdgregwar/elve/Core/Node.h:30: warning: Member Ancestors (typedef) of class Elve::Node is not documented.
+/home/travis/build/stdgregwar/elve/Core/Node.h:38: warning: Member Fan (typedef) of class Elve::Node is not documented.
+/home/travis/build/stdgregwar/elve/Core/Node.h:40: warning: Member Node(const NodeData &data) (function) of class Elve::Node is not documented.
+/home/travis/build/stdgregwar/elve/Core/Node.h:41: warning: Member addChild(Node *child, Index from, Index to) (function) of class Elve::Node is not documented.
+/home/travis/build/stdgregwar/elve/Core/Node.h:42: warning: Member addAncestor(Node *anc, Index from, Index to) (function) of class Elve::Node is not documented.
+/home/travis/build/stdgregwar/elve/Core/Node.h:43: warning: Member IOIndex() const  (function) of class Elve::Node is not documented.
+/home/travis/build/stdgregwar/elve/Core/Node.h:44: warning: Member ancestors() const  (function) of class Elve::Node is not documented.
+/home/travis/build/stdgregwar/elve/Core/Node.h:45: warning: Member children() const  (function) of class Elve::Node is not documented.
+/home/travis/build/stdgregwar/elve/Core/Node.h:46: warning: Member id() const  (function) of class Elve::Node is not documented.
+/home/travis/build/stdgregwar/elve/Core/Node.h:47: warning: Member name() const  (function) of class Elve::Node is not documented.
+/home/travis/build/stdgregwar/elve/Core/Node.h:48: warning: Member ancestorCount() const  (function) of class Elve::Node is not documented.
+/home/travis/build/stdgregwar/elve/Core/Node.h:49: warning: Member childCount() const  (function) of class Elve::Node is not documented.
+/home/travis/build/stdgregwar/elve/Core/Node.h:50: warning: Member inputCount() const  (function) of class Elve::Node is not documented.
+/home/travis/build/stdgregwar/elve/Core/Node.h:51: warning: Member outputCount() const  (function) of class Elve::Node is not documented.
+/home/travis/build/stdgregwar/elve/Core/Node.h:52: warning: Member inputName(Index i) const  (function) of class Elve::Node is not documented.
+/home/travis/build/stdgregwar/elve/Core/Node.h:53: warning: Member outputName(Index i) const  (function) of class Elve::Node is not documented.
+/home/travis/build/stdgregwar/elve/Core/Node.h:54: warning: Member fanIn() const  (function) of class Elve::Node is not documented.
+/home/travis/build/stdgregwar/elve/Core/Node.h:55: warning: Member fanOut() const  (function) of class Elve::Node is not documented.
+/home/travis/build/stdgregwar/elve/Core/Node.h:56: warning: Member isInput() const  (function) of class Elve::Node is not documented.
+/home/travis/build/stdgregwar/elve/Core/Node.h:57: warning: Member isOutput() const  (function) of class Elve::Node is not documented.
+/home/travis/build/stdgregwar/elve/Core/Node.h:58: warning: Member type() const  (function) of class Elve::Node is not documented.
+/home/travis/build/stdgregwar/elve/Core/Node.h:59: warning: Member isCluster() const  (function) of class Elve::Node is not documented.
+/home/travis/build/stdgregwar/elve/Core/Node.h:60: warning: Member level() const  (function) of class Elve::Node is not documented.
+/home/travis/build/stdgregwar/elve/Core/Node.h:61: warning: Member getClusteredGraph() const  (function) of class Elve::Node is not documented.
+/home/travis/build/stdgregwar/elve/Core/Node.h:62: warning: Member setClusteredGraph(SharedGraph graph) (function) of class Elve::Node is not documented.
+/home/travis/build/stdgregwar/elve/Core/Node.h:63: warning: Member properties() const  (function) of class Elve::Node is not documented.
+/home/travis/build/stdgregwar/elve/Core/Node.h:64: warning: Member json() const  (function) of class Elve::Node is not documented.
+/home/travis/build/stdgregwar/elve/Core/Node.h:65: warning: Member data() const  (function) of class Elve::Node is not documented.
+/home/travis/build/stdgregwar/elve/Core/Node.h:33: warning: Member node (variable) of class Elve::Node::Connexion is not documented.
+/home/travis/build/stdgregwar/elve/Core/Node.h:34: warning: Member from (variable) of class Elve::Node::Connexion is not documented.
+/home/travis/build/stdgregwar/elve/Core/Node.h:35: warning: Member to (variable) of class Elve::Node::Connexion is not documented.
 /home/travis/build/stdgregwar/elve/Core/NodeData.h:25: warning: Member Dependency(const NodeID &id) (function) of class Elve::Dependency is not documented.
 /home/travis/build/stdgregwar/elve/Core/NodeData.h:26: warning: Member Dependency(const NodeID &id, Index from, Index to) (function) of class Elve::Dependency is not documented.
 /home/travis/build/stdgregwar/elve/Core/NodeData.h:27: warning: Member Dependency(const QJsonArray &v) (function) of class Elve::Dependency is not documented.
@@ -643,6 +639,6 @@ Generating file index...
 Generating file member index...
 Generating example index...
 finalizing index lists...
-symbol cache used 685/65536 hits=27038 misses=685
-lookup cache used 2132/65536 hits=12278 misses=2316
+symbol cache used 685/65536 hits=27231 misses=685
+lookup cache used 2148/65536 hits=12306 misses=2332
 finished...

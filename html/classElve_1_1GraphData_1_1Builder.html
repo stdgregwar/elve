@@ -88,15 +88,23 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">Elve::GraphData::Builder Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<!-- doxytag: class="Elve::GraphData::Builder" --><table class="memberdecls">
+<!-- doxytag: class="Elve::GraphData::Builder" -->
+<p>The graph data builder is used to efficiently generate the graph data structure without the hassle of keeping intermediary values.  
+ <a href="classElve_1_1GraphData_1_1Builder.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="GraphData_8h_source.html">GraphData.h</a>&gt;</code></p>
+<table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5e44a061b074108fa3addd35a86dc2ac"></a><!-- doxytag: member="Elve::GraphData::Builder::setDependencies" ref="a5e44a061b074108fa3addd35a86dc2ac" args="(const NodeName &amp;name, const NodeNames &amp;dependencies)" -->
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setDependencies</b> (const NodeName &amp;name, const NodeNames &amp;dependencies)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a619544f00622cd7986246cf5535d341c"></a><!-- doxytag: member="Elve::GraphData::Builder::setDependencies" ref="a619544f00622cd7986246cf5535d341c" args="(const NodeName &amp;name, const Dependencies &amp;dependencies)" -->
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setDependencies</b> (const NodeName &amp;name, const Dependencies &amp;dependencies)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acb6c88650b1c092a80e6b783ed81165b"></a><!-- doxytag: member="Elve::GraphData::Builder::setProperties" ref="acb6c88650b1c092a80e6b783ed81165b" args="(const NodeName &amp;name, const NodeProperties &amp;props)" -->
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setProperties</b> (const NodeName &amp;name, const NodeProperties &amp;props)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abf0344ca3eb4ffb573f1d22aa42ca354"></a><!-- doxytag: member="Elve::GraphData::Builder::Builder" ref="abf0344ca3eb4ffb573f1d22aa42ca354" args="()" -->
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classElve_1_1GraphData_1_1Builder.html#abf0344ca3eb4ffb573f1d22aa42ca354">Builder</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classElve_1_1GraphData_1_1Builder.html" title="The graph data builder is used to efficiently generate the graph data structure without the hassle of...">Builder</a>. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classElve_1_1GraphData_1_1Builder.html#a5e44a061b074108fa3addd35a86dc2ac">setDependencies</a> (const NodeName &amp;name, const NodeNames &amp;dependencies)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">set the dependencies of a node  <a href="#a5e44a061b074108fa3addd35a86dc2ac"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classElve_1_1GraphData_1_1Builder.html#a619544f00622cd7986246cf5535d341c">setDependencies</a> (const NodeName &amp;name, const Dependencies &amp;dependencies)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">set the dependencies of a node  <a href="#a619544f00622cd7986246cf5535d341c"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classElve_1_1GraphData_1_1Builder.html#acb6c88650b1c092a80e6b783ed81165b">setProperties</a> (const NodeName &amp;name, const NodeProperties &amp;props)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">set the properties of a node  <a href="#acb6c88650b1c092a80e6b783ed81165b"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a58ac0ac65267b817079cab482dbba08a"></a><!-- doxytag: member="Elve::GraphData::Builder::addProperty" ref="a58ac0ac65267b817079cab482dbba08a" args="(const NodeName &amp;name, const QString &amp;pname, const QJsonValue &amp;val)" -->
 void&#160;</td><td class="memItemRight" valign="bottom"><b>addProperty</b> (const NodeName &amp;name, const QString &amp;pname, const QJsonValue &amp;val)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1d9a8492a8c3b690383a7f8005e81b06"></a><!-- doxytag: member="Elve::GraphData::Builder::setNodeInputNames" ref="a1d9a8492a8c3b690383a7f8005e81b06" args="(const NodeName &amp;name, const Names &amp;names)" -->
@@ -139,9 +147,131 @@ const NodeIDs &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>inputs
 const NodeName &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>name</b> (const NodeID &amp;id) const </td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
-<div class="textblock">
-<p>Definition at line <a class="el" href="GraphData_8h_source.html#l00016">16</a> of file <a class="el" href="GraphData_8h_source.html">GraphData.h</a>.</p>
+<div class="textblock"><p>The graph data builder is used to efficiently generate the graph data structure without the hassle of keeping intermediary values. </p>
+<p>The main advantage of using this class to construct <a class="el" href="classElve_1_1Graph.html" title="The main class in elve, describing the graph and the numerous transformation that you can apply to it...">Graph</a> data is the possibility to use string to refer to the nodes and edit their properties.</p>
+<div class="fragment"><pre class="fragment"> Graph::Builder b;
+ b.setType(<span class="stringliteral">&quot;in&quot;</span>,INPUT);
+ b.setType(<span class="stringliteral">&quot;out&quot;</span>,OUTPUT);
+ b.setDependencies(<span class="stringliteral">&quot;out&quot;</span>,{<span class="stringliteral">&quot;in&quot;</span>});
+ SharedData data = b.build();
+</pre></div> 
+<p>Definition at line <a class="el" href="GraphData_8h_source.html#l00032">32</a> of file <a class="el" href="GraphData_8h_source.html">GraphData.h</a>.</p>
+</div><hr/><h2>Member Function Documentation</h2>
+<a class="anchor" id="a5e44a061b074108fa3addd35a86dc2ac"></a><!-- doxytag: member="Elve::GraphData::Builder::setDependencies" ref="a5e44a061b074108fa3addd35a86dc2ac" args="(const NodeName &amp;name, const NodeNames &amp;dependencies)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classElve_1_1GraphData_1_1Builder.html#a5e44a061b074108fa3addd35a86dc2ac">Elve::GraphData::Builder::setDependencies</a> </td>
+          <td>(</td>
+          <td class="paramtype">const NodeName &amp;&#160;</td>
+          <td class="paramname"><em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const NodeNames &amp;&#160;</td>
+          <td class="paramname"><em>dependencies</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
 </div>
+<div class="memdoc">
+
+<p>set the dependencies of a node </p>
+<dl class="params"><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">name</td><td>name of the node </td></tr>
+    <tr><td class="paramname">dependencies</td><td>direct dependencies of the node as an array of string </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="GraphData_8cpp_source.html#l00082">82</a> of file <a class="el" href="GraphData_8cpp_source.html">GraphData.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a619544f00622cd7986246cf5535d341c"></a><!-- doxytag: member="Elve::GraphData::Builder::setDependencies" ref="a619544f00622cd7986246cf5535d341c" args="(const NodeName &amp;name, const Dependencies &amp;dependencies)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classElve_1_1GraphData_1_1Builder.html#a5e44a061b074108fa3addd35a86dc2ac">Elve::GraphData::Builder::setDependencies</a> </td>
+          <td>(</td>
+          <td class="paramtype">const NodeName &amp;&#160;</td>
+          <td class="paramname"><em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const Dependencies &amp;&#160;</td>
+          <td class="paramname"><em>dependencies</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>set the dependencies of a node </p>
+<dl class="params"><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">name</td><td>name of the node </td></tr>
+    <tr><td class="paramname">dependencies</td><td>array of <a class="el" href="structElve_1_1Dependency.html">Dependency</a> to have differentiated inputs </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="GraphData_8cpp_source.html#l00077">77</a> of file <a class="el" href="GraphData_8cpp_source.html">GraphData.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="acb6c88650b1c092a80e6b783ed81165b"></a><!-- doxytag: member="Elve::GraphData::Builder::setProperties" ref="acb6c88650b1c092a80e6b783ed81165b" args="(const NodeName &amp;name, const NodeProperties &amp;props)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classElve_1_1GraphData_1_1Builder.html#acb6c88650b1c092a80e6b783ed81165b">Elve::GraphData::Builder::setProperties</a> </td>
+          <td>(</td>
+          <td class="paramtype">const NodeName &amp;&#160;</td>
+          <td class="paramname"><em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const NodeProperties &amp;&#160;</td>
+          <td class="paramname"><em>props</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>set the properties of a node </p>
+<dl class="params"><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">name</td><td>name of the node </td></tr>
+    <tr><td class="paramname">props</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="GraphData_8cpp_source.html#l00092">92</a> of file <a class="el" href="GraphData_8cpp_source.html">GraphData.cpp</a>.</p>
+
+</div>
+</div>
+
 <p><a href="classElve_1_1GraphData_1_1Builder-members.html">List of all members.</a></p>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>/home/travis/build/stdgregwar/elve/Core/<a class="el" href="GraphData_8h_source.html">GraphData.h</a></li>
