@@ -7,3 +7,5 @@ SUBDIRS += \
     Elve \
     Plugins
 
+Plugins.depends = Core
+Elve.depends = Core
