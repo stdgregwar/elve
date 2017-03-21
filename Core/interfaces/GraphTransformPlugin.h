@@ -55,6 +55,7 @@ public:
 
 Q_DECLARE_INTERFACE(Elve::GraphTransformPlugin,GraphTransformPlugin_iid)
 
+///ELVE_TRANSFORM helps to define base properties of a TRANSFORM
 #define ELVE_TRANSFORM(Transform,aname,acliname,atype) \
     public: \
         inline Elve::TransformType type() const override {return (atype);} \
