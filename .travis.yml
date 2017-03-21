@@ -1,6 +1,5 @@
 # This will run on Travis' 'new' container-based infrastructure
 sudo: false
-dist: trusty
 # Blacklist
 branches:
   only:
@@ -16,22 +15,14 @@ env:
 # Install dependencies
 addons:
   apt:
-    sources:
-      - debian-sid
     packages:
       - doxygen
       - doxygen-doc
       - doxygen-gui
-      - qt5-default
-      - libqt5svg5-dev
 
 # Build your code e.g. by calling make
 script:
-  - mkdir build
-  - cd build
-  - qmake ../elve.pro
-  - make
-
+ - echo "Build? Which build?"
 # Generate and deploy documentation
 after_success:
   - cd $TRAVIS_BUILD_DIR
