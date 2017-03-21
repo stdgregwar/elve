@@ -21,7 +21,9 @@ addons:
       - doxygen-doc
       - doxygen-gui
       - graphviz
-      - qt5-default
+      - qtbase5-dev
+      - qt5-qmake
+      - qtbase5-dev-tools
       - libqt5svg5-dev
 # Build your code e.g. by calling make
 script:
