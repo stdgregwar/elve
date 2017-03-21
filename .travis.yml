@@ -21,10 +21,14 @@ addons:
       - doxygen-doc
       - doxygen-gui
       - graphviz
-
+      - qt5-default
+      - libqt5svg5-dev
 # Build your code e.g. by calling make
 script:
-  - echo "build"
+  - mkdir build
+  - cd build
+  - qmake ../elve.pro
+  - make
 
 # Generate and deploy documentation
 after_success:
