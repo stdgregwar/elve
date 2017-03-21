@@ -5,6 +5,11 @@
 
 namespace Elve {
 
+/**
+ * @brief The GraphWidgetListener interface reimplement this if you're using elve
+ * as a dependency
+ *
+ */
 class GraphWidgetListener
 {
 public:
