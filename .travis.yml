@@ -1,5 +1,5 @@
 # This will run on Travis' 'new' container-based infrastructure
-sudo: required
+sudo: false
 
 # Blacklist
 branches:
@@ -16,15 +16,14 @@ env:
 # Install dependencies
 addons:
   apt:
+    sources:
+      - debian-sid
     packages:
       - doxygen
       - doxygen-doc
       - doxygen-gui
-      - graphviz
-before_script:
- - sudo add-apt-repository ppa:ubuntu-sdk-team/ppa -y
- - sudo apt-get update -q
- - sudo apt-get install build-essential g++ libboost-all-dev libstdc++6 libqt5-dev qt5-qmake qtcreator libqt5svg5-dev
+      - qt5-default
+      - libqt5svg5-dev
 
 # Build your code e.g. by calling make
 script:
