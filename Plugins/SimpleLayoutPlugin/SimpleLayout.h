@@ -16,7 +16,7 @@ class SimpleLayout : public Elve::LayoutPlugin
 private:
     qreal mK = 2; //Plugin options with default values
     qreal mL0 = 0;
-    qreal mDamp = 4;
+    qreal mDamp = 2;
     qreal mMinUnit = 128.0;
     qreal mMinIOUnit = 128.0;
 };

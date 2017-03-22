@@ -40,7 +40,8 @@ GraphWidget::GraphWidget(QWidget* parent, GraphWidgetListener* listener) : QGrap
     mTargetScale(1),
     mBehaviour(new Behaviour(this)),
     //mEdgesPath(new QGraphicsPathItem()),
-    mListener(listener)
+    mListener(listener),
+    mTimerId(-1)
 {
     mSelectionBox = new QComboBox(this);
     mSelectionBox->setGeometry(20,20,100,20);
@@ -56,7 +57,20 @@ GraphWidget::GraphWidget(QWidget* parent, GraphWidgetListener* listener) : QGrap
     setGeometry(0,0,1280,720);
     setScene(mScene);
     setBackgroundBrush(QBrush(QColor(59,58,58), Qt::SolidPattern));
-    startTimer(1000/60);
+
+}
+
+void GraphWidget::start() {
+    mTimerId = startTimer(1000/60);
+    show();
+}
+
+void GraphWidget::stop() {
+    if(mTimerId != -1) {
+        killTimer(mTimerId);
+        mTimerId = -1;
+    }
+    hide();
 }
 
 void GraphWidget::setCurrentMask(int i) {
@@ -247,6 +261,7 @@ void GraphWidget::group(const Selection &names, const NodeName &groupName) {
 
 void GraphWidget::tick(float dt, bool update)
 {
+
     if(mGraph->layout()) {
         mGraph->layout()->tick(dt,update);
         /*QPainterPath p;

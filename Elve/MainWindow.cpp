@@ -212,6 +212,7 @@ void MainWindow::connectTab(QMdiSubWindow* tab) {
         //TODO disconnect
         QMainWindow* mw = dynamic_cast<QMainWindow*>(mCurrentTab->widget());
         GraphWidget* gw = mw ? dynamic_cast<GraphWidget*>(mw->centralWidget()) : nullptr;
+        gw->stop();
         disconnect(ui.actionRectangle,0,gw,0);
         disconnect(ui.actionToggle,0,gw,0);
         disconnect(ui.actionGroup,0,gw,0);
@@ -224,11 +225,13 @@ void MainWindow::connectTab(QMdiSubWindow* tab) {
     mCurrentTab = tab;
 
     GraphWidget* gw = viewport();
+    if(!gw) return;
 
     connect(ui.actionRectangle,SIGNAL(triggered()),gw,SLOT(borderSelect()));
     connect(ui.actionToggle,SIGNAL(triggered()),gw,SLOT(toggleSelection()));
     connect(ui.actionGroup,SIGNAL(triggered()),gw,SLOT(group()));
     connect(ui.actionUngroup,SIGNAL(triggered()),gw,SLOT(ungroup()));
+    gw->start();
     mCurrentTab = tab;
 }
 

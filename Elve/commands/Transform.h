@@ -47,12 +47,14 @@ public:
         env->store<SharedEGraph>().notify();
         if(is_set("newtab")) {
             MainWindow::get().newWindowWithFile(output,output->graph()->filename());
-        } else {
-            output->view()->setGraph(output);
+        } else if (output->view()) {
+            if(mTrans->type() == SELECTION) {
+                output->view()->updateSelectionColor();
+            } else {
+                output->view()->setGraph(output);
+            }
         }
-        if(output->view() && mTrans->type() == SELECTION) {
-            output->view()->updateSelectionColor();
-        }
+
         return true;
     }
 private:

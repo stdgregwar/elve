@@ -76,6 +76,8 @@ public slots:
     void group();
     void ungroup();
     void setCurrentMask(int i);
+    void start();
+    void stop();
 signals:
     void maskChanged(int i);
 private:
@@ -129,6 +131,7 @@ private:
     GraphWidgetListener* mListener;
     static std::array<QColor,10> mSelectionColors;
     qreal mTargetScale;
+    int mTimerId;
 };
 
 }
