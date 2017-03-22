@@ -13,11 +13,48 @@ class GraphData
 {
     friend class Graph;
 public:
+    /**
+     * @brief The graph data builder is used to efficiently generate the graph data structure without
+     * the hassle of keeping intermediary values.
+     *
+     * The main advantage of using this class to construct Graph data is the possibility to use string to
+     * refer to the nodes and edit their properties.
+     *
+     * @code
+     * Graph::Builder b;
+     * b.setType("in",INPUT);
+     * b.setType("out",OUTPUT);
+     * b.setDependencies("out",{"in"});
+     * SharedData data = b.build();
+     * @endcode
+     *
+     */
     class Builder{
     public:
+        /**
+         * @brief Builder
+         */
         Builder();
+
+        /**
+         * @brief set the dependencies of a node
+         * @param name name of the node
+         * @param dependencies direct dependencies of the node as an array of string
+         */
         void setDependencies(const NodeName& name, const NodeNames& dependencies);
+
+        /**
+         * @brief set the dependencies of a node
+         * @param name name of the node
+         * @param dependencies array of Dependency to have differentiated inputs
+         */
         void setDependencies(const NodeName &name, const Dependencies &dependencies);
+
+        /**
+         * @brief set the properties of a node
+         * @param name name of the node
+         * @param props
+         */
         void setProperties(const NodeName& name, const NodeProperties& props);
         void addProperty(const NodeName& name, const QString& pname, const QJsonValue& val);
         void setNodeInputNames(const NodeName& name, const Names& names);
