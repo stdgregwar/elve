@@ -17,13 +17,13 @@ typedef std::unordered_map<NodeID,Node> NodesByID;
  * @brief Pin structure serving as id in the graph for connexions
  */
 struct Pin{
-    Pin(const NodeID& id) : id(id),index(-1){}
-    Pin(const NodeID &id,const Index& index) : id(id), index(index){}
+    Pin(const NodeID& id);
+    Pin(const NodeID &id,const Index& index);
     NodeID id;
     Index  index;
 };
 
-inline bool operator==(const Pin& a,const Pin& b);
+bool operator==(const Pin& a,const Pin& b);
 
 struct Pin_hash {
     std::size_t operator () (const Pin& p) const {

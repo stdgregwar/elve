@@ -1,5 +1,6 @@
 #include "Extract.h"
 #include <GraphWidget.h>
+#include <Graph.h>
 #include <QDebug>
 #include <Node.h>
 

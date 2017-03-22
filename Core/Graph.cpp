@@ -15,6 +15,9 @@ bool operator==(const Pin& a,const Pin& b) {
     return a.id == b.id && ((a.index == b.index) || a.index == -1 || b.index == -1);
 }
 
+Pin::Pin(const NodeID& id) : id(id),index(-1){}
+Pin::Pin(const NodeID &id,const Index& index) : id(id), index(index){}
+
 Graph::Graph(const SharedData &data) : mData(data), mLastId(0)
 {
     for(const NodeData& d : data->nodeDatas()) {
