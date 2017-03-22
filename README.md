@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/stdgregwar/elve.png)](https://travis-ci.org/stdgregwar/elve)
+
 # ELVE: ELVE Logic Visualisation Explorer
 
 ELVE is a novel interactive open source desktop application for
