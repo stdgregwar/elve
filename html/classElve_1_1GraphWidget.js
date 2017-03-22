@@ -24,6 +24,8 @@ var classElve_1_1GraphWidget =
     [ "setGraph", "classElve_1_1GraphWidget.html#a037dd68a5ee01b8f82ea1ae41d6cfa04", null ],
     [ "setLayout", "classElve_1_1GraphWidget.html#a18309c476c07d5bcc5bbd3438678cef1", null ],
     [ "showEvent", "classElve_1_1GraphWidget.html#a7dd0cf41050d4ef4d7877718a4c91c13", null ],
+    [ "start", "classElve_1_1GraphWidget.html#a9f61f2312ad743e570b8df6bca5540dc", null ],
+    [ "stop", "classElve_1_1GraphWidget.html#ad0d7df766d2314fb7d10da413981b02a", null ],
     [ "tick", "classElve_1_1GraphWidget.html#a1603457d1a3919e5b298468feaae76dd", null ],
     [ "timerEvent", "classElve_1_1GraphWidget.html#ada6ff941c83a80387d315bdcff290dc8", null ],
     [ "toggleSelection", "classElve_1_1GraphWidget.html#add8dcbd9420e0c7c15c21644a0b9eb7c", null ],

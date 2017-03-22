@@ -377,7 +377,9 @@ Gene/home/travis/build/stdgregwar/elve/Core/Singleton.h:13: warning: Member get(
 /home/travis/build/stdgregwar/elve/Core/GraphWidget.h:76: warning: Member group() (slot) of class Elve::GraphWidget is not documented.
 /home/travis/build/stdgregwar/elve/Core/GraphWidget.h:77: warning: Member ungroup() (slot) of class Elve::GraphWidget is not documented.
 /home/travis/build/stdgregwar/elve/Core/GraphWidget.h:78: warning: Member setCurrentMask(int i) (slot) of class Elve::GraphWidget is not documented.
-/home/travis/build/stdgregwar/elve/Core/GraphWidget.h:80: warning: Member maskChanged(int i) (signal) of class Elve::GraphWidget is not documented.
+/home/travis/build/stdgregwar/elve/Core/GraphWidget.h:79: warning: Member start() (slot) of class Elve::GraphWidget is not documented.
+/home/travis/build/stdgregwar/elve/Core/GraphWidget.h:80: warning: Member stop() (slot) of class Elve::GraphWidget is not documented.
+/home/travis/build/stdgregwar/elve/Core/GraphWidget.h:82: warning: Member maskChanged(int i) (signal) of class Elve::GraphWidget is not documented.
 /home/travis/build/stdgregwar/elve/Core/GraphWidget.h:32: warning: Member GraphWidget(QWidget *parent=nullptr, GraphWidgetListener *listener=new DummyListener()) (function) of class Elve::GraphWidget is not documented.
 /home/travis/build/stdgregwar/elve/Core/GraphWidget.h:34: warning: Member setGraph(SharedEGraph graph, unsigned quickTicks=500) (function) of class Elve::GraphWidget is not documented.
 /home/travis/build/stdgregwar/elve/Core/GraphWidget.h:37: warning: Member tick(float dt, bool update=true) (function) of class Elve::GraphWidget is not documented.
@@ -639,6 +641,6 @@ Generating file index...
 Generating file member index...
 Generating example index...
 finalizing index lists...
-symbol cache used 685/65536 hits=27174 misses=685
-lookup cache used 2146/65536 hits=12285 misses=2330
+symbol cache used 688/65536 hits=27240 misses=688
+lookup cache used 2152/65536 hits=12325 misses=2336
 finished...
