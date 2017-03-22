@@ -1,5 +1,8 @@
 # This will run on Travis' 'new' container-based infrastructure
 sudo: false
+language: cpp
+compiler:
+ - gcc
 # Blacklist
 branches:
   only:
