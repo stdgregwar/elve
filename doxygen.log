@@ -178,7 +178,7 @@ Parsing file /h/home/travis/build/stdgregwar/elve/Core/Gravity.h:11: warning: Co
 /home/travis/build/stdgregwar/elve/Core/NodeData.h:24: warning: Compound Elve::Dependency is not documented.
 /home/travis/build/stdgregwar/elve/Core/Constraint.h:9: warning: Compound Elve::Constraint is not documented.
 /home/travis/build/stdgregwar/elve/Core/NodeData.h:47: warning: Compound Elve::NodeData is not documented.
-/home/travis/build/stdgregwar/elve/Core/Graph.cpp:32: warning: no matching class member found for 
+/home/travis/build/stdgregwar/elve/Core/Graph.cpp:35: warning: no matching class member found for 
   Elve::Graph::Graph(const SharedData &data, const SparseData &extraData, const Aliases &aliases, const NodeIDSet &excluded)
 Possible candidates:
   Elve::Graph::Graph(const SharedData &data)
@@ -641,6 +641,6 @@ Generating file index...
 Generating file member index...
 Generating example index...
 finalizing index lists...
-symbol cache used 688/65536 hits=27240 misses=688
-lookup cache used 2152/65536 hits=12325 misses=2336
+symbol cache used 688/65536 hits=27224 misses=688
+lookup cache used 2157/65536 hits=12340 misses=2341
 finished...

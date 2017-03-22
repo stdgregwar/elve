@@ -102,13 +102,13 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00014"></a>00014 <span class="keyword">typedef</span> std::unordered_map&lt;NodeID,Node&gt; NodesByID;
 <a name="l00015"></a>00015 
 <a name="l00019"></a><a class="code" href="structElve_1_1Pin.html">00019</a> <span class="keyword">struct </span><a class="code" href="structElve_1_1Pin.html" title="Pin structure serving as id in the graph for connexions.">Pin</a>{
-<a name="l00020"></a>00020     <a class="code" href="structElve_1_1Pin.html" title="Pin structure serving as id in the graph for connexions.">Pin</a>(<span class="keyword">const</span> NodeID&amp; <span class="keywordtype">id</span>) : id(<span class="keywordtype">id</span>),index(-1){}
-<a name="l00021"></a>00021     <a class="code" href="structElve_1_1Pin.html" title="Pin structure serving as id in the graph for connexions.">Pin</a>(<span class="keyword">const</span> NodeID &amp;<span class="keywordtype">id</span>,<span class="keyword">const</span> Index&amp; index) : id(<span class="keywordtype">id</span>), index(index){}
+<a name="l00020"></a>00020     <a class="code" href="structElve_1_1Pin.html" title="Pin structure serving as id in the graph for connexions.">Pin</a>(<span class="keyword">const</span> NodeID&amp; <span class="keywordtype">id</span>);
+<a name="l00021"></a>00021     <a class="code" href="structElve_1_1Pin.html" title="Pin structure serving as id in the graph for connexions.">Pin</a>(<span class="keyword">const</span> NodeID &amp;<span class="keywordtype">id</span>,<span class="keyword">const</span> Index&amp; index);
 <a name="l00022"></a>00022     NodeID id;
 <a name="l00023"></a>00023     Index  index;
 <a name="l00024"></a>00024 };
 <a name="l00025"></a>00025 
-<a name="l00026"></a>00026 <span class="keyword">inline</span> <span class="keywordtype">bool</span> operator==(<span class="keyword">const</span> <a class="code" href="structElve_1_1Pin.html" title="Pin structure serving as id in the graph for connexions.">Pin</a>&amp; a,<span class="keyword">const</span> <a class="code" href="structElve_1_1Pin.html" title="Pin structure serving as id in the graph for connexions.">Pin</a>&amp; b);
+<a name="l00026"></a>00026 <span class="keywordtype">bool</span> operator==(<span class="keyword">const</span> <a class="code" href="structElve_1_1Pin.html" title="Pin structure serving as id in the graph for connexions.">Pin</a>&amp; a,<span class="keyword">const</span> <a class="code" href="structElve_1_1Pin.html" title="Pin structure serving as id in the graph for connexions.">Pin</a>&amp; b);
 <a name="l00027"></a>00027 
 <a name="l00028"></a><a class="code" href="structElve_1_1Pin__hash.html">00028</a> <span class="keyword">struct </span><a class="code" href="structElve_1_1Pin__hash.html">Pin_hash</a> {
 <a name="l00029"></a>00029     std::size_t operator () (<span class="keyword">const</span> <a class="code" href="structElve_1_1Pin.html" title="Pin structure serving as id in the graph for connexions.">Pin</a>&amp; p)<span class="keyword"> const </span>{
