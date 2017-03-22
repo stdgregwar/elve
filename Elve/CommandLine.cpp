@@ -185,13 +185,19 @@ void CommandLine::graphChanged(SharedEGraph oldGraph, SharedEGraph newGraph) {
 
 bool CommandLine::run_command(const QString& cmd, std::ostream& out,std::ostream& cerr)
 {
-    //try {
+#ifdef QT_NO_DEBUG
+    try {
+#endif
         if(mCli.run_line(cmd.toStdString(),out,cerr)) {
-            store().current()->history().add(cmd.toStdString());
+            if(!store().empty()) {
+                store().current()->history().add(cmd.toStdString());
+            }
         }
-    //} catch(const std::exception& e) {
-    //    cerr << e.what() << std::endl;
-    //}
+#ifdef QT_NO_DEBUG
+    } catch(const std::exception& e) {
+        cerr << e.what() << std::endl;
+    }
+#endif
 }
 
 QStringList CommandLine::completion(const QString& base)
