@@ -15,12 +15,12 @@ class LevelLayout : public Elve::LayoutPlugin
     void tick(float dt, bool fast) override;
     void uiStart(Elve::GraphWidgetListener* listener,const Elve::SharedEGraph& graph) override;
 private:
-    qreal mK = 1; //Plugin options with default values
+    qreal mK = 2; //Plugin options with default values
     qreal mL0 = 0;
     qreal mDamp = 2;
     qreal mMinUnit = 128.0;
     qreal mMinIOUnit = 128.0;
-    qreal mRepulsion = 140;
+    qreal mRepulsion = 75;
 };
 
 

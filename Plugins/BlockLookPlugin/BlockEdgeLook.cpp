@@ -10,7 +10,9 @@ BlockEdgeLook::BlockEdgeLook(const NodeLook &from, const NodeLook &to) : EdgeLoo
 }
 
 QPen BlockEdgeLook::pen() const {
-    return QPen(Qt::white);
+    QPen p(Qt::darkGray);
+    p.setCosmetic(true);
+    return p;
 }
 
 void BlockEdgeLook::addToPath(QPainterPath& p) {

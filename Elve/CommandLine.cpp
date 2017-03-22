@@ -186,8 +186,9 @@ void CommandLine::graphChanged(SharedEGraph oldGraph, SharedEGraph newGraph) {
 bool CommandLine::run_command(const QString& cmd, std::ostream& out,std::ostream& cerr)
 {
     //try {
-        mCli.run_line(cmd.toStdString(),out,cerr);
-        store().current()->history().add(cmd.toStdString());
+        if(mCli.run_line(cmd.toStdString(),out,cerr)) {
+            store().current()->history().add(cmd.toStdString());
+        }
     //} catch(const std::exception& e) {
     //    cerr << e.what() << std::endl;
     //}

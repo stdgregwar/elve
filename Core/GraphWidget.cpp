@@ -142,18 +142,20 @@ void GraphWidget::borderSelect() {
 void GraphWidget::mousePressEvent(QMouseEvent *event)
 {
     if(!mBehaviour || !mBehaviour->mousePressEvent(event)) {
-        QList<QGraphicsItem*> items = mScene->items(mapToScene(event->pos()));
-        NodeIDSet names;
-        for(QGraphicsItem* i : items) {
-            NodeLook* n = dynamic_cast<NodeLook*>(i);
-            if(n) {
-                names.insert(n->node().id());
+        if(event->button() == Qt::RightButton) {
+            QList<QGraphicsItem*> items = mScene->items(mapToScene(event->pos()));
+            NodeIDSet names;
+            for(QGraphicsItem* i : items) {
+                NodeLook* n = dynamic_cast<NodeLook*>(i);
+                if(n) {
+                    names.insert(n->node().id());
+                }
             }
+            SelectionMode mode = CLEAR;
+            if(event->modifiers() & Qt::ShiftModifier) mode = ADD;
+            if(event->modifiers() & Qt::ControlModifier) mode = SUB;
+            select(names,mode);
         }
-        SelectionMode mode = CLEAR;
-        if(event->modifiers() & Qt::ShiftModifier) mode = ADD;
-        if(event->modifiers() & Qt::ControlModifier) mode = SUB;
-        select(names,mode);
         QGraphicsView::mousePressEvent(event);
     }
 }
@@ -173,15 +175,6 @@ void GraphWidget::mouseMoveEvent(QMouseEvent *event)
 }
 
 void GraphWidget::mouseDoubleClickEvent(QMouseEvent* event) { //TEMP ungroup feature
-    QList<QGraphicsItem*> items = mScene->items(mapToScene(event->pos()));
-    NodeIDSet names;
-    for(QGraphicsItem* i : items) {
-        NodeLook* n = dynamic_cast<NodeLook*>(i);
-        if(n) {
-            names.insert(n->node().id());
-        }
-    }
-    ungroup(names);
 }
 
 void GraphWidget::keyPressEvent(QKeyEvent *event) {
@@ -199,11 +192,13 @@ void GraphWidget::keyPressEvent(QKeyEvent *event) {
 
 void GraphWidget::group() {
     qDebug() << "grouping!";
-    group(mGraph->currentSelection());
+    //group(mGraph->currentSelection());
+    mListener->runCommand(QString("group -m %1").arg(mGraph->mask()));
 }
 
 void GraphWidget::ungroup() {
-    ungroup(mGraph->currentSelection());
+    //ungroup(mGraph->currentSelection());
+    mListener->runCommand(QString("ungroup -m %1").arg(mGraph->mask()));
 }
 
 void GraphWidget::toggleSelection() {

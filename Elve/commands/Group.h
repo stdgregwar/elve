@@ -20,9 +20,14 @@ public:
 
     bool execute() override {
         SharedEGraph eg = env->store<SharedEGraph>().current();
-        SharedEGraph grouped =  eg->group(eg->selection(mask),name);
+        SharedEGraph grouped;
+        if(is_set("mask")) {
+            grouped =  eg->group(eg->selection(mask),name);
+        } else {
+            grouped = eg->group(eg->currentSelection(),name);
+        }
         env->store<SharedEGraph>().current() = grouped;
-        if(eg->view()) eg->view()->setGraph(grouped);
+        if(eg->view()) eg->view()->setGraph(grouped,0);
         return true;
     }
 private:

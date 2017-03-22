@@ -14,6 +14,7 @@ BlockNodeLook::BlockNodeLook(const Node& node) : NodeLook(node)
     p.setColor(Qt::transparent);
     QBrush b(baseColor);
     setToolTip(QString("%1").arg(QString::number(node.id())));
+    setZValue(1);
 
     size_t io_count = std::max(node.inputCount(),node.outputCount());
 

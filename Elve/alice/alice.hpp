@@ -277,9 +277,7 @@ public:
    * @param line
    */
   bool run_line(const std::string& line, std::ostream& out, std::ostream& cerr) {
-      execute_line( preprocess_alias( line ),out,cerr);
-      //rl.add_to_history( line ); //TODO manage
-      return true;
+      return execute_line( preprocess_alias( line ),out,cerr);
   }
 
 

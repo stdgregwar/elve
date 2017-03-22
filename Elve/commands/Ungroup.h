@@ -22,7 +22,7 @@ public:
         Selection& s = eg->selection(mask);
         SharedEGraph ungrouped = eg->ungroup(s);
         env->store<SharedEGraph>().current() = ungrouped;
-        if(eg->view()) eg->view()->setGraph(ungrouped);
+        if(eg->view()) eg->view()->setGraph(ungrouped,0);
         return true;
     }
 private:

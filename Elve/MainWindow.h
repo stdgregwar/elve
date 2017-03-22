@@ -20,7 +20,6 @@ public:
     Ui::MainWindow ui;
     void newWindowWithFile(SharedEGraph g, QString filename);
     void connectTab(QMdiSubWindow* tab);
-    void disconnectTab(QMdiSubWindow* tab);
     void runUiCommand(const QString& cmd);
     void runCommandOnShownGraph(const QString& cmd);
     void closeAllTabs();

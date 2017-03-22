@@ -207,13 +207,24 @@ void MainWindow::onFileOpen(const QString& filename){
 }
 
 void MainWindow::connectTab(QMdiSubWindow* tab) {
-    mCurrentTab = tab;
-    GraphWidget* gw = viewport();
-    if(!gw) {
-        qDebug() << "Could not cast tab to viewport. Exiting";
-        //qApp->quit();
+
+    if(mCurrentTab && mCurrentTab != tab) {
+        //TODO disconnect
+        QMainWindow* mw = dynamic_cast<QMainWindow*>(mCurrentTab->widget());
+        GraphWidget* gw = mw ? dynamic_cast<GraphWidget*>(mw->centralWidget()) : nullptr;
+        disconnect(ui.actionRectangle,0,gw,0);
+        disconnect(ui.actionToggle,0,gw,0);
+        disconnect(ui.actionGroup,0,gw,0);
+        disconnect(ui.actionUngroup,0,gw,0);
+    }
+    if(mCurrentTab == tab) {
         return;
     }
+
+    mCurrentTab = tab;
+
+    GraphWidget* gw = viewport();
+
     connect(ui.actionRectangle,SIGNAL(triggered()),gw,SLOT(borderSelect()));
     connect(ui.actionToggle,SIGNAL(triggered()),gw,SLOT(toggleSelection()));
     connect(ui.actionGroup,SIGNAL(triggered()),gw,SLOT(group()));
@@ -239,16 +250,9 @@ void MainWindow::on_ungroup() {
                                     viewport()->graph()->mask())));
 }
 
-void MainWindow::disconnectTab(QMdiSubWindow* tab) {
-    GraphWidget* gw = viewport();
-    if(!gw) {
-        return;
-    }
-    disconnect(ui.actionBorder,SIGNAL(triggered()),gw,SLOT(borderSelect()));
-}
+
 
 void MainWindow::on_tab_change(QMdiSubWindow* tab) {
-    disconnectTab(mCurrentTab);
     connectTab(tab);
 }
 
