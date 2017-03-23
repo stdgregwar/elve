@@ -8,12 +8,13 @@ QT       += core gui svg
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = Core
+TARGET = ElveCore
 TEMPLATE = lib
 INCLUDEPATH += $$PWD
 DEFINES += ELFE_LIBRARY
 
 CONFIG += c++11
+CONFIG += plugin
 
 #QMAKE_CXXFLAGS_RELEASE -= -O2
 #QMAKE_CXXFLAGS_RELEASE += -O3
@@ -21,10 +22,10 @@ CONFIG += c++11
 #QMAKE_LFLAGS_RELEASE -= -O1
 #QMAKE_LFLAGS_RELEASE += -O3
 
-unix {
-    target.path = /usr/lib
-    INSTALLS += target
-}
+#unix {
+#    target.path = /usr/lib
+#    INSTALLS += target
+#}
 
 
 SOURCES +=\

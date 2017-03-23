@@ -8,16 +8,18 @@ QT       += core gui widgets
 
 TARGET = LevelLayoutPlugin
 TEMPLATE = lib
+
 CONFIG += plugin c++11
+CONFIG += no_plugin_name_prefix
 
 DESTDIR = ../../Elve/plugins/layouts
 
 INCLUDEPATH+= ../../Core/interfaces
 INCLUDEPATH += ../../Core
 
-win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../../Core/release/ -lCore
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../../Core/debug/ -lCore
-else:unix: LIBS += -L$$OUT_PWD/../../Core/ -lCore
+win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../../Core/release/ -lElveCore
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../../Core/debug/ -lElveCore
+else:unix: LIBS += -L$$OUT_PWD/../../Core/ -lElveCore
 
 SOURCES += \
     LevelLayout.cpp \

@@ -77,7 +77,7 @@ NodeData::NodeData(const QJsonObject& obj)
 }
 
 const QJsonObject NodeData::json() const {
-    static std::unordered_map<NodeType,QString> typeToString{{NODE,"node"},
+    static std::unordered_map<int,QString> typeToString{{NODE,"node"},
                                                              {INPUT,"input"},
                                                              {OUTPUT,"output"},
                                                              {CLUSTER,"cluster"}};

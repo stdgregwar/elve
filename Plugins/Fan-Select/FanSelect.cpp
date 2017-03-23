@@ -14,17 +14,17 @@ FanSelect::FanSelect()
             ("outmask",po::value(&mInMask),"output selection mask");
 }
 
-void _gatherDependencies(const Node* node, Selection& toFill) {
-    for(Node* an : node->ancestors()) {
+void _gatherDependencies(const Node& node, Selection& toFill) {
+    for(Node* an : node.ancestors()) {
         toFill.add(an->id());
-        _gatherDependencies(an,toFill);
+        _gatherDependencies(*an,toFill);
     }
 }
 
-void _gatherDependents(const Node* node, Selection& toFill) {
-    for(Node* an : node->children()) {
+void _gatherDependents(const Node& node, Selection& toFill) {
+    for(Node* an : node.children()) {
         toFill.add(an->id());
-        _gatherDependents(an,toFill);
+        _gatherDependents(*an,toFill);
     }
 }
 
@@ -38,7 +38,7 @@ SharedEGraph FanSelect::transform(const SharedEGraph& eg) {
     Selection& inSel = eg->selection(inMask);
     if(is_set("in")) {
         for(const NodeID& prim : inSel) {
-            const Node* n = &eg->graph()->nodes().at(prim);
+            const Node& n = eg->graph()->nodes().at(prim);
             _gatherDependencies(n,conein);
         }
     }
@@ -46,7 +46,7 @@ SharedEGraph FanSelect::transform(const SharedEGraph& eg) {
     Selection coneout;
     if(is_set("out")) {
         for(const NodeID& prim : inSel) {
-            const Node* n = &eg->graph()->nodes().at(prim);
+            const Node& n = eg->graph()->nodes().at(prim);
             _gatherDependents(n,coneout);
         }
     }

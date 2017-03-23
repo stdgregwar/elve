@@ -20,9 +20,9 @@ SOURCES += main.cpp \
     CommandLine.cpp \
     StoreView.cpp
 
-win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../Core/release/ -lCore
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../Core/debug/ -lCore
-else:unix: LIBS += -L$$OUT_PWD/../Core/ -lCore
+win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../Core/release/ -lElveCore
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../Core/debug/ -lElveCore
+else:unix: LIBS += -L$$OUT_PWD/../Core/ -lElveCore
 
 #boost
 LIBS += -lboost_system -lboost_program_options -lboost_regex -lboost_filesystem

@@ -8,7 +8,7 @@ using namespace Elve;
 
 static QColor baseColor(34,34,34);
 
-static std::unordered_map<NodeType,QString> pixmaps{
+static std::unordered_map<int,QString> pixmaps{
     {NodeType::CLUSTER,":/resources/cluster.svg"},
     {NodeType::NODE,":/resources/node.svg"},
     {NodeType::INPUT,":/resources/input.svg"},
