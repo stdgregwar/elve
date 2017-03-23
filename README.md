@@ -55,4 +55,4 @@ using qmake ([qmake documentation](http://doc.qt.io/qt-4.8/qmake-tutorial.html))
 ## Development
 
 Would you like to write your own plugin? Take a look at the 
-([available documentation](https://stdgregwar.github.io/elve/html/)).
+[available documentation](https://stdgregwar.github.io/elve/html/).
