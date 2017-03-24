@@ -32,7 +32,9 @@
 
 #pragma once
 
+#ifndef WIN32
 #include <sys/utsname.h>
+#endif
 
 #include <thread>
 
@@ -57,6 +59,7 @@ protected:
 public:
   log_opt_t log() const
   {
+#ifndef WIN32
     utsname u;
     uname( &u );
     return log_opt_t({
@@ -67,6 +70,12 @@ public:
         {"machine", std::string( u.machine )},
         {"supported_threads", static_cast<int>( std::thread::hardware_concurrency() )}
       });
+#else
+      return log_opt_t({
+          {"sysname", "window"},
+          {"supported_threads", "unknown"}
+        });
+#endif
   }
 };
 

@@ -22,6 +22,7 @@ void System::tick(float dt, bool update)
     //qDebug() << "tick" << count++;
     mGravity.updateQuadTree();
 
+#ifndef NO_THREADS
     int nthreads = 8;
     vector<future<void>> futures(nthreads);
     int splitsize = mPoints.size() / nthreads;
@@ -36,6 +37,9 @@ void System::tick(float dt, bool update)
     for(future<void>& f : futures) {
         f.get();
     }
+#else
+    computeForces(0,mPoints.size());
+#endif
 
     for(Point* m : mPoints) {
         m->tick(dt,update);

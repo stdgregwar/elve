@@ -32,7 +32,9 @@
 
 #pragma once
 
+#ifndef WIN32
 #include <wordexp.h>
+#endif
 #include <string>
 
 #include <boost/program_options.hpp>
@@ -49,6 +51,7 @@ inline std::string process_filename( const std::string& filename )
 {
   std::string result;
 
+#ifndef WIN32
   wordexp_t p;
   wordexp( filename.c_str(), &p, 0 );
 
@@ -59,6 +62,9 @@ inline std::string process_filename( const std::string& filename )
   }
 
   wordfree( &p );
+#else
+  result = filename;
+#endif
 
   return result;
 }

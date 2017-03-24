@@ -27,6 +27,8 @@ CONFIG += plugin
 #    INSTALLS += target
 #}
 
+win32:LIBS += -lboost_system-mt -lboost_program_options-mt -lboost_regex-mt -lboost_filesystem-mt
+
 
 SOURCES +=\
     Constraint.cpp \

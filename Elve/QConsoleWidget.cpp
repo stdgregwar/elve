@@ -47,7 +47,7 @@ void QConsoleWidget::OnChildStdOutWrite(QString szOutput)
 #ifdef Q_OS_WIN32
     QString content;
 
-    if (fixedPosition != 0) {
+    if (mFixedPosition != 0) {
         content = szOutput.right(szOutput.count() - szOutput.indexOf('\n') - 1);
     } else {
         content = szOutput;
@@ -124,13 +124,13 @@ void QConsoleWidget::issue() {
 }
 
 void QConsoleWidget::run_command(const QString& cmd, bool print) {
-    std::ostringstream stderr;
-    std::ostringstream stdout;
-    stdout<< std::endl;
+    std::ostringstream std_err;
+    std::ostringstream std_out;
+    std_out<< std::endl;
     if(print) insertPlainText(cmd);
-    CommandLine::get().run_command(cmd,stdout,stderr);
-    OnChildStdOutWrite(QString::fromStdString(stdout.str()));
-    print_error(QString::fromStdString(stderr.str()));
+    CommandLine::get().run_command(cmd,std_out,std_err);
+    OnChildStdOutWrite(QString::fromStdString(std_out.str()));
+    print_error(QString::fromStdString(std_err.str()));
     print_prompt();
 
     if(!cmd.isEmpty()) mHistory.append(cmd);
