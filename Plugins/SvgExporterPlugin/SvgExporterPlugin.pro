@@ -24,9 +24,8 @@ unix {
     INSTALLS += target
 }
 
-win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../../Core/release/ -lElveCore
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../../Core/debug/ -lElveCore
-else:unix: LIBS += -L$$OUT_PWD/../../Core/ -lElveCore
+LIBS += -L$$OUT_PWD/../../Core/ -lElveCore
+win32:LIBS += -lboost_system-mt -lboost_program_options-mt -lboost_regex-mt -lboost_filesystem-mt
 
 INCLUDEPATH += $$PWD/../Core
 DEPENDPATH += $$PWD/../Core

@@ -7,12 +7,12 @@ class Singleton
 {
 public:
     Singleton(){
-        sInstance = reinterpret_cast<T*>(this);
+        sInstance = static_cast<T*>(this);
     }
 
     static T& get() {
         if(!sInstance) {
-           new T();
+           sInstance = new T();
         }
         return *sInstance;
     }

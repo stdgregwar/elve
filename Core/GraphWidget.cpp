@@ -367,6 +367,7 @@ bool GraphWidget::BorderSelect::mousePressEvent(QMouseEvent *event) {
     return true;
 }
 
+
 bool GraphWidget::BorderSelect::mouseReleaseEvent(QMouseEvent *event) {
     QList<QGraphicsItem*> items = gw.mScene->items(mRectangle->sceneBoundingRect());
     NodeIDSet names;

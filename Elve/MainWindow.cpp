@@ -1,5 +1,6 @@
 #include "MainWindow.h"
 
+#include <iostream>
 #include <QApplication>
 #include <QOpenGLContext>
 #include <QDebug>
@@ -44,17 +45,13 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(ui.mdiArea,SIGNAL(subWindowActivated(QMdiSubWindow*)),this,SLOT(on_tab_change(QMdiSubWindow*)));
 
-    /*connect(ui.actionRectangle,SIGNAL(triggered()),this,SLOT(borderSelect()));
-    connect(ui.actionToggle,SIGNAL(triggered()),this,SLOT(toggleSelection()));
-    connect(ui.actionGroup,SIGNAL(triggered()),this,SLOT(group()));*/
-
     PluginManager& pluginManager = PluginManager::get();
 
     //setup loaders
     for(auto& l : pluginManager.loaders()) {
         FileLoadAction* a = new FileLoadAction(l,l->formatName(),this);
         connect(a,SIGNAL(triggered(GraphLoaderPlugin*)),this,SLOT(on_import_trigerred(GraphLoaderPlugin*)));
-        ui.menuImport->addAction(a);
+        ui.menuImport->addAction(new QAction(l->formatName(),ui.menuImport));
     }
 
     //setup exporters
@@ -287,8 +284,10 @@ void MainWindow::newWindowWithFile(SharedEGraph g, QString filename) {
     w->setWindowTitle(filename);
     w->setWindowState(Qt::WindowMaximized);
     w->setAttribute(Qt::WA_DeleteOnClose);
-    gw->setGraph(g);
-    gw->fit();
+    if(g) {
+        gw->setGraph(g);
+        gw->fit();
+    }
 }
 
 void MainWindow::on_actionSave_triggered()
@@ -309,7 +308,7 @@ void MainWindow::on_actionSave_triggered()
         }
         QString filename = list.first();
         //try {
-            graph->toFile(filename);
+        graph->toFile(filename);
         //} catch(std::exception e) {
         //    QMessageBox::critical(this,"Error", e.what());
         //}

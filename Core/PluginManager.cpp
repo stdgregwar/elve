@@ -37,6 +37,7 @@ void _load(const QString& path, const QString& type, QList<T*>& toFill) {
     qDebug() << "Searching for" << type << "plugins in" << dir.absoluteFilePath(path);
     for(const QFileInfo& info : dir.entryInfoList(QDir::Files)) {
         qDebug() << "Trying to load" << info.baseName();
+        //QMessageBox("Warning","Trying to load" + info.baseName() + " : \n",QMessageBox::Warning,0,0,0).exec();
         if(info.suffix() == "so" || info.suffix() == "dll" || info.suffix() == "dylib") {
             QPluginLoader* qpl = new QPluginLoader(info.filePath());
             if(!qpl->load()) {

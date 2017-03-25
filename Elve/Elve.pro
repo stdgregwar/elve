@@ -12,6 +12,7 @@ TARGET = Elve
 TEMPLATE = app
 
 CONFIG += c++11
+CONFIG -= debug_and_release
 
 SOURCES += main.cpp \
     MainWindow.cpp \
@@ -20,8 +21,7 @@ SOURCES += main.cpp \
     CommandLine.cpp \
     StoreView.cpp
 
-win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../Core/release/ -lElveCore
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../Core/debug/ -lElveCore
+win32: LIBS += -L$$OUT_PWD/../Core/ -lElveCore
 else:unix: LIBS += -L$$OUT_PWD/../Core/ -lElveCore
 
 #boost
