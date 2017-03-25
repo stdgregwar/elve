@@ -139,34 +139,65 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00051"></a>00051     <span class="keywordflow">return</span> mSystem;
 <a name="l00052"></a>00052 }
 <a name="l00053"></a>00053 
-<a name="l00054"></a><a class="code" href="classElve_1_1LayoutPlugin.html#add6e60eabb8c3942fb717bf2ffe2062d">00054</a> <span class="keyword">const</span> <a class="code" href="classElve_1_1System.html">System</a>&amp; <a class="code" href="classElve_1_1LayoutPlugin.html#ab429219dd9a8e780b1027e502c50e7f8" title="get the default physical system">LayoutPlugin::system</a>()<span class="keyword"> const</span>
-<a name="l00055"></a>00055 <span class="keyword"></span>{
-<a name="l00056"></a>00056     <span class="keywordflow">return</span> mSystem;
-<a name="l00057"></a>00057 }
-<a name="l00058"></a>00058 
-<a name="l00059"></a><a class="code" href="classElve_1_1LayoutPlugin.html#a9925ca298624fcc39b7701320e6e8703">00059</a> <span class="keywordtype">void</span> <a class="code" href="classElve_1_1LayoutPlugin.html#a9925ca298624fcc39b7701320e6e8703" title="advance the simulation one step">LayoutPlugin::tick</a>(<span class="keywordtype">float</span> dt, <span class="keywordtype">bool</span> fast) {
-<a name="l00060"></a>00060     mSystem.tick(dt,fast);
-<a name="l00061"></a>00061 }
-<a name="l00062"></a>00062 
-<a name="l00063"></a><a class="code" href="classElve_1_1LayoutPlugin.html#a97b580e8087b4efed7256c8a2d6b7034">00063</a> <span class="keywordtype">void</span> <a class="code" href="classElve_1_1LayoutPlugin.html#a97b580e8087b4efed7256c8a2d6b7034" title="tells the plugin to simulate a certain number of ticks in a quick way">LayoutPlugin::quickSim</a>(<span class="keywordtype">size_t</span> ticks) {
-<a name="l00064"></a>00064     <span class="keywordflow">if</span>(ticks == 0)
-<a name="l00065"></a>00065         <span class="keywordflow">return</span>;
-<a name="l00066"></a>00066     <span class="keyword">using namespace </span>std::chrono;
-<a name="l00067"></a>00067 
-<a name="l00068"></a>00068     high_resolution_clock::time_point t1 = high_resolution_clock::now();
-<a name="l00069"></a>00069     <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i = 0; i &lt; ticks; i++) {
-<a name="l00070"></a>00070         <a class="code" href="classElve_1_1LayoutPlugin.html#a9925ca298624fcc39b7701320e6e8703" title="advance the simulation one step">tick</a>(0.25,<span class="keyword">false</span>);
-<a name="l00071"></a>00071     }
-<a name="l00072"></a>00072     high_resolution_clock::time_point t2 = high_resolution_clock::now();
-<a name="l00073"></a>00073     duration&lt;double&gt; time_span = duration_cast&lt;duration&lt;double&gt;&gt;(t2 - t1);
-<a name="l00074"></a>00074     qDebug() &lt;&lt; <span class="stringliteral">&quot;Simulating at mean of&quot;</span> &lt;&lt; ticks/time_span.count() &lt;&lt; <span class="stringliteral">&quot;tps&quot;</span>;
-<a name="l00075"></a>00075 }
-<a name="l00076"></a>00076 
-<a name="l00077"></a><a class="code" href="classElve_1_1LayoutPlugin.html#a1ed43ae8687740bd2b934f22d14c34b7">00077</a> <span class="keywordtype">void</span> <a class="code" href="classElve_1_1LayoutPlugin.html#a1ed43ae8687740bd2b934f22d14c34b7" title="called when the command is started from the GUI">LayoutPlugin::uiStart</a>(<a class="code" href="classElve_1_1GraphWidgetListener.html" title="The GraphWidgetListener interface reimplement this if you&#39;re using elve as a dependency.">Elve::GraphWidgetListener</a>* listener,<span class="keyword">const</span> SharedEGraph&amp; graph) {
-<a name="l00078"></a>00078     listener-&gt;runCommand(QString(<span class="stringliteral">&quot;%1_layout&quot;</span>).arg(<a class="code" href="classElve_1_1LayoutPlugin.html#a81c720b2846a0f5f40daf8f1dc656f81" title="the command line interface name of the GUI">cliName</a>().c_str()));
-<a name="l00079"></a>00079 }
-<a name="l00080"></a>00080 
-<a name="l00081"></a>00081 }
+<a name="l00054"></a>00054 QJsonObject LayoutPlugin::json()<span class="keyword"> const </span>{
+<a name="l00055"></a>00055     QJsonObject layout;
+<a name="l00056"></a>00056     QJsonObject  positions;
+<a name="l00057"></a>00057 
+<a name="l00058"></a>00058     layout.insert(<span class="stringliteral">&quot;name&quot;</span>,<a class="code" href="classElve_1_1LayoutPlugin.html#a9199fa1ef5a45d13462fad351c1127a5" title="the main name of the layout displayed in the GUIs">name</a>());
+<a name="l00059"></a>00059 
+<a name="l00060"></a>00060     <span class="keyword">using</span> pair_type = NodePositions::value_type;
+<a name="l00061"></a>00061     <span class="keywordflow">for</span>(<span class="keyword">const</span> pair_type&amp; p : <a class="code" href="classElve_1_1LayoutPlugin.html#ab429219dd9a8e780b1027e502c50e7f8" title="get the default physical system">system</a>().positions()) {
+<a name="l00062"></a>00062         <span class="keyword">const</span> QVector2D&amp; pos = p.second;
+<a name="l00063"></a>00063         positions.insert(QString::number(p.first),
+<a name="l00064"></a>00064                          QJsonArray{pos.x(),pos.y()});
+<a name="l00065"></a>00065     }
+<a name="l00066"></a>00066     layout.insert(<span class="stringliteral">&quot;positions&quot;</span>,positions);
+<a name="l00067"></a>00067     QJsonArray pinned;
+<a name="l00068"></a>00068     <span class="keywordflow">for</span>(<span class="keyword">const</span> PointsByID::value_type&amp; p : system().pinnedPoints()) {
+<a name="l00069"></a>00069         pinned.append((<span class="keywordtype">int</span>)p.first);
+<a name="l00070"></a>00070     }
+<a name="l00071"></a>00071     layout.insert(<span class="stringliteral">&quot;pinned&quot;</span>,pinned);
+<a name="l00072"></a>00072     <span class="keywordflow">return</span> layout;
+<a name="l00073"></a>00073 }
+<a name="l00074"></a>00074 
+<a name="l00075"></a>00075 <span class="keywordtype">void</span> LayoutPlugin::fromJson(<span class="keyword">const</span> QJsonObject&amp; layout) {
+<a name="l00076"></a>00076     QJsonArray pinned = layout.value(<span class="stringliteral">&quot;pinned&quot;</span>).toArray();
+<a name="l00077"></a>00077     QJsonObject poss = layout.value(<span class="stringliteral">&quot;positions&quot;</span>).toObject();
+<a name="l00078"></a>00078     <span class="keywordflow">for</span>(<span class="keyword">const</span> QJsonValue&amp; v : pinned) {
+<a name="l00079"></a>00079         QJsonArray parr = poss.value(QString::number(v.toInt())).toArray();
+<a name="l00080"></a>00080         QVector2D pos(parr[0].toDouble(),parr[1].toDouble());
+<a name="l00081"></a>00081         system().pin(v.toInt(),pos);
+<a name="l00082"></a>00082     }
+<a name="l00083"></a>00083 }
+<a name="l00084"></a>00084 
+<a name="l00085"></a><a class="code" href="classElve_1_1LayoutPlugin.html#add6e60eabb8c3942fb717bf2ffe2062d">00085</a> <span class="keyword">const</span> <a class="code" href="classElve_1_1System.html">System</a>&amp; LayoutPlugin::system()<span class="keyword"> const</span>
+<a name="l00086"></a>00086 <span class="keyword"></span>{
+<a name="l00087"></a>00087     <span class="keywordflow">return</span> mSystem;
+<a name="l00088"></a>00088 }
+<a name="l00089"></a>00089 
+<a name="l00090"></a><a class="code" href="classElve_1_1LayoutPlugin.html#a9925ca298624fcc39b7701320e6e8703">00090</a> <span class="keywordtype">void</span> LayoutPlugin::tick(<span class="keywordtype">float</span> dt, <span class="keywordtype">bool</span> fast) {
+<a name="l00091"></a>00091     mSystem.tick(dt,fast);
+<a name="l00092"></a>00092 }
+<a name="l00093"></a>00093 
+<a name="l00094"></a><a class="code" href="classElve_1_1LayoutPlugin.html#a97b580e8087b4efed7256c8a2d6b7034">00094</a> <span class="keywordtype">void</span> LayoutPlugin::quickSim(<span class="keywordtype">size_t</span> ticks) {
+<a name="l00095"></a>00095     <span class="keywordflow">if</span>(ticks == 0)
+<a name="l00096"></a>00096         <span class="keywordflow">return</span>;
+<a name="l00097"></a>00097     <span class="keyword">using namespace </span>std::chrono;
+<a name="l00098"></a>00098 
+<a name="l00099"></a>00099     high_resolution_clock::time_point t1 = high_resolution_clock::now();
+<a name="l00100"></a>00100     <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i = 0; i &lt; ticks; i++) {
+<a name="l00101"></a>00101         tick(0.25,<span class="keyword">false</span>);
+<a name="l00102"></a>00102     }
+<a name="l00103"></a>00103     high_resolution_clock::time_point t2 = high_resolution_clock::now();
+<a name="l00104"></a>00104     duration&lt;double&gt; time_span = duration_cast&lt;duration&lt;double&gt;&gt;(t2 - t1);
+<a name="l00105"></a>00105     qDebug() &lt;&lt; <span class="stringliteral">&quot;Simulating at mean of&quot;</span> &lt;&lt; ticks/time_span.count() &lt;&lt; <span class="stringliteral">&quot;tps&quot;</span>;
+<a name="l00106"></a>00106 }
+<a name="l00107"></a>00107 
+<a name="l00108"></a><a class="code" href="classElve_1_1LayoutPlugin.html#a1ed43ae8687740bd2b934f22d14c34b7">00108</a> <span class="keywordtype">void</span> LayoutPlugin::uiStart(<a class="code" href="classElve_1_1GraphWidgetListener.html" title="The GraphWidgetListener interface reimplement this if you&#39;re using elve as a dependency.">Elve::GraphWidgetListener</a>* listener,<span class="keyword">const</span> SharedEGraph&amp; graph) {
+<a name="l00109"></a>00109     listener-&gt;runCommand(QString(<span class="stringliteral">&quot;%1_layout&quot;</span>).arg(cliName().c_str()));
+<a name="l00110"></a>00110 }
+<a name="l00111"></a>00111 
+<a name="l00112"></a>00112 }
 </pre></div></div><!-- contents -->
 </div>
 <!-- window showing the filter options -->

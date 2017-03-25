@@ -15,6 +15,8 @@ var classElve_1_1System =
     [ "massCount", "classElve_1_1System.html#a34b200e50761d8006262266e56e73ebf", null ],
     [ "nearest", "classElve_1_1System.html#ac020f7287679ec964011b4cc76b87ab9", null ],
     [ "orientationHint", "classElve_1_1System.html#a9568e3038ea7bf9017b1f29df6925ab3", null ],
+    [ "pin", "classElve_1_1System.html#a1e2fc675b604f337b52411519a26b026", null ],
+    [ "pinnedPoints", "classElve_1_1System.html#a7a2dea70ff6e5a7b9b0b91b396fa3cb4", null ],
     [ "point", "classElve_1_1System.html#ab156b1e4c7ee0f27322c6acda3f6b08f", null ],
     [ "pointsByID", "classElve_1_1System.html#a45b44c262f03b64450a0b97d23d9d7a6", null ],
     [ "positions", "classElve_1_1System.html#abfd6906f3efd320b7568181624e559b1", null ],
@@ -23,5 +25,6 @@ var classElve_1_1System =
     [ "setSizeHint", "classElve_1_1System.html#a3a35b8f1b480932944799d9c701d7c2a", null ],
     [ "sizeHint", "classElve_1_1System.html#af91b8ea32c915ce1dc8dacd83237018f", null ],
     [ "tick", "classElve_1_1System.html#af641ec9c1bf97f0362799b3d01a553cb", null ],
-    [ "transformPoint", "classElve_1_1System.html#af4c6f2ecbd2ddb58d45507c9a0396ae5", null ]
+    [ "transformPoint", "classElve_1_1System.html#af4c6f2ecbd2ddb58d45507c9a0396ae5", null ],
+    [ "unpin", "classElve_1_1System.html#af6c3c7571dea93e81dfa033a1599873a", null ]
 ];

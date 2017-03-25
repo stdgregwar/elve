@@ -99,44 +99,53 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00011"></a>00011 
 <a name="l00012"></a>00012 <span class="keyword">namespace </span>Elve {
 <a name="l00013"></a>00013 
-<a name="l00014"></a><a class="code" href="classElve_1_1Point.html">00014</a> <span class="keyword">class </span><a class="code" href="classElve_1_1Point.html">Point</a>
-<a name="l00015"></a>00015 {
-<a name="l00016"></a>00016     <span class="keyword">friend</span> <span class="keyword">class </span><a class="code" href="classElve_1_1Movable.html">Movable</a>;
-<a name="l00017"></a>00017 <span class="keyword">public</span>:
-<a name="l00018"></a>00018     <a class="code" href="classElve_1_1Point.html">Point</a>(qreal mass,<span class="keyword">const</span> NodeID&amp; <span class="keywordtype">id</span>);
-<a name="l00019"></a>00019     <span class="keywordtype">bool</span> moved() <span class="keyword">const</span>;
-<a name="l00020"></a>00020     <span class="keyword">const</span> QVector2D&amp; pos() <span class="keyword">const</span>;
-<a name="l00021"></a>00021     <span class="keyword">const</span> QVector2D&amp; speed() <span class="keyword">const</span>;
-<a name="l00022"></a>00022     <span class="keyword">const</span> qreal&amp; mass() <span class="keyword">const</span>;
-<a name="l00023"></a>00023     <span class="keywordtype">void</span> setPos(<span class="keyword">const</span> QVector2D&amp; pos);
-<a name="l00024"></a>00024     <span class="keywordtype">void</span> setSpeed(<span class="keyword">const</span> QVector2D&amp; speed);
-<a name="l00025"></a>00025     <span class="keywordtype">void</span> clearMovables();
-<a name="l00026"></a>00026     <span class="keywordtype">void</span> addMovable(<a class="code" href="classElve_1_1Movable.html">Movable</a>* m);
-<a name="l00027"></a>00027     <span class="keywordtype">void</span> removeMovable(<a class="code" href="classElve_1_1Movable.html">Movable</a>* m);
-<a name="l00028"></a>00028     <span class="keywordtype">void</span> addForce(<a class="code" href="classElve_1_1Force.html">Force</a>* force);
-<a name="l00029"></a>00029     <span class="keywordtype">void</span> addConstraint(<a class="code" href="classElve_1_1Constraint.html">Constraint</a>* c);
-<a name="l00030"></a>00030     <span class="keywordtype">void</span> resetForce();
-<a name="l00031"></a>00031     <span class="keywordtype">void</span> computeForce();
-<a name="l00032"></a>00032     <span class="keywordtype">void</span> tick(<span class="keywordtype">float</span> dt, <span class="keywordtype">bool</span> update = <span class="keyword">true</span>);
-<a name="l00033"></a>00033     <span class="keywordtype">void</span>* containerData() <span class="keyword">const</span>;
-<a name="l00034"></a>00034     <span class="keywordtype">void</span> setContainerData(<span class="keywordtype">void</span>* data) <span class="keyword">const</span>;
-<a name="l00035"></a>00035     <span class="keyword">const</span> NodeID&amp; boundID() <span class="keyword">const</span>;
-<a name="l00036"></a>00036 <span class="keyword">private</span>:
-<a name="l00037"></a>00037     std::set&lt;Movable*&gt;&amp; movables() {<span class="keywordflow">return</span> mMovables;}
-<a name="l00038"></a>00038     NodeID mID;
-<a name="l00039"></a>00039     QVector2D mPos;
-<a name="l00040"></a>00040     QVector2D mSpeed;
-<a name="l00041"></a>00041     QVector2D mForce;
-<a name="l00042"></a>00042     std::set&lt;Force*&gt; mForces;
-<a name="l00043"></a>00043     std::set&lt;Movable*&gt; mMovables;
-<a name="l00044"></a>00044     std::set&lt;Constraint*&gt; mConstraints;
-<a name="l00045"></a>00045     qreal mM;
-<a name="l00046"></a>00046     <span class="keyword">mutable</span> <span class="keywordtype">void</span>* mContainerData;
-<a name="l00047"></a>00047 };
-<a name="l00048"></a>00048 
-<a name="l00049"></a>00049 }
-<a name="l00050"></a>00050 
-<a name="l00051"></a>00051 <span class="preprocessor">#endif // MASS_H</span>
+<a name="l00014"></a>00014 <span class="keyword">class </span>System;
+<a name="l00015"></a>00015 
+<a name="l00016"></a><a class="code" href="classElve_1_1Point.html">00016</a> <span class="keyword">class </span><a class="code" href="classElve_1_1Point.html">Point</a>
+<a name="l00017"></a>00017 {
+<a name="l00018"></a>00018     <span class="keyword">friend</span> <span class="keyword">class </span><a class="code" href="classElve_1_1Movable.html">Movable</a>;
+<a name="l00019"></a>00019 <span class="keyword">public</span>:
+<a name="l00020"></a>00020     <a class="code" href="classElve_1_1Point.html">Point</a>(qreal mass,<span class="keyword">const</span> NodeID&amp; <span class="keywordtype">id</span>, <a class="code" href="classElve_1_1System.html">System</a>&amp; sys);
+<a name="l00021"></a>00021     <span class="keywordtype">bool</span> moved() <span class="keyword">const</span>;
+<a name="l00022"></a>00022     <span class="keyword">const</span> QVector2D&amp; pos() <span class="keyword">const</span>;
+<a name="l00023"></a>00023     <span class="keyword">const</span> QVector2D&amp; speed() <span class="keyword">const</span>;
+<a name="l00024"></a>00024     <span class="keyword">const</span> qreal&amp; mass() <span class="keyword">const</span>;
+<a name="l00025"></a>00025     <span class="keywordtype">void</span> setPos(<span class="keyword">const</span> QVector2D&amp; pos);
+<a name="l00026"></a>00026     <span class="keywordtype">void</span> setSpeed(<span class="keyword">const</span> QVector2D&amp; speed);
+<a name="l00027"></a>00027     <span class="keywordtype">void</span> setMass(qreal mass);
+<a name="l00028"></a>00028     <span class="keywordtype">void</span> clearMovables();
+<a name="l00029"></a>00029     <span class="keywordtype">void</span> addMovable(<a class="code" href="classElve_1_1Movable.html">Movable</a>* m);
+<a name="l00030"></a>00030     <span class="keywordtype">void</span> removeMovable(<a class="code" href="classElve_1_1Movable.html">Movable</a>* m);
+<a name="l00031"></a>00031     <span class="keywordtype">void</span> addForce(<a class="code" href="classElve_1_1Force.html">Force</a>* force);
+<a name="l00032"></a>00032     <span class="keywordtype">void</span> addConstraint(<a class="code" href="classElve_1_1Constraint.html">Constraint</a>* c);
+<a name="l00033"></a>00033     <span class="keywordtype">void</span> clearContraints();
+<a name="l00034"></a>00034     <span class="keywordtype">void</span> removePConstraints();
+<a name="l00035"></a>00035     <span class="keywordtype">void</span> resetForce();
+<a name="l00036"></a>00036     <span class="keywordtype">void</span> computeForce();
+<a name="l00037"></a>00037     <span class="keywordtype">void</span> tick(<span class="keywordtype">float</span> dt, <span class="keywordtype">bool</span> update = <span class="keyword">true</span>);
+<a name="l00038"></a>00038     <span class="keywordtype">void</span>* containerData() <span class="keyword">const</span>;
+<a name="l00039"></a>00039     <span class="keywordtype">void</span> setContainerData(<span class="keywordtype">void</span>* data) <span class="keyword">const</span>;
+<a name="l00040"></a>00040     <span class="keywordtype">bool</span> pinned() <span class="keyword">const</span>;
+<a name="l00041"></a>00041     <span class="keywordtype">void</span> pin();
+<a name="l00042"></a>00042     <span class="keywordtype">void</span> unpin();
+<a name="l00043"></a>00043     <span class="keyword">const</span> NodeID&amp; boundID() <span class="keyword">const</span>;
+<a name="l00044"></a>00044 <span class="keyword">private</span>:
+<a name="l00045"></a>00045     <a class="code" href="classElve_1_1System.html">System</a>&amp; mSys;
+<a name="l00046"></a>00046     std::set&lt;Movable*&gt;&amp; movables() {<span class="keywordflow">return</span> mMovables;}
+<a name="l00047"></a>00047     NodeID mID;
+<a name="l00048"></a>00048     QVector2D mPos;
+<a name="l00049"></a>00049     QVector2D mSpeed;
+<a name="l00050"></a>00050     QVector2D mForce;
+<a name="l00051"></a>00051     std::set&lt;Force*&gt; mForces;
+<a name="l00052"></a>00052     std::set&lt;Movable*&gt; mMovables;
+<a name="l00053"></a>00053     std::set&lt;Constraint*&gt; mConstraints;
+<a name="l00054"></a>00054     qreal mM;
+<a name="l00055"></a>00055     <span class="keyword">mutable</span> <span class="keywordtype">void</span>* mContainerData;
+<a name="l00056"></a>00056 };
+<a name="l00057"></a>00057 
+<a name="l00058"></a>00058 }
+<a name="l00059"></a>00059 
+<a name="l00060"></a>00060 <span class="preprocessor">#endif // MASS_H</span>
 </pre></div></div><!-- contents -->
 </div>
 <!-- window showing the filter options -->

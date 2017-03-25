@@ -92,8 +92,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <!-- doxytag: class="Elve::Point" --><table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5dafd0be7c4bb0b0f4ac3dc28320f11b"></a><!-- doxytag: member="Elve::Point::Point" ref="a5dafd0be7c4bb0b0f4ac3dc28320f11b" args="(qreal mass, const NodeID &amp;id)" -->
-&#160;</td><td class="memItemRight" valign="bottom"><b>Point</b> (qreal mass, const NodeID &amp;id)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a43ae2a09fd1f7ed53a779cb25c26cdd7"></a><!-- doxytag: member="Elve::Point::Point" ref="a43ae2a09fd1f7ed53a779cb25c26cdd7" args="(qreal mass, const NodeID &amp;id, System &amp;sys)" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>Point</b> (qreal mass, const NodeID &amp;id, <a class="el" href="classElve_1_1System.html">System</a> &amp;sys)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a13ba720450d872d5580d10c6f01b4b54"></a><!-- doxytag: member="Elve::Point::moved" ref="a13ba720450d872d5580d10c6f01b4b54" args="() const " -->
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>moved</b> () const </td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a039b5c0204020681cd5a952c4d1de8f3"></a><!-- doxytag: member="Elve::Point::pos" ref="a039b5c0204020681cd5a952c4d1de8f3" args="() const " -->
@@ -106,6 +106,8 @@ const qreal &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>mass</b>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>setPos</b> (const QVector2D &amp;pos)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac2f564f4c4c759155faad18d8cccac6d"></a><!-- doxytag: member="Elve::Point::setSpeed" ref="ac2f564f4c4c759155faad18d8cccac6d" args="(const QVector2D &amp;speed)" -->
 void&#160;</td><td class="memItemRight" valign="bottom"><b>setSpeed</b> (const QVector2D &amp;speed)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab60155ea89e18ed39b67da52ae09e41d"></a><!-- doxytag: member="Elve::Point::setMass" ref="ab60155ea89e18ed39b67da52ae09e41d" args="(qreal mass)" -->
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setMass</b> (qreal mass)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae5ba8a1828b4fd866821ffa356bf78cd"></a><!-- doxytag: member="Elve::Point::clearMovables" ref="ae5ba8a1828b4fd866821ffa356bf78cd" args="()" -->
 void&#160;</td><td class="memItemRight" valign="bottom"><b>clearMovables</b> ()</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1f2667f0839199995aa675cd81349cde"></a><!-- doxytag: member="Elve::Point::addMovable" ref="a1f2667f0839199995aa675cd81349cde" args="(Movable *m)" -->
@@ -116,6 +118,10 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>removeMovable</b> (<a
 void&#160;</td><td class="memItemRight" valign="bottom"><b>addForce</b> (<a class="el" href="classElve_1_1Force.html">Force</a> *force)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4a6afa426c2bcf9a9ddbfa1a225bf2ae"></a><!-- doxytag: member="Elve::Point::addConstraint" ref="a4a6afa426c2bcf9a9ddbfa1a225bf2ae" args="(Constraint *c)" -->
 void&#160;</td><td class="memItemRight" valign="bottom"><b>addConstraint</b> (<a class="el" href="classElve_1_1Constraint.html">Constraint</a> *c)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aab024d16fa05fed1f8f539f87ce7c86c"></a><!-- doxytag: member="Elve::Point::clearContraints" ref="aab024d16fa05fed1f8f539f87ce7c86c" args="()" -->
+void&#160;</td><td class="memItemRight" valign="bottom"><b>clearContraints</b> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a816d5812608f0a553b23d1f300f7c441"></a><!-- doxytag: member="Elve::Point::removePConstraints" ref="a816d5812608f0a553b23d1f300f7c441" args="()" -->
+void&#160;</td><td class="memItemRight" valign="bottom"><b>removePConstraints</b> ()</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab39399a3ca0d8f9fef87ee730832b387"></a><!-- doxytag: member="Elve::Point::resetForce" ref="ab39399a3ca0d8f9fef87ee730832b387" args="()" -->
 void&#160;</td><td class="memItemRight" valign="bottom"><b>resetForce</b> ()</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a47090d07ef62f8eb921c395eec78ea38"></a><!-- doxytag: member="Elve::Point::computeForce" ref="a47090d07ef62f8eb921c395eec78ea38" args="()" -->
@@ -126,6 +132,12 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>tick</b> (float dt, b
 void *&#160;</td><td class="memItemRight" valign="bottom"><b>containerData</b> () const </td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1d0368f31fe6723eb6047c0e52a67dad"></a><!-- doxytag: member="Elve::Point::setContainerData" ref="a1d0368f31fe6723eb6047c0e52a67dad" args="(void *data) const " -->
 void&#160;</td><td class="memItemRight" valign="bottom"><b>setContainerData</b> (void *data) const </td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="accd8b98e07e34f0417a20949f54b5f56"></a><!-- doxytag: member="Elve::Point::pinned" ref="accd8b98e07e34f0417a20949f54b5f56" args="() const " -->
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>pinned</b> () const </td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a40c30805065ed6b0e5b15f314b96b562"></a><!-- doxytag: member="Elve::Point::pin" ref="a40c30805065ed6b0e5b15f314b96b562" args="()" -->
+void&#160;</td><td class="memItemRight" valign="bottom"><b>pin</b> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0758398f2e7e4545b9a236f1c4368c9d"></a><!-- doxytag: member="Elve::Point::unpin" ref="a0758398f2e7e4545b9a236f1c4368c9d" args="()" -->
+void&#160;</td><td class="memItemRight" valign="bottom"><b>unpin</b> ()</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acc8b0933aeaf773313228ef7b4db9cc1"></a><!-- doxytag: member="Elve::Point::boundID" ref="acc8b0933aeaf773313228ef7b4db9cc1" args="() const " -->
 const NodeID &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>boundID</b> () const </td></tr>
 <tr><td colspan="2"><h2><a name="friends"></a>
@@ -135,7 +147,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>Movable</b></td></tr
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock">
-<p>Definition at line <a class="el" href="Point_8h_source.html#l00014">14</a> of file <a class="el" href="Point_8h_source.html">Point.h</a>.</p>
+<p>Definition at line <a class="el" href="Point_8h_source.html#l00016">16</a> of file <a class="el" href="Point_8h_source.html">Point.h</a>.</p>
 </div>
 <p><a href="classElve_1_1Point-members.html">List of all members.</a></p>
 <hr/>The documentation for this class was generated from the following files:<ul>

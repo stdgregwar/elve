@@ -126,40 +126,47 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00038"></a>00038         QPointF rpos = <span class="keyword">event</span>-&gt;scenePos();
 <a name="l00039"></a>00039         setState({rpos.x(),rpos.y()},
 <a name="l00040"></a>00040         {delta.x(),delta.y()});
-<a name="l00041"></a>00041         <span class="keyword">event</span>-&gt;accept();
-<a name="l00042"></a>00042     }
-<a name="l00043"></a>00043 }
-<a name="l00044"></a>00044 
-<a name="l00045"></a><a class="code" href="classElve_1_1NodeLook.html#acb1b336e01841890221f4e9181d90b61">00045</a> <span class="keywordtype">void</span> <a class="code" href="classElve_1_1NodeLook.html#af02e56f327ac06e7f1765648d237c929" title="get the selection color">NodeLook::color</a>(<span class="keyword">const</span> QColor&amp; color) {
-<a name="l00046"></a>00046     mSelectionColor = <a class="code" href="classElve_1_1NodeLook.html#af02e56f327ac06e7f1765648d237c929" title="get the selection color">color</a>;
-<a name="l00047"></a>00047     color.isValid() ? <a class="code" href="classElve_1_1NodeLook.html#a4aceee20d196d2b8a4da226095eb8c6f" title="called when the selection color of the node changes">onColorChange</a>(color) : <a class="code" href="classElve_1_1NodeLook.html#a6c67020aa29ad9782f484e2eea673a4e" title="called when the node is unselected and must be reverted to normal colors">onColorReset</a>();
-<a name="l00048"></a>00048 }
-<a name="l00049"></a>00049 
-<a name="l00050"></a><a class="code" href="classElve_1_1NodeLook.html#af02e56f327ac06e7f1765648d237c929">00050</a> <span class="keyword">const</span> QColor&amp; <a class="code" href="classElve_1_1NodeLook.html#af02e56f327ac06e7f1765648d237c929" title="get the selection color">NodeLook::color</a>()<span class="keyword"> const </span>{
-<a name="l00051"></a>00051     <span class="keywordflow">return</span> mSelectionColor;
-<a name="l00052"></a>00052 }
-<a name="l00053"></a>00053 
-<a name="l00054"></a>00054 <span class="keywordtype">void</span> NodeLook::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
-<a name="l00055"></a>00055 {
-<a name="l00056"></a>00056     <span class="keywordflow">if</span>(mDraged) {
-<a name="l00057"></a>00057         setState({<span class="keyword">event</span>-&gt;scenePos().x()+mOffset.x(),<span class="keyword">event</span>-&gt;scenePos().y()+mOffset.y()},{0,0});
-<a name="l00058"></a>00058         setPos(event-&gt;scenePos()+mOffset);
-<a name="l00059"></a>00059         <span class="keyword">event</span>-&gt;accept();
-<a name="l00060"></a>00060     }
-<a name="l00061"></a>00061 }
-<a name="l00062"></a>00062 
-<a name="l00063"></a><a class="code" href="classElve_1_1NodeLook.html#ac3212df9ac241e935e34110d2776e216">00063</a> QPointF <a class="code" href="classElve_1_1NodeLook.html#ac3212df9ac241e935e34110d2776e216" title="position of the input at index">NodeLook::inputPos</a>(<span class="keywordtype">int</span> index)<span class="keyword"> const </span>{
-<a name="l00064"></a>00064     <span class="keywordflow">return</span> pos();
-<a name="l00065"></a>00065 }
-<a name="l00066"></a>00066 
-<a name="l00067"></a><a class="code" href="classElve_1_1NodeLook.html#ae1490992bd90a9ab68fd21ff634345b4">00067</a> QPointF <a class="code" href="classElve_1_1NodeLook.html#ae1490992bd90a9ab68fd21ff634345b4" title="position of the output at index">NodeLook::outputPos</a>(<span class="keywordtype">int</span> index)<span class="keyword"> const </span>{
-<a name="l00068"></a>00068     <span class="keywordflow">return</span> pos();
-<a name="l00069"></a>00069 }
-<a name="l00070"></a>00070 
-<a name="l00071"></a><a class="code" href="classElve_1_1NodeLook.html#a7450fcc9c7ba766a60d8b3576e16f5d8">00071</a> <span class="keyword">const</span> <a class="code" href="classElve_1_1Node.html">Node</a> &amp;<a class="code" href="classElve_1_1NodeLook.html#a7450fcc9c7ba766a60d8b3576e16f5d8" title="get the node this Look is for">NodeLook::node</a>()<span class="keyword"> const </span>{
-<a name="l00072"></a>00072     <span class="keywordflow">return</span> mNode;
-<a name="l00073"></a>00073 }
-<a name="l00074"></a>00074 }
+<a name="l00041"></a>00041         <span class="keywordtype">bool</span> pinned = point()-&gt;pinned();
+<a name="l00042"></a>00042 
+<a name="l00043"></a>00043         <span class="keywordflow">if</span>(event-&gt;modifiers().testFlag(Qt::ControlModifier)) {
+<a name="l00044"></a>00044             pinned ? point()-&gt;unpin() : point()-&gt;pin();
+<a name="l00045"></a>00045         } <span class="keywordflow">else</span> <span class="keywordflow">if</span>(pinned) {
+<a name="l00046"></a>00046             point()-&gt;pin();
+<a name="l00047"></a>00047         }
+<a name="l00048"></a>00048         <span class="keyword">event</span>-&gt;accept();
+<a name="l00049"></a>00049     }
+<a name="l00050"></a>00050 }
+<a name="l00051"></a>00051 
+<a name="l00052"></a><a class="code" href="classElve_1_1NodeLook.html#acb1b336e01841890221f4e9181d90b61">00052</a> <span class="keywordtype">void</span> <a class="code" href="classElve_1_1NodeLook.html#af02e56f327ac06e7f1765648d237c929" title="get the selection color">NodeLook::color</a>(<span class="keyword">const</span> QColor&amp; color) {
+<a name="l00053"></a>00053     mSelectionColor = <a class="code" href="classElve_1_1NodeLook.html#af02e56f327ac06e7f1765648d237c929" title="get the selection color">color</a>;
+<a name="l00054"></a>00054     color.isValid() ? <a class="code" href="classElve_1_1NodeLook.html#a4aceee20d196d2b8a4da226095eb8c6f" title="called when the selection color of the node changes">onColorChange</a>(color) : <a class="code" href="classElve_1_1NodeLook.html#a6c67020aa29ad9782f484e2eea673a4e" title="called when the node is unselected and must be reverted to normal colors">onColorReset</a>();
+<a name="l00055"></a>00055 }
+<a name="l00056"></a>00056 
+<a name="l00057"></a><a class="code" href="classElve_1_1NodeLook.html#af02e56f327ac06e7f1765648d237c929">00057</a> <span class="keyword">const</span> QColor&amp; <a class="code" href="classElve_1_1NodeLook.html#af02e56f327ac06e7f1765648d237c929" title="get the selection color">NodeLook::color</a>()<span class="keyword"> const </span>{
+<a name="l00058"></a>00058     <span class="keywordflow">return</span> mSelectionColor;
+<a name="l00059"></a>00059 }
+<a name="l00060"></a>00060 
+<a name="l00061"></a>00061 <span class="keywordtype">void</span> NodeLook::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
+<a name="l00062"></a>00062 {
+<a name="l00063"></a>00063     <span class="keywordflow">if</span>(mDraged) {
+<a name="l00064"></a>00064         setState({<span class="keyword">event</span>-&gt;scenePos().x()+mOffset.x(),<span class="keyword">event</span>-&gt;scenePos().y()+mOffset.y()},{0,0});
+<a name="l00065"></a>00065         setPos(event-&gt;scenePos()+mOffset);
+<a name="l00066"></a>00066         <span class="keyword">event</span>-&gt;accept();
+<a name="l00067"></a>00067     }
+<a name="l00068"></a>00068 }
+<a name="l00069"></a>00069 
+<a name="l00070"></a><a class="code" href="classElve_1_1NodeLook.html#ac3212df9ac241e935e34110d2776e216">00070</a> QPointF <a class="code" href="classElve_1_1NodeLook.html#ac3212df9ac241e935e34110d2776e216" title="position of the input at index">NodeLook::inputPos</a>(<span class="keywordtype">int</span> index)<span class="keyword"> const </span>{
+<a name="l00071"></a>00071     <span class="keywordflow">return</span> pos();
+<a name="l00072"></a>00072 }
+<a name="l00073"></a>00073 
+<a name="l00074"></a><a class="code" href="classElve_1_1NodeLook.html#ae1490992bd90a9ab68fd21ff634345b4">00074</a> QPointF <a class="code" href="classElve_1_1NodeLook.html#ae1490992bd90a9ab68fd21ff634345b4" title="position of the output at index">NodeLook::outputPos</a>(<span class="keywordtype">int</span> index)<span class="keyword"> const </span>{
+<a name="l00075"></a>00075     <span class="keywordflow">return</span> pos();
+<a name="l00076"></a>00076 }
+<a name="l00077"></a>00077 
+<a name="l00078"></a><a class="code" href="classElve_1_1NodeLook.html#a7450fcc9c7ba766a60d8b3576e16f5d8">00078</a> <span class="keyword">const</span> <a class="code" href="classElve_1_1Node.html">Node</a> &amp;<a class="code" href="classElve_1_1NodeLook.html#a7450fcc9c7ba766a60d8b3576e16f5d8" title="get the node this Look is for">NodeLook::node</a>()<span class="keyword"> const </span>{
+<a name="l00079"></a>00079     <span class="keywordflow">return</span> mNode;
+<a name="l00080"></a>00080 }
+<a name="l00081"></a>00081 }
 </pre></div></div><!-- contents -->
 </div>
 <!-- window showing the filter options -->

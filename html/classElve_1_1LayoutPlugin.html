@@ -105,6 +105,10 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">clear, called when re-using the layout object for another graph  <a href="#ad282a353a4885a033eb9872b9ef0da9a"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classElve_1_1LayoutPlugin.html#a81ee9f831eb474ef8c954bc6a40456ac">setGraph</a> (SharedGraph graph)=0</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">set the graph that this layout must animate  <a href="#a81ee9f831eb474ef8c954bc6a40456ac"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afe20e2ffa3e20b01a4bfaa4507e1b63c"></a><!-- doxytag: member="Elve::LayoutPlugin::json" ref="afe20e2ffa3e20b01a4bfaa4507e1b63c" args="() const " -->
+virtual QJsonObject&#160;</td><td class="memItemRight" valign="bottom"><b>json</b> () const </td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a16925a019051546ac983a336431652ec"></a><!-- doxytag: member="Elve::LayoutPlugin::fromJson" ref="a16925a019051546ac983a336431652ec" args="(const QJsonObject &amp;layout)" -->
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>fromJson</b> (const QJsonObject &amp;layout)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">QVector2D&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classElve_1_1LayoutPlugin.html#a767c3f4260f66d0b723b53e55621e21c">startPosition</a> (const NodeID &amp;id)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">startPosition of a <a class="el" href="classElve_1_1Node.html">Node</a>  <a href="#a767c3f4260f66d0b723b53e55621e21c"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classElve_1_1LayoutPlugin.html#af00f0c8b3a9b0f225238488466558293">setGraph</a> (SharedEGraph g, const NodePositions &amp;positions)</td></tr>
@@ -115,8 +119,8 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">advance the simulation one step  <a href="#a9925ca298624fcc39b7701320e6e8703"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual SharedLayout&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classElve_1_1LayoutPlugin.html#ae27b6ede934752b05fd0dc999a55a819">create</a> ()=0</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">make a shared copy of this layout  <a href="#ae27b6ede934752b05fd0dc999a55a819"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classElve_1_1LayoutPlugin.html#a8fdc4f03c47c86cbb633cb3fac9caac0">name</a> ()=0</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">the main name of the layout displayed in the GUIs  <a href="#a8fdc4f03c47c86cbb633cb3fac9caac0"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classElve_1_1LayoutPlugin.html#a9199fa1ef5a45d13462fad351c1127a5">name</a> () const =0</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">the main name of the layout displayed in the GUIs  <a href="#a9199fa1ef5a45d13462fad351c1127a5"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classElve_1_1LayoutPlugin.html#a81c720b2846a0f5f40daf8f1dc656f81">cliName</a> ()=0</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">the command line interface name of the GUI  <a href="#a81c720b2846a0f5f40daf8f1dc656f81"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classElve_1_1LayoutPlugin.html#a1ed43ae8687740bd2b934f22d14c34b7">uiStart</a> (<a class="el" href="classElve_1_1GraphWidgetListener.html">Elve::GraphWidgetListener</a> *listener, const SharedEGraph &amp;graph)</td></tr>
@@ -232,15 +236,15 @@ Inheritance diagram for Elve::LayoutPlugin:</div>
 
 </div>
 </div>
-<a class="anchor" id="a8fdc4f03c47c86cbb633cb3fac9caac0"></a><!-- doxytag: member="Elve::LayoutPlugin::name" ref="a8fdc4f03c47c86cbb633cb3fac9caac0" args="()=0" -->
+<a class="anchor" id="a9199fa1ef5a45d13462fad351c1127a5"></a><!-- doxytag: member="Elve::LayoutPlugin::name" ref="a9199fa1ef5a45d13462fad351c1127a5" args="() const =0" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">virtual QString <a class="el" href="classElve_1_1LayoutPlugin.html#a8fdc4f03c47c86cbb633cb3fac9caac0">Elve::LayoutPlugin::name</a> </td>
+          <td class="memname">virtual QString <a class="el" href="classElve_1_1LayoutPlugin.html#a9199fa1ef5a45d13462fad351c1127a5">Elve::LayoutPlugin::name</a> </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
-          <td><code> [pure virtual]</code></td>
+          <td> const<code> [pure virtual]</code></td>
         </tr>
       </table>
 </div>
@@ -275,7 +279,7 @@ Inheritance diagram for Elve::LayoutPlugin:</div>
 </dl>
 <p>Default implementation of this method just call tick repeatedly </p>
 
-<p>Definition at line <a class="el" href="LayoutPlugin_8cpp_source.html#l00063">63</a> of file <a class="el" href="LayoutPlugin_8cpp_source.html">LayoutPlugin.cpp</a>.</p>
+<p>Definition at line <a class="el" href="LayoutPlugin_8cpp_source.html#l00094">94</a> of file <a class="el" href="LayoutPlugin_8cpp_source.html">LayoutPlugin.cpp</a>.</p>
 
 </div>
 </div>
@@ -410,7 +414,7 @@ Inheritance diagram for Elve::LayoutPlugin:</div>
 <p>get a const reference to the default physical system </p>
 <dl class="return"><dt><b>Returns:</b></dt><dd></dd></dl>
 
-<p>Definition at line <a class="el" href="LayoutPlugin_8cpp_source.html#l00054">54</a> of file <a class="el" href="LayoutPlugin_8cpp_source.html">LayoutPlugin.cpp</a>.</p>
+<p>Definition at line <a class="el" href="LayoutPlugin_8cpp_source.html#l00085">85</a> of file <a class="el" href="LayoutPlugin_8cpp_source.html">LayoutPlugin.cpp</a>.</p>
 
 </div>
 </div>
@@ -449,7 +453,7 @@ Inheritance diagram for Elve::LayoutPlugin:</div>
 </dl>
 <p>The default implementation of this method ticks the default physical system. </p>
 
-<p>Definition at line <a class="el" href="LayoutPlugin_8cpp_source.html#l00059">59</a> of file <a class="el" href="LayoutPlugin_8cpp_source.html">LayoutPlugin.cpp</a>.</p>
+<p>Definition at line <a class="el" href="LayoutPlugin_8cpp_source.html#l00090">90</a> of file <a class="el" href="LayoutPlugin_8cpp_source.html">LayoutPlugin.cpp</a>.</p>
 
 </div>
 </div>
@@ -488,7 +492,7 @@ Inheritance diagram for Elve::LayoutPlugin:</div>
 </dl>
 <p>Usefull if you want to display custom GUI wizard or dialogs when your plugin is triggered, You can do anything in this method but don't forget that it is executed as part of the Qt event loop and will stall everything until it returns. </p>
 
-<p>Definition at line <a class="el" href="LayoutPlugin_8cpp_source.html#l00077">77</a> of file <a class="el" href="LayoutPlugin_8cpp_source.html">LayoutPlugin.cpp</a>.</p>
+<p>Definition at line <a class="el" href="LayoutPlugin_8cpp_source.html#l00108">108</a> of file <a class="el" href="LayoutPlugin_8cpp_source.html">LayoutPlugin.cpp</a>.</p>
 
 </div>
 </div>
