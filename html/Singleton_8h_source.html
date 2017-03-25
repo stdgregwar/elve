@@ -95,12 +95,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00007"></a>00007 {
 <a name="l00008"></a>00008 <span class="keyword">public</span>:
 <a name="l00009"></a>00009     <a class="code" href="classSingleton.html">Singleton</a>(){
-<a name="l00010"></a>00010         sInstance = <span class="keyword">reinterpret_cast&lt;</span>T*<span class="keyword">&gt;</span>(<span class="keyword">this</span>);
+<a name="l00010"></a>00010         sInstance = <span class="keyword">static_cast&lt;</span>T*<span class="keyword">&gt;</span>(<span class="keyword">this</span>);
 <a name="l00011"></a>00011     }
 <a name="l00012"></a>00012 
 <a name="l00013"></a>00013     <span class="keyword">static</span> T&amp; <span class="keyword">get</span>() {
 <a name="l00014"></a>00014         <span class="keywordflow">if</span>(!sInstance) {
-<a name="l00015"></a>00015            <span class="keyword">new</span> T();
+<a name="l00015"></a>00015            sInstance = <span class="keyword">new</span> T();
 <a name="l00016"></a>00016         }
 <a name="l00017"></a>00017         <span class="keywordflow">return</span> *sInstance;
 <a name="l00018"></a>00018     }
