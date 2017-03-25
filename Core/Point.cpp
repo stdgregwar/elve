@@ -1,11 +1,14 @@
 #include "Point.h"
 #include <QDebug>
 
+#include "System.h"
+#include "PointConstraint.h"
+
 #define MAX_FORCE 1e14
 
 namespace Elve {
 
-Point::Point(qreal mass, const NodeID &id) : mM(mass), mContainerData(nullptr), mID(id)
+Point::Point(qreal mass, const NodeID &id, System& sys) : mM(mass), mContainerData(nullptr), mID(id), mSys(sys)
 {
     //mMovables.insert(id);
 }
@@ -40,8 +43,16 @@ const qreal& Point::mass() const {
     return mM;
 }
 
+void Point::setMass(qreal mass) {
+    mM = mass;
+}
+
 void Point::addForce(Force *force) {
     mForces.insert(force);
+}
+
+void Point::clearContraints() {
+    mConstraints.clear();
 }
 
 void Point::addConstraint(Constraint* c)
@@ -94,6 +105,27 @@ void Point::tick(float dt, bool update)
             m->onStateChange(mPos,mSpeed);
         }
     }
+}
+
+void Point::removePConstraints() {
+    for(auto it = mConstraints.begin(); it != mConstraints.end(); it++) {
+        PointConstraint* pc = dynamic_cast<PointConstraint*>(*it);
+        if(pc) {
+            mConstraints.erase(it);
+        }
+    }
+}
+
+bool Point::pinned() const {
+    return mSys.pinnedPoints().count(mID);
+}
+
+void Point::pin() {
+    mSys.pin(mID,pos());
+}
+
+void Point::unpin() {
+    mSys.unpin(mID);
 }
 
 void Point::clearMovables() {

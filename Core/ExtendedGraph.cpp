@@ -51,7 +51,9 @@ SharedEGraph ExtendedGraph::fromJSON(const QJsonObject &obj)
     eg->selections() = masks;
     eg->setMask(obj["mask"].toInt());
     eg->setLook(PluginManager::get().defaultLook());
-    eg->setLayout(PluginManager::get().getLayout(layoutName));
+    SharedLayout lay = PluginManager::get().getLayout(layoutName);
+    lay->fromJson(obj["layout"].toObject());
+    eg->setLayout(lay);
     return eg;
 }
 
@@ -72,19 +74,7 @@ QJsonObject ExtendedGraph::json() const
     main.insert("graph",mGraph->json());
 
     if(mLayout) {
-        QJsonObject layout;
-        QJsonObject  positions;
-
-        layout.insert("name",mLayout->name());
-
-        using pair_type = NodePositions::value_type;
-        for(const pair_type& p : mLayout->system().positions()) {
-            const QVector2D& pos = p.second;
-            positions.insert(to_string(p.first).c_str(),
-                             QJsonArray{pos.x(),pos.y()});
-        }
-        layout.insert("positions",positions);
-        main.insert("layout",layout);
+        main.insert("layout",mLayout->json());
     }
 
     main.insert("mask",mMaskId);

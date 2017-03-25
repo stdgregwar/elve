@@ -25,7 +25,7 @@ void LevelLayout::uiStart(GraphWidgetListener* listener,const SharedEGraph& grap
 
 void LevelLayout::setGraph(SharedGraph graph)
 {
-    clear();
+    //clear();
     qreal sk = mK;
     qreal l0 = mL0;
     qreal damp = mDamp;
@@ -42,7 +42,7 @@ void LevelLayout::setGraph(SharedGraph graph)
     system().setSizeHint(rect);
     system().setRepulsionForce(mRepulsion*1e4);
 
-    for(const auto& p : graph->nodes()) {
+    for(const NodesByID::value_type& p : graph->nodes()) {
         QVector2D pos = startPosition(p.first);
         const Elve::Node& n = p.second;
 
@@ -56,10 +56,10 @@ void LevelLayout::setGraph(SharedGraph graph)
             int index1 = index*2;
             int index2 = (index-(graph->inputCount()/2))*2+1;
             int t_index = is_set("interleave") ? (index > (graph->inputCount()/2) ? index2 : index1) : index;
-            system().addPConstrain(m,{t_index*ioUnit*ioFactor,inputHeight});
+            system().pin(p.first,{t_index*ioUnit*ioFactor,inputHeight});
         } else if(p.second.isOutput()) {
             //mSystem.addVConstraint(m,-1024*SS);
-            system().addPConstrain(m,{p.second.IOIndex()*ioUnit,outputHeight});
+            system().pin(p.first,{p.second.IOIndex()*ioUnit,outputHeight});
         } else {
             system().addVConstraint(m,-outputHeight-unit*p.second.level());
         }

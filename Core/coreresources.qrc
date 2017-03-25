@@ -1,3 +1,5 @@
 <RCC>
-    <qresource prefix="/"/>
+    <qresource prefix="/">
+        <file>resources/lock.svg</file>
+    </qresource>
 </RCC>

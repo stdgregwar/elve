@@ -11,7 +11,7 @@ namespace Elve {
 
 using namespace std;
 
-System::System() : mGravity(75e4)
+System::System() : mGravity(75e4), mDamp(2)
 {
 
 }
@@ -75,6 +75,10 @@ void System::setRepulsionForce(float f) {
     mGravity.setK(f);
 }
 
+const PointsByID& System::pinnedPoints() const {
+    return mPinnedPoints;
+}
+
 const PointsByID& System::pointsByID() const {
     return mPointsById;
 }
@@ -96,9 +100,17 @@ void System::clearMovables() {
 
 Point* System::addPoint(qreal mass, const NodeID &id, QVector2D pos, qreal damp, GravityMode g)
 {
-    Point* nm = new Point(mass,id);
-    mPoints.push_back(nm);
-    mPointsById[id] = nm;
+    mDamp.setB(damp);
+    Point* nm = nullptr;
+    auto it = mPointsById.find(id);
+    if(it != mPointsById.end()) {
+        nm = it->second;
+        nm->setMass(mass);
+    }else {
+        nm = new Point(mass,id,*this);
+        mPoints.push_back(nm);
+        mPointsById[id] = nm;
+    }
     nm->setPos(pos);
     //id->setMass(nm);
     if(g != NONE) {
@@ -107,10 +119,23 @@ Point* System::addPoint(qreal mass, const NodeID &id, QVector2D pos, qreal damp,
             mGravity.addPoint(nm);
         }
     }
-    Damp* d = new Damp(damp);
-    nm->addForce(d);
+    nm->addForce(&mDamp);
     nm->addConstraint(&mBox);
     return nm;
+}
+
+void System::pin(const NodeID& id, const QVector2D& pnt) {
+    Point* p = point(id);
+    mPinnedPoints[p->boundID()] = p;
+    p->removePConstraints();
+    addPConstrain(p,pnt);
+}
+
+void System::unpin(const NodeID& id) {
+    Point* p = point(id);
+    p->removePConstraints();
+    p->addConstraint(&mBox);
+    mPinnedPoints.erase(id);
 }
 
 void System::addSpring(unsigned i, unsigned j, qreal k, qreal l0)
@@ -139,6 +164,8 @@ void System::clear()
     }
     mForces.clear();
     mGravity.clear();
+    mPointsById.clear();
+    mPinnedPoints.clear();
 }
 
 const Point* System::nearest(const QVector2D& p) const

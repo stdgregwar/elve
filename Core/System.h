@@ -5,6 +5,7 @@
 #include "Spring.h"
 #include "Force.h"
 #include "Gravity.h"
+#include "Damp.h"
 #include "Constraint.h"
 #include "Graph.h"
 #include "BoxConstraint.h"
@@ -36,7 +37,10 @@ public:
     void addVConstraint(Point* m, qreal height);
     void addHConstraint(Point* m, qreal pos);
     void addPConstrain(Point* m, const QVector2D& p);
+    void pin(const NodeID& id, const QVector2D& pnt);
+    void unpin(const NodeID& id);
     void clear();
+    const PointsByID& pinnedPoints() const;
     void clearMovables();
     size_t massCount() const;
     size_t forceCount() const;
@@ -57,9 +61,11 @@ private:
     OrientationHint mOrHint;
     void computeForces(size_t from,size_t until);
     Gravity mGravity;
+    Damp mDamp;
     BoxConstraint mBox;
     std::vector<Point*> mPoints;
     PointsByID mPointsById;
+    PointsByID mPinnedPoints;
     std::vector<Force*> mForces;
     std::vector<Constraint*> mConstraints;
 };

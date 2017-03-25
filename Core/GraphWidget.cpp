@@ -14,6 +14,8 @@
 #include <random>
 #include <chrono>
 
+#include "Point.h"
+
 #define SS 40960000
 
 namespace Elve {
@@ -126,14 +128,21 @@ void GraphWidget::quickSim(unsigned ticks)
 void GraphWidget::drawBackground(QPainter *painter, const QRectF &rect){
     QGraphicsView::drawBackground(painter,rect);
     if(mGraph->layout()) {
-        //painter->setPen(mEdgesPath->pen());
+        painter->setPen(QPen(Qt::gray));
         //mGraph->layout()->system().debug(painter);
+        painter->drawRect(mGraph->layout()->system().sizeHint());
     }
     //painter->fillRect(rect,Qt::CrossPattern);
 }
 
 void GraphWidget::drawForeground(QPainter *painter, const QRectF &rect) {
     //painter->drawText(QPointF{20,20},QString("selection : %1").arg(QString::number(mGraph->mask())));
+    QImage img = QIcon(":resources/lock.svg").pixmap(QSize(64,64)).toImage();
+    for(const PointsByID::value_type& p : mGraph->layout()->system().pinnedPoints()) {
+        const QVector2D& pos = p.second->pos();
+        painter->drawImage(QPointF(pos.x(),pos.y()),img);
+    }
+
 }
 
 void GraphWidget::wheelEvent(QWheelEvent *event)

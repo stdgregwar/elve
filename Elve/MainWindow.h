@@ -35,11 +35,12 @@ private:
     QConsoleWidget* mConsole;
     StoreView* mStoreView;
 public slots:
-    void onFileOpen(const QString& file);
-    void on_import_trigerred(GraphLoaderPlugin* ld);
+
+     void onFileOpen(const QString& file);
     void on_export_trigerred(FileExporterPlugin* exp);
     void on_layout_trigerred(LayoutPlugin *layout);
     void on_look_triggered(LookFactoryPlugin* factory);
+    void on_import_trigerred(GraphLoaderPlugin* ld);
     void on_transform_triggered(GraphTransformPlugin* trans);
     void on_tab_change(QMdiSubWindow* tab);
     void applyQSSTheme();

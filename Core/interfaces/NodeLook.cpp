@@ -38,6 +38,13 @@ void NodeLook::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
         QPointF rpos = event->scenePos();
         setState({rpos.x(),rpos.y()},
         {delta.x(),delta.y()});
+        bool pinned = point()->pinned();
+
+        if(event->modifiers().testFlag(Qt::ControlModifier)) {
+            pinned ? point()->unpin() : point()->pin();
+        } else if(pinned) {
+            point()->pin();
+        }
         event->accept();
     }
 }

@@ -58,6 +58,10 @@ public:
      */
     virtual void setGraph(SharedGraph graph) = 0;
 
+    virtual QJsonObject json() const;
+
+    virtual void fromJson(const QJsonObject& layout);
+
     /**
      * @brief startPosition of a Node
      * @param id the node id
@@ -109,7 +113,7 @@ public:
      * @brief the main name of the layout displayed in the GUIs
      * @return
      */
-    virtual QString name() = 0;
+    virtual QString name() const = 0;
 
     /**
      * @brief the command line interface name of the GUI
@@ -158,7 +162,7 @@ Q_DECLARE_INTERFACE(Elve::LayoutPlugin,LayoutPlugin_iid)
 #define ELVE_LAYOUT(Layout,full_name,cli_name)\
  public:\
     inline Elve::SharedLayout create() override {return std::make_shared<Layout>(*this);}\
-    inline QString name() override {return (full_name);}\
+    inline QString name() const override {return (full_name);}\
     inline std::string cliName() override {return (cli_name);}
 
 #endif // LAYOUTPLUGIN_H

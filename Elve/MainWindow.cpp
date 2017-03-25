@@ -34,7 +34,7 @@ namespace Elve {
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), mCurrentTab(nullptr)
 {
-    //Q_INIT_RESOURCE(coreresources); //Init coremodule resources
+    //Init coremodule resources
 
     PluginManager::get().load("plugins");
 
@@ -51,7 +51,7 @@ MainWindow::MainWindow(QWidget *parent)
     for(auto& l : pluginManager.loaders()) {
         FileLoadAction* a = new FileLoadAction(l,l->formatName(),this);
         connect(a,SIGNAL(triggered(GraphLoaderPlugin*)),this,SLOT(on_import_trigerred(GraphLoaderPlugin*)));
-        ui.menuImport->addAction(new QAction(l->formatName(),ui.menuImport));
+        ui.menuImport->addAction(a);
     }
 
     //setup exporters

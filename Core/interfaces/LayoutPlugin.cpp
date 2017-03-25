@@ -51,6 +51,37 @@ System& LayoutPlugin::system() {
     return mSystem;
 }
 
+QJsonObject LayoutPlugin::json() const {
+    QJsonObject layout;
+    QJsonObject  positions;
+
+    layout.insert("name",name());
+
+    using pair_type = NodePositions::value_type;
+    for(const pair_type& p : system().positions()) {
+        const QVector2D& pos = p.second;
+        positions.insert(QString::number(p.first),
+                         QJsonArray{pos.x(),pos.y()});
+    }
+    layout.insert("positions",positions);
+    QJsonArray pinned;
+    for(const PointsByID::value_type& p : system().pinnedPoints()) {
+        pinned.append((int)p.first);
+    }
+    layout.insert("pinned",pinned);
+    return layout;
+}
+
+void LayoutPlugin::fromJson(const QJsonObject& layout) {
+    QJsonArray pinned = layout.value("pinned").toArray();
+    QJsonObject poss = layout.value("positions").toObject();
+    for(const QJsonValue& v : pinned) {
+        QJsonArray parr = poss.value(QString::number(v.toInt())).toArray();
+        QVector2D pos(parr[0].toDouble(),parr[1].toDouble());
+        system().pin(v.toInt(),pos);
+    }
+}
+
 const System& LayoutPlugin::system() const
 {
     return mSystem;
