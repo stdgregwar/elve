@@ -2,7 +2,6 @@ var classElve_1_1ExtendedGraph =
 [
     [ "ExtendedGraph", "classElve_1_1ExtendedGraph.html#afb260c9442c51cc374dfe69ee7d033b7", null ],
     [ "~ExtendedGraph", "classElve_1_1ExtendedGraph.html#a28ab3b2f933956162357362fb4a97d9d", null ],
-    [ "applyLayout", "classElve_1_1ExtendedGraph.html#aa6cba0ef0f529a9fae93a6678d196ac8", null ],
     [ "clone", "classElve_1_1ExtendedGraph.html#a7f5fee814314eacfae07788bd6757fc7", null ],
     [ "currentSelection", "classElve_1_1ExtendedGraph.html#a2f0d42d80e2cb4135ee3c4e83b5bff08", null ],
     [ "fromFile", "classElve_1_1ExtendedGraph.html#a275f86c6d8acb43ad214b013a70242fa", null ],
