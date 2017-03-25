@@ -194,12 +194,6 @@ ExtendedGraph::~ExtendedGraph()
 {
 }
 
-void ExtendedGraph::applyLayout(const NodePositions &p) {
-    if(mLayout) {
-        mLayout->setGraph(shared_from_this(),p);
-    }
-}
-
 const NodePositions& ExtendedGraph::positions() const
 {
     if(mPosDirty && mLayout) {
@@ -250,7 +244,14 @@ void ExtendedGraph::setLayout(const SharedLayout &l)
 {
     if(!l) return;
     mPosDirty = true;
-    if(mLook) l->setGraph(shared_from_this(),positions());
+    if(mLook) {
+        if(mLayout) {
+            for(const PointsByID::value_type& p : mLayout->system().pinnedPoints()) {
+                l->system().pin(p.first,p.second->pos());
+            }
+        }
+        l->setGraph(shared_from_this(),positions());
+    }
     mLayout = l;
     if(mView && mLook) mView->reflect(l->system(),mGraph,mLook);
 }

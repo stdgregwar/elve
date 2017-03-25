@@ -16,7 +16,7 @@ SimpleLayout::SimpleLayout() {
 
 void SimpleLayout::setGraph(SharedGraph graph)
 {
-    clear();
+    //clear();
     qreal sk = mK;
     qreal l0 = mL0;
     qreal damp = mDamp;
@@ -46,10 +46,10 @@ void SimpleLayout::setGraph(SharedGraph graph)
             int index1 = index*2;
             int index2 = (index-(graph->inputCount()/2))*2+1;
             int t_index = index;// > (graph->inputCount()/2) ? index2 : index1;
-            system().addPConstrain(m,{t_index*ioUnit*ioFactor,inputHeight});
+            system().pin(p.first,{t_index*ioUnit*ioFactor,inputHeight});
         } else if(p.second.isOutput()) {
             //mSystem.addVConstraint(m,-1024*SS);
-            system().addPConstrain(m,{p.second.IOIndex()*ioUnit,outputHeight});
+            system().pin(p.first,{p.second.IOIndex()*ioUnit,outputHeight});
         } else {
             //system().addVConstraint(m,1024-64*p.second.level());
         }

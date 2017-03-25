@@ -163,12 +163,6 @@ public:
     CommandHistory& history();
 
     /**
-     * @brief used internally to trigger layout application
-     * @param p
-     */
-    void applyLayout(const NodePositions& p = NodePositions());
-
-    /**
      * @brief used internally to acknoledge graph that it's being shown
      * @param view
      */
