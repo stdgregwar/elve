@@ -53,6 +53,7 @@ GraphWidget::GraphWidget(QWidget* parent, GraphWidgetListener* listener) : QGrap
     mPlayPauseIcon->setPixmap(QIcon(":resources/play.svg").pixmap(PLAYICONSIZE,PLAYICONSIZE));
     mPlayPauseIcon->setFlag(QGraphicsItem::ItemIgnoresTransformations);
     mPlayPauseIcon->setPos(20,50);
+    mPlayPauseIcon->setZValue(2);
     mScene->addItem(mPlayPauseIcon);
 
     mSelectionBox = new QComboBox(this);

@@ -111,6 +111,7 @@ void Point::removePConstraints() {
     for(auto it = mConstraints.begin(); it != mConstraints.end(); it++) {
         PointConstraint* pc = dynamic_cast<PointConstraint*>(*it);
         if(pc) {
+            delete *it;
             mConstraints.erase(it);
         }
     }

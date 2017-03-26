@@ -26,6 +26,12 @@ addons:
 # Build your code e.g. by calling make
 script:
  - echo "Build? Which build?"
+ - git clone https://github.com/stdgregwar/mxe_qt5_boost.git mxe
+ - export PATH=$HOME/mxe/usr/bin:$PATH
+ - mkdir build
+ - cd build
+ - ../mxe/usr/i686-w64-mingw32.shared.posix/qt5/bin/qmake ..
+ - make
 # Generate and deploy documentation
 after_success:
   - cd $TRAVIS_BUILD_DIR
