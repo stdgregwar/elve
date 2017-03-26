@@ -25,6 +25,8 @@ addons:
       - gperf
       - g++-multilib
       - libc6-dev-i386
+      - autopoint
+      - intltool
 
 # Build your code e.g. by calling make
 script:
