@@ -22,7 +22,7 @@ addons:
       - doxygen
       - doxygen-doc
       - doxygen-gui
-      - gpref
+      - gperf
       - g++-multilib
       - libc6-dev-i386
 
