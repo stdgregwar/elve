@@ -137,6 +137,7 @@
      <string>&amp;View</string>
     </property>
     <addaction name="actionFit"/>
+    <addaction name="actionPause_Simulation"/>
    </widget>
    <widget class="QMenu" name="menuTransform">
     <property name="title">
@@ -245,6 +246,17 @@
    </property>
    <property name="shortcut">
     <string>U</string>
+   </property>
+  </action>
+  <action name="actionPause_Simulation">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Pause Simulation</string>
+   </property>
+   <property name="shortcut">
+    <string>Space</string>
    </property>
   </action>
  </widget>

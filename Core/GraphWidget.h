@@ -6,6 +6,8 @@
 #include <QPointF>
 #include <QComboBox>
 #include <QColor>
+#include <QPushButton>
+#include <QLabel>
 
 #include "System.h"
 #include "Graph.h"
@@ -48,6 +50,7 @@ public:
     void mouseDoubleClickEvent(QMouseEvent* event) override;
     void mouseMoveEvent(QMouseEvent *event) override;
     void keyPressEvent(QKeyEvent *event) override;
+    void paintEvent(QPaintEvent* ev) override;
 
     void group(const Selection &names, const NodeName& groupName = "group");
     void ungroup(const NodeIDSet &names);
@@ -78,6 +81,7 @@ public slots:
     void setCurrentMask(int i);
     void start();
     void stop();
+    void toggleSim(bool sim);
 signals:
     void maskChanged(int i);
 private:
@@ -121,6 +125,7 @@ private:
     bool mDrag;
     qreal mScale;
     QPointF mLastPos;
+    QGraphicsPixmapItem* mPlayPauseIcon;
     SharedEGraph mGraph;
     Behaviour* mBehaviour;
     QComboBox* mSelectionBox;
@@ -132,6 +137,7 @@ private:
     static std::array<QColor,10> mSelectionColors;
     qreal mTargetScale;
     int mTimerId;
+    bool mSim;
 };
 
 }

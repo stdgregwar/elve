@@ -214,6 +214,7 @@ void MainWindow::connectTab(QMdiSubWindow* tab) {
         disconnect(ui.actionToggle,0,gw,0);
         disconnect(ui.actionGroup,0,gw,0);
         disconnect(ui.actionUngroup,0,gw,0);
+        disconnect(ui.actionPause_Simulation,0,gw,0);
     }
     if(mCurrentTab == tab) {
         return;
@@ -228,6 +229,7 @@ void MainWindow::connectTab(QMdiSubWindow* tab) {
     connect(ui.actionToggle,SIGNAL(triggered()),gw,SLOT(toggleSelection()));
     connect(ui.actionGroup,SIGNAL(triggered()),gw,SLOT(group()));
     connect(ui.actionUngroup,SIGNAL(triggered()),gw,SLOT(ungroup()));
+    connect(ui.actionPause_Simulation,SIGNAL(triggered(bool)),gw,SLOT(toggleSim(bool)));
     gw->start();
     mCurrentTab = tab;
 }

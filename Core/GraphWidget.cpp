@@ -9,6 +9,7 @@
 #include <QJsonArray>
 #include <QPaintEvent>
 #include <QTimeLine>
+#include <QGridLayout>
 
 #include <unordered_map>
 #include <random>
@@ -21,6 +22,8 @@
 namespace Elve {
 
 using namespace std;
+
+constexpr int PLAYICONSIZE = 48;
 
 std::array<QColor,10> GraphWidget::mSelectionColors = {
     Qt::blue,
@@ -43,8 +46,15 @@ GraphWidget::GraphWidget(QWidget* parent, GraphWidgetListener* listener) : QGrap
     mBehaviour(new Behaviour(this)),
     //mEdgesPath(new QGraphicsPathItem()),
     mListener(listener),
-    mTimerId(-1)
+    mTimerId(-1),
+    mSim(true)
 {
+    mPlayPauseIcon = new QGraphicsPixmapItem();
+    mPlayPauseIcon->setPixmap(QIcon(":resources/play.svg").pixmap(PLAYICONSIZE,PLAYICONSIZE));
+    mPlayPauseIcon->setFlag(QGraphicsItem::ItemIgnoresTransformations);
+    mPlayPauseIcon->setPos(20,50);
+    mScene->addItem(mPlayPauseIcon);
+
     mSelectionBox = new QComboBox(this);
     mSelectionBox->setGeometry(20,20,100,20);
     for(int i = 0; i < mSelectionColors.size(); i++) {
@@ -73,6 +83,13 @@ void GraphWidget::stop() {
         mTimerId = -1;
     }
     hide();
+}
+
+void GraphWidget::toggleSim(bool sim) {
+    mSim = !sim;
+    mPlayPauseIcon->setPixmap(
+                QIcon(mSim ? ":resources/play.svg" : ":resources/pause.svg")
+                .pixmap(PLAYICONSIZE,PLAYICONSIZE));
 }
 
 void GraphWidget::setCurrentMask(int i) {
@@ -142,7 +159,11 @@ void GraphWidget::drawForeground(QPainter *painter, const QRectF &rect) {
         const QVector2D& pos = p.second->pos();
         painter->drawImage(QPointF(pos.x(),pos.y()),img);
     }
+}
 
+void GraphWidget::paintEvent(QPaintEvent* ev) {
+    mPlayPauseIcon->setPos(mapToScene(20,50));
+    QGraphicsView::paintEvent(ev);
 }
 
 void GraphWidget::wheelEvent(QWheelEvent *event)
@@ -278,13 +299,15 @@ void GraphWidget::tick(float dt, bool update)
             e->addToPath(p);
         });
         mEdgesPath->setPath(p);*/
-        updateEdges();
     }
 }
 
 void GraphWidget::timerEvent(QTimerEvent *e)
 {
-    tick(0.25);
+    if(mSim) tick(0.25);
+
+
+    updateEdges();
 
     qreal oldScale= mScale;
     mScale = 0.8*mScale+0.2*mTargetScale;
@@ -311,8 +334,9 @@ void GraphWidget::setLayout(const SharedLayout& l) {
 
 void GraphWidget::clearScene() {
     clearEdgesPaths();
+    mScene->removeItem(mPlayPauseIcon);
     mScene->clear();
-    //mScene->addItem(mEdgesPath);
+    mScene->addItem(mPlayPauseIcon);
     for_each(mEdges.begin(),mEdges.end(),[](EdgeLook* e){delete e;});
     mEdges.clear();
     mNodes.clear();

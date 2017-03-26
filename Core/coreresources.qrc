@@ -1,5 +1,7 @@
 <RCC>
     <qresource prefix="/">
         <file>resources/lock.svg</file>
+        <file>resources/play.svg</file>
+        <file>resources/pause.svg</file>
     </qresource>
 </RCC>

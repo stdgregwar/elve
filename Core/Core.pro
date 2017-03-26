@@ -68,7 +68,9 @@ RESOURCES += \
 FORMS +=
 
 DISTFILES += \
-    test.blif
+    test.blif \
+    resources/play.svg \
+    resources/pause.svg
 
 HEADERS += \
     Constraint.h \
