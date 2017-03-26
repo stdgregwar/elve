@@ -9,7 +9,8 @@
 #include "StoreView.h"
 
 
-namespace Elve {
+namespace Elve
+{
 
 class MainWindow : public QMainWindow, public Singleton<MainWindow>, public GraphWidgetListener
 {
@@ -36,7 +37,7 @@ private:
     StoreView* mStoreView;
 public slots:
 
-     void onFileOpen(const QString& file);
+    void onFileOpen(const QString& file);
     void on_export_trigerred(FileExporterPlugin* exp);
     void on_layout_trigerred(LayoutPlugin *layout);
     void on_look_triggered(LookFactoryPlugin* factory);

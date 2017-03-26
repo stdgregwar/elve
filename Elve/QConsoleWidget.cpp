@@ -44,24 +44,7 @@ QConsoleWidget::~QConsoleWidget()
 
 void QConsoleWidget::OnChildStdOutWrite(QString szOutput)
 {
-#ifdef Q_OS_WIN32
-    QString content;
-
-    if (mFixedPosition != 0) {
-        content = szOutput.right(szOutput.count() - szOutput.indexOf('\n') - 1);
-    } else {
-        content = szOutput;
-    }
-
-    if (content.startsWith("\f\r\n")) {
-        clear();
-        insertPlainText(content.right(content.count() - 3));
-    } else {
-        insertPlainText(content);
-    }
-#else
     insertPlainText(szOutput);
-#endif
     mFixedPosition = textCursor().position();
 }
 
