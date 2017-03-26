@@ -22,16 +22,19 @@ addons:
       - doxygen
       - doxygen-doc
       - doxygen-gui
-      - libstdc++6
+      - gpref
+      - g++-multilib
+      - libc6-dev-i386
 
 # Build your code e.g. by calling make
 script:
  - echo "Build? Which build?"
- - git clone https://github.com/stdgregwar/mxe_qt5_boost.git mxe
+ - git clone https://github.com/mxe/mxe
+ - cd mxe
+ - make -j8 MXE_TARGETS=i686-w64-mingw32.shared.posix qtbase qtsvg boost
  - export PATH=$HOME/mxe/usr/bin:$PATH
- - mkdir build
- - cd build
- - ../mxe/usr/i686-w64-mingw32.shared.posix/qt5/bin/qmake ..
+ - cd $TRAVIS_BUILD_DIR
+ - $HOME/mxe/usr/i686-w64-mingw32.shared.posix/qt5/bin/qmake $HOME
  - make
 # Generate and deploy documentation
 after_success:
