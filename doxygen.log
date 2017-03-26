@@ -160,7 +160,7 @@ Pr/home/travis/build/stdgregwar/elve/Core/Gravity.h:11: warning: Compound Elve::
 /home/travis/build/stdgregwar/elve/Core/CommandHistory.h:10: warning: Compound Elve::CommandHistory is not documented.
 /home/travis/build/stdgregwar/elve/Core/PointConstraint.h:10: warning: Compound Elve::PointConstraint is not documented.
 /home/travis/build/stdgregwar/elve/Core/QuadTree.h:16: warning: Compound Elve::QuadTree is not documented.
-/home/travis/build/stdgregwar/elve/Core/GraphWidget.h:29: warning: Compound Elve::GraphWidget is not documented.
+/home/travis/build/stdgregwar/elve/Core/GraphWidget.h:31: warning: Compound Elve::GraphWidget is not documented.
 /home/travis/build/stdgregwar/elve/Core/Graph.h:28: warning: Compound Elve::Pin_hash is not documented.
 /home/travis/build/stdgregwar/elve/Core/interfaces/GraphWidgetListener.h:21: warning: Compound Elve::DummyListener is not documented.
 /home/travis/build/stdgregwar/elve/Core/Selection.h:10: warning: Compound Elve::Selection is not documented.
@@ -373,38 +373,40 @@ Generating code for file /home/travis/build/stdgregwar/elve/Core/Singleton.h...
 /home/travis/build/stdgregwar/elve/Core/GraphData.h:79: warning: Member outputs() const  (function) of class Elve::GraphData::Builder is not documented.
 /home/travis/build/stdgregwar/elve/Core/GraphData.h:80: warning: Member inputs() const  (function) of class Elve::GraphData::Builder is not documented.
 /home/travis/build/stdgregwar/elve/Core/GraphData.h:81: warning: Member name(const NodeID &id) const  (function) of class Elve::GraphData::Builder is not documented.
-/home/travis/build/stdgregwar/elve/Core/GraphWidget.h:74: warning: Member borderSelect() (slot) of class Elve::GraphWidget is not documented.
-/home/travis/build/stdgregwar/elve/Core/GraphWidget.h:75: warning: Member toggleSelection() (slot) of class Elve::GraphWidget is not documented.
-/home/travis/build/stdgregwar/elve/Core/GraphWidget.h:76: warning: Member group() (slot) of class Elve::GraphWidget is not documented.
-/home/travis/build/stdgregwar/elve/Core/GraphWidget.h:77: warning: Member ungroup() (slot) of class Elve::GraphWidget is not documented.
-/home/travis/build/stdgregwar/elve/Core/GraphWidget.h:78: warning: Member setCurrentMask(int i) (slot) of class Elve::GraphWidget is not documented.
-/home/travis/build/stdgregwar/elve/Core/GraphWidget.h:79: warning: Member start() (slot) of class Elve::GraphWidget is not documented.
-/home/travis/build/stdgregwar/elve/Core/GraphWidget.h:80: warning: Member stop() (slot) of class Elve::GraphWidget is not documented.
-/home/travis/build/stdgregwar/elve/Core/GraphWidget.h:82: warning: Member maskChanged(int i) (signal) of class Elve::GraphWidget is not documented.
-/home/travis/build/stdgregwar/elve/Core/GraphWidget.h:32: warning: Member GraphWidget(QWidget *parent=nullptr, GraphWidgetListener *listener=new DummyListener()) (function) of class Elve::GraphWidget is not documented.
-/home/travis/build/stdgregwar/elve/Core/GraphWidget.h:34: warning: Member setGraph(SharedEGraph graph, unsigned quickTicks=500) (function) of class Elve::GraphWidget is not documented.
-/home/travis/build/stdgregwar/elve/Core/GraphWidget.h:37: warning: Member tick(float dt, bool update=true) (function) of class Elve::GraphWidget is not documented.
-/home/travis/build/stdgregwar/elve/Core/GraphWidget.h:40: warning: Member init() (function) of class Elve::GraphWidget is not documented.
-/home/travis/build/stdgregwar/elve/Core/GraphWidget.h:43: warning: Member timerEvent(QTimerEvent *event) override (function) of class Elve::GraphWidget is not documented.
-/home/travis/build/stdgregwar/elve/Core/GraphWidget.h:44: warning: Member wheelEvent(QWheelEvent *event) override (function) of class Elve::GraphWidget is not documented.
-/home/travis/build/stdgregwar/elve/Core/GraphWidget.h:45: warning: Member showEvent(QShowEvent *event) (function) of class Elve::GraphWidget is not documented.
-/home/travis/build/stdgregwar/elve/Core/GraphWidget.h:46: warning: Member mousePressEvent(QMouseEvent *event) override (function) of class Elve::GraphWidget is not documented.
-/home/travis/build/stdgregwar/elve/Core/GraphWidget.h:47: warning: Member mouseReleaseEvent(QMouseEvent *event) override (function) of class Elve::GraphWidget is not documented.
-/home/travis/build/stdgregwar/elve/Core/GraphWidget.h:48: warning: Member mouseDoubleClickEvent(QMouseEvent *event) override (function) of class Elve::GraphWidget is not documented.
-/home/travis/build/stdgregwar/elve/Core/GraphWidget.h:49: warning: Member mouseMoveEvent(QMouseEvent *event) override (function) of class Elve::GraphWidget is not documented.
-/home/travis/build/stdgregwar/elve/Core/GraphWidget.h:50: warning: Member keyPressEvent(QKeyEvent *event) override (function) of class Elve::GraphWidget is not documented.
-/home/travis/build/stdgregwar/elve/Core/GraphWidget.h:52: warning: Member group(const Selection &names, const NodeName &groupName="group") (function) of class Elve::GraphWidget is not documented.
-/home/travis/build/stdgregwar/elve/Core/GraphWidget.h:53: warning: Member ungroup(const NodeIDSet &names) (function) of class Elve::GraphWidget is not documented.
-/home/travis/build/stdgregwar/elve/Core/GraphWidget.h:55: warning: Member quickSim(unsigned ticks) (function) of class Elve::GraphWidget is not documented.
-/home/travis/build/stdgregwar/elve/Core/GraphWidget.h:56: warning: Member setLayout(const SharedLayout &l) (function) of class Elve::GraphWidget is not documented.
-/home/travis/build/stdgregwar/elve/Core/GraphWidget.h:57: warning: Member reflect(System &sys, SharedGraph g, SharedLook lf) (function) of class Elve::GraphWidget is not documented.
-/home/travis/build/stdgregwar/elve/Core/GraphWidget.h:59: warning: Member select(const NodeIDSet &names, SelectionMode mode) (function) of class Elve::GraphWidget is not documented.
-/home/travis/build/stdgregwar/elve/Core/GraphWidget.h:61: warning: Member drawBackground(QPainter *painter, const QRectF &rect) override (function) of class Elve::GraphWidget is not documented.
-/home/travis/build/stdgregwar/elve/Core/GraphWidget.h:62: warning: Member drawForeground(QPainter *painter, const QRectF &rect) override (function) of class Elve::GraphWidget is not documented.
-/home/travis/build/stdgregwar/elve/Core/GraphWidget.h:64: warning: Member fit() (function) of class Elve::GraphWidget is not documented.
-/home/travis/build/stdgregwar/elve/Core/GraphWidget.h:66: warning: Member updateSelectionColor() (function) of class Elve::GraphWidget is not documented.
-/home/travis/build/stdgregwar/elve/Core/GraphWidget.h:68: warning: Member graph() const  (function) of class Elve::GraphWidget is not documented.
-/home/travis/build/stdgregwar/elve/Core/GraphWidget.h:69: warning: Member scene() (function) of class Elve::GraphWidget is not documented.
+/home/travis/build/stdgregwar/elve/Core/GraphWidget.h:77: warning: Member borderSelect() (slot) of class Elve::GraphWidget is not documented.
+/home/travis/build/stdgregwar/elve/Core/GraphWidget.h:78: warning: Member toggleSelection() (slot) of class Elve::GraphWidget is not documented.
+/home/travis/build/stdgregwar/elve/Core/GraphWidget.h:79: warning: Member group() (slot) of class Elve::GraphWidget is not documented.
+/home/travis/build/stdgregwar/elve/Core/GraphWidget.h:80: warning: Member ungroup() (slot) of class Elve::GraphWidget is not documented.
+/home/travis/build/stdgregwar/elve/Core/GraphWidget.h:81: warning: Member setCurrentMask(int i) (slot) of class Elve::GraphWidget is not documented.
+/home/travis/build/stdgregwar/elve/Core/GraphWidget.h:82: warning: Member start() (slot) of class Elve::GraphWidget is not documented.
+/home/travis/build/stdgregwar/elve/Core/GraphWidget.h:83: warning: Member stop() (slot) of class Elve::GraphWidget is not documented.
+/home/travis/build/stdgregwar/elve/Core/GraphWidget.h:84: warning: Member toggleSim(bool sim) (slot) of class Elve::GraphWidget is not documented.
+/home/travis/build/stdgregwar/elve/Core/GraphWidget.h:86: warning: Member maskChanged(int i) (signal) of class Elve::GraphWidget is not documented.
+/home/travis/build/stdgregwar/elve/Core/GraphWidget.h:34: warning: Member GraphWidget(QWidget *parent=nullptr, GraphWidgetListener *listener=new DummyListener()) (function) of class Elve::GraphWidget is not documented.
+/home/travis/build/stdgregwar/elve/Core/GraphWidget.h:36: warning: Member setGraph(SharedEGraph graph, unsigned quickTicks=500) (function) of class Elve::GraphWidget is not documented.
+/home/travis/build/stdgregwar/elve/Core/GraphWidget.h:39: warning: Member tick(float dt, bool update=true) (function) of class Elve::GraphWidget is not documented.
+/home/travis/build/stdgregwar/elve/Core/GraphWidget.h:42: warning: Member init() (function) of class Elve::GraphWidget is not documented.
+/home/travis/build/stdgregwar/elve/Core/GraphWidget.h:45: warning: Member timerEvent(QTimerEvent *event) override (function) of class Elve::GraphWidget is not documented.
+/home/travis/build/stdgregwar/elve/Core/GraphWidget.h:46: warning: Member wheelEvent(QWheelEvent *event) override (function) of class Elve::GraphWidget is not documented.
+/home/travis/build/stdgregwar/elve/Core/GraphWidget.h:47: warning: Member showEvent(QShowEvent *event) (function) of class Elve::GraphWidget is not documented.
+/home/travis/build/stdgregwar/elve/Core/GraphWidget.h:48: warning: Member mousePressEvent(QMouseEvent *event) override (function) of class Elve::GraphWidget is not documented.
+/home/travis/build/stdgregwar/elve/Core/GraphWidget.h:49: warning: Member mouseReleaseEvent(QMouseEvent *event) override (function) of class Elve::GraphWidget is not documented.
+/home/travis/build/stdgregwar/elve/Core/GraphWidget.h:50: warning: Member mouseDoubleClickEvent(QMouseEvent *event) override (function) of class Elve::GraphWidget is not documented.
+/home/travis/build/stdgregwar/elve/Core/GraphWidget.h:51: warning: Member mouseMoveEvent(QMouseEvent *event) override (function) of class Elve::GraphWidget is not documented.
+/home/travis/build/stdgregwar/elve/Core/GraphWidget.h:52: warning: Member keyPressEvent(QKeyEvent *event) override (function) of class Elve::GraphWidget is not documented.
+/home/travis/build/stdgregwar/elve/Core/GraphWidget.h:53: warning: Member paintEvent(QPaintEvent *ev) override (function) of class Elve::GraphWidget is not documented.
+/home/travis/build/stdgregwar/elve/Core/GraphWidget.h:55: warning: Member group(const Selection &names, const NodeName &groupName="group") (function) of class Elve::GraphWidget is not documented.
+/home/travis/build/stdgregwar/elve/Core/GraphWidget.h:56: warning: Member ungroup(const NodeIDSet &names) (function) of class Elve::GraphWidget is not documented.
+/home/travis/build/stdgregwar/elve/Core/GraphWidget.h:58: warning: Member quickSim(unsigned ticks) (function) of class Elve::GraphWidget is not documented.
+/home/travis/build/stdgregwar/elve/Core/GraphWidget.h:59: warning: Member setLayout(const SharedLayout &l) (function) of class Elve::GraphWidget is not documented.
+/home/travis/build/stdgregwar/elve/Core/GraphWidget.h:60: warning: Member reflect(System &sys, SharedGraph g, SharedLook lf) (function) of class Elve::GraphWidget is not documented.
+/home/travis/build/stdgregwar/elve/Core/GraphWidget.h:62: warning: Member select(const NodeIDSet &names, SelectionMode mode) (function) of class Elve::GraphWidget is not documented.
+/home/travis/build/stdgregwar/elve/Core/GraphWidget.h:64: warning: Member drawBackground(QPainter *painter, const QRectF &rect) override (function) of class Elve::GraphWidget is not documented.
+/home/travis/build/stdgregwar/elve/Core/GraphWidget.h:65: warning: Member drawForeground(QPainter *painter, const QRectF &rect) override (function) of class Elve::GraphWidget is not documented.
+/home/travis/build/stdgregwar/elve/Core/GraphWidget.h:67: warning: Member fit() (function) of class Elve::GraphWidget is not documented.
+/home/travis/build/stdgregwar/elve/Core/GraphWidget.h:69: warning: Member updateSelectionColor() (function) of class Elve::GraphWidget is not documented.
+/home/travis/build/stdgregwar/elve/Core/GraphWidget.h:71: warning: Member graph() const  (function) of class Elve::GraphWidget is not documented.
+/home/travis/build/stdgregwar/elve/Core/GraphWidget.h:72: warning: Member scene() (function) of class Elve::GraphWidget is not documented.
 /home/travis/build/stdgregwar/elve/Core/Gravity.h:13: warning: Member Gravity(qreal k) (function) of class Elve::Gravity is not documented.
 /home/travis/build/stdgregwar/elve/Core/Gravity.h:14: warning: Member force(const Point &m) const override (function) of class Elve::Gravity is not documented.
 /home/travis/build/stdgregwar/elve/Core/Gravity.h:15: warning: Member plainOldGravity(const Point &m) const  (function) of class Elve::Gravity is not documented.
@@ -654,6 +656,6 @@ Generating file index...
 Generating file member index...
 Generating example index...
 finalizing index lists...
-symbol cache used 702/65536 hits=27913 misses=702
-lookup cache used 2210/65536 hits=12694 misses=2398
+symbol cache used 707/65536 hits=28027 misses=707
+lookup cache used 2220/65536 hits=12784 misses=2408
 finished...
