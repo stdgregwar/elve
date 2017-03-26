@@ -22,6 +22,7 @@ addons:
       - doxygen
       - doxygen-doc
       - doxygen-gui
+      - libstdc++6
 
 # Build your code e.g. by calling make
 script:
