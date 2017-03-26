@@ -27,6 +27,9 @@ addons:
       - libc6-dev-i386
       - autopoint
       - intltool
+      - libtool
+      - p7zip-full
+      - scons
 
 # Build your code e.g. by calling make
 script:
