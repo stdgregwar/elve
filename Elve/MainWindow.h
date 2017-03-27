@@ -53,6 +53,7 @@ private slots:
     void on_actionQuit_triggered();
     void on_actionSave_triggered();
     void on_actionFit_triggered();
+    void on_actionFullscreen_triggered(bool checked);
 };
 
 }

@@ -82,6 +82,7 @@ public slots:
     void start();
     void stop();
     void toggleSim(bool sim);
+    void quickSim();
 signals:
     void maskChanged(int i);
 private:
