@@ -18,6 +18,7 @@ var classElve_1_1GraphWidget =
     [ "mouseReleaseEvent", "classElve_1_1GraphWidget.html#a1c50e67ef238496080fcfb0b827d7f42", null ],
     [ "paintEvent", "classElve_1_1GraphWidget.html#ae94c62864da108711550cd83a48a91cd", null ],
     [ "quickSim", "classElve_1_1GraphWidget.html#abac6cea2c4f5b98b38bec6172dc9328f", null ],
+    [ "quickSim", "classElve_1_1GraphWidget.html#a975a3183d035b3409ac821828c133561", null ],
     [ "reflect", "classElve_1_1GraphWidget.html#ae47283a7bdbecaad5dd2763a6d221b1b", null ],
     [ "scene", "classElve_1_1GraphWidget.html#a35fe48e654b2dcea0dc16890cca8114e", null ],
     [ "select", "classElve_1_1GraphWidget.html#a2c8a83aedb33c05bbb065494f459dde1", null ],

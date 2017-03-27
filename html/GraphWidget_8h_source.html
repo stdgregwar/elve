@@ -170,67 +170,68 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00082"></a>00082     <span class="keywordtype">void</span> start();
 <a name="l00083"></a>00083     <span class="keywordtype">void</span> stop();
 <a name="l00084"></a>00084     <span class="keywordtype">void</span> toggleSim(<span class="keywordtype">bool</span> sim);
-<a name="l00085"></a>00085 signals:
-<a name="l00086"></a>00086     <span class="keywordtype">void</span> maskChanged(<span class="keywordtype">int</span> i);
-<a name="l00087"></a>00087 <span class="keyword">private</span>:
-<a name="l00088"></a>00088     <span class="keyword">class </span>Behaviour
-<a name="l00089"></a>00089     {
-<a name="l00090"></a>00090         <span class="keyword">public</span>:
-<a name="l00091"></a>00091             Behaviour(<a class="code" href="classElve_1_1GraphWidget.html">GraphWidget</a>* parent) : gw(*parent) {}
-<a name="l00092"></a>00092             <span class="keyword">virtual</span> <span class="keywordtype">void</span> onStart(){}
-<a name="l00093"></a>00093             <span class="keyword">virtual</span> <span class="keywordtype">bool</span> mousePressEvent(QMouseEvent *){<span class="keywordflow">return</span> <span class="keyword">false</span>;}
-<a name="l00094"></a>00094             <span class="keyword">virtual</span> <span class="keywordtype">bool</span> mouseReleaseEvent(QMouseEvent *){<span class="keywordflow">return</span> <span class="keyword">false</span>;}
-<a name="l00095"></a>00095             <span class="keyword">virtual</span> <span class="keywordtype">bool</span> mouseMoveEvent(QMouseEvent *){<span class="keywordflow">return</span> <span class="keyword">false</span>;}
-<a name="l00096"></a>00096             <span class="keyword">virtual</span> <span class="keywordtype">void</span> onEnd(){}
-<a name="l00097"></a>00097         <span class="keyword">protected</span>:
-<a name="l00098"></a>00098             <a class="code" href="classElve_1_1GraphWidget.html">GraphWidget</a>&amp; gw;
-<a name="l00099"></a>00099     };
-<a name="l00100"></a>00100 
-<a name="l00101"></a>00101     <span class="keyword">class </span>BorderSelect : <span class="keyword">public</span> Behaviour
-<a name="l00102"></a>00102     {
-<a name="l00103"></a>00103     <span class="keyword">public</span>:
-<a name="l00104"></a>00104         BorderSelect(<a class="code" href="classElve_1_1GraphWidget.html">GraphWidget</a>* parent);
-<a name="l00105"></a>00105         <span class="keywordtype">void</span> onStart() <span class="keyword">override</span>;
-<a name="l00106"></a>00106         <span class="keywordtype">bool</span> mousePressEvent(QMouseEvent *event) <span class="keyword">override</span>;
-<a name="l00107"></a>00107         <span class="keywordtype">bool</span> mouseReleaseEvent(QMouseEvent *event) <span class="keyword">override</span>;
-<a name="l00108"></a>00108         <span class="keywordtype">bool</span> mouseMoveEvent(QMouseEvent *event) <span class="keyword">override</span>;
-<a name="l00109"></a>00109         <span class="keywordtype">void</span> onEnd() <span class="keyword">override</span>;
-<a name="l00110"></a>00110     <span class="keyword">private</span>:
-<a name="l00111"></a>00111         QPointF mOrigin;
-<a name="l00112"></a>00112         QGraphicsRectItem* mRectangle;
-<a name="l00113"></a>00113         QGraphicsPathItem* mCross;
-<a name="l00114"></a>00114     };
-<a name="l00115"></a>00115 
-<a name="l00116"></a>00116     <span class="keywordtype">void</span> setBehaviour(Behaviour* b);
-<a name="l00117"></a>00117     <span class="keywordtype">void</span> clear();
-<a name="l00118"></a>00118     <span class="keywordtype">void</span> clearScene();
-<a name="l00119"></a>00119     <span class="keywordtype">void</span> unsetGraph();
-<a name="l00120"></a>00120     <span class="keywordtype">void</span> clearEdgesPaths();
-<a name="l00121"></a>00121     <span class="keywordtype">void</span> flushPen(QPen&amp; pen, QPainterPath&amp; path, <span class="keyword">const</span> QPen&amp; newPen);
-<a name="l00122"></a>00122     <span class="keywordtype">void</span> updateEdges();
-<a name="l00123"></a>00123 
-<a name="l00124"></a>00124     QGraphicsScene* mScene;
-<a name="l00125"></a>00125     <span class="keywordtype">bool</span> mDrag;
-<a name="l00126"></a>00126     qreal mScale;
-<a name="l00127"></a>00127     QPointF mLastPos;
-<a name="l00128"></a>00128     QGraphicsPixmapItem* mPlayPauseIcon;
-<a name="l00129"></a>00129     SharedEGraph mGraph;
-<a name="l00130"></a>00130     Behaviour* mBehaviour;
-<a name="l00131"></a>00131     QComboBox* mSelectionBox;
-<a name="l00132"></a>00132     <span class="comment">//temp</span>
-<a name="l00133"></a>00133     std::vector&lt;EdgeLook*&gt; mEdges;
-<a name="l00134"></a>00134     std::vector&lt;NodeLook*&gt; mNodes;
-<a name="l00135"></a>00135     QList&lt;QGraphicsPathItem*&gt; mEdgesPaths;
-<a name="l00136"></a>00136     <a class="code" href="classElve_1_1GraphWidgetListener.html" title="The GraphWidgetListener interface reimplement this if you&#39;re using elve as a dependency.">GraphWidgetListener</a>* mListener;
-<a name="l00137"></a>00137     <span class="keyword">static</span> std::array&lt;QColor,10&gt; mSelectionColors;
-<a name="l00138"></a>00138     qreal mTargetScale;
-<a name="l00139"></a>00139     <span class="keywordtype">int</span> mTimerId;
-<a name="l00140"></a>00140     <span class="keywordtype">bool</span> mSim;
-<a name="l00141"></a>00141 };
-<a name="l00142"></a>00142 
-<a name="l00143"></a>00143 }
-<a name="l00144"></a>00144 
-<a name="l00145"></a>00145 <span class="preprocessor">#endif // GRAPHWIDGET_H</span>
+<a name="l00085"></a>00085     <span class="keywordtype">void</span> quickSim();
+<a name="l00086"></a>00086 signals:
+<a name="l00087"></a>00087     <span class="keywordtype">void</span> maskChanged(<span class="keywordtype">int</span> i);
+<a name="l00088"></a>00088 <span class="keyword">private</span>:
+<a name="l00089"></a>00089     <span class="keyword">class </span>Behaviour
+<a name="l00090"></a>00090     {
+<a name="l00091"></a>00091         <span class="keyword">public</span>:
+<a name="l00092"></a>00092             Behaviour(<a class="code" href="classElve_1_1GraphWidget.html">GraphWidget</a>* parent) : gw(*parent) {}
+<a name="l00093"></a>00093             <span class="keyword">virtual</span> <span class="keywordtype">void</span> onStart(){}
+<a name="l00094"></a>00094             <span class="keyword">virtual</span> <span class="keywordtype">bool</span> mousePressEvent(QMouseEvent *){<span class="keywordflow">return</span> <span class="keyword">false</span>;}
+<a name="l00095"></a>00095             <span class="keyword">virtual</span> <span class="keywordtype">bool</span> mouseReleaseEvent(QMouseEvent *){<span class="keywordflow">return</span> <span class="keyword">false</span>;}
+<a name="l00096"></a>00096             <span class="keyword">virtual</span> <span class="keywordtype">bool</span> mouseMoveEvent(QMouseEvent *){<span class="keywordflow">return</span> <span class="keyword">false</span>;}
+<a name="l00097"></a>00097             <span class="keyword">virtual</span> <span class="keywordtype">void</span> onEnd(){}
+<a name="l00098"></a>00098         <span class="keyword">protected</span>:
+<a name="l00099"></a>00099             <a class="code" href="classElve_1_1GraphWidget.html">GraphWidget</a>&amp; gw;
+<a name="l00100"></a>00100     };
+<a name="l00101"></a>00101 
+<a name="l00102"></a>00102     <span class="keyword">class </span>BorderSelect : <span class="keyword">public</span> Behaviour
+<a name="l00103"></a>00103     {
+<a name="l00104"></a>00104     <span class="keyword">public</span>:
+<a name="l00105"></a>00105         BorderSelect(<a class="code" href="classElve_1_1GraphWidget.html">GraphWidget</a>* parent);
+<a name="l00106"></a>00106         <span class="keywordtype">void</span> onStart() <span class="keyword">override</span>;
+<a name="l00107"></a>00107         <span class="keywordtype">bool</span> mousePressEvent(QMouseEvent *event) <span class="keyword">override</span>;
+<a name="l00108"></a>00108         <span class="keywordtype">bool</span> mouseReleaseEvent(QMouseEvent *event) <span class="keyword">override</span>;
+<a name="l00109"></a>00109         <span class="keywordtype">bool</span> mouseMoveEvent(QMouseEvent *event) <span class="keyword">override</span>;
+<a name="l00110"></a>00110         <span class="keywordtype">void</span> onEnd() <span class="keyword">override</span>;
+<a name="l00111"></a>00111     <span class="keyword">private</span>:
+<a name="l00112"></a>00112         QPointF mOrigin;
+<a name="l00113"></a>00113         QGraphicsRectItem* mRectangle;
+<a name="l00114"></a>00114         QGraphicsPathItem* mCross;
+<a name="l00115"></a>00115     };
+<a name="l00116"></a>00116 
+<a name="l00117"></a>00117     <span class="keywordtype">void</span> setBehaviour(Behaviour* b);
+<a name="l00118"></a>00118     <span class="keywordtype">void</span> clear();
+<a name="l00119"></a>00119     <span class="keywordtype">void</span> clearScene();
+<a name="l00120"></a>00120     <span class="keywordtype">void</span> unsetGraph();
+<a name="l00121"></a>00121     <span class="keywordtype">void</span> clearEdgesPaths();
+<a name="l00122"></a>00122     <span class="keywordtype">void</span> flushPen(QPen&amp; pen, QPainterPath&amp; path, <span class="keyword">const</span> QPen&amp; newPen);
+<a name="l00123"></a>00123     <span class="keywordtype">void</span> updateEdges();
+<a name="l00124"></a>00124 
+<a name="l00125"></a>00125     QGraphicsScene* mScene;
+<a name="l00126"></a>00126     <span class="keywordtype">bool</span> mDrag;
+<a name="l00127"></a>00127     qreal mScale;
+<a name="l00128"></a>00128     QPointF mLastPos;
+<a name="l00129"></a>00129     QGraphicsPixmapItem* mPlayPauseIcon;
+<a name="l00130"></a>00130     SharedEGraph mGraph;
+<a name="l00131"></a>00131     Behaviour* mBehaviour;
+<a name="l00132"></a>00132     QComboBox* mSelectionBox;
+<a name="l00133"></a>00133     <span class="comment">//temp</span>
+<a name="l00134"></a>00134     std::vector&lt;EdgeLook*&gt; mEdges;
+<a name="l00135"></a>00135     std::vector&lt;NodeLook*&gt; mNodes;
+<a name="l00136"></a>00136     QList&lt;QGraphicsPathItem*&gt; mEdgesPaths;
+<a name="l00137"></a>00137     <a class="code" href="classElve_1_1GraphWidgetListener.html" title="The GraphWidgetListener interface reimplement this if you&#39;re using elve as a dependency.">GraphWidgetListener</a>* mListener;
+<a name="l00138"></a>00138     <span class="keyword">static</span> std::array&lt;QColor,10&gt; mSelectionColors;
+<a name="l00139"></a>00139     qreal mTargetScale;
+<a name="l00140"></a>00140     <span class="keywordtype">int</span> mTimerId;
+<a name="l00141"></a>00141     <span class="keywordtype">bool</span> mSim;
+<a name="l00142"></a>00142 };
+<a name="l00143"></a>00143 
+<a name="l00144"></a>00144 }
+<a name="l00145"></a>00145 
+<a name="l00146"></a>00146 <span class="preprocessor">#endif // GRAPHWIDGET_H</span>
 </pre></div></div><!-- contents -->
 </div>
 <!-- window showing the filter options -->
