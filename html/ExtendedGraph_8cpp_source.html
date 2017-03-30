@@ -346,21 +346,24 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00258"></a>00258 
 <a name="l00259"></a><a class="code" href="classElve_1_1ExtendedGraph.html#a10b4b96b3b8b3f99351d4eeaf4286620">00259</a> <span class="keywordtype">void</span> <a class="code" href="classElve_1_1ExtendedGraph.html#a10b4b96b3b8b3f99351d4eeaf4286620" title="set the look for this graph">ExtendedGraph::setLook</a>(<span class="keyword">const</span> SharedLook&amp; l) {
 <a name="l00260"></a>00260     mLook = l;
-<a name="l00261"></a>00261     <span class="keywordflow">if</span>(mLayout) mLayout-&gt;setGraph(shared_from_this(),<a class="code" href="classElve_1_1ExtendedGraph.html#a4353721d739f50cffc4018a67a0d0259" title="all the positions of the nodes">positions</a>());
-<a name="l00262"></a>00262     <span class="keywordflow">if</span>(mView &amp;&amp; mLayout) mView-&gt;reflect(mLayout-&gt;system(),mGraph,mLook);
-<a name="l00263"></a>00263 }
-<a name="l00264"></a>00264 
-<a name="l00265"></a><a class="code" href="classElve_1_1ExtendedGraph.html#a2685dc24cf6a4641d621ae68f27a268a">00265</a> <span class="keyword">const</span> SharedLayout &amp;<a class="code" href="classElve_1_1ExtendedGraph.html#a2685dc24cf6a4641d621ae68f27a268a" title="get shared layout">ExtendedGraph::layout</a>()
-<a name="l00266"></a>00266 {
-<a name="l00267"></a>00267     <span class="keywordflow">return</span> mLayout;
-<a name="l00268"></a>00268 }
-<a name="l00269"></a>00269 
-<a name="l00270"></a><a class="code" href="classElve_1_1ExtendedGraph.html#aa6c68b998db02ab06fb0b2743850b964">00270</a> <span class="keyword">const</span> SharedLook&amp; <a class="code" href="classElve_1_1ExtendedGraph.html#aa6c68b998db02ab06fb0b2743850b964" title="look">ExtendedGraph::look</a>()
-<a name="l00271"></a>00271 {
-<a name="l00272"></a>00272     <span class="keywordflow">return</span> mLook;
-<a name="l00273"></a>00273 }
-<a name="l00274"></a>00274 
-<a name="l00275"></a>00275 }
+<a name="l00261"></a>00261     <span class="keywordflow">if</span>(mLayout) {
+<a name="l00262"></a>00262         mLayout-&gt;clear();
+<a name="l00263"></a>00263         mLayout-&gt;setGraph(shared_from_this(),<a class="code" href="classElve_1_1ExtendedGraph.html#a4353721d739f50cffc4018a67a0d0259" title="all the positions of the nodes">positions</a>());
+<a name="l00264"></a>00264     }
+<a name="l00265"></a>00265     <span class="keywordflow">if</span>(mView &amp;&amp; mLayout) mView-&gt;reflect(mLayout-&gt;system(),mGraph,mLook);
+<a name="l00266"></a>00266 }
+<a name="l00267"></a>00267 
+<a name="l00268"></a><a class="code" href="classElve_1_1ExtendedGraph.html#a2685dc24cf6a4641d621ae68f27a268a">00268</a> <span class="keyword">const</span> SharedLayout &amp;<a class="code" href="classElve_1_1ExtendedGraph.html#a2685dc24cf6a4641d621ae68f27a268a" title="get shared layout">ExtendedGraph::layout</a>()
+<a name="l00269"></a>00269 {
+<a name="l00270"></a>00270     <span class="keywordflow">return</span> mLayout;
+<a name="l00271"></a>00271 }
+<a name="l00272"></a>00272 
+<a name="l00273"></a><a class="code" href="classElve_1_1ExtendedGraph.html#aa6c68b998db02ab06fb0b2743850b964">00273</a> <span class="keyword">const</span> SharedLook&amp; <a class="code" href="classElve_1_1ExtendedGraph.html#aa6c68b998db02ab06fb0b2743850b964" title="look">ExtendedGraph::look</a>()
+<a name="l00274"></a>00274 {
+<a name="l00275"></a>00275     <span class="keywordflow">return</span> mLook;
+<a name="l00276"></a>00276 }
+<a name="l00277"></a>00277 
+<a name="l00278"></a>00278 }
 </pre></div></div><!-- contents -->
 </div>
 <!-- window showing the filter options -->
