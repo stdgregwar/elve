@@ -140,7 +140,8 @@ QGraphicsScene* GraphWidget::scene() {
 
 void GraphWidget::quickSim(unsigned ticks)
 {
-    mGraph->layout()->quickSim(ticks);
+    if(mGraph && mGraph->layout())
+        mGraph->layout()->quickSim(ticks);
 }
 
 void GraphWidget::drawBackground(QPainter *painter, const QRectF &rect){
@@ -224,15 +225,15 @@ void GraphWidget::mouseDoubleClickEvent(QMouseEvent* event) { //TEMP ungroup fea
 
 void GraphWidget::keyPressEvent(QKeyEvent *event) {
     QGraphicsView::keyPressEvent(event);
-    if(event->key() == Qt::Key_Q) {
-        if(mGraph->layout()) {
-            mGraph->layout()->quickSim(400);
-        }
-    } else if(event->key() >= Qt::Key_0 && event->key() <= Qt::Key_9) {
+    if(event->key() >= Qt::Key_0 && event->key() <= Qt::Key_9) {
         mGraph->setMask(event->key()-Qt::Key_0);
         emit maskChanged(event->key()-Qt::Key_0);
         updateSelectionColor();
     }
+}
+
+void GraphWidget::quickSim() {
+    quickSim(500);
 }
 
 void GraphWidget::group() {

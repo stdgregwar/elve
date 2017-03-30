@@ -215,6 +215,7 @@ void MainWindow::connectTab(QMdiSubWindow* tab) {
         disconnect(ui.actionGroup,0,gw,0);
         disconnect(ui.actionUngroup,0,gw,0);
         disconnect(ui.actionPause_Simulation,0,gw,0);
+        disconnect(ui.actionQuicksim,0,gw,0);
     }
     if(mCurrentTab == tab) {
         return;
@@ -230,6 +231,7 @@ void MainWindow::connectTab(QMdiSubWindow* tab) {
     connect(ui.actionGroup,SIGNAL(triggered()),gw,SLOT(group()));
     connect(ui.actionUngroup,SIGNAL(triggered()),gw,SLOT(ungroup()));
     connect(ui.actionPause_Simulation,SIGNAL(triggered(bool)),gw,SLOT(toggleSim(bool)));
+    connect(ui.actionQuicksim,SIGNAL(triggered()),gw,SLOT(quickSim()));
     gw->start();
     mCurrentTab = tab;
 }
@@ -356,4 +358,9 @@ void MainWindow::on_actionFit_triggered()
     }
 }
 
+}
+
+void Elve::MainWindow::on_actionFullscreen_triggered(bool checked)
+{
+    checked ? showFullScreen() : showNormal();
 }
