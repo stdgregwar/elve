@@ -258,7 +258,10 @@ void ExtendedGraph::setLayout(const SharedLayout &l)
 
 void ExtendedGraph::setLook(const SharedLook& l) {
     mLook = l;
-    if(mLayout) mLayout->setGraph(shared_from_this(),positions());
+    if(mLayout) {
+        mLayout->clear();
+        mLayout->setGraph(shared_from_this(),positions());
+    }
     if(mView && mLayout) mView->reflect(mLayout->system(),mGraph,mLook);
 }
 
