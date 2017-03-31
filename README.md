@@ -30,15 +30,15 @@ The following software is required in order to build and use ELVE.
 To download Qt, follow the instructions on
 [Qt website](https://www.qt.io/download-open-source/).
 
-In *Ubuntu* Qt and the other packages can be installed with the following command.
+In *Ubuntu* Qt and the other packages can be installed with the following commands.
 
-    sudo apt-get install build-essential git libboost-all-dev g++-6 libstdc++6 
+    sudo apt-get install build-essential git libboost-all-dev g++-6 libstdc++6
     sudo apt-get install qt5-default qtcreator libqt5svg5-dev
 
-In *Mac*, it is recommended to use [Homebrew](http://brew.sh/) to install
+<!-- In *Mac*, it is recommended to use [Homebrew](http://brew.sh/) to install
 the required packages (except Qt) using the following command.
 
-    brew install git boost gcc6
+    brew install git boost gcc6 -->
 
 ## Build and Run
 
@@ -54,5 +54,11 @@ using qmake ([qmake documentation](http://doc.qt.io/qt-4.8/qmake-tutorial.html))
 
 ## Development
 
-Would you like to write your own plugin? Take a look at the 
+Would you like to write your own plugin? Take a look at the
 [available documentation](https://stdgregwar.github.io/elve/html/).
+
+## Contact
+
+ELVE is developed and maintained by the [Processor Architecture Lab, EPFL](http://lap.epfl.ch/).
+
+You can contact us at <elve@groupes.epfl.ch>.
