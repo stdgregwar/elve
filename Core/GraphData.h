@@ -56,18 +56,90 @@ public:
          * @param props
          */
         void setProperties(const NodeName& name, const NodeProperties& props);
+
+        /**
+         * @brief add a property to a specific node, overriding current property
+         * @param name name of the node
+         * @param pname name of the property
+         * @param val property value
+         */
         void addProperty(const NodeName& name, const QString& pname, const QJsonValue& val);
+
+        /**
+         * @brief set inputs names for a particular node
+         * @param name name of the node
+         * @param names names of the inputs in order
+         */
         void setNodeInputNames(const NodeName& name, const Names& names);
+
+        /**
+         * @brief set ouputs names for a particular node
+         * @param name name of the node
+         * @param names names of the outputs in order
+         */
         void setNodeOutputNames(const NodeName& name, const Names& names);
+
+        /**
+         * @brief set all node attribute given the node of a previous graph
+         * @param name new name of the node
+         * @param node previous node
+         */
         void setNode(const NodeName& name, const Node& node);
 
+        /**
+         * @brief get json properties of a given node
+         * @param name name of the node
+         * @return reference to properties
+         */
         QJsonObject& properties(const NodeName& name);
+
+        /**
+         * @brief set the type of a node
+         * @param name name of the node
+         * @param type node type (cf NodeType)
+         */
         void setType(const NodeName& name, const NodeType& type);
+
+        /**
+         * @brief set input/output index of the node
+         * @param name name of the node
+         * @param index
+         *
+         * This index is used by most of the layouting plugins
+         * to know how the inputs are ordered
+         */
         void setIoIndex(const NodeName& name, const Index& index);
+
+        /**
+         * @brief create a shared instance of SharedDta from the incremental builder
+         * @param filename original filename of the graph, leave just a name if no filename
+         * @return a SharedData instance
+         *
+         * THe newly created SharedData is then ready to be fed in the Graph
+         * primary constructor. using std::make_shared() for example.
+         */
         const SharedData build(const QString &filename);
 
+        /**
+         * @brief get the id of a specific node
+         * @param name name of the node
+         * @return the unique id associated to the node
+         *
+         */
         NodeID id(const NodeName& name);
+
+        /**
+         * @brief type
+         * @param id
+         * @return the type of the node
+         */
         NodeType type(const NodeID& id);
+
+        /**
+         * @brief get node properties given the node id
+         * @param id id of the node
+         * @return
+         */
         NodeProperties props(const NodeID& id);
         Index index(const NodeID& id);
         Dependencies dependencies(const NodeID& id);
