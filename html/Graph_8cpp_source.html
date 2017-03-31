@@ -112,7 +112,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00024"></a>00024         addNode(d);
 <a name="l00025"></a>00025     }
 <a name="l00026"></a>00026     <span class="keywordflow">for</span>(<span class="keyword">const</span> <a class="code" href="classElve_1_1NodeData.html">NodeData</a>&amp; d : data-&gt;nodeDatas()) {
-<a name="l00027"></a>00027         <span class="keywordflow">for</span>(<span class="keyword">const</span> <a class="code" href="structElve_1_1Dependency.html">Dependency</a>&amp; dep : d.dependencies()) {
+<a name="l00027"></a>00027         <span class="keywordflow">for</span>(<span class="keyword">const</span> <a class="code" href="structElve_1_1Dependency.html" title="Node dependency.">Dependency</a>&amp; dep : d.dependencies()) {
 <a name="l00028"></a>00028             addEdge(dep.id,dep.from,d.id(),dep.to);
 <a name="l00029"></a>00029         }
 <a name="l00030"></a>00030     }
