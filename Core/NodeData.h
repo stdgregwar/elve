@@ -11,16 +11,55 @@
 
 namespace Elve {
 
+/**
+ * @brief Node id type is a unique identifier for nodes
+ *
+ * Nodes are stored in many places in Elve and cannot always be
+ * differentiated by their names, the introduction of this NodeID
+ * type allow to speed up table lookup and graph random access.
+ */
 typedef unsigned NodeID;
 typedef std::string Name;
 typedef std::vector<std::string> Names;
+
+/**
+ * @brief Name of a node
+ */
 typedef Name NodeName;
+
+/**
+ * @brief typedef for node'input/output index
+ */
 typedef int Index;
+
+/**
+ * @brief array of ordered NodeIDs
+ */
 typedef std::vector<NodeID> NodeIDs;
+
+/**
+ * @brief NodeNames
+ */
 typedef Names NodeNames;
+
+/**
+ * @brief a fast hash set of NodeID 's
+ */
 typedef std::unordered_set<NodeID> NodeIDSet;
+
+/**
+ * @brief Attached properties bound to the node
+ */
 typedef QJsonObject NodeProperties;
 
+/**
+ * @brief Node dependency
+ *
+ * Represent direct ancestor of the node. I.e. one node of the fan-in
+ *
+ * It allows to specifie in which input the ancestor is connected an from
+ * wich output of the ancestor the connexion comes.
+ */
 struct Dependency {
     Dependency(const NodeID& id);
     Dependency(const NodeID &id,Index from, Index to);
@@ -31,8 +70,14 @@ struct Dependency {
     Index to;
 };
 
+/**
+ * @brief NodeData fan-in
+ */
 typedef std::vector<Dependency> Dependencies;
 
+/**
+ * @brief Enum to discriminate node types
+ */
 enum NodeType{
     NODE,
     INPUT,
