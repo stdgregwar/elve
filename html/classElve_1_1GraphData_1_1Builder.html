@@ -103,8 +103,12 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">set the dependencies of a node  <a href="#a5e44a061b074108fa3addd35a86dc2ac"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classElve_1_1GraphData_1_1Builder.html#a619544f00622cd7986246cf5535d341c">setDependencies</a> (const NodeName &amp;name, const Dependencies &amp;dependencies)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">set the dependencies of a node  <a href="#a619544f00622cd7986246cf5535d341c"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classElve_1_1GraphData_1_1Builder.html#acb6c88650b1c092a80e6b783ed81165b">setProperties</a> (const NodeName &amp;name, const NodeProperties &amp;<a class="el" href="classElve_1_1GraphData_1_1Builder.html#a75be6dcef9040f606d0299742c785baa">props</a>)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">set the properties of a node  <a href="#acb6c88650b1c092a80e6b783ed81165b"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classElve_1_1GraphData_1_1Builder.html#a3d101a326a9e360a35dc2c550305131d">setId</a> (const NodeName &amp;name, const NodeID &amp;<a class="el" href="classElve_1_1GraphData_1_1Builder.html#ab18cb94b7c0d1e1affd5be002eac97c7">id</a>)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">set the properties of a node  <a href="#a3d101a326a9e360a35dc2c550305131d"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae542e60d4b20cc7e3df1d6d43046785b"></a><!-- doxytag: member="Elve::GraphData::Builder::addDependency" ref="ae542e60d4b20cc7e3df1d6d43046785b" args="(const NodeID &amp;from, const NodeID &amp;to)" -->
+void&#160;</td><td class="memItemRight" valign="bottom"><b>addDependency</b> (const NodeID &amp;from, const NodeID &amp;to)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acb6c88650b1c092a80e6b783ed81165b"></a><!-- doxytag: member="Elve::GraphData::Builder::setProperties" ref="acb6c88650b1c092a80e6b783ed81165b" args="(const NodeName &amp;name, const NodeProperties &amp;props)" -->
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setProperties</b> (const NodeName &amp;name, const NodeProperties &amp;<a class="el" href="classElve_1_1GraphData_1_1Builder.html#a75be6dcef9040f606d0299742c785baa">props</a>)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classElve_1_1GraphData_1_1Builder.html#a58ac0ac65267b817079cab482dbba08a">addProperty</a> (const NodeName &amp;name, const QString &amp;pname, const QJsonValue &amp;val)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">add a property to a specific node, overriding current property  <a href="#a58ac0ac65267b817079cab482dbba08a"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classElve_1_1GraphData_1_1Builder.html#a1d9a8492a8c3b690383a7f8005e81b06">setNodeInputNames</a> (const NodeName &amp;name, const Names &amp;names)</td></tr>
@@ -143,8 +147,8 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>nodeOutputCount</b> (c
 const NodeIDs &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>outputs</b> () const </td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3121454bc64bdf8ebd22cf9ffe1e6afc"></a><!-- doxytag: member="Elve::GraphData::Builder::inputs" ref="a3121454bc64bdf8ebd22cf9ffe1e6afc" args="() const " -->
 const NodeIDs &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>inputs</b> () const </td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afa5ed86f129c8e8cbdcc1a2b140c044e"></a><!-- doxytag: member="Elve::GraphData::Builder::name" ref="afa5ed86f129c8e8cbdcc1a2b140c044e" args="(const NodeID &amp;id) const " -->
-const NodeName &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>name</b> (const NodeID &amp;<a class="el" href="classElve_1_1GraphData_1_1Builder.html#ab18cb94b7c0d1e1affd5be002eac97c7">id</a>) const </td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2049a451eb3c7474fdffba421bf2dabd"></a><!-- doxytag: member="Elve::GraphData::Builder::name" ref="a2049a451eb3c7474fdffba421bf2dabd" args="(const NodeID &amp;id) const " -->
+NodeName&#160;</td><td class="memItemRight" valign="bottom"><b>name</b> (const NodeID &amp;<a class="el" href="classElve_1_1GraphData_1_1Builder.html#ab18cb94b7c0d1e1affd5be002eac97c7">id</a>) const </td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>The graph data builder is used to efficiently generate the graph data structure without the hassle of keeping intermediary values. </p>
@@ -391,6 +395,44 @@ const NodeName &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>name<
 
 </div>
 </div>
+<a class="anchor" id="a3d101a326a9e360a35dc2c550305131d"></a><!-- doxytag: member="Elve::GraphData::Builder::setId" ref="a3d101a326a9e360a35dc2c550305131d" args="(const NodeName &amp;name, const NodeID &amp;id)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classElve_1_1GraphData_1_1Builder.html#a3d101a326a9e360a35dc2c550305131d">Elve::GraphData::Builder::setId</a> </td>
+          <td>(</td>
+          <td class="paramtype">const NodeName &amp;&#160;</td>
+          <td class="paramname"><em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const NodeID &amp;&#160;</td>
+          <td class="paramname"><em>id</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>set the properties of a node </p>
+<dl class="params"><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">name</td><td>name of the node </td></tr>
+    <tr><td class="paramname">props</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="GraphData_8cpp_source.html#l00168">168</a> of file <a class="el" href="GraphData_8cpp_source.html">GraphData.cpp</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="a4acff785328eaf1f9d18ac13652c9ac6"></a><!-- doxytag: member="Elve::GraphData::Builder::setIoIndex" ref="a4acff785328eaf1f9d18ac13652c9ac6" args="(const NodeName &amp;name, const Index &amp;index)" -->
 <div class="memitem">
 <div class="memproto">
@@ -501,7 +543,7 @@ const NodeName &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>name<
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="GraphData_8cpp_source.html#l00156">156</a> of file <a class="el" href="GraphData_8cpp_source.html">GraphData.cpp</a>.</p>
+<p>Definition at line <a class="el" href="GraphData_8cpp_source.html#l00158">158</a> of file <a class="el" href="GraphData_8cpp_source.html">GraphData.cpp</a>.</p>
 
 </div>
 </div>
@@ -539,45 +581,7 @@ const NodeName &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>name<
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="GraphData_8cpp_source.html#l00161">161</a> of file <a class="el" href="GraphData_8cpp_source.html">GraphData.cpp</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="acb6c88650b1c092a80e6b783ed81165b"></a><!-- doxytag: member="Elve::GraphData::Builder::setProperties" ref="acb6c88650b1c092a80e6b783ed81165b" args="(const NodeName &amp;name, const NodeProperties &amp;props)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void <a class="el" href="classElve_1_1GraphData_1_1Builder.html#acb6c88650b1c092a80e6b783ed81165b">Elve::GraphData::Builder::setProperties</a> </td>
-          <td>(</td>
-          <td class="paramtype">const NodeName &amp;&#160;</td>
-          <td class="paramname"><em>name</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const NodeProperties &amp;&#160;</td>
-          <td class="paramname"><em>props</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>set the properties of a node </p>
-<dl class="params"><dt><b>Parameters:</b></dt><dd>
-  <table class="params">
-    <tr><td class="paramname">name</td><td>name of the node </td></tr>
-    <tr><td class="paramname">props</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p>Definition at line <a class="el" href="GraphData_8cpp_source.html#l00092">92</a> of file <a class="el" href="GraphData_8cpp_source.html">GraphData.cpp</a>.</p>
+<p>Definition at line <a class="el" href="GraphData_8cpp_source.html#l00163">163</a> of file <a class="el" href="GraphData_8cpp_source.html">GraphData.cpp</a>.</p>
 
 </div>
 </div>

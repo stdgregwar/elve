@@ -348,19 +348,24 @@ Generating code for file /home/travis/build/stdgregwar/elve/Core/Singleton.h...
 /home/travis/build/stdgregwar/elve/Core/Graph.h:29: warning: Member operator()(const Pin &p) const  (function) of class Elve::Pin_hash is not documented.
 /home/travis/build/stdgregwar/elve/Core/Graph.h:65: warning: argument 'exluded' of command @param is not found in the argument list of Elve::Graph::Graph(const SharedData &data, const SparseData &extraData, const Aliases &aliases)
 /home/travis/build/stdgregwar/elve/Core/Graph.h:96: warning: argument 'xrefitem' of command @param is not found in the argument list of Elve::Graph::clusterize(size_t level)
-/home/travis/build/stdgregwar/elve/Core/GraphData.h:172: warning: Member GraphData(const QJsonObject &obj) (function) of class Elve::GraphData is not documented.
-/home/travis/build/stdgregwar/elve/Core/GraphData.h:173: warning: Member nodeDatas() const  (function) of class Elve::GraphData is not documented.
-/home/travis/build/stdgregwar/elve/Core/GraphData.h:174: warning: Member filename() const  (function) of class Elve::GraphData is not documented.
-/home/travis/build/stdgregwar/elve/Core/GraphData.h:175: warning: Member json() const  (function) of class Elve::GraphData is not documented.
-/home/travis/build/stdgregwar/elve/Core/GraphData.h:144: warning: Member index(const NodeID &id) (function) of class Elve::GraphData::Builder is not documented.
-/home/travis/build/stdgregwar/elve/Core/GraphData.h:145: warning: Member dependencies(const NodeID &id) (function) of class Elve::GraphData::Builder is not documented.
-/home/travis/build/stdgregwar/elve/Core/GraphData.h:146: warning: Member nodeInputNames(const NodeID &id) (function) of class Elve::GraphData::Builder is not documented.
-/home/travis/build/stdgregwar/elve/Core/GraphData.h:147: warning: Member nodeOutputNames(const NodeID &id) (function) of class Elve::GraphData::Builder is not documented.
-/home/travis/build/stdgregwar/elve/Core/GraphData.h:148: warning: Member nodeInputCount(const NodeID &id) (function) of class Elve::GraphData::Builder is not documented.
-/home/travis/build/stdgregwar/elve/Core/GraphData.h:149: warning: Member nodeOutputCount(const NodeID &id) (function) of class Elve::GraphData::Builder is not documented.
-/home/travis/build/stdgregwar/elve/Core/GraphData.h:151: warning: Member outputs() const  (function) of class Elve::GraphData::Builder is not documented.
-/home/travis/build/stdgregwar/elve/Core/GraphData.h:152: warning: Member inputs() const  (function) of class Elve::GraphData::Builder is not documented.
-/home/travis/build/stdgregwar/elve/Core/GraphData.h:153: warning: Member name(const NodeID &id) const  (function) of class Elve::GraphData::Builder is not documented.
+/home/travis/build/stdgregwar/elve/Core/GraphData.h:174: warning: Member GraphData(const QJsonObject &obj) (function) of class Elve::GraphData is not documented.
+/home/travis/build/stdgregwar/elve/Core/GraphData.h:175: warning: Member nodeDatas() const  (function) of class Elve::GraphData is not documented.
+/home/travis/build/stdgregwar/elve/Core/GraphData.h:176: warning: Member filename() const  (function) of class Elve::GraphData is not documented.
+/home/travis/build/stdgregwar/elve/Core/GraphData.h:177: warning: Member json() const  (function) of class Elve::GraphData is not documented.
+/home/travis/build/stdgregwar/elve/Core/GraphData.h:59: warning: Member addDependency(const NodeID &from, const NodeID &to) (function) of class Elve::GraphData::Builder is not documented.
+/home/travis/build/stdgregwar/elve/Core/GraphData.h:60: warning: Member setProperties(const NodeName &name, const NodeProperties &props) (function) of class Elve::GraphData::Builder is not documented.
+/home/travis/build/stdgregwar/elve/Core/GraphData.h:146: warning: Member index(const NodeID &id) (function) of class Elve::GraphData::Builder is not documented.
+/home/travis/build/stdgregwar/elve/Core/GraphData.h:147: warning: Member dependencies(const NodeID &id) (function) of class Elve::GraphData::Builder is not documented.
+/home/travis/build/stdgregwar/elve/Core/GraphData.h:148: warning: Member nodeInputNames(const NodeID &id) (function) of class Elve::GraphData::Builder is not documented.
+/home/travis/build/stdgregwar/elve/Core/GraphData.h:149: warning: Member nodeOutputNames(const NodeID &id) (function) of class Elve::GraphData::Builder is not documented.
+/home/travis/build/stdgregwar/elve/Core/GraphData.h:150: warning: Member nodeInputCount(const NodeID &id) (function) of class Elve::GraphData::Builder is not documented.
+/home/travis/build/stdgregwar/elve/Core/GraphData.h:151: warning: Member nodeOutputCount(const NodeID &id) (function) of class Elve::GraphData::Builder is not documented.
+/home/travis/build/stdgregwar/elve/Core/GraphData.h:153: warning: Member outputs() const  (function) of class Elve::GraphData::Builder is not documented.
+/home/travis/build/stdgregwar/elve/Core/GraphData.h:154: warning: Member inputs() const  (function) of class Elve::GraphData::Builder is not documented.
+/home/travis/build/stdgregwar/elve/Core/GraphData.h:155: warning: Member name(const NodeID &id) const  (function) of class Elve::GraphData::Builder is not documented.
+/home/travis/build/stdgregwar/elve/Core/GraphData.h:53: warning: argument 'props' of command @param is not found in the argument list of Elve::GraphData::Builder::setId(const NodeName &name, const NodeID &id)
+/home/travis/build/stdgregwar/elve/Core/GraphData.h:53: warning: The following parameters of Elve::GraphData::Builder::setId(const NodeName &name, const NodeID &id) are not documented:
+  parameter 'id'
 /home/travis/build/stdgregwar/elve/Core/GraphWidget.h:77: warning: Member borderSelect() (slot) of class Elve::GraphWidget is not documented.
 /home/travis/build/stdgregwar/elve/Core/GraphWidget.h:78: warning: Member toggleSelection() (slot) of class Elve::GraphWidget is not documented.
 /home/travis/build/stdgregwar/elve/Core/GraphWidget.h:79: warning: Member group() (slot) of class Elve::GraphWidget is not documented.
@@ -645,6 +650,6 @@ Generating file index...
 Generating file member index...
 Generating example index...
 finalizing index lists...
-symbol cache used 708/65536 hits=28576 misses=708
-lookup cache used 2225/65536 hits=12882 misses=2413
+symbol cache used 710/65536 hits=28827 misses=710
+lookup cache used 2236/65536 hits=13003 misses=2424
 finished...

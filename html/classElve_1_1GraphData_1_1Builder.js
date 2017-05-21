@@ -1,13 +1,14 @@
 var classElve_1_1GraphData_1_1Builder =
 [
     [ "Builder", "classElve_1_1GraphData_1_1Builder.html#abf0344ca3eb4ffb573f1d22aa42ca354", null ],
+    [ "addDependency", "classElve_1_1GraphData_1_1Builder.html#ae542e60d4b20cc7e3df1d6d43046785b", null ],
     [ "addProperty", "classElve_1_1GraphData_1_1Builder.html#a58ac0ac65267b817079cab482dbba08a", null ],
     [ "build", "classElve_1_1GraphData_1_1Builder.html#afd83216e33a03a006f04ed39c8caca95", null ],
     [ "dependencies", "classElve_1_1GraphData_1_1Builder.html#a7373baf9a2a9fa46d6be3eb6e3f87874", null ],
     [ "id", "classElve_1_1GraphData_1_1Builder.html#ab18cb94b7c0d1e1affd5be002eac97c7", null ],
     [ "index", "classElve_1_1GraphData_1_1Builder.html#a7f254f4e42abaacdc187981289d3dbd5", null ],
     [ "inputs", "classElve_1_1GraphData_1_1Builder.html#a3121454bc64bdf8ebd22cf9ffe1e6afc", null ],
-    [ "name", "classElve_1_1GraphData_1_1Builder.html#afa5ed86f129c8e8cbdcc1a2b140c044e", null ],
+    [ "name", "classElve_1_1GraphData_1_1Builder.html#a2049a451eb3c7474fdffba421bf2dabd", null ],
     [ "nodeInputCount", "classElve_1_1GraphData_1_1Builder.html#a10249f885045aee759d8fd4051b2813b", null ],
     [ "nodeInputNames", "classElve_1_1GraphData_1_1Builder.html#a321ffd3ecb3880520e1d8e1727c934d3", null ],
     [ "nodeOutputCount", "classElve_1_1GraphData_1_1Builder.html#a1a0ee7c8ebaf7c34a141b72a5cf06162", null ],
@@ -17,6 +18,7 @@ var classElve_1_1GraphData_1_1Builder =
     [ "props", "classElve_1_1GraphData_1_1Builder.html#a75be6dcef9040f606d0299742c785baa", null ],
     [ "setDependencies", "classElve_1_1GraphData_1_1Builder.html#a5e44a061b074108fa3addd35a86dc2ac", null ],
     [ "setDependencies", "classElve_1_1GraphData_1_1Builder.html#a619544f00622cd7986246cf5535d341c", null ],
+    [ "setId", "classElve_1_1GraphData_1_1Builder.html#a3d101a326a9e360a35dc2c550305131d", null ],
     [ "setIoIndex", "classElve_1_1GraphData_1_1Builder.html#a4acff785328eaf1f9d18ac13652c9ac6", null ],
     [ "setNode", "classElve_1_1GraphData_1_1Builder.html#a4a352938e104a5647b48d33c809f61ac", null ],
     [ "setNodeInputNames", "classElve_1_1GraphData_1_1Builder.html#a1d9a8492a8c3b690383a7f8005e81b06", null ],
