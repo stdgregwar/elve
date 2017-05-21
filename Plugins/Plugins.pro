@@ -8,6 +8,7 @@ SUBDIRS += \
     BlifLoaderPlugin \
     DivisorLoaderPlugin \
     Extract \
+    GEXFLoader \
     LevelLayoutPlugin \
     SimpleLayoutPlugin \
     SvgExporterPlugin \

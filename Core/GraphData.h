@@ -55,6 +55,8 @@ public:
          * @param name name of the node
          * @param props
          */
+        void setId(const NodeName& name, const NodeID& id);
+        void addDependency(const NodeID& from, const NodeID& to);
         void setProperties(const NodeName& name, const NodeProperties& props);
         void addProperty(const NodeName& name, const QString& pname, const QJsonValue& val);
         void setNodeInputNames(const NodeName& name, const Names& names);
@@ -78,7 +80,7 @@ public:
 
         const NodeIDs& outputs() const;
         const NodeIDs& inputs() const;
-        const NodeName& name(const NodeID& id) const;
+        NodeName name(const NodeID& id) const;
     private:
 
         NodeID mID;

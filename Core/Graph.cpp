@@ -371,6 +371,7 @@ QJsonObject Graph::json() const
 NodeLevel Graph::highestLevel() const {
     using pair_type = NodesByID::value_type;
 
+    if(mNodes.empty()) return 0;
     return max_element(mNodes.begin(),mNodes.end(),
         [](const pair_type& a, const pair_type& b)->bool {
             return a.second.level() < b.second.level();
