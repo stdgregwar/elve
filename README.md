@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/stdgregwar/elve.png)](https://travis-ci.org/stdgregwar/elve)
 
-# ELVE: ELVE Logic Visualisation Explorer
+# ELVE: ELVE Logic Visualisation Engine
 
 ELVE is a novel interactive open source desktop application for
 visualisation of logic circuits. The current state of the tool offers basic
