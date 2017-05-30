@@ -52,6 +52,9 @@ can build and run ELVE by selecting the *Run* option from the *Build* menu.
 Alternatively, you can build ELVE with your preferred tool
 using qmake ([qmake documentation](http://doc.qt.io/qt-4.8/qmake-tutorial.html)).
 
+## Usage
+Usage of ELVE is best described in Elve wiki [First Steps](https://github.com/stdgregwar/elve/wiki/First-steps).
+
 ## Development
 
 Would you like to write your own plugin? Take a look at the
