@@ -5,7 +5,9 @@ CONFIG += c++11
 SUBDIRS += \
     Core \
     Elve \
-    Plugins
+    Plugins \
+    PluginsTemplates
 
 Plugins.depends = Core
+PluginsTemplates.depends = Core
 Elve.depends = Core

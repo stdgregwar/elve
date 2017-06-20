@@ -1,6 +1,8 @@
 #ifndef UTILS_H
 #define UTILS_H
 
+#include <functional>
+
 template<typename T,
          template<typename> class IN,
          template<typename> class OUT>
