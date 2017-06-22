@@ -146,7 +146,7 @@ SharedEGraph ExtendedGraph::group(const NodeIDSet& names, const NodeName &groupN
 
     for(int i = 0; i < 10; i++) {
         for(const NodeID& id : selection(i)) {
-            eg->selection(i).add(eg->graph()->alias(i).id);
+            eg->selection(i).add(eg->graph()->inputAlias(i).id); //TODO : check if arbitrary inputAlias choice work
         }
     }
     return eg;

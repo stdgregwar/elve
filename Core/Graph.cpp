@@ -15,6 +15,15 @@ bool operator==(const Pin& a,const Pin& b) {
     return a.id == b.id && ((a.index == b.index) || a.index == -1 || b.index == -1);
 }
 
+void Aliases::reserve(size_t size) {
+    inputs.reserve(size);
+    outputs.reserve(size);
+}
+
+size_t Aliases::size() const {
+    return inputs.size(); //pretty arbitrary, TODO think of a better solution
+}
+
 Pin::Pin(const NodeID& id) : id(id),index(-1){}
 Pin::Pin(const NodeID &id,const Index& index) : id(id), index(index){}
 
@@ -38,8 +47,6 @@ Graph::Graph(const SharedData& data, const SparseData &extraData, const Aliases 
     for(const pair_type& p : mExtraData) {
         if(!mExcluded.count(p.first)) {
             addNode(p.second);
-        } else {
-            qDebug() << "Extra data" << p.second.name().c_str() << "was exluded";
         }
     }
 
@@ -50,17 +57,14 @@ Graph::Graph(const SharedData& data, const SparseData &extraData, const Aliases 
     }
 
     for(const NodeData& d : data->nodeDatas()) {
-        const Pin& p = alias(d.id());
-        if(!mExcluded.count(p.id)) {
-            for(const Dependency& dep : d.dependencies()) {
-                const Pin cpin = alias({d.id(),dep.to});
-                if(mExcluded.count(cpin.id)) {
-                    continue;
-                }
-                const Pin dpin = alias({dep.id,dep.from});
-                if(!mExcluded.count(dpin.id)) {
-                    addEdge(dpin.id,dpin.index,cpin.id,cpin.index);
-                }
+        for(const Dependency& dep : d.dependencies()) {
+            const Pin cpin = inputAlias({d.id(),dep.to});
+            if(mExcluded.count(cpin.id)) {
+                continue;
+            }
+            const Pin dpin = outputAlias({dep.id,dep.from});
+            if(!mExcluded.count(dpin.id)) {
+                addEdge(dpin.id,dpin.index,cpin.id,cpin.index);
             }
         }
     }
@@ -82,9 +86,17 @@ size_t Graph::nodeCount() const {
     return mNodes.size();
 }
 
-const Pin Graph::alias(const Pin &id) const {
-    auto it = mAliases.find(id);
-    if(it != mAliases.end()) return alias(it->second);
+const Pin Graph::inputAlias(const Pin &id) const {
+    auto it = mAliases.inputs.find(id);
+    if(it != mAliases.inputs.end())
+        return inputAlias(it->second);
+    return id;
+}
+
+const Pin Graph::outputAlias(const Pin &id) const {
+    auto it = mAliases.outputs.find(id);
+    if(it != mAliases.outputs.end())
+        return outputAlias(it->second);
     return id;
 }
 
@@ -104,6 +116,8 @@ Node* Graph::addNode(const NodeData& d) {
 void Graph::addEdge(const NodeID& from, Index fi, const NodeID& to, Index ti) {
     if(from != to) {
         mNodes.at(from).addChild(&mNodes.at(to),fi,ti);
+    } else {
+        qDebug() << "will not make edge from" << from << fi << "to" << to << ti;
     }
 }
 
@@ -221,8 +235,8 @@ SharedGraph Graph::fastGroup(const vector<NodeIDSet>& groups, const NodeName& ba
         if(group.size() < 2) { //Ignore groups of one or less elements
             continue;
         }
-        set<Name> inputs;
-        set<Name> outputs;
+        vector<Name> inputs;
+        vector<Name> outputs;
         Dependencies deps; deps.reserve(group.size());
         deps.insert(deps.end(),group.begin(),group.end());
 
@@ -233,24 +247,25 @@ SharedGraph Graph::fastGroup(const vector<NodeIDSet>& groups, const NodeName& ba
             for(const Node::Connexion& c : n.fanIn()) {
                 if(!group.count(c.node->id())) { //Ancestor is outside of the group
                     //Add input to node
-                    aliases.emplace(Pin(id,c.to),Pin(i,inputs.size()));
-                    inputs.insert(n.name());
+                    int inputNum = lazy_add(inputs,n.name());
+                    aliases.inputs.emplace(Pin(id,c.to),Pin(i,inputNum));
                 }
             }
             for(const Node::Connexion& c : n.fanOut()) {
                 if(!group.count(c.node->id())) { //Ancestor is outside of the group
                     //Add input to node
-                    aliases.emplace(Pin(id,c.from),Pin(i,outputs.size()));
-                    outputs.insert(n.name());
+                    int outputNum = lazy_add(outputs,n.name());
+                    aliases.outputs.emplace(Pin(id,c.from),Pin(i,outputNum));
                 }
             }
-            aliases.emplace(id,i);
+            //aliases.inputs.emplace(id,i); //TODO : fix this uglyness
+            //aliases.outputs.emplace(id,i);
             excluded.insert(id);
             av_index += data(id).ioIndex();
         }
         av_index /= group.size();
         Names inputNames; inputNames.reserve(inputs.size());
-        Names outputNames;outputNames.reserve(outputs.size());
+        Names outputNames; outputNames.reserve(outputs.size());
         inputNames.insert(inputNames.begin(),inputs.begin(),inputs.end());
         outputNames.insert(outputNames.begin(),outputs.begin(),outputs.end());
 
@@ -353,12 +368,23 @@ QJsonObject Graph::json() const
         main.insert("extra_data",extra);
     }
     {
-        QJsonArray als;
-        using pair_type = Aliases::value_type;
-        for(const pair_type& p : mAliases) {
-            als.append(QJsonArray{(int)p.first.id,(int)p.first.index,(int)p.second.id,(int)p.second.index});
+        {
+            QJsonArray als;
+            using pair_type = AliasesMap::value_type;
+            for(const pair_type& p : mAliases.inputs) {
+                als.append(QJsonArray{(int)p.first.id,(int)p.first.index,(int)p.second.id,(int)p.second.index});
+            }
+            main.insert("inputAliases",als);
         }
-        main.insert("aliases",als);
+        {
+            QJsonArray als;
+            using pair_type = AliasesMap::value_type;
+            for(const pair_type& p : mAliases.outputs) {
+                als.append(QJsonArray{(int)p.first.id,(int)p.first.index,(int)p.second.id,(int)p.second.index});
+            }
+            main.insert("outputAliases",als);
+        }
+
     }
     QJsonArray excl;
     for(const NodeID& id : mExcluded) {
@@ -390,12 +416,23 @@ SharedGraph Graph::fromJson(const QJsonObject& obj)
         extra.emplace(obj.value("id").toInt(),obj);
     }
     Aliases als;
-    QJsonArray jals = obj.value("aliases").toArray();
-    als.reserve(jals.size());
-    for(const QJsonValue& v : jals) {
-        QJsonArray pair = v.toArray();
-        als.emplace(Pin(pair.at(0).toInt(-1),pair.at(1).toInt(-1)),
-                    Pin(pair.at(2).toInt(-1),pair.at(3).toInt(-1)));
+    { //Handle input aliases
+        QJsonArray jals = obj.value("inputAliases").toArray();
+        als.inputs.reserve(jals.size());
+        for(const QJsonValue& v : jals) {
+            QJsonArray pair = v.toArray();
+            als.inputs.emplace(Pin(pair.at(0).toInt(-1),pair.at(1).toInt(-1)),
+                        Pin(pair.at(2).toInt(-1),pair.at(3).toInt(-1)));
+        }
+    }
+    { //Handle output aliases
+        QJsonArray jals = obj.value("outputAliases").toArray();
+        als.outputs.reserve(jals.size());
+        for(const QJsonValue& v : jals) {
+            QJsonArray pair = v.toArray();
+            als.outputs.emplace(Pin(pair.at(0).toInt(-1),pair.at(1).toInt(-1)),
+                        Pin(pair.at(2).toInt(-1),pair.at(3).toInt(-1)));
+        }
     }
     NodeIDSet excl;
     QJsonArray jexcl = obj.value("excluded").toArray();
@@ -408,9 +445,14 @@ SharedGraph Graph::fromJson(const QJsonObject& obj)
 
 Aliases Graph::aliasesWithout(const NodeID& repl) const {
     Aliases als;
-    for(const auto& p : mAliases) {
+    for(const auto& p : mAliases.inputs) {
         if(p.second.id != repl) {
-            als.insert(p);
+            als.inputs.insert(p);
+        }
+    }
+    for(const auto& p : mAliases.outputs) {
+        if(p.second.id != repl) {
+            als.outputs.insert(p);
         }
     }
     return als;

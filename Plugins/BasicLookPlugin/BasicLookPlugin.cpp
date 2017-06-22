@@ -17,8 +17,8 @@ NodeLook* BasicLookPlugin::node(const Node &n) {
     return new BasicNodeLook(*this,n);
 }
 
-EdgeLook* BasicLookPlugin::edge(const NodeLook &ancestor, const NodeLook &children) {
-    return new BasicEdgeLook(ancestor,children);
+EdgeLook* BasicLookPlugin::edge(const NodeLook &ancestor, Index outi, const NodeLook &children, Index ini) {
+    return new BasicEdgeLook(ancestor,outi,children,ini);
 }
 
 OrientationHint BasicLookPlugin::orientationHint() const {

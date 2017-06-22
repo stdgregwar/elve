@@ -4,7 +4,7 @@
 
 using namespace Elve;
 
-BlockEdgeLook::BlockEdgeLook(const NodeLook &from, const NodeLook &to) : EdgeLook(from,to)
+BlockEdgeLook::BlockEdgeLook(const NodeLook &from,Elve::Index outi, const Elve::NodeLook& to, Elve::Index ini) : EdgeLook(from,outi,to,ini)
 {
 
 }

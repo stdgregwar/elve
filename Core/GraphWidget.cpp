@@ -355,7 +355,7 @@ void GraphWidget::reflect(System &sys, SharedGraph g, SharedLook lf) {
 
     for(auto& nbi : g->nodes()) {
         const Node& n = nbi.second;
-        NodeLook* ni = lf->getNode(n);
+        NodeLook* ni = lf->node(n);
         looks[n.id()] = ni;
         mNodes.push_back(ni);
         Point* p = sys.point(n.id());
@@ -366,11 +366,11 @@ void GraphWidget::reflect(System &sys, SharedGraph g, SharedLook lf) {
 
     for(auto& nbi : g->nodes()) {
         const Node& n = nbi.second;
-        for(const Node* an : n.ancestors()) {
-            const NodeLook& al = *looks.at(an->id());
+        for(const Node::Connexion& c : n.fanIn()) {
+            const NodeLook& al = *looks.at(c.node->id());
             const NodeLook& ll = *looks.at(n.id());
-            EdgeLook* ei = lf->edge(al,ll);
-            Point* ep = sys.point(an->id());
+            EdgeLook* ei = lf->edge(al,c.from,ll,c.to);
+            //Point* ep = sys.point(c.node->id());
             mEdges.push_back(ei);
         }
     }

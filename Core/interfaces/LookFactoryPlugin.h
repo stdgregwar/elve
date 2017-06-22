@@ -73,7 +73,9 @@ public:
     /**
      * @brief edge producing method
      * @param ancestor nodelook from which the edge comes
+     * @param outi ancestor out index
      * @param children nodelook to which the edge goes
+     * @param children in index
      * @return a subclass of EdgeLook
      *
      * Re-implement this method
@@ -82,22 +84,7 @@ public:
      * from the node(const Node& n) method and must return an subclass of EdgeLook
      * that will represent the edge between those nodes.
      */
-    virtual EdgeLook* edge(const NodeLook& ancestor, const NodeLook& children) = 0;
-
-    /**
-     * @brief getNode impl detail
-     * @param n
-     * @return
-     */
-    NodeLook* getNode(const Node& n);
-
-    /**
-     * @brief getEdge impl detail
-     * @param ancestor
-     * @param children
-     * @return
-     */
-    EdgeLook* getEdge(const NodeLook& ancestor, const NodeLook& children);
+    virtual EdgeLook* edge(const NodeLook& ancestor, Index outi, const NodeLook& children, Index ini) = 0;
 
     /**
      * @brief reimplement this to tell the layout you're in another orientation

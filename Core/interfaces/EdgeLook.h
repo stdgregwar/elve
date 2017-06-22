@@ -17,9 +17,11 @@ public:
     /**
      * @brief EdgeLook only constructor
      * @param from the Node(Look) from which the edge comes
+     * @param outi the output index from which the edge comes
      * @param to the Node(Look) to which the edge goes
+     * @param ini the input index to which the edge goes
      */
-    EdgeLook(const NodeLook& from,const NodeLook& to);
+    EdgeLook(const NodeLook& from, Index outi ,const NodeLook& to, Index ini);
 
     /**
      * @brief add the shape of this edge

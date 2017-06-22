@@ -31,7 +31,15 @@ struct Pin_hash {
         }
 };
 
-typedef std::unordered_map<Pin,Pin,Pin_hash> Aliases;
+typedef std::unordered_map<Pin,Pin,Pin_hash> AliasesMap;
+
+struct Aliases {
+    AliasesMap inputs;
+    AliasesMap outputs;
+    void reserve(size_t size);
+    size_t size() const;
+};
+
 typedef std::pair<NodeID,NodeID> Edge;
 typedef std::vector<Edge> AdjacencyList;
 
@@ -85,7 +93,17 @@ public:
      * This resolve aliases recursively, so if there is a pin aliased to another
      * one that is also aliased you'll get the last one
      */
-    const Pin alias(const Pin& id) const;
+    const Pin inputAlias(const Pin& id) const;
+
+    /**
+     * @brief get alias Pin for a particular Pin
+     * @param id the desired Pin
+     * @return the aliased Pin
+     *
+     * This resolve aliases recursively, so if there is a pin aliased to another
+     * one that is also aliased you'll get the last one
+     */
+    const Pin outputAlias(const Pin& id) const;
 
     /**
      * @brief expanded nodes count

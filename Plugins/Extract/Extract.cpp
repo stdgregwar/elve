@@ -41,7 +41,7 @@ SharedEGraph Extract::transform(const SharedEGraph& eg) {
                 inputDone.insert(inid);
                 //aliases
                 for(const Node::Connexion& oc : c.node->fanOut()) {
-                    als.emplace(Pin(inid,oc.from),Pin(newId,oc.from));
+                    als.inputs.emplace(Pin(inid,oc.from),Pin(newId,oc.from));
                 }
             }
         }
@@ -54,7 +54,7 @@ SharedEGraph Extract::transform(const SharedEGraph& eg) {
                 outputDone.insert(outid);
                 //aliases
                 for(const Node::Connexion& ic : c.node->fanIn()) {
-                    als.emplace(Pin(outid,ic.to),Pin(newId,ic.to));
+                    als.outputs.emplace(Pin(outid,ic.to),Pin(newId,ic.to));
                 }
             }
         }

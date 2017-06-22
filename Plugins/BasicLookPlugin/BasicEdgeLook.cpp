@@ -6,7 +6,7 @@ using namespace Elve;
 
 static const QColor base = QColor(128,128,128);
 
-BasicEdgeLook::BasicEdgeLook(const NodeLook &from, const NodeLook &to) : EdgeLook(from,to)
+BasicEdgeLook::BasicEdgeLook(const NodeLook &from, Index outi, const NodeLook &to, Index ini) : EdgeLook(from,outi,to,ini)
 {
 
 }

@@ -15,7 +15,7 @@ NodeLook* LookPluginName::node(const Node &n) {
     return nullptr;
 }
 
-EdgeLook* LookPluginName::edge(const NodeLook &ancestor, const NodeLook &children) {
+EdgeLook* LookPluginName::edge(const NodeLook &ancestor, Index outi, const NodeLook &children, Index ini) {
     return nullptr;
 }
 
