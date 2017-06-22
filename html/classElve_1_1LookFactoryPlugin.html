@@ -109,12 +109,8 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">create a shared copy of this Look  <a href="#ad7350b5b9fef96c78deeef04cf1ea3b8"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classElve_1_1NodeLook.html">NodeLook</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classElve_1_1LookFactoryPlugin.html#a44e109255f146491791f7b7d3b90218d">node</a> (const <a class="el" href="classElve_1_1Node.html">Node</a> &amp;n)=0</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">node producing method  <a href="#a44e109255f146491791f7b7d3b90218d"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classElve_1_1EdgeLook.html">EdgeLook</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classElve_1_1LookFactoryPlugin.html#ae7af0bf1f2e03e087290b88ab7b0e8ce">edge</a> (const <a class="el" href="classElve_1_1NodeLook.html">NodeLook</a> &amp;ancestor, const <a class="el" href="classElve_1_1NodeLook.html">NodeLook</a> &amp;children)=0</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">edge producing method  <a href="#ae7af0bf1f2e03e087290b88ab7b0e8ce"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classElve_1_1NodeLook.html">NodeLook</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classElve_1_1LookFactoryPlugin.html#a461c5e469c00f44e1a7bde7dcf6e7415">getNode</a> (const <a class="el" href="classElve_1_1Node.html">Node</a> &amp;n)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">getNode impl detail  <a href="#a461c5e469c00f44e1a7bde7dcf6e7415"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classElve_1_1EdgeLook.html">EdgeLook</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classElve_1_1LookFactoryPlugin.html#a7df80de8b421975ea88f7a5810664e4b">getEdge</a> (const <a class="el" href="classElve_1_1NodeLook.html">NodeLook</a> &amp;ancestor, const <a class="el" href="classElve_1_1NodeLook.html">NodeLook</a> &amp;children)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">getEdge impl detail  <a href="#a7df80de8b421975ea88f7a5810664e4b"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classElve_1_1EdgeLook.html">EdgeLook</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classElve_1_1LookFactoryPlugin.html#a6b20a771f0ec10565784f2d9082959fb">edge</a> (const <a class="el" href="classElve_1_1NodeLook.html">NodeLook</a> &amp;ancestor, Index outi, const <a class="el" href="classElve_1_1NodeLook.html">NodeLook</a> &amp;children, Index ini)=0</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">edge producing method  <a href="#a6b20a771f0ec10565784f2d9082959fb"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual OrientationHint&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classElve_1_1LookFactoryPlugin.html#a95473d2628b6eb3156f8f0315e54b8b1">orientationHint</a> () const </td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">reimplement this to tell the layout you're in another orientation that BottomUp  <a href="#a95473d2628b6eb3156f8f0315e54b8b1"></a><br/></td></tr>
 </table>
@@ -200,12 +196,12 @@ Inheritance diagram for Elve::LookFactoryPlugin:</div>
 
 </div>
 </div>
-<a class="anchor" id="ae7af0bf1f2e03e087290b88ab7b0e8ce"></a><!-- doxytag: member="Elve::LookFactoryPlugin::edge" ref="ae7af0bf1f2e03e087290b88ab7b0e8ce" args="(const NodeLook &amp;ancestor, const NodeLook &amp;children)=0" -->
+<a class="anchor" id="a6b20a771f0ec10565784f2d9082959fb"></a><!-- doxytag: member="Elve::LookFactoryPlugin::edge" ref="a6b20a771f0ec10565784f2d9082959fb" args="(const NodeLook &amp;ancestor, Index outi, const NodeLook &amp;children, Index ini)=0" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">virtual <a class="el" href="classElve_1_1EdgeLook.html">EdgeLook</a>* <a class="el" href="classElve_1_1LookFactoryPlugin.html#ae7af0bf1f2e03e087290b88ab7b0e8ce">Elve::LookFactoryPlugin::edge</a> </td>
+          <td class="memname">virtual <a class="el" href="classElve_1_1EdgeLook.html">EdgeLook</a>* <a class="el" href="classElve_1_1LookFactoryPlugin.html#a6b20a771f0ec10565784f2d9082959fb">Elve::LookFactoryPlugin::edge</a> </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="classElve_1_1NodeLook.html">NodeLook</a> &amp;&#160;</td>
           <td class="paramname"><em>ancestor</em>, </td>
@@ -213,8 +209,20 @@ Inheritance diagram for Elve::LookFactoryPlugin:</div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">Index&#160;</td>
+          <td class="paramname"><em>outi</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
           <td class="paramtype">const <a class="el" href="classElve_1_1NodeLook.html">NodeLook</a> &amp;&#160;</td>
-          <td class="paramname"><em>children</em>&#160;</td>
+          <td class="paramname"><em>children</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Index&#160;</td>
+          <td class="paramname"><em>ini</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -229,80 +237,15 @@ Inheritance diagram for Elve::LookFactoryPlugin:</div>
 <dl class="params"><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">ancestor</td><td>nodelook from which the edge comes </td></tr>
+    <tr><td class="paramname">outi</td><td>ancestor out index </td></tr>
     <tr><td class="paramname">children</td><td>nodelook to which the edge goes </td></tr>
+    <tr><td class="paramname">children</td><td>in index </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>a subclass of <a class="el" href="classElve_1_1EdgeLook.html" title="Class representing look of an edge.">EdgeLook</a></dd></dl>
 <p>Re-implement this method</p>
 <p>In this method you're given two <a class="el" href="classElve_1_1NodeLook.html" title="The NodeLook abstract class.">NodeLook</a> that you previously returned from the <a class="el" href="classElve_1_1LookFactoryPlugin.html#a44e109255f146491791f7b7d3b90218d" title="node producing method">node(const Node&amp; n)</a> method and must return an subclass of <a class="el" href="classElve_1_1EdgeLook.html" title="Class representing look of an edge.">EdgeLook</a> that will represent the edge between those nodes. </p>
-
-</div>
-</div>
-<a class="anchor" id="a7df80de8b421975ea88f7a5810664e4b"></a><!-- doxytag: member="Elve::LookFactoryPlugin::getEdge" ref="a7df80de8b421975ea88f7a5810664e4b" args="(const NodeLook &amp;ancestor, const NodeLook &amp;children)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classElve_1_1EdgeLook.html">EdgeLook</a> * <a class="el" href="classElve_1_1LookFactoryPlugin.html#a7df80de8b421975ea88f7a5810664e4b">Elve::LookFactoryPlugin::getEdge</a> </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="classElve_1_1NodeLook.html">NodeLook</a> &amp;&#160;</td>
-          <td class="paramname"><em>ancestor</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="classElve_1_1NodeLook.html">NodeLook</a> &amp;&#160;</td>
-          <td class="paramname"><em>children</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>getEdge impl detail </p>
-<dl class="params"><dt><b>Parameters:</b></dt><dd>
-  <table class="params">
-    <tr><td class="paramname">ancestor</td><td></td></tr>
-    <tr><td class="paramname">children</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="return"><dt><b>Returns:</b></dt><dd></dd></dl>
-
-<p>Definition at line <a class="el" href="LookFactoryPlugin_8cpp_source.html#l00022">22</a> of file <a class="el" href="LookFactoryPlugin_8cpp_source.html">LookFactoryPlugin.cpp</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a461c5e469c00f44e1a7bde7dcf6e7415"></a><!-- doxytag: member="Elve::LookFactoryPlugin::getNode" ref="a461c5e469c00f44e1a7bde7dcf6e7415" args="(const Node &amp;n)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classElve_1_1NodeLook.html">NodeLook</a> * <a class="el" href="classElve_1_1LookFactoryPlugin.html#a461c5e469c00f44e1a7bde7dcf6e7415">Elve::LookFactoryPlugin::getNode</a> </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="classElve_1_1Node.html">Node</a> &amp;&#160;</td>
-          <td class="paramname"><em>n</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>getNode impl detail </p>
-<dl class="params"><dt><b>Parameters:</b></dt><dd>
-  <table class="params">
-    <tr><td class="paramname">n</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="return"><dt><b>Returns:</b></dt><dd></dd></dl>
-
-<p>Definition at line <a class="el" href="LookFactoryPlugin_8cpp_source.html#l00018">18</a> of file <a class="el" href="LookFactoryPlugin_8cpp_source.html">LookFactoryPlugin.cpp</a>.</p>
 
 </div>
 </div>

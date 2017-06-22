@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['edge',['edge',['../classElve_1_1LookFactoryPlugin.html#ae7af0bf1f2e03e087290b88ab7b0e8ce',1,'Elve::LookFactoryPlugin']]],
-  ['edgelook',['EdgeLook',['../classElve_1_1EdgeLook.html#a5656a27473a6cd4eb61522fa18cea15a',1,'Elve::EdgeLook']]],
+  ['edge',['edge',['../classElve_1_1LookFactoryPlugin.html#a6b20a771f0ec10565784f2d9082959fb',1,'Elve::LookFactoryPlugin']]],
+  ['edgelook',['EdgeLook',['../classElve_1_1EdgeLook.html#af97d4932cac46368dc95d2a74e7b14d4',1,'Elve::EdgeLook']]],
   ['edgelook',['EdgeLook',['../classElve_1_1EdgeLook.html',1,'Elve']]],
   ['excluded',['excluded',['../classElve_1_1Graph.html#a37d6a78b3d6110fef359c72e4c733219',1,'Elve::Graph']]],
   ['exportgraph',['exportGraph',['../classElve_1_1FileExporterPlugin.html#a8c02793a958a8d38ed54428e837aebd6',1,'Elve::FileExporterPlugin']]],

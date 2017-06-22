@@ -96,8 +96,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classElve_1_1EdgeLook.html#a5656a27473a6cd4eb61522fa18cea15a">EdgeLook</a> (const <a class="el" href="classElve_1_1NodeLook.html">NodeLook</a> &amp;<a class="el" href="classElve_1_1EdgeLook.html#a9d9ee4823d96a248cd079b829937b42a">from</a>, const <a class="el" href="classElve_1_1NodeLook.html">NodeLook</a> &amp;<a class="el" href="classElve_1_1EdgeLook.html#a2929080c5539f72a8b332f2cb5e59e73">to</a>)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classElve_1_1EdgeLook.html" title="Class representing look of an edge.">EdgeLook</a> only constructor.  <a href="#a5656a27473a6cd4eb61522fa18cea15a"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classElve_1_1EdgeLook.html#af97d4932cac46368dc95d2a74e7b14d4">EdgeLook</a> (const <a class="el" href="classElve_1_1NodeLook.html">NodeLook</a> &amp;<a class="el" href="classElve_1_1EdgeLook.html#a9d9ee4823d96a248cd079b829937b42a">from</a>, Index outi, const <a class="el" href="classElve_1_1NodeLook.html">NodeLook</a> &amp;<a class="el" href="classElve_1_1EdgeLook.html#a2929080c5539f72a8b332f2cb5e59e73">to</a>, Index ini)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classElve_1_1EdgeLook.html" title="Class representing look of an edge.">EdgeLook</a> only constructor.  <a href="#af97d4932cac46368dc95d2a74e7b14d4"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classElve_1_1EdgeLook.html#abf4457c658a76f1d3e31e49f236e05a7">addToPath</a> (QPainterPath &amp;path)=0</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">add the shape of this edge  <a href="#abf4457c658a76f1d3e31e49f236e05a7"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual QPen&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classElve_1_1EdgeLook.html#a5dfeadfc214ba4de4b6a7742a69f3ecc">pen</a> () const =0</td></tr>
@@ -117,12 +117,12 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="EdgeLook_8h_source.html#l00014">14</a> of file <a class="el" href="EdgeLook_8h_source.html">EdgeLook.h</a>.</p>
 </div><hr/><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a5656a27473a6cd4eb61522fa18cea15a"></a><!-- doxytag: member="Elve::EdgeLook::EdgeLook" ref="a5656a27473a6cd4eb61522fa18cea15a" args="(const NodeLook &amp;from, const NodeLook &amp;to)" -->
+<a class="anchor" id="af97d4932cac46368dc95d2a74e7b14d4"></a><!-- doxytag: member="Elve::EdgeLook::EdgeLook" ref="af97d4932cac46368dc95d2a74e7b14d4" args="(const NodeLook &amp;from, Index outi, const NodeLook &amp;to, Index ini)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classElve_1_1EdgeLook.html#a5656a27473a6cd4eb61522fa18cea15a">Elve::EdgeLook::EdgeLook</a> </td>
+          <td class="memname"><a class="el" href="classElve_1_1EdgeLook.html#af97d4932cac46368dc95d2a74e7b14d4">Elve::EdgeLook::EdgeLook</a> </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="classElve_1_1NodeLook.html">NodeLook</a> &amp;&#160;</td>
           <td class="paramname"><em>from</em>, </td>
@@ -130,8 +130,20 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">Index&#160;</td>
+          <td class="paramname"><em>outi</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
           <td class="paramtype">const <a class="el" href="classElve_1_1NodeLook.html">NodeLook</a> &amp;&#160;</td>
-          <td class="paramname"><em>to</em>&#160;</td>
+          <td class="paramname"><em>to</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Index&#160;</td>
+          <td class="paramname"><em>ini</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -146,7 +158,9 @@ Public Member Functions</h2></td></tr>
 <dl class="params"><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">from</td><td>the Node(Look) from which the edge comes </td></tr>
+    <tr><td class="paramname">outi</td><td>the output index from which the edge comes </td></tr>
     <tr><td class="paramname">to</td><td>the Node(Look) to which the edge goes </td></tr>
+    <tr><td class="paramname">ini</td><td>the input index to which the edge goes </td></tr>
   </table>
   </dd>
 </dl>
@@ -199,7 +213,7 @@ Public Member Functions</h2></td></tr>
 <p>get the node from which the edge is coming </p>
 <dl class="return"><dt><b>Returns:</b></dt><dd></dd></dl>
 
-<p>Definition at line <a class="el" href="EdgeLook_8cpp_source.html#l00026">26</a> of file <a class="el" href="EdgeLook_8cpp_source.html">EdgeLook.cpp</a>.</p>
+<p>Definition at line <a class="el" href="EdgeLook_8cpp_source.html#l00016">16</a> of file <a class="el" href="EdgeLook_8cpp_source.html">EdgeLook.cpp</a>.</p>
 
 </div>
 </div>
@@ -220,7 +234,7 @@ Public Member Functions</h2></td></tr>
 <p>get the output index (pin) from which the edge is coming </p>
 <dl class="return"><dt><b>Returns:</b></dt><dd></dd></dl>
 
-<p>Definition at line <a class="el" href="EdgeLook_8cpp_source.html#l00018">18</a> of file <a class="el" href="EdgeLook_8cpp_source.html">EdgeLook.cpp</a>.</p>
+<p>Definition at line <a class="el" href="EdgeLook_8cpp_source.html#l00008">8</a> of file <a class="el" href="EdgeLook_8cpp_source.html">EdgeLook.cpp</a>.</p>
 
 </div>
 </div>
@@ -241,7 +255,7 @@ Public Member Functions</h2></td></tr>
 <p>get the input index (pin) to which the edge is going </p>
 <dl class="return"><dt><b>Returns:</b></dt><dd></dd></dl>
 
-<p>Definition at line <a class="el" href="EdgeLook_8cpp_source.html#l00022">22</a> of file <a class="el" href="EdgeLook_8cpp_source.html">EdgeLook.cpp</a>.</p>
+<p>Definition at line <a class="el" href="EdgeLook_8cpp_source.html#l00012">12</a> of file <a class="el" href="EdgeLook_8cpp_source.html">EdgeLook.cpp</a>.</p>
 
 </div>
 </div>
@@ -282,7 +296,7 @@ Public Member Functions</h2></td></tr>
 <p>get the node to which the edge is going </p>
 <dl class="return"><dt><b>Returns:</b></dt><dd></dd></dl>
 
-<p>Definition at line <a class="el" href="EdgeLook_8cpp_source.html#l00030">30</a> of file <a class="el" href="EdgeLook_8cpp_source.html">EdgeLook.cpp</a>.</p>
+<p>Definition at line <a class="el" href="EdgeLook_8cpp_source.html#l00020">20</a> of file <a class="el" href="EdgeLook_8cpp_source.html">EdgeLook.cpp</a>.</p>
 
 </div>
 </div>

@@ -1,5 +1,6 @@
 var hierarchy =
 [
+    [ "Elve::Aliases", "structElve_1_1Aliases.html", null ],
     [ "Elve::GraphData::Builder", "classElve_1_1GraphData_1_1Builder.html", null ],
     [ "Elve::CommandHistory", "classElve_1_1CommandHistory.html", null ],
     [ "Elve::Node::Connexion", "structElve_1_1Node_1_1Connexion.html", null ],

@@ -1,5 +1,6 @@
 var annotated =
 [
+    [ "Elve::Aliases", "structElve_1_1Aliases.html", "structElve_1_1Aliases" ],
     [ "Elve::BoxConstraint", "classElve_1_1BoxConstraint.html", "classElve_1_1BoxConstraint" ],
     [ "Elve::GraphData::Builder", "classElve_1_1GraphData_1_1Builder.html", "classElve_1_1GraphData_1_1Builder" ],
     [ "Elve::CommandHistory", "classElve_1_1CommandHistory.html", "classElve_1_1CommandHistory" ],

@@ -2,7 +2,6 @@ var classElve_1_1Graph =
 [
     [ "Graph", "classElve_1_1Graph.html#a9a05fa25975dbba7ced53ce675907654", null ],
     [ "Graph", "classElve_1_1Graph.html#aa34545bafbb047c7f2cd2a6fb216206a", null ],
-    [ "alias", "classElve_1_1Graph.html#a0379dbf83802f0da4f58abbb7a743d71", null ],
     [ "aliases", "classElve_1_1Graph.html#acfc3cef90c6c0f6b0d69e44726dc7751", null ],
     [ "clusterize", "classElve_1_1Graph.html#a84538c2600dec4b668f133a21a76dd36", null ],
     [ "data", "classElve_1_1Graph.html#a26026a232132aa388dd85ae5e9c600df", null ],
@@ -14,6 +13,7 @@ var classElve_1_1Graph =
     [ "fromJson", "classElve_1_1Graph.html#a135b42000f8790f26952c82a7e0bdeda", null ],
     [ "group", "classElve_1_1Graph.html#a66a340499aa157b7ed71dcca5e65241d", null ],
     [ "highestLevel", "classElve_1_1Graph.html#a57406f44b5c4eaf561b53a57c84d587a", null ],
+    [ "inputAlias", "classElve_1_1Graph.html#af3441ca145644d879744566d56394a49", null ],
     [ "inputCount", "classElve_1_1Graph.html#ab24ae6757d7146fbea0518fa39457829", null ],
     [ "inputs", "classElve_1_1Graph.html#a586e634ebe29fad7e8ecf5dca8e35f0e", null ],
     [ "json", "classElve_1_1Graph.html#a3d338aedf61552a5f2afb0fb17a573fa", null ],
@@ -23,6 +23,7 @@ var classElve_1_1Graph =
     [ "node", "classElve_1_1Graph.html#a4e8d600d404ae814c7ee983003246b15", null ],
     [ "nodeCount", "classElve_1_1Graph.html#a451dd2ee71419f31d66ea48a1e9d93f4", null ],
     [ "nodes", "classElve_1_1Graph.html#a8f4c207ac8ccc0ff21c5cf17f59c80ed", null ],
+    [ "outputAlias", "classElve_1_1Graph.html#ae3efae4f462e1450e3bd77860be268fc", null ],
     [ "outputCount", "classElve_1_1Graph.html#abd5f545f0daf31e567d9a37123afc9b3", null ],
     [ "outputs", "classElve_1_1Graph.html#a9b1ff9568bc7d8550ab793c03ad501f1", null ],
     [ "ungroup", "classElve_1_1Graph.html#af5c0cac34886dd065d7ddfa469a62445", null ],

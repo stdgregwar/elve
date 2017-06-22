@@ -118,28 +118,24 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00060"></a>00060 
 <a name="l00071"></a>00071     <span class="keyword">virtual</span> <a class="code" href="classElve_1_1NodeLook.html" title="The NodeLook abstract class.">NodeLook</a>* <a class="code" href="classElve_1_1LookFactoryPlugin.html#a44e109255f146491791f7b7d3b90218d" title="node producing method">node</a>(<span class="keyword">const</span> <a class="code" href="classElve_1_1Node.html">Node</a>&amp; n) = 0;
 <a name="l00072"></a>00072 
-<a name="l00085"></a>00085     <span class="keyword">virtual</span> <a class="code" href="classElve_1_1EdgeLook.html" title="Class representing look of an edge.">EdgeLook</a>* <a class="code" href="classElve_1_1LookFactoryPlugin.html#ae7af0bf1f2e03e087290b88ab7b0e8ce" title="edge producing method">edge</a>(<span class="keyword">const</span> <a class="code" href="classElve_1_1NodeLook.html" title="The NodeLook abstract class.">NodeLook</a>&amp; ancestor, <span class="keyword">const</span> <a class="code" href="classElve_1_1NodeLook.html" title="The NodeLook abstract class.">NodeLook</a>&amp; children) = 0;
-<a name="l00086"></a>00086 
-<a name="l00092"></a>00092     <a class="code" href="classElve_1_1NodeLook.html" title="The NodeLook abstract class.">NodeLook</a>* <a class="code" href="classElve_1_1LookFactoryPlugin.html#a461c5e469c00f44e1a7bde7dcf6e7415" title="getNode impl detail">getNode</a>(<span class="keyword">const</span> <a class="code" href="classElve_1_1Node.html">Node</a>&amp; n);
-<a name="l00093"></a>00093 
-<a name="l00100"></a>00100     <a class="code" href="classElve_1_1EdgeLook.html" title="Class representing look of an edge.">EdgeLook</a>* <a class="code" href="classElve_1_1LookFactoryPlugin.html#a7df80de8b421975ea88f7a5810664e4b" title="getEdge impl detail">getEdge</a>(<span class="keyword">const</span> <a class="code" href="classElve_1_1NodeLook.html" title="The NodeLook abstract class.">NodeLook</a>&amp; ancestor, <span class="keyword">const</span> <a class="code" href="classElve_1_1NodeLook.html" title="The NodeLook abstract class.">NodeLook</a>&amp; children);
+<a name="l00087"></a>00087     <span class="keyword">virtual</span> <a class="code" href="classElve_1_1EdgeLook.html" title="Class representing look of an edge.">EdgeLook</a>* <a class="code" href="classElve_1_1LookFactoryPlugin.html#a6b20a771f0ec10565784f2d9082959fb" title="edge producing method">edge</a>(<span class="keyword">const</span> <a class="code" href="classElve_1_1NodeLook.html" title="The NodeLook abstract class.">NodeLook</a>&amp; ancestor, Index outi, <span class="keyword">const</span> <a class="code" href="classElve_1_1NodeLook.html" title="The NodeLook abstract class.">NodeLook</a>&amp; children, Index ini) = 0;
+<a name="l00088"></a>00088 
+<a name="l00094"></a>00094     <span class="keyword">virtual</span> OrientationHint <a class="code" href="classElve_1_1LookFactoryPlugin.html#a95473d2628b6eb3156f8f0315e54b8b1" title="reimplement this to tell the layout you&#39;re in another orientation that BottomUp">orientationHint</a>() <span class="keyword">const</span>;
+<a name="l00095"></a>00095 };
+<a name="l00096"></a>00096 
+<a name="l00097"></a>00097 }
+<a name="l00098"></a>00098 
+<a name="l00099"></a>00099 Q_DECLARE_INTERFACE(<a class="code" href="classElve_1_1LookFactoryPlugin.html" title="The LookFactoryPlugin abstract class.">Elve::LookFactoryPlugin</a>,LookFactoryPlugin_iid)
+<a name="l00100"></a>00100 
 <a name="l00101"></a>00101 
-<a name="l00107"></a>00107     <span class="keyword">virtual</span> OrientationHint <a class="code" href="classElve_1_1LookFactoryPlugin.html#a95473d2628b6eb3156f8f0315e54b8b1" title="reimplement this to tell the layout you&#39;re in another orientation that BottomUp">orientationHint</a>() <span class="keyword">const</span>;
-<a name="l00108"></a>00108 };
-<a name="l00109"></a>00109 
-<a name="l00110"></a>00110 }
-<a name="l00111"></a>00111 
-<a name="l00112"></a>00112 Q_DECLARE_INTERFACE(<a class="code" href="classElve_1_1LookFactoryPlugin.html" title="The LookFactoryPlugin abstract class.">Elve::LookFactoryPlugin</a>,LookFactoryPlugin_iid)
-<a name="l00113"></a>00113 
-<a name="l00114"></a>00114 
-<a name="l00115"></a>00115 <span class="preprocessor">#define ELVE_LOOK(Look,full_name,cli_name)\</span>
-<a name="l00116"></a>00116 <span class="preprocessor"> public:\</span>
-<a name="l00117"></a>00117 <span class="preprocessor">    Look();\</span>
-<a name="l00118"></a>00118 <span class="preprocessor">    inline Elve::SharedLook create() override {return std::make_shared&lt;Look&gt;(*this);}\</span>
-<a name="l00119"></a>00119 <span class="preprocessor">    inline QString lookName() const override {return (full_name);}\</span>
-<a name="l00120"></a>00120 <span class="preprocessor">    inline std::string cliName() const override {return (cli_name);}</span>
-<a name="l00121"></a>00121 <span class="preprocessor"></span>
-<a name="l00122"></a>00122 <span class="preprocessor">#endif // LOOKFACTORYPLUGIN_H</span>
+<a name="l00102"></a>00102 <span class="preprocessor">#define ELVE_LOOK(Look,full_name,cli_name)\</span>
+<a name="l00103"></a>00103 <span class="preprocessor"> public:\</span>
+<a name="l00104"></a>00104 <span class="preprocessor">    Look();\</span>
+<a name="l00105"></a>00105 <span class="preprocessor">    inline Elve::SharedLook create() override {return std::make_shared&lt;Look&gt;(*this);}\</span>
+<a name="l00106"></a>00106 <span class="preprocessor">    inline QString lookName() const override {return (full_name);}\</span>
+<a name="l00107"></a>00107 <span class="preprocessor">    inline std::string cliName() const override {return (cli_name);}</span>
+<a name="l00108"></a>00108 <span class="preprocessor"></span>
+<a name="l00109"></a>00109 <span class="preprocessor">#endif // LOOKFACTORYPLUGIN_H</span>
 </pre></div></div><!-- contents -->
 </div>
 <!-- window showing the filter options -->

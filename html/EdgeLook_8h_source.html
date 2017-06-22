@@ -95,27 +95,27 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00014"></a><a class="code" href="classElve_1_1EdgeLook.html">00014</a> <span class="keyword">class </span><a class="code" href="classElve_1_1EdgeLook.html" title="Class representing look of an edge.">EdgeLook</a>
 <a name="l00015"></a>00015 {
 <a name="l00016"></a>00016 <span class="keyword">public</span>:
-<a name="l00022"></a>00022     <a class="code" href="classElve_1_1EdgeLook.html#a5656a27473a6cd4eb61522fa18cea15a" title="EdgeLook only constructor.">EdgeLook</a>(<span class="keyword">const</span> <a class="code" href="classElve_1_1NodeLook.html" title="The NodeLook abstract class.">NodeLook</a>&amp; <a class="code" href="classElve_1_1EdgeLook.html#a9d9ee4823d96a248cd079b829937b42a" title="get the node from which the edge is coming">from</a>,<span class="keyword">const</span> <a class="code" href="classElve_1_1NodeLook.html" title="The NodeLook abstract class.">NodeLook</a>&amp; <a class="code" href="classElve_1_1EdgeLook.html#a2929080c5539f72a8b332f2cb5e59e73" title="get the node to which the edge is going">to</a>);
-<a name="l00023"></a>00023 
-<a name="l00032"></a>00032     <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classElve_1_1EdgeLook.html#abf4457c658a76f1d3e31e49f236e05a7" title="add the shape of this edge">addToPath</a>(QPainterPath&amp; path) = 0;
-<a name="l00033"></a>00033 
-<a name="l00042"></a>00042     <span class="keyword">virtual</span> QPen <a class="code" href="classElve_1_1EdgeLook.html#a5dfeadfc214ba4de4b6a7742a69f3ecc" title="state the pen that must draw this edge">pen</a>() <span class="keyword">const</span> = 0;
-<a name="l00043"></a>00043 
-<a name="l00048"></a>00048     <span class="keyword">const</span> <a class="code" href="classElve_1_1NodeLook.html" title="The NodeLook abstract class.">NodeLook</a>&amp; <a class="code" href="classElve_1_1EdgeLook.html#a9d9ee4823d96a248cd079b829937b42a" title="get the node from which the edge is coming">from</a>() <span class="keyword">const</span>;
-<a name="l00049"></a>00049 
-<a name="l00054"></a>00054     <span class="keyword">const</span> <a class="code" href="classElve_1_1NodeLook.html" title="The NodeLook abstract class.">NodeLook</a>&amp; <a class="code" href="classElve_1_1EdgeLook.html#a2929080c5539f72a8b332f2cb5e59e73" title="get the node to which the edge is going">to</a>() <span class="keyword">const</span>;
-<a name="l00055"></a>00055 
-<a name="l00060"></a>00060     Index <a class="code" href="classElve_1_1EdgeLook.html#ab50f48c9b64766098445d81b02a06cc9" title="get the output index (pin) from which the edge is coming">iFrom</a>() <span class="keyword">const</span>;
-<a name="l00061"></a>00061 
-<a name="l00066"></a>00066     Index <a class="code" href="classElve_1_1EdgeLook.html#a14c128885009092f7e3b18264818f465" title="get the input index (pin) to which the edge is going">iTo</a>() <span class="keyword">const</span>;
-<a name="l00067"></a>00067 <span class="keyword">private</span>:
-<a name="l00068"></a>00068     <span class="keyword">const</span> <a class="code" href="classElve_1_1NodeLook.html" title="The NodeLook abstract class.">NodeLook</a>&amp; mFrom;
-<a name="l00069"></a>00069     <span class="keyword">const</span> <a class="code" href="classElve_1_1NodeLook.html" title="The NodeLook abstract class.">NodeLook</a>&amp; mTo;
-<a name="l00070"></a>00070     Index mIFrom;
-<a name="l00071"></a>00071     Index mITo;
-<a name="l00072"></a>00072 };
-<a name="l00073"></a>00073 }
-<a name="l00074"></a>00074 <span class="preprocessor">#endif // EDGELOOK_H</span>
+<a name="l00024"></a>00024     <a class="code" href="classElve_1_1EdgeLook.html#af97d4932cac46368dc95d2a74e7b14d4" title="EdgeLook only constructor.">EdgeLook</a>(<span class="keyword">const</span> <a class="code" href="classElve_1_1NodeLook.html" title="The NodeLook abstract class.">NodeLook</a>&amp; <a class="code" href="classElve_1_1EdgeLook.html#a9d9ee4823d96a248cd079b829937b42a" title="get the node from which the edge is coming">from</a>, Index outi ,<span class="keyword">const</span> <a class="code" href="classElve_1_1NodeLook.html" title="The NodeLook abstract class.">NodeLook</a>&amp; <a class="code" href="classElve_1_1EdgeLook.html#a2929080c5539f72a8b332f2cb5e59e73" title="get the node to which the edge is going">to</a>, Index ini);
+<a name="l00025"></a>00025 
+<a name="l00034"></a>00034     <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classElve_1_1EdgeLook.html#abf4457c658a76f1d3e31e49f236e05a7" title="add the shape of this edge">addToPath</a>(QPainterPath&amp; path) = 0;
+<a name="l00035"></a>00035 
+<a name="l00044"></a>00044     <span class="keyword">virtual</span> QPen <a class="code" href="classElve_1_1EdgeLook.html#a5dfeadfc214ba4de4b6a7742a69f3ecc" title="state the pen that must draw this edge">pen</a>() <span class="keyword">const</span> = 0;
+<a name="l00045"></a>00045 
+<a name="l00050"></a>00050     <span class="keyword">const</span> <a class="code" href="classElve_1_1NodeLook.html" title="The NodeLook abstract class.">NodeLook</a>&amp; <a class="code" href="classElve_1_1EdgeLook.html#a9d9ee4823d96a248cd079b829937b42a" title="get the node from which the edge is coming">from</a>() <span class="keyword">const</span>;
+<a name="l00051"></a>00051 
+<a name="l00056"></a>00056     <span class="keyword">const</span> <a class="code" href="classElve_1_1NodeLook.html" title="The NodeLook abstract class.">NodeLook</a>&amp; <a class="code" href="classElve_1_1EdgeLook.html#a2929080c5539f72a8b332f2cb5e59e73" title="get the node to which the edge is going">to</a>() <span class="keyword">const</span>;
+<a name="l00057"></a>00057 
+<a name="l00062"></a>00062     Index <a class="code" href="classElve_1_1EdgeLook.html#ab50f48c9b64766098445d81b02a06cc9" title="get the output index (pin) from which the edge is coming">iFrom</a>() <span class="keyword">const</span>;
+<a name="l00063"></a>00063 
+<a name="l00068"></a>00068     Index <a class="code" href="classElve_1_1EdgeLook.html#a14c128885009092f7e3b18264818f465" title="get the input index (pin) to which the edge is going">iTo</a>() <span class="keyword">const</span>;
+<a name="l00069"></a>00069 <span class="keyword">private</span>:
+<a name="l00070"></a>00070     <span class="keyword">const</span> <a class="code" href="classElve_1_1NodeLook.html" title="The NodeLook abstract class.">NodeLook</a>&amp; mFrom;
+<a name="l00071"></a>00071     <span class="keyword">const</span> <a class="code" href="classElve_1_1NodeLook.html" title="The NodeLook abstract class.">NodeLook</a>&amp; mTo;
+<a name="l00072"></a>00072     Index mIFrom;
+<a name="l00073"></a>00073     Index mITo;
+<a name="l00074"></a>00074 };
+<a name="l00075"></a>00075 }
+<a name="l00076"></a>00076 <span class="preprocessor">#endif // EDGELOOK_H</span>
 </pre></div></div><!-- contents -->
 </div>
 <!-- window showing the filter options -->
