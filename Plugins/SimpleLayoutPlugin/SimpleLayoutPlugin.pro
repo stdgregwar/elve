@@ -25,8 +25,3 @@ SOURCES += \
 HEADERS += \
     SimpleLayout.h
 DISTFILES +=
-
-unix {
-    target.path = /usr/lib
-    INSTALLS += target
-}

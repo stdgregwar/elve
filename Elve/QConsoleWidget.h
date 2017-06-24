@@ -3,6 +3,7 @@
 
 #include <QTextEdit>
 #include <QDir>
+#include <QSocketNotifier>
 
 
 namespace Elve {
@@ -22,6 +23,7 @@ public:
     void toBottom();
     ~QConsoleWidget();
 private:
+    QSocketNotifier* mNotifier;
     int mFixedPosition;
     int mCmdIndex;
     QStringList mHistory;
@@ -30,6 +32,7 @@ protected:
 public slots:
     void OnChildStdOutWrite(QString szOutput);
     void cursorPositionChanged();
+    void readStdin();
 };
 
 }

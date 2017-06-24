@@ -13,13 +13,6 @@ CONFIG += no_plugin_name_prefix
 
 # DESTDIR = ../../Elve/plugins/looks  #uncomment this when writting your plugin
 
-
-unix {
-    target.path = /usr/lib
-    INSTALLS += target
-}
-
-
 LIBS += -L$$OUT_PWD/../../Core/ -lElveCore
 win32:LIBS += -lboost_system-mt -lboost_program_options-mt -lboost_regex-mt -lboost_filesystem-mt
 

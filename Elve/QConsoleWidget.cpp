@@ -4,7 +4,7 @@
 #include <QScrollBar>
 #include <QDebug>
 #include <QKeyEvent>
-
+#include <stdio.h>
 
 namespace Elve {
 
@@ -12,11 +12,13 @@ QConsoleWidget::QConsoleWidget(QWidget *parent) : QTextEdit(parent),
     mHistory{
         "read_graph -n ~/mul5.json; cluster; show -g",
         "read_graph -n ~/mul5.json; show -g"/*,
-        "chrono -r; load_blif \"/home/ghirt/benchs/arithmetic/div.blif\"; level_layout; show -g; chrono",
-        "chrono -r; load_blif \"/home/ghirt/benchs/random/dec.blif\"; cluster; level_layout; show -g; chrono"*/
-        },
+                "chrono -r; load_blif \"/home/ghirt/benchs/arithmetic/div.blif\"; level_layout; show -g; chrono",
+                "chrono -r; load_blif \"/home/ghirt/benchs/random/dec.blif\"; cluster; level_layout; show -g; chrono"*/
+},
     mCmdIndex(2)
 {
+    mNotifier = new QSocketNotifier(fileno(stdin), QSocketNotifier::Read, this);
+    connect(mNotifier,SIGNAL(activated(int)),this,SLOT(readStdin()));
     setUndoRedoEnabled(false);
     setStyleSheet("font : 11pt 'Mono';");
     setWhatsThis(tr("<html><head/><body>"
@@ -141,6 +143,15 @@ void QConsoleWidget::cursorPositionChanged()
 {
     if (textCursor().position() < mFixedPosition) {
         textCursor().setPosition(mFixedPosition);
+    }
+}
+
+void QConsoleWidget::readStdin()
+{
+    std::string line;
+    std::getline(std::cin, line);
+    if (!std::cin.eof()) {
+        run_command(QString::fromStdString(line),true);
     }
 }
 

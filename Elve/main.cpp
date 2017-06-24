@@ -7,6 +7,5 @@ int main(int argc, char *argv[])
     Q_INIT_RESOURCE(coreresources);
     Elve::MainWindow w;
     w.show();
-
     return a.exec();
 }

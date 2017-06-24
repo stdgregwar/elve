@@ -25,8 +25,3 @@ SOURCES += \
 
 HEADERS += \
     Layout.h
-
-unix {
-    target.path = /usr/lib
-    INSTALLS += target
-}

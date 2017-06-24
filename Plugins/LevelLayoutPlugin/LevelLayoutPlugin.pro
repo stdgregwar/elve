@@ -30,10 +30,5 @@ HEADERS += \
 DISTFILES += \
     libLevelLayoutPlugin.ini
 
-unix {
-    target.path = /usr/lib
-    INSTALLS += target
-}
-
 FORMS += \
     dialog.ui

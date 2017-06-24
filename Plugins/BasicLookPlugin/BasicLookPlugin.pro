@@ -15,13 +15,6 @@ DESTDIR = ../../Elve/plugins/looks
 
 #DISTFILES += BlifLoaderPlugin.json
 
-unix {
-    target.path = /usr/lib
-    #target.path = ../Core/plugins
-    INSTALLS += target
-}
-
-
 LIBS += -L$$OUT_PWD/../../Core/ -lElveCore
 win32:LIBS += -lboost_system-mt -lboost_program_options-mt -lboost_regex-mt -lboost_filesystem-mt
 

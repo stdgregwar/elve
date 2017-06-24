@@ -23,10 +23,10 @@ CONFIG -= debug_and_release
 #QMAKE_LFLAGS_RELEASE -= -O1
 #QMAKE_LFLAGS_RELEASE += -O3
 
-#unix {
-#    target.path = /usr/lib
-#    INSTALLS += target
-#}
+unix {
+    target.path = /usr/lib
+    INSTALLS += target
+}
 
 win32:LIBS += -lboost_system-mt -lboost_program_options-mt -lboost_regex-mt -lboost_filesystem-mt
 

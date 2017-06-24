@@ -77,3 +77,8 @@ FORMS += \
 
 RESOURCES += \
     elveresources.qrc
+
+install_it.path = %{buildDir}
+install_it.files += %{sourceDir}/RunElve
+
+INSTALLS += iunstall_it
