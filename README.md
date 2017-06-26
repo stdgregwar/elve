@@ -58,7 +58,7 @@ Usage of ELVE is best described in Elve wiki [First Steps](https://github.com/st
 ## Development
 
 Would you like to write your own plugin? Take a look at the
-[available documentation](https://stdgregwar.github.io/elve/html/).
+[wiki](https://github.com/stdgregwar/elve/wiki/Writing-Plug-ins).
 
 ## Contact
 
