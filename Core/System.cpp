@@ -245,6 +245,11 @@ QVector2D System::transformPoint(const QVector2D& p) const {
     }
 }
 
+void System::addForce(Point* m, Force* f) {
+    mForces.push_back(f);
+    m->addForce(f);
+}
+
 void System::addPConstrain(Point* m, const QVector2D& p)
 {
     Constraint* pc = new PointConstraint(transformPoint(p));

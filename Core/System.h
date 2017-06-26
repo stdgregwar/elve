@@ -37,6 +37,7 @@ public:
     void addVConstraint(Point* m, qreal height);
     void addHConstraint(Point* m, qreal pos);
     void addPConstrain(Point* m, const QVector2D& p);
+    void addForce(Point* m, Force* f);
     void pin(const NodeID& id, const QVector2D& pnt);
     void unpin(const NodeID& id);
     void clear();
