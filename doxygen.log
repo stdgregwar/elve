@@ -525,7 +525,8 @@ Generating code for file /home/travis/build/stdgregwar/elve/Core/Singleton.h...
 /home/travis/build/stdgregwar/elve/Core/Point.h:40: warning: Member pinned() const  (function) of class Elve::Point is not documented.
 /home/travis/build/stdgregwar/elve/Core/Point.h:41: warning: Member pin() (function) of class Elve::Point is not documented.
 /home/travis/build/stdgregwar/elve/Core/Point.h:42: warning: Member unpin() (function) of class Elve::Point is not documented.
-/home/travis/build/stdgregwar/elve/Core/Point.h:43: warning: Member boundID() const  (function) of class Elve::Point is not documented.
+/home/travis/build/stdgregwar/elve/Core/Point.h:43: warning: Member notify() (function) of class Elve::Point is not documented.
+/home/travis/build/stdgregwar/elve/Core/Point.h:44: warning: Member boundID() const  (function) of class Elve::Point is not documented.
 /home/travis/build/stdgregwar/elve/Core/PointConstraint.h:12: warning: Member PointConstraint(const QVector2D &point) (function) of class Elve::PointConstraint is not documented.
 /home/travis/build/stdgregwar/elve/Core/PointConstraint.h:13: warning: Member constrain(Point &mass) override (function) of class Elve::PointConstraint is not documented.
 /home/travis/build/stdgregwar/elve/Core/QuadTree.h:18: warning: Member QuadTree(const QRectF &bounds) (function) of class Elve::QuadTree is not documented.
@@ -576,23 +577,24 @@ Generating code for file /home/travis/build/stdgregwar/elve/Core/Singleton.h...
 /home/travis/build/stdgregwar/elve/Core/System.h:37: warning: Member addVConstraint(Point *m, qreal height) (function) of class Elve::System is not documented.
 /home/travis/build/stdgregwar/elve/Core/System.h:38: warning: Member addHConstraint(Point *m, qreal pos) (function) of class Elve::System is not documented.
 /home/travis/build/stdgregwar/elve/Core/System.h:39: warning: Member addPConstrain(Point *m, const QVector2D &p) (function) of class Elve::System is not documented.
-/home/travis/build/stdgregwar/elve/Core/System.h:40: warning: Member pin(const NodeID &id, const QVector2D &pnt) (function) of class Elve::System is not documented.
-/home/travis/build/stdgregwar/elve/Core/System.h:41: warning: Member unpin(const NodeID &id) (function) of class Elve::System is not documented.
-/home/travis/build/stdgregwar/elve/Core/System.h:42: warning: Member clear() (function) of class Elve::System is not documented.
-/home/travis/build/stdgregwar/elve/Core/System.h:43: warning: Member pinnedPoints() const  (function) of class Elve::System is not documented.
-/home/travis/build/stdgregwar/elve/Core/System.h:44: warning: Member clearMovables() (function) of class Elve::System is not documented.
-/home/travis/build/stdgregwar/elve/Core/System.h:45: warning: Member massCount() const  (function) of class Elve::System is not documented.
-/home/travis/build/stdgregwar/elve/Core/System.h:46: warning: Member forceCount() const  (function) of class Elve::System is not documented.
-/home/travis/build/stdgregwar/elve/Core/System.h:47: warning: Member nearest(const QVector2D &p) const  (function) of class Elve::System is not documented.
-/home/travis/build/stdgregwar/elve/Core/System.h:48: warning: Member positions() const  (function) of class Elve::System is not documented.
-/home/travis/build/stdgregwar/elve/Core/System.h:49: warning: Member pointsByID() const  (function) of class Elve::System is not documented.
-/home/travis/build/stdgregwar/elve/Core/System.h:50: warning: Member debug(QPainter *p) const  (function) of class Elve::System is not documented.
-/home/travis/build/stdgregwar/elve/Core/System.h:51: warning: Member setSizeHint(const QRectF &rect) (function) of class Elve::System is not documented.
-/home/travis/build/stdgregwar/elve/Core/System.h:52: warning: Member setOrientationHint(OrientationHint hint) (function) of class Elve::System is not documented.
-/home/travis/build/stdgregwar/elve/Core/System.h:53: warning: Member setRepulsionForce(float f) (function) of class Elve::System is not documented.
-/home/travis/build/stdgregwar/elve/Core/System.h:54: warning: Member orientationHint() const  (function) of class Elve::System is not documented.
-/home/travis/build/stdgregwar/elve/Core/System.h:55: warning: Member transformPoint(const QVector2D &p) const  (function) of class Elve::System is not documented.
-/home/travis/build/stdgregwar/elve/Core/System.h:56: warning: Member sizeHint() const  (function) of class Elve::System is not documented.
+/home/travis/build/stdgregwar/elve/Core/System.h:40: warning: Member addForce(Point *m, Force *f) (function) of class Elve::System is not documented.
+/home/travis/build/stdgregwar/elve/Core/System.h:41: warning: Member pin(const NodeID &id, const QVector2D &pnt) (function) of class Elve::System is not documented.
+/home/travis/build/stdgregwar/elve/Core/System.h:42: warning: Member unpin(const NodeID &id) (function) of class Elve::System is not documented.
+/home/travis/build/stdgregwar/elve/Core/System.h:43: warning: Member clear() (function) of class Elve::System is not documented.
+/home/travis/build/stdgregwar/elve/Core/System.h:44: warning: Member pinnedPoints() const  (function) of class Elve::System is not documented.
+/home/travis/build/stdgregwar/elve/Core/System.h:45: warning: Member clearMovables() (function) of class Elve::System is not documented.
+/home/travis/build/stdgregwar/elve/Core/System.h:46: warning: Member massCount() const  (function) of class Elve::System is not documented.
+/home/travis/build/stdgregwar/elve/Core/System.h:47: warning: Member forceCount() const  (function) of class Elve::System is not documented.
+/home/travis/build/stdgregwar/elve/Core/System.h:48: warning: Member nearest(const QVector2D &p) const  (function) of class Elve::System is not documented.
+/home/travis/build/stdgregwar/elve/Core/System.h:49: warning: Member positions() const  (function) of class Elve::System is not documented.
+/home/travis/build/stdgregwar/elve/Core/System.h:50: warning: Member pointsByID() const  (function) of class Elve::System is not documented.
+/home/travis/build/stdgregwar/elve/Core/System.h:51: warning: Member debug(QPainter *p) const  (function) of class Elve::System is not documented.
+/home/travis/build/stdgregwar/elve/Core/System.h:52: warning: Member setSizeHint(const QRectF &rect) (function) of class Elve::System is not documented.
+/home/travis/build/stdgregwar/elve/Core/System.h:53: warning: Member setOrientationHint(OrientationHint hint) (function) of class Elve::System is not documented.
+/home/travis/build/stdgregwar/elve/Core/System.h:54: warning: Member setRepulsionForce(float f) (function) of class Elve::System is not documented.
+/home/travis/build/stdgregwar/elve/Core/System.h:55: warning: Member orientationHint() const  (function) of class Elve::System is not documented.
+/home/travis/build/stdgregwar/elve/Core/System.h:56: warning: Member transformPoint(const QVector2D &p) const  (function) of class Elve::System is not documented.
+/home/travis/build/stdgregwar/elve/Core/System.h:57: warning: Member sizeHint() const  (function) of class Elve::System is not documented.
 Generating code for file /home/travis/build/stdgregwar/elve/Core/Spring.cpp...
 Generating code for file /home/travis/build/stdgregwar/elve/Core/Spring.h...
 Generating code for file /home/travis/build/stdgregwar/elve/Core/System.cpp...
@@ -658,6 +660,6 @@ Generating file index...
 Generating file member index...
 Generating example index...
 finalizing index lists...
-symbol cache used 715/65536 hits=29042 misses=715
-lookup cache used 2259/65536 hits=13090 misses=2450
+symbol cache used 717/65536 hits=29129 misses=717
+lookup cache used 2266/65536 hits=13128 misses=2457
 finished...

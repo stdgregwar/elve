@@ -11,6 +11,7 @@ var classElve_1_1Point =
     [ "containerData", "classElve_1_1Point.html#aafb709eebc4804ada8c3d038e586d3cb", null ],
     [ "mass", "classElve_1_1Point.html#a37cf45c359a4f1ba487cc92c52001224", null ],
     [ "moved", "classElve_1_1Point.html#a13ba720450d872d5580d10c6f01b4b54", null ],
+    [ "notify", "classElve_1_1Point.html#a5ad92ed27ffc7461d30447841a2a15cf", null ],
     [ "pin", "classElve_1_1Point.html#a40c30805065ed6b0e5b15f314b96b562", null ],
     [ "pinned", "classElve_1_1Point.html#accd8b98e07e34f0417a20949f54b5f56", null ],
     [ "pos", "classElve_1_1Point.html#a039b5c0204020681cd5a952c4d1de8f3", null ],
