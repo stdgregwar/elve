@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>ELVE: Elve::GraphTransformPlugin Class Reference</title>
+<title>ELVE: Elve::TransformPlugin Class Reference</title>
 
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
@@ -78,55 +78,55 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   </div>
 </div>
 <script type="text/javascript">
-  initNavTree('classElve_1_1GraphTransformPlugin.html','');
+  initNavTree('classElve_1_1TransformPlugin.html','');
 </script>
 <div id="doc-content">
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a>  </div>
   <div class="headertitle">
-<div class="title">Elve::GraphTransformPlugin Class Reference</div>  </div>
+<div class="title">Elve::TransformPlugin Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<!-- doxytag: class="Elve::GraphTransformPlugin" --><!-- doxytag: inherits="Elve::Plugin" -->
-<p>The <a class="el" href="classElve_1_1GraphTransformPlugin.html" title="The GraphTransformPlugin abstract class.">GraphTransformPlugin</a> abstract class.  
- <a href="classElve_1_1GraphTransformPlugin.html#details">More...</a></p>
+<!-- doxytag: class="Elve::TransformPlugin" --><!-- doxytag: inherits="Elve::Plugin" -->
+<p>The GraphTransformPlugin abstract class.  
+ <a href="classElve_1_1TransformPlugin.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="GraphTransformPlugin_8h_source.html">GraphTransformPlugin.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual SharedEGraph&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classElve_1_1GraphTransformPlugin.html#a9dae8e9c77c5dd0ee27b5f9eb9570d0e">transform</a> (const SharedEGraph &amp;graph)=0</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">transform the given graph in another  <a href="#a9dae8e9c77c5dd0ee27b5f9eb9570d0e"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2c9b7d253bba8fcc27d13b268b6cc38c"></a><!-- doxytag: member="Elve::GraphTransformPlugin::type" ref="a2c9b7d253bba8fcc27d13b268b6cc38c" args="() const =0" -->
+<tr><td class="memItemLeft" align="right" valign="top">virtual SharedEGraph&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classElve_1_1TransformPlugin.html#a3ae1692d88d54f0e0f655c453727ee9b">transform</a> (const SharedEGraph &amp;graph)=0</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">transform the given graph in another  <a href="#a3ae1692d88d54f0e0f655c453727ee9b"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af9661d6784ef4764d1c4c04f6ab7abaf"></a><!-- doxytag: member="Elve::TransformPlugin::type" ref="af9661d6784ef4764d1c4c04f6ab7abaf" args="() const =0" -->
 virtual TransformType&#160;</td><td class="memItemRight" valign="bottom"><b>type</b> () const =0</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9c459f0a2f20954b876973ca4dc8bf46"></a><!-- doxytag: member="Elve::GraphTransformPlugin::name" ref="a9c459f0a2f20954b876973ca4dc8bf46" args="() const =0" -->
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac5fc81e60e11e13fbf351552df8031f2"></a><!-- doxytag: member="Elve::TransformPlugin::name" ref="ac5fc81e60e11e13fbf351552df8031f2" args="() const =0" -->
 virtual QString&#160;</td><td class="memItemRight" valign="bottom"><b>name</b> () const =0</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7a84cd91772e8e42f055b8210c861528"></a><!-- doxytag: member="Elve::GraphTransformPlugin::cliName" ref="a7a84cd91772e8e42f055b8210c861528" args="() const =0" -->
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a308f7320d7a377882ac6c2e4e910a868"></a><!-- doxytag: member="Elve::TransformPlugin::cliName" ref="a308f7320d7a377882ac6c2e4e910a868" args="() const =0" -->
 virtual std::string&#160;</td><td class="memItemRight" valign="bottom"><b>cliName</b> () const =0</td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
-<div class="textblock"><p>The <a class="el" href="classElve_1_1GraphTransformPlugin.html" title="The GraphTransformPlugin abstract class.">GraphTransformPlugin</a> abstract class. </p>
+<div class="textblock"><p>The GraphTransformPlugin abstract class. </p>
 <p>This class is A QPlugin interface allowing to define new graph's transformation in elve. Here transformation can mean anything from clustering to altering selection masks.</p>
 <p>Since graphs are supposed to be immutable in elve, the transform should not modify given graph but output a new modified copy of it. Except for selection that are a mutable part. </p>
 
 <p>Definition at line <a class="el" href="GraphTransformPlugin_8h_source.html#l00032">32</a> of file <a class="el" href="GraphTransformPlugin_8h_source.html">GraphTransformPlugin.h</a>.</p>
 </div><div class="dynheader">
-Inheritance diagram for Elve::GraphTransformPlugin:</div>
+Inheritance diagram for Elve::TransformPlugin:</div>
 <div class="dyncontent">
  <div class="center">
-  <img src="classElve_1_1GraphTransformPlugin.png" usemap="#Elve::GraphTransformPlugin_map" alt=""/>
-  <map id="Elve::GraphTransformPlugin_map" name="Elve::GraphTransformPlugin_map">
-<area href="classElve_1_1Plugin.html" title="base of all plugin interface in elve" alt="Elve::Plugin" shape="rect" coords="0,0,170,24"/>
+  <img src="classElve_1_1TransformPlugin.png" usemap="#Elve::TransformPlugin_map" alt=""/>
+  <map id="Elve::TransformPlugin_map" name="Elve::TransformPlugin_map">
+<area href="classElve_1_1Plugin.html" title="base of all plugin interface in elve" alt="Elve::Plugin" shape="rect" coords="0,0,135,24"/>
 </map>
  </div></div>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="a9dae8e9c77c5dd0ee27b5f9eb9570d0e"></a><!-- doxytag: member="Elve::GraphTransformPlugin::transform" ref="a9dae8e9c77c5dd0ee27b5f9eb9570d0e" args="(const SharedEGraph &amp;graph)=0" -->
+<a class="anchor" id="a3ae1692d88d54f0e0f655c453727ee9b"></a><!-- doxytag: member="Elve::TransformPlugin::transform" ref="a3ae1692d88d54f0e0f655c453727ee9b" args="(const SharedEGraph &amp;graph)=0" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">virtual SharedEGraph <a class="el" href="classElve_1_1GraphTransformPlugin.html#a9dae8e9c77c5dd0ee27b5f9eb9570d0e">Elve::GraphTransformPlugin::transform</a> </td>
+          <td class="memname">virtual SharedEGraph <a class="el" href="classElve_1_1TransformPlugin.html#a3ae1692d88d54f0e0f655c453727ee9b">Elve::TransformPlugin::transform</a> </td>
           <td>(</td>
           <td class="paramtype">const SharedEGraph &amp;&#160;</td>
           <td class="paramname"><em>graph</em></td><td>)</td>
@@ -150,7 +150,7 @@ Inheritance diagram for Elve::GraphTransformPlugin:</div>
 </div>
 </div>
 
-<p><a href="classElve_1_1GraphTransformPlugin-members.html">List of all members.</a></p>
+<p><a href="classElve_1_1TransformPlugin-members.html">List of all members.</a></p>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>/home/travis/build/stdgregwar/elve/Core/interfaces/<a class="el" href="GraphTransformPlugin_8h_source.html">GraphTransformPlugin.h</a></li>
 </ul>
@@ -173,7 +173,7 @@ Inheritance diagram for Elve::GraphTransformPlugin:</div>
   <div id="nav-path" class="navpath">
     <ul>
       <li class="navelem"><b>Elve</b>      </li>
-      <li class="navelem"><a class="el" href="classElve_1_1GraphTransformPlugin.html">GraphTransformPlugin</a>      </li>
+      <li class="navelem"><a class="el" href="classElve_1_1TransformPlugin.html">TransformPlugin</a>      </li>
 
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">

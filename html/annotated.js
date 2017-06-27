@@ -15,13 +15,12 @@ var annotated =
     [ "Elve::Force", "classElve_1_1Force.html", "classElve_1_1Force" ],
     [ "Elve::Graph", "classElve_1_1Graph.html", "classElve_1_1Graph" ],
     [ "Elve::GraphData", "classElve_1_1GraphData.html", "classElve_1_1GraphData" ],
-    [ "Elve::GraphLoaderPlugin", "classElve_1_1GraphLoaderPlugin.html", "classElve_1_1GraphLoaderPlugin" ],
-    [ "Elve::GraphTransformPlugin", "classElve_1_1GraphTransformPlugin.html", "classElve_1_1GraphTransformPlugin" ],
     [ "Elve::GraphWidget", "classElve_1_1GraphWidget.html", "classElve_1_1GraphWidget" ],
     [ "Elve::GraphWidgetListener", "classElve_1_1GraphWidgetListener.html", "classElve_1_1GraphWidgetListener" ],
     [ "Elve::Gravity", "classElve_1_1Gravity.html", "classElve_1_1Gravity" ],
     [ "Elve::LayoutPlugin", "classElve_1_1LayoutPlugin.html", "classElve_1_1LayoutPlugin" ],
     [ "Elve::LinearConstraint", "classElve_1_1LinearConstraint.html", "classElve_1_1LinearConstraint" ],
+    [ "Elve::LoaderPlugin", "classElve_1_1LoaderPlugin.html", "classElve_1_1LoaderPlugin" ],
     [ "Elve::LookFactoryPlugin", "classElve_1_1LookFactoryPlugin.html", "classElve_1_1LookFactoryPlugin" ],
     [ "Elve::Movable", "classElve_1_1Movable.html", "classElve_1_1Movable" ],
     [ "Elve::Node", "classElve_1_1Node.html", "classElve_1_1Node" ],
@@ -39,5 +38,6 @@ var annotated =
     [ "Elve::Selection", "classElve_1_1Selection.html", "classElve_1_1Selection" ],
     [ "Singleton< T >", "classSingleton.html", "classSingleton" ],
     [ "Elve::Spring", "classElve_1_1Spring.html", "classElve_1_1Spring" ],
-    [ "Elve::System", "classElve_1_1System.html", "classElve_1_1System" ]
+    [ "Elve::System", "classElve_1_1System.html", "classElve_1_1System" ],
+    [ "Elve::TransformPlugin", "classElve_1_1TransformPlugin.html", "classElve_1_1TransformPlugin" ]
 ];

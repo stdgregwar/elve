@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>ELVE: Elve::GraphLoaderPlugin Class Reference</title>
+<title>ELVE: Elve::LoaderPlugin Class Reference</title>
 
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
@@ -78,54 +78,54 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   </div>
 </div>
 <script type="text/javascript">
-  initNavTree('classElve_1_1GraphLoaderPlugin.html','');
+  initNavTree('classElve_1_1LoaderPlugin.html','');
 </script>
 <div id="doc-content">
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a>  </div>
   <div class="headertitle">
-<div class="title">Elve::GraphLoaderPlugin Class Reference</div>  </div>
+<div class="title">Elve::LoaderPlugin Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<!-- doxytag: class="Elve::GraphLoaderPlugin" --><!-- doxytag: inherits="Elve::Plugin" -->
-<p>The <a class="el" href="classElve_1_1GraphLoaderPlugin.html" title="The GraphLoaderPlugin abstract class.">GraphLoaderPlugin</a> abstract class.  
- <a href="classElve_1_1GraphLoaderPlugin.html#details">More...</a></p>
+<!-- doxytag: class="Elve::LoaderPlugin" --><!-- doxytag: inherits="Elve::Plugin" -->
+<p>The GraphLoaderPlugin abstract class.  
+ <a href="classElve_1_1LoaderPlugin.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="GraphLoaderPlugin_8h_source.html">GraphLoaderPlugin.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual SharedGraph&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classElve_1_1GraphLoaderPlugin.html#a67f2398ff9cebe1950b5fd162cde47e4">load</a> (const QString &amp;filepath)=0</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">load the graph from the given file  <a href="#a67f2398ff9cebe1950b5fd162cde47e4"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classElve_1_1GraphLoaderPlugin.html#a174aa54d8e9ad86e3fa48379f7b637c1">fileFilter</a> ()=0</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">tells the file filter  <a href="#a174aa54d8e9ad86e3fa48379f7b637c1"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classElve_1_1GraphLoaderPlugin.html#a7bdbe0b8dc0dd1a85e33d350c064d7ab">formatName</a> ()=0</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">tells the name of the import format  <a href="#a7bdbe0b8dc0dd1a85e33d350c064d7ab"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classElve_1_1GraphLoaderPlugin.html#a6e39e3f4b6e7419f9957dbb01e83a3e3">cliName</a> ()=0</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">command line interface name  <a href="#a6e39e3f4b6e7419f9957dbb01e83a3e3"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual SharedGraph&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classElve_1_1LoaderPlugin.html#a4627a58dbd9c2e1fe2ecac919c31b71d">load</a> (const QString &amp;filepath)=0</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">load the graph from the given file  <a href="#a4627a58dbd9c2e1fe2ecac919c31b71d"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classElve_1_1LoaderPlugin.html#aab5563146449536b051d7464a001245f">fileFilter</a> ()=0</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">tells the file filter  <a href="#aab5563146449536b051d7464a001245f"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classElve_1_1LoaderPlugin.html#a4bd219accd537d5f239cf79661401443">formatName</a> ()=0</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">tells the name of the import format  <a href="#a4bd219accd537d5f239cf79661401443"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classElve_1_1LoaderPlugin.html#a72b645934318cbaa321803fc758d10fe">cliName</a> ()=0</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">command line interface name  <a href="#a72b645934318cbaa321803fc758d10fe"></a><br/></td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
-<div class="textblock"><p>The <a class="el" href="classElve_1_1GraphLoaderPlugin.html" title="The GraphLoaderPlugin abstract class.">GraphLoaderPlugin</a> abstract class. </p>
-<p><a class="el" href="classElve_1_1GraphLoaderPlugin.html" title="The GraphLoaderPlugin abstract class.">GraphLoaderPlugin</a> is a QPlugin interface that allow to extend the range of file format that elve can import. </p>
+<div class="textblock"><p>The GraphLoaderPlugin abstract class. </p>
+<p>GraphLoaderPlugin is a QPlugin interface that allow to extend the range of file format that elve can import. </p>
 
 <p>Definition at line <a class="el" href="GraphLoaderPlugin_8h_source.html#l00020">20</a> of file <a class="el" href="GraphLoaderPlugin_8h_source.html">GraphLoaderPlugin.h</a>.</p>
 </div><div class="dynheader">
-Inheritance diagram for Elve::GraphLoaderPlugin:</div>
+Inheritance diagram for Elve::LoaderPlugin:</div>
 <div class="dyncontent">
  <div class="center">
-  <img src="classElve_1_1GraphLoaderPlugin.png" usemap="#Elve::GraphLoaderPlugin_map" alt=""/>
-  <map id="Elve::GraphLoaderPlugin_map" name="Elve::GraphLoaderPlugin_map">
-<area href="classElve_1_1Plugin.html" title="base of all plugin interface in elve" alt="Elve::Plugin" shape="rect" coords="0,0,153,24"/>
+  <img src="classElve_1_1LoaderPlugin.png" usemap="#Elve::LoaderPlugin_map" alt=""/>
+  <map id="Elve::LoaderPlugin_map" name="Elve::LoaderPlugin_map">
+<area href="classElve_1_1Plugin.html" title="base of all plugin interface in elve" alt="Elve::Plugin" shape="rect" coords="0,0,118,24"/>
 </map>
  </div></div>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="a6e39e3f4b6e7419f9957dbb01e83a3e3"></a><!-- doxytag: member="Elve::GraphLoaderPlugin::cliName" ref="a6e39e3f4b6e7419f9957dbb01e83a3e3" args="()=0" -->
+<a class="anchor" id="a72b645934318cbaa321803fc758d10fe"></a><!-- doxytag: member="Elve::LoaderPlugin::cliName" ref="a72b645934318cbaa321803fc758d10fe" args="()=0" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">virtual std::string <a class="el" href="classElve_1_1GraphLoaderPlugin.html#a6e39e3f4b6e7419f9957dbb01e83a3e3">Elve::GraphLoaderPlugin::cliName</a> </td>
+          <td class="memname">virtual std::string <a class="el" href="classElve_1_1LoaderPlugin.html#a72b645934318cbaa321803fc758d10fe">Elve::LoaderPlugin::cliName</a> </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [pure virtual]</code></td>
@@ -140,12 +140,12 @@ Inheritance diagram for Elve::GraphLoaderPlugin:</div>
 
 </div>
 </div>
-<a class="anchor" id="a174aa54d8e9ad86e3fa48379f7b637c1"></a><!-- doxytag: member="Elve::GraphLoaderPlugin::fileFilter" ref="a174aa54d8e9ad86e3fa48379f7b637c1" args="()=0" -->
+<a class="anchor" id="aab5563146449536b051d7464a001245f"></a><!-- doxytag: member="Elve::LoaderPlugin::fileFilter" ref="aab5563146449536b051d7464a001245f" args="()=0" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">virtual QString <a class="el" href="classElve_1_1GraphLoaderPlugin.html#a174aa54d8e9ad86e3fa48379f7b637c1">Elve::GraphLoaderPlugin::fileFilter</a> </td>
+          <td class="memname">virtual QString <a class="el" href="classElve_1_1LoaderPlugin.html#aab5563146449536b051d7464a001245f">Elve::LoaderPlugin::fileFilter</a> </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [pure virtual]</code></td>
@@ -160,12 +160,12 @@ Inheritance diagram for Elve::GraphLoaderPlugin:</div>
 
 </div>
 </div>
-<a class="anchor" id="a7bdbe0b8dc0dd1a85e33d350c064d7ab"></a><!-- doxytag: member="Elve::GraphLoaderPlugin::formatName" ref="a7bdbe0b8dc0dd1a85e33d350c064d7ab" args="()=0" -->
+<a class="anchor" id="a4bd219accd537d5f239cf79661401443"></a><!-- doxytag: member="Elve::LoaderPlugin::formatName" ref="a4bd219accd537d5f239cf79661401443" args="()=0" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">virtual QString <a class="el" href="classElve_1_1GraphLoaderPlugin.html#a7bdbe0b8dc0dd1a85e33d350c064d7ab">Elve::GraphLoaderPlugin::formatName</a> </td>
+          <td class="memname">virtual QString <a class="el" href="classElve_1_1LoaderPlugin.html#a4bd219accd537d5f239cf79661401443">Elve::LoaderPlugin::formatName</a> </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [pure virtual]</code></td>
@@ -180,12 +180,12 @@ Inheritance diagram for Elve::GraphLoaderPlugin:</div>
 
 </div>
 </div>
-<a class="anchor" id="a67f2398ff9cebe1950b5fd162cde47e4"></a><!-- doxytag: member="Elve::GraphLoaderPlugin::load" ref="a67f2398ff9cebe1950b5fd162cde47e4" args="(const QString &amp;filepath)=0" -->
+<a class="anchor" id="a4627a58dbd9c2e1fe2ecac919c31b71d"></a><!-- doxytag: member="Elve::LoaderPlugin::load" ref="a4627a58dbd9c2e1fe2ecac919c31b71d" args="(const QString &amp;filepath)=0" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">virtual SharedGraph <a class="el" href="classElve_1_1GraphLoaderPlugin.html#a67f2398ff9cebe1950b5fd162cde47e4">Elve::GraphLoaderPlugin::load</a> </td>
+          <td class="memname">virtual SharedGraph <a class="el" href="classElve_1_1LoaderPlugin.html#a4627a58dbd9c2e1fe2ecac919c31b71d">Elve::LoaderPlugin::load</a> </td>
           <td>(</td>
           <td class="paramtype">const QString &amp;&#160;</td>
           <td class="paramname"><em>filepath</em></td><td>)</td>
@@ -209,7 +209,7 @@ Inheritance diagram for Elve::GraphLoaderPlugin:</div>
 </div>
 </div>
 
-<p><a href="classElve_1_1GraphLoaderPlugin-members.html">List of all members.</a></p>
+<p><a href="classElve_1_1LoaderPlugin-members.html">List of all members.</a></p>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>/home/travis/build/stdgregwar/elve/Core/interfaces/<a class="el" href="GraphLoaderPlugin_8h_source.html">GraphLoaderPlugin.h</a></li>
 </ul>
@@ -232,7 +232,7 @@ Inheritance diagram for Elve::GraphLoaderPlugin:</div>
   <div id="nav-path" class="navpath">
     <ul>
       <li class="navelem"><b>Elve</b>      </li>
-      <li class="navelem"><a class="el" href="classElve_1_1GraphLoaderPlugin.html">GraphLoaderPlugin</a>      </li>
+      <li class="navelem"><a class="el" href="classElve_1_1LoaderPlugin.html">LoaderPlugin</a>      </li>
 
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">

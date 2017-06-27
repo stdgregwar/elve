@@ -32,10 +32,10 @@ var hierarchy =
     [ "Elve::Pin_hash", "structElve_1_1Pin__hash.html", null ],
     [ "Elve::Plugin", "classElve_1_1Plugin.html", [
       [ "Elve::FileExporterPlugin", "classElve_1_1FileExporterPlugin.html", null ],
-      [ "Elve::GraphLoaderPlugin", "classElve_1_1GraphLoaderPlugin.html", null ],
-      [ "Elve::GraphTransformPlugin", "classElve_1_1GraphTransformPlugin.html", null ],
       [ "Elve::LayoutPlugin", "classElve_1_1LayoutPlugin.html", null ],
-      [ "Elve::LookFactoryPlugin", "classElve_1_1LookFactoryPlugin.html", null ]
+      [ "Elve::LoaderPlugin", "classElve_1_1LoaderPlugin.html", null ],
+      [ "Elve::LookFactoryPlugin", "classElve_1_1LookFactoryPlugin.html", null ],
+      [ "Elve::TransformPlugin", "classElve_1_1TransformPlugin.html", null ]
     ] ],
     [ "Elve::Point", "classElve_1_1Point.html", null ],
     [ "Elve::QuadTree", "classElve_1_1QuadTree.html", null ],

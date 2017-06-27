@@ -92,7 +92,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00004"></a>00004 <span class="preprocessor">#include &lt;ExtendedGraph.h&gt;</span>
 <a name="l00005"></a>00005 <span class="preprocessor">#include &quot;Plugin.h&quot;</span>
 <a name="l00006"></a>00006 
-<a name="l00007"></a>00007 <span class="preprocessor">#define GraphTransformPlugin_iid &quot;ch.epfl.lap.elfe.GraphTransformPlugin&quot;</span>
+<a name="l00007"></a>00007 <span class="preprocessor">#define TransformPlugin_iid &quot;ch.epfl.lap.elfe.GraphTransformPlugin&quot;</span>
 <a name="l00008"></a>00008 <span class="preprocessor"></span>
 <a name="l00009"></a>00009 <span class="keyword">namespace </span>Elve {
 <a name="l00010"></a>00010 
@@ -101,11 +101,11 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00018"></a>00018     OTHER 
 <a name="l00019"></a>00019 };
 <a name="l00020"></a>00020 
-<a name="l00032"></a><a class="code" href="classElve_1_1GraphTransformPlugin.html">00032</a> <span class="keyword">class </span><a class="code" href="classElve_1_1GraphTransformPlugin.html" title="The GraphTransformPlugin abstract class.">GraphTransformPlugin</a> : <span class="keyword">public</span> QObject, <span class="keyword">public</span> <a class="code" href="classElve_1_1Plugin.html" title="base of all plugin interface in elve">Plugin</a>
+<a name="l00032"></a><a class="code" href="classElve_1_1TransformPlugin.html">00032</a> <span class="keyword">class </span><a class="code" href="classElve_1_1TransformPlugin.html" title="The GraphTransformPlugin abstract class.">TransformPlugin</a> : <span class="keyword">public</span> QObject, <span class="keyword">public</span> <a class="code" href="classElve_1_1Plugin.html" title="base of all plugin interface in elve">Plugin</a>
 <a name="l00033"></a>00033 {
 <a name="l00034"></a>00034     Q_OBJECT
 <a name="l00035"></a>00035 <span class="keyword">public</span>:
-<a name="l00048"></a>00048     <span class="keyword">virtual</span> SharedEGraph <a class="code" href="classElve_1_1GraphTransformPlugin.html#a9dae8e9c77c5dd0ee27b5f9eb9570d0e" title="transform the given graph in another">transform</a>(<span class="keyword">const</span> SharedEGraph&amp; graph) = 0;
+<a name="l00048"></a>00048     <span class="keyword">virtual</span> SharedEGraph <a class="code" href="classElve_1_1TransformPlugin.html#a3ae1692d88d54f0e0f655c453727ee9b" title="transform the given graph in another">transform</a>(<span class="keyword">const</span> SharedEGraph&amp; graph) = 0;
 <a name="l00049"></a>00049     <span class="keyword">virtual</span> TransformType type() <span class="keyword">const</span> = 0;
 <a name="l00050"></a>00050     <span class="keyword">virtual</span> QString name() <span class="keyword">const</span> = 0;
 <a name="l00051"></a>00051     <span class="keyword">virtual</span> std::string cliName() <span class="keyword">const</span> = 0;
@@ -113,7 +113,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00053"></a>00053 
 <a name="l00054"></a>00054 }
 <a name="l00055"></a>00055 
-<a name="l00056"></a>00056 Q_DECLARE_INTERFACE(<a class="code" href="classElve_1_1GraphTransformPlugin.html" title="The GraphTransformPlugin abstract class.">Elve::GraphTransformPlugin</a>,GraphTransformPlugin_iid)
+<a name="l00056"></a>00056 Q_DECLARE_INTERFACE(<a class="code" href="classElve_1_1TransformPlugin.html" title="The GraphTransformPlugin abstract class.">Elve::TransformPlugin</a>,TransformPlugin_iid)
 <a name="l00057"></a>00057 
 <a name="l00058"></a>00058 
 <a name="l00059"></a>00059 <span class="preprocessor">#define ELVE_TRANSFORM(Transform,aname,acliname,atype) \</span>

@@ -95,27 +95,27 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00007"></a>00007 <span class="preprocessor">#include &quot;../Graph.h&quot;</span>
 <a name="l00008"></a>00008 <span class="preprocessor">#include &quot;Plugin.h&quot;</span>
 <a name="l00009"></a>00009 
-<a name="l00010"></a>00010 <span class="preprocessor">#define GraphLoaderPlugin_iid &quot;ch.epfl.lap.elfe.GraphLoaderPlugin&quot;</span>
+<a name="l00010"></a>00010 <span class="preprocessor">#define LoaderPlugin_iid &quot;ch.epfl.lap.elfe.GraphLoaderPlugin&quot;</span>
 <a name="l00011"></a>00011 <span class="preprocessor"></span>
 <a name="l00012"></a>00012 <span class="keyword">namespace </span>Elve {
 <a name="l00013"></a>00013 
-<a name="l00020"></a><a class="code" href="classElve_1_1GraphLoaderPlugin.html">00020</a> <span class="keyword">class </span><a class="code" href="classElve_1_1GraphLoaderPlugin.html" title="The GraphLoaderPlugin abstract class.">GraphLoaderPlugin</a> : <span class="keyword">public</span> <a class="code" href="classElve_1_1Plugin.html" title="base of all plugin interface in elve">Plugin</a>
+<a name="l00020"></a><a class="code" href="classElve_1_1LoaderPlugin.html">00020</a> <span class="keyword">class </span><a class="code" href="classElve_1_1LoaderPlugin.html" title="The GraphLoaderPlugin abstract class.">LoaderPlugin</a> : <span class="keyword">public</span> <a class="code" href="classElve_1_1Plugin.html" title="base of all plugin interface in elve">Plugin</a>
 <a name="l00021"></a>00021 {
 <a name="l00022"></a>00022     <span class="keyword">public</span>:
-<a name="l00023"></a>00023         <span class="keyword">virtual</span> ~<a class="code" href="classElve_1_1GraphLoaderPlugin.html" title="The GraphLoaderPlugin abstract class.">GraphLoaderPlugin</a>(){}
+<a name="l00023"></a>00023         <span class="keyword">virtual</span> ~<a class="code" href="classElve_1_1LoaderPlugin.html" title="The GraphLoaderPlugin abstract class.">LoaderPlugin</a>(){}
 <a name="l00024"></a>00024 
-<a name="l00034"></a>00034         <span class="keyword">virtual</span> SharedGraph <a class="code" href="classElve_1_1GraphLoaderPlugin.html#a67f2398ff9cebe1950b5fd162cde47e4" title="load the graph from the given file">load</a>(<span class="keyword">const</span> QString&amp; filepath) = 0;
+<a name="l00034"></a>00034         <span class="keyword">virtual</span> SharedGraph <a class="code" href="classElve_1_1LoaderPlugin.html#a4627a58dbd9c2e1fe2ecac919c31b71d" title="load the graph from the given file">load</a>(<span class="keyword">const</span> QString&amp; filepath) = 0;
 <a name="l00035"></a>00035 
-<a name="l00043"></a>00043         <span class="keyword">virtual</span> QString <a class="code" href="classElve_1_1GraphLoaderPlugin.html#a174aa54d8e9ad86e3fa48379f7b637c1" title="tells the file filter">fileFilter</a>() = 0;
+<a name="l00043"></a>00043         <span class="keyword">virtual</span> QString <a class="code" href="classElve_1_1LoaderPlugin.html#aab5563146449536b051d7464a001245f" title="tells the file filter">fileFilter</a>() = 0;
 <a name="l00044"></a>00044 
-<a name="l00052"></a>00052         <span class="keyword">virtual</span> QString <a class="code" href="classElve_1_1GraphLoaderPlugin.html#a7bdbe0b8dc0dd1a85e33d350c064d7ab" title="tells the name of the import format">formatName</a>() = 0;
+<a name="l00052"></a>00052         <span class="keyword">virtual</span> QString <a class="code" href="classElve_1_1LoaderPlugin.html#a4bd219accd537d5f239cf79661401443" title="tells the name of the import format">formatName</a>() = 0;
 <a name="l00053"></a>00053 
-<a name="l00061"></a>00061         <span class="keyword">virtual</span> std::string <a class="code" href="classElve_1_1GraphLoaderPlugin.html#a6e39e3f4b6e7419f9957dbb01e83a3e3" title="command line interface name">cliName</a>() = 0;
+<a name="l00061"></a>00061         <span class="keyword">virtual</span> std::string <a class="code" href="classElve_1_1LoaderPlugin.html#a72b645934318cbaa321803fc758d10fe" title="command line interface name">cliName</a>() = 0;
 <a name="l00062"></a>00062 };
 <a name="l00063"></a>00063 
 <a name="l00064"></a>00064 }
 <a name="l00065"></a>00065 
-<a name="l00066"></a>00066 Q_DECLARE_INTERFACE(<a class="code" href="classElve_1_1GraphLoaderPlugin.html" title="The GraphLoaderPlugin abstract class.">Elve::GraphLoaderPlugin</a>,GraphLoaderPlugin_iid)
+<a name="l00066"></a>00066 Q_DECLARE_INTERFACE(<a class="code" href="classElve_1_1LoaderPlugin.html" title="The GraphLoaderPlugin abstract class.">Elve::LoaderPlugin</a>,LoaderPlugin_iid)
 <a name="l00067"></a>00067 
 <a name="l00068"></a>00068 <span class="preprocessor">#define ELVE_LOADER(Loader,full_name,filter,cli_name)\</span>
 <a name="l00069"></a>00069 <span class="preprocessor"> public:\</span>
