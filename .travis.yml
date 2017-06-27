@@ -1,0 +1,32 @@
+# This will run on Travis' 'new' container-based infrastructure
+sudo: false
+language: cpp
+compiler:
+ - gcc
+# Blacklist
+branches:
+  only:
+    - master
+
+# Environment variables
+env:
+  global:
+    - GH_REPO_NAME: elve
+    - DOXYFILE: $TRAVIS_BUILD_DIR/doc/Doxyfile
+    - GH_REPO_REF: github.com/stdgregwar/elve.git
+
+# Install dependencies
+addons:
+  apt:
+    packages:
+      - doxygen
+      - doxygen-doc
+      - doxygen-gui
+# Build your code e.g. by calling make
+script:
+ - echo "Build? Which build?"
+# Generate and deploy documentation
+after_success:
+  - cd $TRAVIS_BUILD_DIR
+  - chmod +x generateDocumentationAndDeploy.sh
+  - ./generateDocumentationAndDeploy.sh
