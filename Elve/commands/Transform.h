@@ -12,7 +12,7 @@ using namespace alice;
 class TransformCommand : public PluginCommand
 {
 public:
-    TransformCommand(GraphTransformPlugin* pl, const environment::ptr& env) : PluginCommand(pl,env, (pl->name()).toStdString()),
+    TransformCommand(TransformPlugin* pl, const environment::ptr& env) : PluginCommand(pl,env, (pl->name()).toStdString()),
       mTrans(pl)
     {
         opts.add_options()
@@ -58,7 +58,7 @@ public:
         return true;
     }
 private:
-    GraphTransformPlugin* mTrans;
+    TransformPlugin* mTrans;
     int mInput;
     int mOutput;
 };

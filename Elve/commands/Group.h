@@ -9,7 +9,7 @@ using namespace alice;
 class GroupCommand : public command
 {
 public:
-    GroupCommand(const environment::ptr& env) : command(env,"Group"),name("group") {
+    GroupCommand(const environment::ptr& env) : command(env,"Group the selected nodes into a cluster"),name("group") {
         pod.add("mask",1).add("name",1);
 
         opts.add_options()

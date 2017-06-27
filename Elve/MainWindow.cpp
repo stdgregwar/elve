@@ -50,7 +50,7 @@ MainWindow::MainWindow(QWidget *parent)
     //setup loaders
     for(auto& l : pluginManager.loaders()) {
         FileLoadAction* a = new FileLoadAction(l,l->formatName(),this);
-        connect(a,SIGNAL(triggered(GraphLoaderPlugin*)),this,SLOT(on_import_trigerred(GraphLoaderPlugin*)));
+        connect(a,SIGNAL(triggered(LoaderPlugin*)),this,SLOT(on_import_trigerred(LoaderPlugin*)));
         ui.menuImport->addAction(a);
     }
 
@@ -71,7 +71,7 @@ MainWindow::MainWindow(QWidget *parent)
     //Setup transforms
     for(auto& l : pluginManager.transforms()) {
         TransformAction* a = new TransformAction(l,l->name(),this);
-        connect(a,SIGNAL(triggered(GraphTransformPlugin*)),this,SLOT(on_transform_triggered(GraphTransformPlugin*)));
+        connect(a,SIGNAL(triggered(TransformPlugin*)),this,SLOT(on_transform_triggered(TransformPlugin*)));
         switch(l->type()) {
         case SELECTION:
             ui.menuSelect->addAction(a);
@@ -118,7 +118,7 @@ void MainWindow::closeAllTabs() {
     ui.mdiArea->closeAllSubWindows();
 }
 
-void MainWindow::on_import_trigerred(GraphLoaderPlugin* ld) {
+void MainWindow::on_import_trigerred(LoaderPlugin* ld) {
     QString filename = QFileDialog::getOpenFileName(this,"Open " + ld->formatName(),"",ld->fileFilter());
     if(filename != "") {
         runUiCommand(QString("load_%1 \"%2\"").arg(ld->cliName().c_str(),filename));
@@ -135,7 +135,7 @@ void MainWindow::on_import_trigerred(GraphLoaderPlugin* ld) {
     }
 }
 
-void MainWindow::on_transform_triggered(GraphTransformPlugin* trans) {
+void MainWindow::on_transform_triggered(TransformPlugin* trans) {
     runCommandOnShownGraph((trans->cliName() + " -n").c_str());
 }
 

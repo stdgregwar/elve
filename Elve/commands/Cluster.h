@@ -11,7 +11,7 @@ using namespace alice;
 class ClusterCommand : public command
 {
 public:
-    ClusterCommand(const environment::ptr& env) : command(env,"cluster") {
+    ClusterCommand(const environment::ptr& env) : command(env,"Apply simple clustering on whole graph") {
         opts.add_options()("level,l",po::value(&level)->default_value(level),"clustering iterations count");
     }
 

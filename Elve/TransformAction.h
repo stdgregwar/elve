@@ -9,18 +9,18 @@ class TransformAction : public QAction
 {
     Q_OBJECT
 public:
-    TransformAction(GraphTransformPlugin* data, const QString& text,QObject* parent = nullptr) : QAction(text,parent),mData(data)
+    TransformAction(TransformPlugin* data, const QString& text,QObject* parent = nullptr) : QAction(text,parent),mData(data)
     {
         connect(this,SIGNAL(triggered()),this,SLOT(onTriggered()));
     }
 signals:
-    void triggered(GraphTransformPlugin*);
+    void triggered(TransformPlugin*);
 public slots:
     void onTriggered() {
         emit triggered(mData);
     }
 private:
-    GraphTransformPlugin* mData;
+    TransformPlugin* mData;
 };
 
 }

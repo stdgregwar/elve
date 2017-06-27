@@ -12,7 +12,7 @@ class ChronoCommand : public command
 {
 
 public:
-    ChronoCommand(const environment::ptr& env) : command(env,"chrono") {
+    ChronoCommand(const environment::ptr& env) : command(env,"Manipulate chronometer") {
         opts.add_options()("reset,r","reset chrono");
     }
 

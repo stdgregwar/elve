@@ -4,7 +4,7 @@
 #include <ExtendedGraph.h>
 #include "Plugin.h"
 
-#define GraphTransformPlugin_iid "ch.epfl.lap.elfe.GraphTransformPlugin"
+#define TransformPlugin_iid "ch.epfl.lap.elfe.GraphTransformPlugin"
 
 namespace Elve {
 
@@ -29,7 +29,7 @@ enum TransformType {
  * modify given graph but output a new modified copy of it. Except for selection
  * that are a mutable part.
  */
-class GraphTransformPlugin : public QObject, public Plugin
+class TransformPlugin : public QObject, public Plugin
 {
     Q_OBJECT
 public:
@@ -53,7 +53,7 @@ public:
 
 }
 
-Q_DECLARE_INTERFACE(Elve::GraphTransformPlugin,GraphTransformPlugin_iid)
+Q_DECLARE_INTERFACE(Elve::TransformPlugin,TransformPlugin_iid)
 
 ///ELVE_TRANSFORM helps to define base properties of a TRANSFORM
 #define ELVE_TRANSFORM(Transform,aname,acliname,atype) \

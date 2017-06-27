@@ -14,8 +14,8 @@
 
 namespace Elve {
 
-typedef QList<GraphLoaderPlugin*> Loaders;
-typedef QList<GraphTransformPlugin*> Transforms;
+typedef QList<LoaderPlugin*> Loaders;
+typedef QList<TransformPlugin*> Transforms;
 typedef QList<FileExporterPlugin*> Exporters;
 typedef QList<LayoutPlugin*> Layouts;
 typedef QList<LookFactoryPlugin*> Looks;

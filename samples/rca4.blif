@@ -1,0 +1,67 @@
+# Benchmark "rca_4" written by ABC on Thu Jan 12 15:06:09 2017
+.model rca_4
+.inputs a0 b0 a1 b1 a2 b2 a3 b3
+.outputs s0 s1 s2 s3 s4
+.names a0 b0 n14
+01 1
+.names a0 b0 n15
+10 1
+.names n14 n15 s0
+00 0
+.names a0 b0 n17
+11 1
+.names a1 b1 n18
+01 1
+.names a1 b1 n19
+10 1
+.names n18 n19 n20
+00 1
+.names n17 n20 n21
+11 1
+.names n17 n20 n22
+00 1
+.names n21 n22 s1
+00 0
+.names a1 b1 n24
+11 1
+.names n17 n20 n25
+10 1
+.names n24 n25 n26
+00 1
+.names a2 b2 n27
+01 1
+.names a2 b2 n28
+10 1
+.names n27 n28 n29
+00 1
+.names n26 n29 n30
+01 1
+.names n26 n29 n31
+10 1
+.names n30 n31 s2
+00 0
+.names a2 b2 n33
+11 1
+.names n26 n29 n34
+00 1
+.names n33 n34 n35
+00 1
+.names a3 b3 n36
+01 1
+.names a3 b3 n37
+10 1
+.names n36 n37 n38
+00 1
+.names n35 n38 n39
+01 1
+.names n35 n38 n40
+10 1
+.names n39 n40 s3
+00 0
+.names a3 b3 n42
+11 1
+.names n35 n38 n43
+00 1
+.names n42 n43 s4
+00 0
+.end

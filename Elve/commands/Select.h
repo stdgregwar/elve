@@ -10,7 +10,7 @@ using namespace alice;
 class SelectCommand : public command
 {
 public:
-    SelectCommand(const environment::ptr& env) : command(env,"Select") {
+    SelectCommand(const environment::ptr& env) : command(env,"Controls selection masks") {
         pod.add("mask",1).add("nodeIDs",-1);
 
         opts.add_options()

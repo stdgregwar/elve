@@ -2,11 +2,11 @@
 
 #include <interfaces/GraphTransformPlugin.h>
 
-class FanSelect : public Elve::GraphTransformPlugin
+class FanSelect : public Elve::TransformPlugin
 {
     Q_OBJECT
     Q_PLUGIN_METADATA(IID "ch.epfl.lap.FanSelectTransform")
-    Q_INTERFACES(Elve::GraphTransformPlugin)
+    Q_INTERFACES(Elve::TransformPlugin)
 public:
     ELVE_TRANSFORM(FanSelect,"Select Fans","fanselect",Elve::SELECTION)
     FanSelect();

@@ -12,11 +12,11 @@
  * Note that the engine will apply different graph management policies depending of the type of your transform
  * the type is specified in the ELVE_TRANSFORM macro bellow
  */
-class TransformName : public Elve::GraphTransformPlugin
+class TransformName : public Elve::TransformPlugin
 {
     Q_OBJECT
     Q_PLUGIN_METADATA(IID "ch.epfl.lap.TransformName")
-    Q_INTERFACES(Elve::GraphTransformPlugin)
+    Q_INTERFACES(Elve::TransformPlugin)
 public:
     ELVE_TRANSFORM(TransformName,"GUI title","cmd_line_name",Elve::OTHER) //Last is the transform type
     TransformName();

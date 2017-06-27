@@ -5,13 +5,13 @@
 #include <GraphLoaderPlugin.h>
 
 
-class GEXFLoader : public QObject, public Elve::GraphLoaderPlugin
+class GEXFLoader : public QObject, public Elve::LoaderPlugin
 {
     Q_OBJECT
 #if QT_VERSION >= 0x050000
     Q_PLUGIN_METADATA(IID "ch.epfl.lap.GEXFLoader")
 #endif // QT_VERSION >= 0x050000
-    Q_INTERFACES(Elve::GraphLoaderPlugin)
+    Q_INTERFACES(Elve::LoaderPlugin)
 public:
     GEXFLoader(QObject *parent = 0){};
     Elve::SharedGraph load(const QString &filepath) override;
