@@ -98,94 +98,99 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00010"></a>00010     QString NodeDescriptor::multipleDescription(<span class="keyword">const</span> <a class="code" href="classElve_1_1Selection.html">Elve::Selection</a>&amp; sel, <span class="keyword">const</span> SharedEGraph&amp; eg) {
 <a name="l00011"></a>00011         <span class="keywordtype">int</span> counts[NodeType::LAST] = {};
 <a name="l00012"></a>00012         QString names;
-<a name="l00013"></a>00013 
-<a name="l00014"></a>00014         <span class="keywordflow">for</span>(<span class="keyword">const</span> <span class="keyword">auto</span>&amp; <span class="keywordtype">id</span> : sel) { <span class="comment">//Count nodes types</span>
-<a name="l00015"></a>00015             <span class="keyword">auto</span> node = eg-&gt;graph()-&gt;node(<span class="keywordtype">id</span>);
-<a name="l00016"></a>00016             names += QString(<span class="stringliteral">&quot;%1&lt;br&gt;&quot;</span>).arg(QString::fromStdString(node.name()));
-<a name="l00017"></a>00017             ++counts[node.type()];
-<a name="l00018"></a>00018         }
-<a name="l00019"></a>00019 
-<a name="l00020"></a>00020         <span class="keywordflow">return</span> QString(
-<a name="l00021"></a>00021                     <span class="stringliteral">&quot;&lt;html&gt;&quot;</span>
-<a name="l00022"></a>00022                         <span class="stringliteral">&quot;%1 &lt;b&gt;Nodes&lt;/b&gt;&lt;br&gt;&quot;</span>
-<a name="l00023"></a>00023                         <span class="stringliteral">&quot;%2 &lt;b&gt;Clusters&lt;/b&gt;&lt;br&gt;&quot;</span>
-<a name="l00024"></a>00024                         <span class="stringliteral">&quot;%3 &lt;b&gt;Inputs&lt;/b&gt;&lt;br&gt;&quot;</span>
-<a name="l00025"></a>00025                         <span class="stringliteral">&quot;%4 &lt;b&gt;Outputs&lt;/b&gt;&lt;br&gt;&lt;br&gt;&quot;</span>
-<a name="l00026"></a>00026                         <span class="stringliteral">&quot;&lt;b&gt;Names:&lt;/b&gt;&lt;br&gt;&quot;</span>
-<a name="l00027"></a>00027                         <span class="stringliteral">&quot;%5&quot;</span>
-<a name="l00028"></a>00028                     <span class="stringliteral">&quot;&lt;/html&gt;&quot;</span>
-<a name="l00029"></a>00029                     )
-<a name="l00030"></a>00030                 .arg(sel.size())
-<a name="l00031"></a>00031                 .arg(counts[CLUSTER]+counts[INPUT_CLUSTER]+counts[OUTPUT_CLUSTER])
-<a name="l00032"></a>00032                 .arg(counts[INPUT]+counts[INPUT_CLUSTER])
-<a name="l00033"></a>00033                 .arg(counts[OUTPUT]+counts[OUTPUT_CLUSTER])
-<a name="l00034"></a>00034                 .arg(names);
-<a name="l00035"></a>00035     }
-<a name="l00036"></a>00036 
-<a name="l00037"></a>00037     QString NodeDescriptor::nodeDescription(<span class="keyword">const</span> <a class="code" href="classElve_1_1Node.html">Elve::Node</a>&amp; node) {
-<a name="l00038"></a>00038         QString props;
-<a name="l00039"></a>00039         <span class="keywordflow">if</span>(node.properties().contains(<span class="stringliteral">&quot;toShow&quot;</span>)) {
-<a name="l00040"></a>00040             <span class="keyword">auto</span> toShow = node.properties().value(<span class="stringliteral">&quot;toShow&quot;</span>).toObject();
-<a name="l00041"></a>00041             <span class="keywordflow">for</span>(<span class="keyword">auto</span> v = toShow.begin(); v != toShow.end(); v++) {
-<a name="l00042"></a>00042                 props += v.key() + <span class="stringliteral">&quot; : &quot;</span>;
-<a name="l00043"></a>00043                 <span class="keywordflow">if</span>(v.value().isArray()) {
-<a name="l00044"></a>00044                     props += <span class="stringliteral">&quot;[&quot;</span>;
-<a name="l00045"></a>00045                     <span class="keywordtype">bool</span> first = <span class="keyword">true</span>;
-<a name="l00046"></a>00046                     <span class="keywordflow">for</span>(<span class="keyword">const</span> <span class="keyword">auto</span>&amp; v2 : v.value().toArray()) {
-<a name="l00047"></a>00047                         props += (first ? <span class="stringliteral">&quot;&quot;</span> : <span class="stringliteral">&quot;, &quot;</span>) + v2.toString();
-<a name="l00048"></a>00048                         first = <span class="keyword">false</span>;
-<a name="l00049"></a>00049                     }
-<a name="l00050"></a>00050                     props += <span class="stringliteral">&quot;]&quot;</span>;
-<a name="l00051"></a>00051                 } <span class="keywordflow">else</span> {
-<a name="l00052"></a>00052                     props += v.value().toVariant().toString();
-<a name="l00053"></a>00053                 }
-<a name="l00054"></a>00054                 props += <span class="stringliteral">&quot;\n&quot;</span>;
-<a name="l00055"></a>00055             }
-<a name="l00056"></a>00056         }
-<a name="l00057"></a>00057         <span class="keywordflow">return</span> [&amp;]()-&gt;QString{
-<a name="l00058"></a>00058             <span class="keywordflow">if</span>(node.type() == CLUSTER) {
-<a name="l00059"></a>00059                 <span class="keywordflow">return</span> QString(
-<a name="l00060"></a>00060                             <span class="stringliteral">&quot;&lt;html&gt;&quot;</span>
-<a name="l00061"></a>00061                                <span class="stringliteral">&quot;&lt;b&gt;Name&lt;/b&gt; : %1&lt;br&gt;&quot;</span>
-<a name="l00062"></a>00062                                    <span class="stringliteral">&quot;&lt;b&gt;ID&lt;/b&gt;   : %2&lt;br&gt;&quot;</span>
-<a name="l00063"></a>00063                                    <span class="stringliteral">&quot;&lt;b&gt;Node Count&lt;/b&gt; : %3&lt;br&gt;&quot;</span>
-<a name="l00064"></a>00064                                    <span class="stringliteral">&quot;%4&quot;</span>
-<a name="l00065"></a>00065                                <span class="stringliteral">&quot;&lt;/html&gt;&quot;</span>
-<a name="l00066"></a>00066                                )
-<a name="l00067"></a>00067                            .arg(node.name().c_str())
-<a name="l00068"></a>00068                            .arg(node.id())
-<a name="l00069"></a>00069                            .arg(node.data().dependencies().size())
-<a name="l00070"></a>00070                            .arg(props);
-<a name="l00071"></a>00071             } <span class="keywordflow">else</span> {
-<a name="l00072"></a>00072                 QJsonObject truthtable = node.properties()[<span class="stringliteral">&quot;truthtable&quot;</span>].toObject();
-<a name="l00073"></a>00073                 QString table;
-<a name="l00074"></a>00074                 <span class="keywordflow">for</span>(QJsonObject::const_iterator it = truthtable.constBegin();
-<a name="l00075"></a>00075                         it != truthtable.constEnd();
-<a name="l00076"></a>00076                         it++) {
-<a name="l00077"></a>00077                     table += it.key() + <span class="stringliteral">&quot; &quot;</span>;
-<a name="l00078"></a>00078                     table += it.value().toString() + <span class="stringliteral">&quot;\n&quot;</span>;
-<a name="l00079"></a>00079                 }
-<a name="l00080"></a>00080                 <span class="keywordflow">return</span> QString(
-<a name="l00081"></a>00081                             <span class="stringliteral">&quot;&lt;html&gt;&quot;</span>
-<a name="l00082"></a>00082                             <span class="stringliteral">&quot;&lt;b&gt;Name&lt;/b&gt; : %1&lt;br&gt;&quot;</span>
-<a name="l00083"></a>00083                                    <span class="stringliteral">&quot;&lt;b&gt;ID&lt;/b&gt;   : %2&lt;br&gt;&quot;</span>
-<a name="l00084"></a>00084                                    <span class="stringliteral">&quot;&lt;b&gt;Level&lt;/b&gt;: %3&lt;br&gt;&quot;</span>
-<a name="l00085"></a>00085                                    <span class="stringliteral">&quot;&lt;b&gt;Truthtable&lt;/b&gt; :\n %4&lt;br&gt;&quot;</span>
-<a name="l00086"></a>00086                                    <span class="stringliteral">&quot;&lt;b&gt;Ancestor Count&lt;/b&gt; : %5&lt;br&gt;&quot;</span>
-<a name="l00087"></a>00087                                    <span class="stringliteral">&quot;%6&quot;</span>
-<a name="l00088"></a>00088                                <span class="stringliteral">&quot;&lt;/html&gt;&quot;</span>
-<a name="l00089"></a>00089                                )
-<a name="l00090"></a>00090                            .arg(node.name().c_str())
-<a name="l00091"></a>00091                            .arg(node.id())
-<a name="l00092"></a>00092                            .arg(QString::number(node.level()))
-<a name="l00093"></a>00093                            .arg(table)
-<a name="l00094"></a>00094                            .arg(node.data().dependencies().size())
-<a name="l00095"></a>00095                            .arg(props);
-<a name="l00096"></a>00096             }
-<a name="l00097"></a>00097         }();
-<a name="l00098"></a>00098     }
-<a name="l00099"></a>00099 
-<a name="l00100"></a>00100 }
+<a name="l00013"></a>00013         QString ids;
+<a name="l00014"></a>00014 
+<a name="l00015"></a>00015         <span class="keywordflow">for</span>(<span class="keyword">const</span> <span class="keyword">auto</span>&amp; <span class="keywordtype">id</span> : sel) { <span class="comment">//Count nodes types</span>
+<a name="l00016"></a>00016             <span class="keyword">auto</span> node = eg-&gt;graph()-&gt;node(<span class="keywordtype">id</span>);
+<a name="l00017"></a>00017             names += QString(<span class="stringliteral">&quot;%1&lt;br&gt;&quot;</span>).arg(QString::fromStdString(node.name()));
+<a name="l00018"></a>00018             ids += QString(<span class="stringliteral">&quot;%1&lt;br&gt;&quot;</span>).arg(node.id());
+<a name="l00019"></a>00019             ++counts[node.type()];
+<a name="l00020"></a>00020         }
+<a name="l00021"></a>00021 
+<a name="l00022"></a>00022         <span class="keywordflow">return</span> QString(
+<a name="l00023"></a>00023                     <span class="stringliteral">&quot;&lt;html&gt;&quot;</span>
+<a name="l00024"></a>00024                         <span class="stringliteral">&quot;%1 &lt;b&gt;Nodes&lt;/b&gt;&lt;br&gt;&quot;</span>
+<a name="l00025"></a>00025                         <span class="stringliteral">&quot;%2 &lt;b&gt;Clusters&lt;/b&gt;&lt;br&gt;&quot;</span>
+<a name="l00026"></a>00026                         <span class="stringliteral">&quot;%3 &lt;b&gt;Inputs&lt;/b&gt;&lt;br&gt;&quot;</span>
+<a name="l00027"></a>00027                         <span class="stringliteral">&quot;%4 &lt;b&gt;Outputs&lt;/b&gt;&lt;br&gt;&lt;br&gt;&quot;</span>
+<a name="l00028"></a>00028                         <span class="stringliteral">&quot;&lt;b&gt;Names:&lt;/b&gt;&lt;br&gt;&quot;</span>
+<a name="l00029"></a>00029                         <span class="stringliteral">&quot;%5&quot;</span>
+<a name="l00030"></a>00030                         <span class="stringliteral">&quot;&lt;br&gt;&lt;b&gt;IDs&lt;/b&gt;&lt;br&gt;&quot;</span>
+<a name="l00031"></a>00031                         <span class="stringliteral">&quot;%6&quot;</span>
+<a name="l00032"></a>00032                     <span class="stringliteral">&quot;&lt;/html&gt;&quot;</span>
+<a name="l00033"></a>00033                     )
+<a name="l00034"></a>00034                 .arg(sel.size())
+<a name="l00035"></a>00035                 .arg(counts[CLUSTER]+counts[INPUT_CLUSTER]+counts[OUTPUT_CLUSTER])
+<a name="l00036"></a>00036                 .arg(counts[INPUT]+counts[INPUT_CLUSTER])
+<a name="l00037"></a>00037                 .arg(counts[OUTPUT]+counts[OUTPUT_CLUSTER])
+<a name="l00038"></a>00038                 .arg(names)
+<a name="l00039"></a>00039                 .arg(ids);
+<a name="l00040"></a>00040     }
+<a name="l00041"></a>00041 
+<a name="l00042"></a>00042     QString NodeDescriptor::nodeDescription(<span class="keyword">const</span> <a class="code" href="classElve_1_1Node.html">Elve::Node</a>&amp; node) {
+<a name="l00043"></a>00043         QString props;
+<a name="l00044"></a>00044         <span class="keywordflow">if</span>(node.properties().contains(<span class="stringliteral">&quot;toShow&quot;</span>)) {
+<a name="l00045"></a>00045             <span class="keyword">auto</span> toShow = node.properties().value(<span class="stringliteral">&quot;toShow&quot;</span>).toObject();
+<a name="l00046"></a>00046             <span class="keywordflow">for</span>(<span class="keyword">auto</span> v = toShow.begin(); v != toShow.end(); v++) {
+<a name="l00047"></a>00047                 props += v.key() + <span class="stringliteral">&quot; : &quot;</span>;
+<a name="l00048"></a>00048                 <span class="keywordflow">if</span>(v.value().isArray()) {
+<a name="l00049"></a>00049                     props += <span class="stringliteral">&quot;[&quot;</span>;
+<a name="l00050"></a>00050                     <span class="keywordtype">bool</span> first = <span class="keyword">true</span>;
+<a name="l00051"></a>00051                     <span class="keywordflow">for</span>(<span class="keyword">const</span> <span class="keyword">auto</span>&amp; v2 : v.value().toArray()) {
+<a name="l00052"></a>00052                         props += (first ? <span class="stringliteral">&quot;&quot;</span> : <span class="stringliteral">&quot;, &quot;</span>) + v2.toString();
+<a name="l00053"></a>00053                         first = <span class="keyword">false</span>;
+<a name="l00054"></a>00054                     }
+<a name="l00055"></a>00055                     props += <span class="stringliteral">&quot;]&quot;</span>;
+<a name="l00056"></a>00056                 } <span class="keywordflow">else</span> {
+<a name="l00057"></a>00057                     props += v.value().toVariant().toString();
+<a name="l00058"></a>00058                 }
+<a name="l00059"></a>00059                 props += <span class="stringliteral">&quot;\n&quot;</span>;
+<a name="l00060"></a>00060             }
+<a name="l00061"></a>00061         }
+<a name="l00062"></a>00062         <span class="keywordflow">return</span> [&amp;]()-&gt;QString{
+<a name="l00063"></a>00063             <span class="keywordflow">if</span>(node.type() == CLUSTER) {
+<a name="l00064"></a>00064                 <span class="keywordflow">return</span> QString(
+<a name="l00065"></a>00065                             <span class="stringliteral">&quot;&lt;html&gt;&quot;</span>
+<a name="l00066"></a>00066                                <span class="stringliteral">&quot;&lt;b&gt;Name&lt;/b&gt; : %1&lt;br&gt;&quot;</span>
+<a name="l00067"></a>00067                                    <span class="stringliteral">&quot;&lt;b&gt;ID&lt;/b&gt;   : %2&lt;br&gt;&quot;</span>
+<a name="l00068"></a>00068                                    <span class="stringliteral">&quot;&lt;b&gt;Node Count&lt;/b&gt; : %3&lt;br&gt;&quot;</span>
+<a name="l00069"></a>00069                                    <span class="stringliteral">&quot;%4&quot;</span>
+<a name="l00070"></a>00070                                <span class="stringliteral">&quot;&lt;/html&gt;&quot;</span>
+<a name="l00071"></a>00071                                )
+<a name="l00072"></a>00072                            .arg(node.name().c_str())
+<a name="l00073"></a>00073                            .arg(node.id())
+<a name="l00074"></a>00074                            .arg(node.data().dependencies().size())
+<a name="l00075"></a>00075                            .arg(props);
+<a name="l00076"></a>00076             } <span class="keywordflow">else</span> {
+<a name="l00077"></a>00077                 QJsonObject truthtable = node.properties()[<span class="stringliteral">&quot;truthtable&quot;</span>].toObject();
+<a name="l00078"></a>00078                 QString table;
+<a name="l00079"></a>00079                 <span class="keywordflow">for</span>(QJsonObject::const_iterator it = truthtable.constBegin();
+<a name="l00080"></a>00080                         it != truthtable.constEnd();
+<a name="l00081"></a>00081                         it++) {
+<a name="l00082"></a>00082                     table += it.key() + <span class="stringliteral">&quot; &quot;</span>;
+<a name="l00083"></a>00083                     table += it.value().toString() + <span class="stringliteral">&quot;\n&quot;</span>;
+<a name="l00084"></a>00084                 }
+<a name="l00085"></a>00085                 <span class="keywordflow">return</span> QString(
+<a name="l00086"></a>00086                             <span class="stringliteral">&quot;&lt;html&gt;&quot;</span>
+<a name="l00087"></a>00087                             <span class="stringliteral">&quot;&lt;b&gt;Name&lt;/b&gt; : %1&lt;br&gt;&quot;</span>
+<a name="l00088"></a>00088                                    <span class="stringliteral">&quot;&lt;b&gt;ID&lt;/b&gt;   : %2&lt;br&gt;&quot;</span>
+<a name="l00089"></a>00089                                    <span class="stringliteral">&quot;&lt;b&gt;Level&lt;/b&gt;: %3&lt;br&gt;&quot;</span>
+<a name="l00090"></a>00090                                    <span class="stringliteral">&quot;&lt;b&gt;Truthtable&lt;/b&gt; :\n %4&lt;br&gt;&quot;</span>
+<a name="l00091"></a>00091                                    <span class="stringliteral">&quot;&lt;b&gt;Ancestor Count&lt;/b&gt; : %5&lt;br&gt;&quot;</span>
+<a name="l00092"></a>00092                                    <span class="stringliteral">&quot;%6&quot;</span>
+<a name="l00093"></a>00093                                <span class="stringliteral">&quot;&lt;/html&gt;&quot;</span>
+<a name="l00094"></a>00094                                )
+<a name="l00095"></a>00095                            .arg(node.name().c_str())
+<a name="l00096"></a>00096                            .arg(node.id())
+<a name="l00097"></a>00097                            .arg(QString::number(node.level()))
+<a name="l00098"></a>00098                            .arg(table)
+<a name="l00099"></a>00099                            .arg(node.data().dependencies().size())
+<a name="l00100"></a>00100                            .arg(props);
+<a name="l00101"></a>00101             }
+<a name="l00102"></a>00102         }();
+<a name="l00103"></a>00103     }
+<a name="l00104"></a>00104 
+<a name="l00105"></a>00105 }
 </pre></div></div><!-- contents -->
 </div>
 <!-- window showing the filter options -->
