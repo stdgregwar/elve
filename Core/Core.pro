@@ -60,7 +60,8 @@ SOURCES +=\
     interfaces/GraphWidgetListener.cpp \
     LinearConstraint.cpp \
     CommandHistory.cpp \
-    ExtendedGraph.cpp
+    ExtendedGraph.cpp \
+    NodeDescriptor.cpp
 
 RESOURCES += \
     coreresources.qrc
@@ -105,4 +106,5 @@ HEADERS += \
     interfaces/GraphWidgetListener.h \
     LinearConstraint.h \
     CommandHistory.h \
-    ExtendedGraph.h
+    ExtendedGraph.h \
+    NodeDescriptor.h

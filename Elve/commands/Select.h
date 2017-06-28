@@ -42,6 +42,7 @@ public:
         }
         if(eg->view()) {
             eg->view()->updateSelectionColor();
+            MainWindow::get().selectionChanged(eg);
         }
         ids.clear();
         return true;

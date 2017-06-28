@@ -7,6 +7,7 @@
 #include "PluginManager.h"
 #include "QConsoleWidget.h"
 #include "StoreView.h"
+#include "NodeInspector.h"
 
 
 namespace Elve
@@ -28,6 +29,8 @@ public:
     void graphChanged(SharedEGraph old, SharedEGraph newg) override;
     void runCommand(const QString& cmd) override;
 
+    void selectionChanged(const SharedEGraph& graph);
+
     GraphWidget* viewport();
     ~MainWindow();
 private:
@@ -35,6 +38,7 @@ private:
     QMdiSubWindow* mCurrentTab;
     QConsoleWidget* mConsole;
     StoreView* mStoreView;
+    NodeInspector* mNodeInspector;
 public slots:
 
     void onFileOpen(const QString& file);

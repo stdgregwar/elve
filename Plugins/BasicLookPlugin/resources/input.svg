@@ -40,8 +40,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="9.1606236"
-     inkscape:cx="-16.462507"
-     inkscape:cy="23.67274"
+     inkscape:cx="-41.242479"
+     inkscape:cy="23.454414"
      inkscape:current-layer="layer1"
      showgrid="true"
      inkscape:document-units="px"
@@ -79,7 +79,7 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer">
     <g
-       id="body"
+       id="grp"
        inkscape:label="#g6196">
       <path
          sodipodi:nodetypes="cccc"
@@ -90,9 +90,9 @@
       <path
          sodipodi:nodetypes="cccc"
          inkscape:connector-curvature="0"
-         id="path4716"
+         id="body"
          d="M 4.3998191,59.98613 31.184683,3.946329 60.208051,59.908941 Z"
-         style="fill:#8bdef0;fill-rule:evenodd;stroke:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;fill-opacity:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0" />
+         style="fill:#8bdef0;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
     </g>
     <rect
        style="opacity:1;fill:#37abc8;fill-opacity:1;stroke:none;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"

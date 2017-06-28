@@ -19,7 +19,8 @@ SOURCES += main.cpp \
     QConsoleWidget.cpp \
     Redirect.cpp \
     CommandLine.cpp \
-    StoreView.cpp
+    StoreView.cpp \
+    NodeInspector.cpp
 
 win32: LIBS += -L$$OUT_PWD/../Core/ -lElveCore
 else:unix: LIBS += -L$$OUT_PWD/../Core/ -lElveCore
@@ -70,7 +71,8 @@ HEADERS += \
     commands/Ungroup.h \
     commands/Chrono.h \
     commands/ClearAll.h \
-    commands/Look.h
+    commands/Look.h \
+    NodeInspector.h
 
 FORMS += \
     uis/mainwindow_test.ui

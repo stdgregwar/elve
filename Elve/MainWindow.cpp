@@ -90,6 +90,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui.menuHelp->addAction(QWhatsThis::createAction(this));
 
+    {
     //Setup terminal
     QDockWidget* dw = new QDockWidget("Shell",this);
     mConsole = new QConsoleWidget(this);
@@ -97,7 +98,9 @@ MainWindow::MainWindow(QWidget *parent)
     dw->setFeatures(QDockWidget::DockWidgetFloatable | QDockWidget::DockWidgetMovable);
     addDockWidget(Qt::BottomDockWidgetArea,dw);
     setDockOptions(QMainWindow::DockOption::AnimatedDocks);
+    }
 
+    {
     //Setup store view
     QDockWidget* vdw = new QDockWidget("Store",this);
     mStoreView = new StoreView(CommandLine::get().store(),this);
@@ -105,9 +108,21 @@ MainWindow::MainWindow(QWidget *parent)
     vdw->setFeatures(QDockWidget::DockWidgetFloatable | QDockWidget::DockWidgetMovable);
     addDockWidget(Qt::LeftDockWidgetArea,vdw);
     setDockOptions(QMainWindow::DockOption::AnimatedDocks);
+    }
+
+    {
+    //Setup node viewer
+    QDockWidget* dw = new QDockWidget("Node",this);
+        mNodeInspector = new NodeInspector(this);
+        dw->setWidget(mNodeInspector);
+        dw->setFeatures(QDockWidget::DockWidgetFloatable | QDockWidget::DockWidgetMovable);
+        addDockWidget(Qt::LeftDockWidgetArea,dw);
+    }
 }
 
-
+void MainWindow::selectionChanged(const SharedEGraph &graph) {
+    mNodeInspector->graphSelectionChanged(graph);
+}
 
 MainWindow::~MainWindow()
 {
