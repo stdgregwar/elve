@@ -10,10 +10,12 @@ namespace Elve {
     QString NodeDescriptor::multipleDescription(const Elve::Selection& sel, const SharedEGraph& eg) {
         int counts[NodeType::LAST] = {};
         QString names;
+        QString ids;
 
         for(const auto& id : sel) { //Count nodes types
             auto node = eg->graph()->node(id);
             names += QString("%1<br>").arg(QString::fromStdString(node.name()));
+            ids += QString("%1<br>").arg(node.id());
             ++counts[node.type()];
         }
 
@@ -25,13 +27,16 @@ namespace Elve {
                         "%4 <b>Outputs</b><br><br>"
                         "<b>Names:</b><br>"
                         "%5"
+                        "<br><b>IDs</b><br>"
+                        "%6"
                     "</html>"
                     )
                 .arg(sel.size())
                 .arg(counts[CLUSTER]+counts[INPUT_CLUSTER]+counts[OUTPUT_CLUSTER])
                 .arg(counts[INPUT]+counts[INPUT_CLUSTER])
                 .arg(counts[OUTPUT]+counts[OUTPUT_CLUSTER])
-                .arg(names);
+                .arg(names)
+                .arg(ids);
     }
 
     QString NodeDescriptor::nodeDescription(const Elve::Node& node) {
