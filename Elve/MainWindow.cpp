@@ -111,8 +111,8 @@ MainWindow::MainWindow(QWidget *parent)
     }
 
     {
-    //Setup node viewer
-    QDockWidget* dw = new QDockWidget("Node",this);
+    //Setup selection viewer
+    QDockWidget* dw = new QDockWidget("Selection",this);
         mNodeInspector = new NodeInspector(this);
         dw->setWidget(mNodeInspector);
         dw->setFeatures(QDockWidget::DockWidgetFloatable | QDockWidget::DockWidgetMovable);

@@ -9,9 +9,11 @@ namespace Elve {
 
     QString NodeDescriptor::multipleDescription(const Elve::Selection& sel, const SharedEGraph& eg) {
         int counts[NodeType::LAST] = {};
+        QString names;
 
         for(const auto& id : sel) { //Count nodes types
             auto node = eg->graph()->node(id);
+            names += QString("%1<br>").arg(QString::fromStdString(node.name()));
             ++counts[node.type()];
         }
 
@@ -20,13 +22,16 @@ namespace Elve {
                         "%1 <b>Nodes</b><br>"
                         "%2 <b>Clusters</b><br>"
                         "%3 <b>Inputs</b><br>"
-                        "%4 <b>Outputs</b><br>"
+                        "%4 <b>Outputs</b><br><br>"
+                        "<b>Names:</b><br>"
+                        "%5"
                     "</html>"
                     )
                 .arg(sel.size())
                 .arg(counts[CLUSTER]+counts[INPUT_CLUSTER]+counts[OUTPUT_CLUSTER])
                 .arg(counts[INPUT]+counts[INPUT_CLUSTER])
-                .arg(counts[OUTPUT]+counts[OUTPUT_CLUSTER]);
+                .arg(counts[OUTPUT]+counts[OUTPUT_CLUSTER])
+                .arg(names);
     }
 
     QString NodeDescriptor::nodeDescription(const Elve::Node& node) {
@@ -55,7 +60,7 @@ namespace Elve {
                             "<html>"
                                "<b>Name</b> : %1<br>"
                                    "<b>ID</b>   : %2<br>"
-                                   "<b>nodeCount</b> : %3<br>"
+                                   "<b>Node Count</b> : %3<br>"
                                    "%4"
                                "</html>"
                                )
@@ -76,9 +81,9 @@ namespace Elve {
                             "<html>"
                             "<b>Name</b> : %1<br>"
                                    "<b>ID</b>   : %2<br>"
-                                   "<b>level</b>: %3<br>"
-                                   "<b>truthtable</b> :\n %4<br>"
-                                   "<b>ancestorsCount</b> : %5<br>"
+                                   "<b>Level</b>: %3<br>"
+                                   "<b>Truthtable</b> :\n %4<br>"
+                                   "<b>Ancestor Count</b> : %5<br>"
                                    "%6"
                                "</html>"
                                )

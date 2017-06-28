@@ -50,6 +50,7 @@ public:
         } else if (output->view()) {
             if(mTrans->type() == SELECTION) {
                 output->view()->updateSelectionColor();
+                MainWindow::get().selectionChanged(output);
             } else {
                 output->view()->setGraph(output);
             }
