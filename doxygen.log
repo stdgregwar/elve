@@ -163,7 +163,7 @@ Prepro/home/travis/build/stdgregwar/elve/Core/Graph.h:36: warning: Compound Elve
 /home/travis/build/stdgregwar/elve/Core/QuadTree.h:16: warning: Compound Elve::QuadTree is not documented.
 /home/travis/build/stdgregwar/elve/Core/GraphWidget.h:31: warning: Compound Elve::GraphWidget is not documented.
 /home/travis/build/stdgregwar/elve/Core/Graph.h:28: warning: Compound Elve::Pin_hash is not documented.
-/home/travis/build/stdgregwar/elve/Core/interfaces/GraphWidgetListener.h:21: warning: Compound Elve::DummyListener is not documented.
+/home/travis/build/stdgregwar/elve/Core/interfaces/GraphWidgetListener.h:22: warning: Compound Elve::DummyListener is not documented.
 /home/travis/build/stdgregwar/elve/Core/Selection.h:10: warning: Compound Elve::Selection is not documented.
 /home/travis/build/stdgregwar/elve/Core/BoxConstraint.h:11: warning: Compound Elve::BoxConstraint is not documented.
 /home/travis/build/stdgregwar/elve/Core/Node.h:32: warning: Compound Elve::Node::Connexion is not documented.
@@ -420,8 +420,9 @@ Generating code for/home/travis/build/stdgregwar/elve/Core/Singleton.h:13: warni
 /home/travis/build/stdgregwar/elve/Core/interfaces/GraphTransformPlugin.h:49: warning: Member type() const =0 (function) of class Elve::TransformPlugin is not documented.
 /home/travis/build/stdgregwar/elve/Core/interfaces/GraphTransformPlugin.h:50: warning: Member name() const =0 (function) of class Elve::TransformPlugin is not documented.
 /home/travis/build/stdgregwar/elve/Core/interfaces/GraphTransformPlugin.h:51: warning: Member cliName() const =0 (function) of class Elve::TransformPlugin is not documented.
-/home/travis/build/stdgregwar/elve/Core/interfaces/GraphWidgetListener.h:17: warning: Member graphChanged(SharedEGraph oldGraph, SharedEGraph newGraph)=0 (function) of class Elve::GraphWidgetListener is not documented.
-/home/travis/build/stdgregwar/elve/Core/interfaces/GraphWidgetListener.h:18: warning: Member runCommand(const QString &cmd)=0 (function) of class Elve::GraphWidgetListener is not documented.
+/home/travis/build/stdgregwar/elve/Core/interfaces/GraphWidgetListener.h:17: warning: Member graphChanged(const SharedEGraph &oldGraph, const SharedEGraph &newGraph)=0 (function) of class Elve::GraphWidgetListener is not documented.
+/home/travis/build/stdgregwar/elve/Core/interfaces/GraphWidgetListener.h:18: warning: Member selectionChanged(const SharedEGraph &graph)=0 (function) of class Elve::GraphWidgetListener is not documented.
+/home/travis/build/stdgregwar/elve/Core/interfaces/GraphWidgetListener.h:19: warning: Member runCommand(const QString &cmd)=0 (function) of class Elve::GraphWidgetListener is not documented.
 /home/travis/build/stdgregwar/elve/Core/interfaces/LayoutPlugin.h:61: warning: Member json() const  (function) of class Elve::LayoutPlugin is not documented.
 /home/travis/build/stdgregwar/elve/Core/interfaces/LayoutPlugin.h:63: warning: Member fromJson(const QJsonObject &layout) (function) of class Elve::LayoutPlugin is not documented.
 /home/travis/build/stdgregwar/elve/Core/interfaces/LookFactoryPlugin.h:73: warning: The following parameters of Elve::LookFactoryPlugin::edge(const NodeLook &ancestor, Index outi, const NodeLook &children, Index ini) are not documented:
@@ -670,6 +671,6 @@ Generating file index...
 Generating file member index...
 Generating example index...
 finalizing index lists...
-symbol cache used 721/65536 hits=29349 misses=721
-lookup cache used 2288/65536 hits=13237 misses=2480
+symbol cache used 723/65536 hits=29438 misses=723
+lookup cache used 2290/65536 hits=13257 misses=2482
 finished...
