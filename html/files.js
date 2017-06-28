@@ -28,6 +28,8 @@ var files =
     [ "/home/travis/build/stdgregwar/elve/Core/Node.h", null, null ],
     [ "/home/travis/build/stdgregwar/elve/Core/NodeData.cpp", null, null ],
     [ "/home/travis/build/stdgregwar/elve/Core/NodeData.h", null, null ],
+    [ "/home/travis/build/stdgregwar/elve/Core/NodeDescriptor.cpp", null, null ],
+    [ "/home/travis/build/stdgregwar/elve/Core/NodeDescriptor.h", null, null ],
     [ "/home/travis/build/stdgregwar/elve/Core/PluginManager.cpp", null, null ],
     [ "/home/travis/build/stdgregwar/elve/Core/PluginManager.h", null, null ],
     [ "/home/travis/build/stdgregwar/elve/Core/Point.cpp", null, null ],

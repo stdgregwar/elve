@@ -28,6 +28,7 @@ var hierarchy =
     ] ],
     [ "Elve::Node", "classElve_1_1Node.html", null ],
     [ "Elve::NodeData", "classElve_1_1NodeData.html", null ],
+    [ "Elve::NodeDescriptor", "classElve_1_1NodeDescriptor.html", null ],
     [ "Elve::Pin", "structElve_1_1Pin.html", null ],
     [ "Elve::Pin_hash", "structElve_1_1Pin__hash.html", null ],
     [ "Elve::Plugin", "classElve_1_1Plugin.html", [

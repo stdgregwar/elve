@@ -25,6 +25,7 @@ var annotated =
     [ "Elve::Movable", "classElve_1_1Movable.html", "classElve_1_1Movable" ],
     [ "Elve::Node", "classElve_1_1Node.html", "classElve_1_1Node" ],
     [ "Elve::NodeData", "classElve_1_1NodeData.html", "classElve_1_1NodeData" ],
+    [ "Elve::NodeDescriptor", "classElve_1_1NodeDescriptor.html", "classElve_1_1NodeDescriptor" ],
     [ "Elve::NodeLook", "classElve_1_1NodeLook.html", "classElve_1_1NodeLook" ],
     [ "Elve::Pin", "structElve_1_1Pin.html", "structElve_1_1Pin" ],
     [ "Elve::Pin_hash", "structElve_1_1Pin__hash.html", "structElve_1_1Pin__hash" ],
