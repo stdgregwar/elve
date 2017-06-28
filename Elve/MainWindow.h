@@ -26,10 +26,10 @@ public:
     void runCommandOnShownGraph(const QString& cmd);
     void closeAllTabs();
 
-    void graphChanged(SharedEGraph old, SharedEGraph newg) override;
+    void graphChanged(const SharedEGraph& old, const SharedEGraph& newg) override;
     void runCommand(const QString& cmd) override;
 
-    void selectionChanged(const SharedEGraph& graph);
+    void selectionChanged(const SharedEGraph& graph) override;
 
     GraphWidget* viewport();
     ~MainWindow();

@@ -229,6 +229,7 @@ void GraphWidget::keyPressEvent(QKeyEvent *event) {
         mGraph->setMask(event->key()-Qt::Key_0);
         emit maskChanged(event->key()-Qt::Key_0);
         updateSelectionColor();
+        mListener->selectionChanged(mGraph);
     }
 }
 

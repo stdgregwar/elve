@@ -344,7 +344,7 @@ void MainWindow::applyQSSTheme() {
     qApp->setStyleSheet(StyleSheet);
 }
 
-void MainWindow::graphChanged(SharedEGraph old, SharedEGraph newg) {
+void MainWindow::graphChanged(const SharedEGraph &old, const SharedEGraph &newg) {
     CommandLine::get().graphChanged(old,newg);
 }
 
