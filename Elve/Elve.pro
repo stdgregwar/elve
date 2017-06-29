@@ -80,7 +80,7 @@ FORMS += \
 RESOURCES += \
     elveresources.qrc
 
-install_it.path = %{buildDir}
-install_it.files += %{sourceDir}/RunElve
+install_it.path = $$OUT_PWD
+install_it.files += RunElve
 
-INSTALLS += iunstall_it
+INSTALLS += install_it
