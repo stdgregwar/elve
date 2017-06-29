@@ -56,7 +56,7 @@ using qmake ([qmake documentation](http://doc.qt.io/qt-4.8/qmake-tutorial.html))
 #from elve directory
 mkdir build
 cd build
-qmake ..
+qmake CONFIG+=release ..
 make
 #optional
 sudo make install
