@@ -123,69 +123,73 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00035"></a>00035 <span class="keywordtype">void</span> _load(<span class="keyword">const</span> QString&amp; path, <span class="keyword">const</span> QString&amp; type, QList&lt;T*&gt;&amp; toFill) {
 <a name="l00036"></a>00036     QDir dir(path);
 <a name="l00037"></a>00037     qDebug() &lt;&lt; <span class="stringliteral">&quot;Searching for&quot;</span> &lt;&lt; type &lt;&lt; <span class="stringliteral">&quot;plugins in&quot;</span> &lt;&lt; dir.absoluteFilePath(path);
-<a name="l00038"></a>00038     <span class="keywordflow">for</span>(<span class="keyword">const</span> QFileInfo&amp; info : dir.entryInfoList(QDir::Files)) {
-<a name="l00039"></a>00039         qDebug() &lt;&lt; <span class="stringliteral">&quot;Trying to load&quot;</span> &lt;&lt; info.baseName();
-<a name="l00040"></a>00040         <span class="comment">//QMessageBox(&quot;Warning&quot;,&quot;Trying to load&quot; + info.baseName() + &quot; : \n&quot;,QMessageBox::Warning,0,0,0).exec();</span>
-<a name="l00041"></a>00041         <span class="keywordflow">if</span>(info.suffix() == <span class="stringliteral">&quot;so&quot;</span> || info.suffix() == <span class="stringliteral">&quot;dll&quot;</span> || info.suffix() == <span class="stringliteral">&quot;dylib&quot;</span>) {
-<a name="l00042"></a>00042             QPluginLoader* qpl = <span class="keyword">new</span> QPluginLoader(info.filePath());
-<a name="l00043"></a>00043             <span class="keywordflow">if</span>(!qpl-&gt;load()) {
-<a name="l00044"></a>00044                 QMessageBox(<span class="stringliteral">&quot;Warning&quot;</span>,<span class="stringliteral">&quot;Could not load &quot;</span> + info.baseName() + <span class="stringliteral">&quot; : \n&quot;</span> + qpl-&gt;errorString(),QMessageBox::Warning,0,0,0).exec();
-<a name="l00045"></a>00045                 qDebug() &lt;&lt; qpl-&gt;errorString() &lt;&lt; endl;
-<a name="l00046"></a>00046             } <span class="keywordflow">else</span> {
-<a name="l00047"></a>00047                 QObject* obj = qpl-&gt;instance();
-<a name="l00048"></a>00048                 T* <span class="keyword">interface </span>= qobject_cast&lt;T*&gt;(obj);
-<a name="l00049"></a>00049                 <span class="keywordflow">if</span>(interface) {
-<a name="l00050"></a>00050                     <span class="keywordflow">if</span>(dir.exists(info.baseName()+<span class="stringliteral">&quot;.ini&quot;</span>)) {
-<a name="l00051"></a>00051                         qDebug() &lt;&lt; <span class="stringliteral">&quot;found config file for plugin&quot;</span> &lt;&lt; info.baseName();
-<a name="l00052"></a>00052                         <span class="comment">//TODO link config file path with plugin</span>
-<a name="l00053"></a>00053                         interface-&gt;configPath((info.baseName()+<span class="stringliteral">&quot;.ini&quot;</span>).toStdString());
-<a name="l00054"></a>00054                     }
-<a name="l00055"></a>00055                     interface-&gt;basePath(info.path());
-<a name="l00056"></a>00056                     toFill.push_back(interface);
-<a name="l00057"></a>00057                 } <span class="keywordflow">else</span> {
-<a name="l00058"></a>00058                     QMessageBox(<span class="stringliteral">&quot;Warning&quot;</span>,<span class="stringliteral">&quot;Could not load &quot;</span> + info.baseName() + <span class="stringliteral">&quot; : \n Plugin is not a &quot;</span> + type,QMessageBox::Warning,0,0,0).exec();
-<a name="l00059"></a>00059                 }
-<a name="l00060"></a>00060             }
-<a name="l00061"></a>00061             <span class="keyword">delete</span> qpl;
-<a name="l00062"></a>00062         }
-<a name="l00063"></a>00063     }
-<a name="l00064"></a>00064 }
-<a name="l00065"></a>00065 
-<a name="l00066"></a>00066 SharedLayout PluginManager::getLayout(<span class="keyword">const</span> QString&amp; name)<span class="keyword"> const</span>
-<a name="l00067"></a>00067 <span class="keyword"></span>{
-<a name="l00068"></a>00068     <span class="keywordflow">for</span>(LayoutPlugin* l : mLayouts) {
-<a name="l00069"></a>00069         <span class="keywordflow">if</span>(l-&gt;name() == name) {
-<a name="l00070"></a>00070             <span class="keywordflow">return</span> l-&gt;create();
-<a name="l00071"></a>00071         }
-<a name="l00072"></a>00072     }
-<a name="l00073"></a>00073     <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;couldn&#39;t find &quot;</span> + name.toStdString() + <span class="stringliteral">&quot; layout&quot;</span>);
-<a name="l00074"></a>00074     <span class="keywordflow">return</span> <span class="keyword">nullptr</span>; <span class="comment">//TODO</span>
-<a name="l00075"></a>00075 }
-<a name="l00076"></a>00076 
-<a name="l00077"></a>00077 SharedLayout PluginManager::defaultLayout()<span class="keyword"> const</span>
-<a name="l00078"></a>00078 <span class="keyword"></span>{
-<a name="l00079"></a>00079     <span class="keywordflow">return</span> mLayouts.first()-&gt;create();
-<a name="l00080"></a>00080 }
-<a name="l00081"></a>00081 
-<a name="l00082"></a>00082 SharedLook PluginManager::defaultLook()<span class="keyword"> const </span>{
-<a name="l00083"></a>00083     <span class="keywordflow">return</span> mLooks.first()-&gt;create();
+<a name="l00038"></a>00038     <span class="keywordflow">if</span>(!dir.exists()) {
+<a name="l00039"></a>00039         qDebug() &lt;&lt; <span class="stringliteral">&quot;Directory don&#39;t exist&quot;</span>;
+<a name="l00040"></a>00040         <span class="keywordflow">return</span>;
+<a name="l00041"></a>00041     }
+<a name="l00042"></a>00042     <span class="keywordflow">for</span>(<span class="keyword">const</span> QFileInfo&amp; info : dir.entryInfoList(QDir::Files)) {
+<a name="l00043"></a>00043         qDebug() &lt;&lt; <span class="stringliteral">&quot;Trying to load&quot;</span> &lt;&lt; info.baseName();
+<a name="l00044"></a>00044         <span class="comment">//QMessageBox(&quot;Warning&quot;,&quot;Trying to load&quot; + info.baseName() + &quot; : \n&quot;,QMessageBox::Warning,0,0,0).exec();</span>
+<a name="l00045"></a>00045         <span class="keywordflow">if</span>(info.suffix() == <span class="stringliteral">&quot;so&quot;</span> || info.suffix() == <span class="stringliteral">&quot;dll&quot;</span> || info.suffix() == <span class="stringliteral">&quot;dylib&quot;</span>) {
+<a name="l00046"></a>00046             QPluginLoader* qpl = <span class="keyword">new</span> QPluginLoader(info.filePath());
+<a name="l00047"></a>00047             <span class="keywordflow">if</span>(!qpl-&gt;load()) {
+<a name="l00048"></a>00048                 QMessageBox(<span class="stringliteral">&quot;Warning&quot;</span>,<span class="stringliteral">&quot;Could not load &quot;</span> + info.baseName() + <span class="stringliteral">&quot; : \n&quot;</span> + qpl-&gt;errorString(),QMessageBox::Warning,0,0,0).exec();
+<a name="l00049"></a>00049                 qDebug() &lt;&lt; qpl-&gt;errorString() &lt;&lt; endl;
+<a name="l00050"></a>00050             } <span class="keywordflow">else</span> {
+<a name="l00051"></a>00051                 QObject* obj = qpl-&gt;instance();
+<a name="l00052"></a>00052                 T* <span class="keyword">interface </span>= qobject_cast&lt;T*&gt;(obj);
+<a name="l00053"></a>00053                 <span class="keywordflow">if</span>(interface) {
+<a name="l00054"></a>00054                     <span class="keywordflow">if</span>(dir.exists(info.baseName()+<span class="stringliteral">&quot;.ini&quot;</span>)) {
+<a name="l00055"></a>00055                         qDebug() &lt;&lt; <span class="stringliteral">&quot;found config file for plugin&quot;</span> &lt;&lt; info.baseName();
+<a name="l00056"></a>00056                         <span class="comment">//TODO link config file path with plugin</span>
+<a name="l00057"></a>00057                         interface-&gt;configPath((info.baseName()+<span class="stringliteral">&quot;.ini&quot;</span>).toStdString());
+<a name="l00058"></a>00058                     }
+<a name="l00059"></a>00059                     interface-&gt;basePath(info.path());
+<a name="l00060"></a>00060                     toFill.push_back(interface);
+<a name="l00061"></a>00061                 } <span class="keywordflow">else</span> {
+<a name="l00062"></a>00062                     QMessageBox(<span class="stringliteral">&quot;Warning&quot;</span>,<span class="stringliteral">&quot;Could not load &quot;</span> + info.baseName() + <span class="stringliteral">&quot; : \n Plugin is not a &quot;</span> + type,QMessageBox::Warning,0,0,0).exec();
+<a name="l00063"></a>00063                 }
+<a name="l00064"></a>00064             }
+<a name="l00065"></a>00065             <span class="keyword">delete</span> qpl;
+<a name="l00066"></a>00066         }
+<a name="l00067"></a>00067     }
+<a name="l00068"></a>00068 }
+<a name="l00069"></a>00069 
+<a name="l00070"></a>00070 SharedLayout PluginManager::getLayout(<span class="keyword">const</span> QString&amp; name)<span class="keyword"> const</span>
+<a name="l00071"></a>00071 <span class="keyword"></span>{
+<a name="l00072"></a>00072     <span class="keywordflow">for</span>(LayoutPlugin* l : mLayouts) {
+<a name="l00073"></a>00073         <span class="keywordflow">if</span>(l-&gt;name() == name) {
+<a name="l00074"></a>00074             <span class="keywordflow">return</span> l-&gt;create();
+<a name="l00075"></a>00075         }
+<a name="l00076"></a>00076     }
+<a name="l00077"></a>00077     <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;couldn&#39;t find &quot;</span> + name.toStdString() + <span class="stringliteral">&quot; layout&quot;</span>);
+<a name="l00078"></a>00078     <span class="keywordflow">return</span> <span class="keyword">nullptr</span>; <span class="comment">//TODO</span>
+<a name="l00079"></a>00079 }
+<a name="l00080"></a>00080 
+<a name="l00081"></a>00081 SharedLayout PluginManager::defaultLayout()<span class="keyword"> const</span>
+<a name="l00082"></a>00082 <span class="keyword"></span>{
+<a name="l00083"></a>00083     <span class="keywordflow">return</span> mLayouts.first()-&gt;create();
 <a name="l00084"></a>00084 }
 <a name="l00085"></a>00085 
-<a name="l00086"></a>00086 <span class="keywordtype">void</span> PluginManager::load(<span class="keyword">const</span> QString&amp; path)
-<a name="l00087"></a>00087 {
-<a name="l00088"></a>00088     <span class="comment">//For loaders</span>
-<a name="l00089"></a>00089     _load(path+<span class="stringliteral">&quot;/loaders&quot;</span>,<span class="stringliteral">&quot;Graph Loader&quot;</span>,mLoaders);
-<a name="l00090"></a>00090     <span class="comment">//For layouts</span>
-<a name="l00091"></a>00091     _load(path+<span class="stringliteral">&quot;/layouts&quot;</span>,<span class="stringliteral">&quot;Layout&quot;</span>,mLayouts);
-<a name="l00092"></a>00092     <span class="comment">//For exporters</span>
-<a name="l00093"></a>00093     _load(path+<span class="stringliteral">&quot;/exporters&quot;</span>,<span class="stringliteral">&quot;Exporter&quot;</span>,mExporters);
-<a name="l00094"></a>00094     <span class="comment">//For transforms</span>
-<a name="l00095"></a>00095     _load(path+<span class="stringliteral">&quot;/transforms&quot;</span>,<span class="stringliteral">&quot;Transform&quot;</span>,mTransforms);
-<a name="l00096"></a>00096     <span class="comment">//For looks</span>
-<a name="l00097"></a>00097     _load(path+<span class="stringliteral">&quot;/looks&quot;</span>,<span class="stringliteral">&quot;Look&quot;</span>,mLooks);
-<a name="l00098"></a>00098 }
-<a name="l00099"></a>00099 
-<a name="l00100"></a>00100 }
+<a name="l00086"></a>00086 SharedLook PluginManager::defaultLook()<span class="keyword"> const </span>{
+<a name="l00087"></a>00087     <span class="keywordflow">return</span> mLooks.first()-&gt;create();
+<a name="l00088"></a>00088 }
+<a name="l00089"></a>00089 
+<a name="l00090"></a>00090 <span class="keywordtype">void</span> PluginManager::load(<span class="keyword">const</span> QString&amp; path)
+<a name="l00091"></a>00091 {
+<a name="l00092"></a>00092     <span class="comment">//For loaders</span>
+<a name="l00093"></a>00093     _load(path+<span class="stringliteral">&quot;/loaders&quot;</span>,<span class="stringliteral">&quot;Graph Loader&quot;</span>,mLoaders);
+<a name="l00094"></a>00094     <span class="comment">//For layouts</span>
+<a name="l00095"></a>00095     _load(path+<span class="stringliteral">&quot;/layouts&quot;</span>,<span class="stringliteral">&quot;Layout&quot;</span>,mLayouts);
+<a name="l00096"></a>00096     <span class="comment">//For exporters</span>
+<a name="l00097"></a>00097     _load(path+<span class="stringliteral">&quot;/exporters&quot;</span>,<span class="stringliteral">&quot;Exporter&quot;</span>,mExporters);
+<a name="l00098"></a>00098     <span class="comment">//For transforms</span>
+<a name="l00099"></a>00099     _load(path+<span class="stringliteral">&quot;/transforms&quot;</span>,<span class="stringliteral">&quot;Transform&quot;</span>,mTransforms);
+<a name="l00100"></a>00100     <span class="comment">//For looks</span>
+<a name="l00101"></a>00101     _load(path+<span class="stringliteral">&quot;/looks&quot;</span>,<span class="stringliteral">&quot;Look&quot;</span>,mLooks);
+<a name="l00102"></a>00102 }
+<a name="l00103"></a>00103 
+<a name="l00104"></a>00104 }
 </pre></div></div><!-- contents -->
 </div>
 <!-- window showing the filter options -->

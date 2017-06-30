@@ -52,17 +52,17 @@ var files =
     [ "/home/travis/build/stdgregwar/elve/Core/interfaces/EdgeLook.h", null, null ],
     [ "/home/travis/build/stdgregwar/elve/Core/interfaces/FileExporterPlugin.cpp", null, null ],
     [ "/home/travis/build/stdgregwar/elve/Core/interfaces/FileExporterPlugin.h", null, null ],
-    [ "/home/travis/build/stdgregwar/elve/Core/interfaces/GraphLoaderPlugin.h", null, null ],
-    [ "/home/travis/build/stdgregwar/elve/Core/interfaces/GraphTransformPlugin.h", null, null ],
     [ "/home/travis/build/stdgregwar/elve/Core/interfaces/GraphWidgetListener.cpp", null, null ],
     [ "/home/travis/build/stdgregwar/elve/Core/interfaces/GraphWidgetListener.h", null, null ],
     [ "/home/travis/build/stdgregwar/elve/Core/interfaces/LayoutPlugin.cpp", null, null ],
     [ "/home/travis/build/stdgregwar/elve/Core/interfaces/LayoutPlugin.h", null, null ],
     [ "/home/travis/build/stdgregwar/elve/Core/interfaces/LoaderInterface.cpp", null, null ],
+    [ "/home/travis/build/stdgregwar/elve/Core/interfaces/LoaderPlugin.h", null, null ],
     [ "/home/travis/build/stdgregwar/elve/Core/interfaces/LookFactoryPlugin.cpp", null, null ],
     [ "/home/travis/build/stdgregwar/elve/Core/interfaces/LookFactoryPlugin.h", null, null ],
     [ "/home/travis/build/stdgregwar/elve/Core/interfaces/NodeLook.cpp", null, null ],
     [ "/home/travis/build/stdgregwar/elve/Core/interfaces/NodeLook.h", null, null ],
     [ "/home/travis/build/stdgregwar/elve/Core/interfaces/Plugin.cpp", null, null ],
-    [ "/home/travis/build/stdgregwar/elve/Core/interfaces/Plugin.h", null, null ]
+    [ "/home/travis/build/stdgregwar/elve/Core/interfaces/Plugin.h", null, null ],
+    [ "/home/travis/build/stdgregwar/elve/Core/interfaces/TransformPlugin.h", null, null ]
 ];
