@@ -13,6 +13,11 @@ CONFIG += no_plugin_name_prefix
 
 DESTDIR = ../../Elve/plugins/loaders
 
+unix {
+    target.path = ~/.elve/plugins/loaders
+    INSTALLS += target
+}
+
 SOURCES += \
     DivisorLoader.cpp
 

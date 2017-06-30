@@ -13,6 +13,12 @@ CONFIG += no_plugin_name_prefix
 
 DESTDIR = ../../Elve/plugins/layouts
 
+unix {
+    target.path = ~/.elve/plugins/layouts
+    INSTALLS += target
+}
+
+
 INCLUDEPATH+= ../../Core/interfaces
 INCLUDEPATH += ../../Core
 

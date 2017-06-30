@@ -37,6 +37,7 @@ MainWindow::MainWindow(QWidget *parent)
     //Init coremodule resources
 
     PluginManager::get().load("plugins");
+    PluginManager::get().load(".elve/plugins");
 
     QObject::connect(new QShortcut(QKeySequence("F12"), this), SIGNAL(activated()), this, SLOT(applyQSSTheme()));
     applyQSSTheme();

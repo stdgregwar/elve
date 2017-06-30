@@ -81,4 +81,6 @@ RESOURCES += \
 install_it.path = %{buildDir}
 install_it.files += %{sourceDir}/RunElve
 
-INSTALLS += iunstall_it
+unix:target.path = /usr/bin
+
+INSTALLS += iunstall_it target

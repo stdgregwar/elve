@@ -35,6 +35,10 @@ template <class T>
 void _load(const QString& path, const QString& type, QList<T*>& toFill) {
     QDir dir(path);
     qDebug() << "Searching for" << type << "plugins in" << dir.absoluteFilePath(path);
+    if(!dir.exists()) {
+        qDebug() << "Directory don't exist";
+        return;
+    }
     for(const QFileInfo& info : dir.entryInfoList(QDir::Files)) {
         qDebug() << "Trying to load" << info.baseName();
         //QMessageBox("Warning","Trying to load" + info.baseName() + " : \n",QMessageBox::Warning,0,0,0).exec();

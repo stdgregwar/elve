@@ -13,6 +13,11 @@ CONFIG += no_plugin_name_prefix
 
 DESTDIR = ../../Elve/plugins/looks
 
+unix {
+    target.path = ~/.elve/plugins/looks
+    INSTALLS += target
+}
+
 INCLUDEPATH += ../../Core
 
 #DISTFILES += BlifLoaderPlugin.json
