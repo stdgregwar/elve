@@ -1,10 +1,10 @@
 #ifndef PLUGINMANAGER_H
 #define PLUGINMANAGER_H
 
-#include <interfaces/GraphLoaderPlugin.h>
+#include <interfaces/LoaderPlugin.h>
 #include <interfaces/LayoutPlugin.h>
 #include <interfaces/FileExporterPlugin.h>
-#include <interfaces/GraphTransformPlugin.h>
+#include <interfaces/TransformPlugin.h>
 #include <interfaces/LookFactoryPlugin.h>
 #include <QPluginLoader>
 #include <QMap>
@@ -14,8 +14,8 @@
 
 namespace Elve {
 
-typedef QList<GraphLoaderPlugin*> Loaders;
-typedef QList<GraphTransformPlugin*> Transforms;
+typedef QList<LoaderPlugin*> Loaders;
+typedef QList<TransformPlugin*> Transforms;
 typedef QList<FileExporterPlugin*> Exporters;
 typedef QList<LayoutPlugin*> Layouts;
 typedef QList<LookFactoryPlugin*> Looks;

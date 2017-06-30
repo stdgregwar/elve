@@ -101,9 +101,13 @@ void Point::tick(float dt, bool update)
     }
 
     if(moved() && update) {
-        for(Movable* m : mMovables) {
-            m->onStateChange(mPos,mSpeed);
-        }
+        notify();
+    }
+}
+
+void Point::notify() {
+    for(Movable* m : mMovables) {
+        m->onStateChange(mPos,mSpeed);
     }
 }
 

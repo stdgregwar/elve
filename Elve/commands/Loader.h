@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Plugin.h"
-#include <interfaces/GraphLoaderPlugin.h>
+#include <interfaces/LoaderPlugin.h>
 #include <PluginManager.h>
 
 namespace Elve {
@@ -12,7 +12,7 @@ using namespace alice;
 class LoaderCommand : public PluginCommand
 {
 public:
-    LoaderCommand(GraphLoaderPlugin* pl, const environment::ptr& env) : PluginCommand(pl,env, (pl->formatName() + " Loader").toStdString()),
+    LoaderCommand(LoaderPlugin* pl, const environment::ptr& env) : PluginCommand(pl,env, (pl->formatName() + " Loader").toStdString()),
       mLoader(pl)
     {
         pod.add("filename",1);
@@ -39,7 +39,7 @@ public:
     }
 private:
     std::string mFilename;
-    GraphLoaderPlugin* mLoader;
+    LoaderPlugin* mLoader;
 };
 
 }

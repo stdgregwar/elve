@@ -9,7 +9,7 @@ using namespace alice;
 class UngroupCommand : public command
 {
 public:
-    UngroupCommand(const environment::ptr& env) : command(env,"Ungroup") {
+    UngroupCommand(const environment::ptr& env) : command(env,"Ungroup the selected nodes") {
         pod.add("mask",1).add("name",1);
 
         opts.add_options()

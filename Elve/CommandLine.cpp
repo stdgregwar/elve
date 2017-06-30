@@ -144,7 +144,7 @@ void CommandLine::setupPluginsCommands() {
     }
 
     mCli.set_category("Loaders");
-    for(GraphLoaderPlugin* pl : PluginManager::get().loaders()) {
+    for(LoaderPlugin* pl : PluginManager::get().loaders()) {
         mCli.insert_command("load_" + pl->cliName(), make_shared<LoaderCommand>(pl,mCli.env));
     }
 
@@ -154,7 +154,7 @@ void CommandLine::setupPluginsCommands() {
     }
 
     mCli.set_category("Transforms");
-    for(GraphTransformPlugin* pl : PluginManager::get().transforms()) {
+    for(TransformPlugin* pl : PluginManager::get().transforms()) {
         mCli.insert_command(pl->cliName(), make_shared<TransformCommand>(pl,mCli.env));
     }
 

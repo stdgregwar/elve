@@ -13,7 +13,7 @@
 #include <QMessageBox>
 #include <QWhatsThis>
 
-#include <interfaces/GraphLoaderPlugin.h>
+#include <interfaces/LoaderPlugin.h>
 #include <Graph.h>
 #include <ExtendedGraph.h>
 #include <QMdiSubWindow>
@@ -51,7 +51,7 @@ MainWindow::MainWindow(QWidget *parent)
     //setup loaders
     for(auto& l : pluginManager.loaders()) {
         FileLoadAction* a = new FileLoadAction(l,l->formatName(),this);
-        connect(a,SIGNAL(triggered(GraphLoaderPlugin*)),this,SLOT(on_import_trigerred(GraphLoaderPlugin*)));
+        connect(a,SIGNAL(triggered(LoaderPlugin*)),this,SLOT(on_import_trigerred(LoaderPlugin*)));
         ui.menuImport->addAction(a);
     }
 
@@ -72,7 +72,7 @@ MainWindow::MainWindow(QWidget *parent)
     //Setup transforms
     for(auto& l : pluginManager.transforms()) {
         TransformAction* a = new TransformAction(l,l->name(),this);
-        connect(a,SIGNAL(triggered(GraphTransformPlugin*)),this,SLOT(on_transform_triggered(GraphTransformPlugin*)));
+        connect(a,SIGNAL(triggered(TransformPlugin*)),this,SLOT(on_transform_triggered(TransformPlugin*)));
         switch(l->type()) {
         case SELECTION:
             ui.menuSelect->addAction(a);
@@ -91,6 +91,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui.menuHelp->addAction(QWhatsThis::createAction(this));
 
+    {
     //Setup terminal
     QDockWidget* dw = new QDockWidget("Shell",this);
     mConsole = new QConsoleWidget(this);
@@ -98,7 +99,9 @@ MainWindow::MainWindow(QWidget *parent)
     dw->setFeatures(QDockWidget::DockWidgetFloatable | QDockWidget::DockWidgetMovable);
     addDockWidget(Qt::BottomDockWidgetArea,dw);
     setDockOptions(QMainWindow::DockOption::AnimatedDocks);
+    }
 
+    {
     //Setup store view
     QDockWidget* vdw = new QDockWidget("Store",this);
     mStoreView = new StoreView(CommandLine::get().store(),this);
@@ -106,9 +109,21 @@ MainWindow::MainWindow(QWidget *parent)
     vdw->setFeatures(QDockWidget::DockWidgetFloatable | QDockWidget::DockWidgetMovable);
     addDockWidget(Qt::LeftDockWidgetArea,vdw);
     setDockOptions(QMainWindow::DockOption::AnimatedDocks);
+    }
+
+    {
+    //Setup selection viewer
+    QDockWidget* dw = new QDockWidget("Selection",this);
+        mNodeInspector = new NodeInspector(this);
+        dw->setWidget(mNodeInspector);
+        dw->setFeatures(QDockWidget::DockWidgetFloatable | QDockWidget::DockWidgetMovable);
+        addDockWidget(Qt::LeftDockWidgetArea,dw);
+    }
 }
 
-
+void MainWindow::selectionChanged(const SharedEGraph &graph) {
+    mNodeInspector->graphSelectionChanged(graph);
+}
 
 MainWindow::~MainWindow()
 {
@@ -119,7 +134,7 @@ void MainWindow::closeAllTabs() {
     ui.mdiArea->closeAllSubWindows();
 }
 
-void MainWindow::on_import_trigerred(GraphLoaderPlugin* ld) {
+void MainWindow::on_import_trigerred(LoaderPlugin* ld) {
     QString filename = QFileDialog::getOpenFileName(this,"Open " + ld->formatName(),"",ld->fileFilter());
     if(filename != "") {
         runUiCommand(QString("load_%1 \"%2\"").arg(ld->cliName().c_str(),filename));
@@ -136,7 +151,7 @@ void MainWindow::on_import_trigerred(GraphLoaderPlugin* ld) {
     }
 }
 
-void MainWindow::on_transform_triggered(GraphTransformPlugin* trans) {
+void MainWindow::on_transform_triggered(TransformPlugin* trans) {
     runCommandOnShownGraph((trans->cliName() + " -n").c_str());
 }
 
@@ -330,7 +345,7 @@ void MainWindow::applyQSSTheme() {
     qApp->setStyleSheet(StyleSheet);
 }
 
-void MainWindow::graphChanged(SharedEGraph old, SharedEGraph newg) {
+void MainWindow::graphChanged(const SharedEGraph &old, const SharedEGraph &newg) {
     CommandLine::get().graphChanged(old,newg);
 }
 

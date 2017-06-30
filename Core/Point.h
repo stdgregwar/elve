@@ -40,6 +40,7 @@ public:
     bool pinned() const;
     void pin();
     void unpin();
+    void notify();
     const NodeID& boundID() const;
 private:
     System& mSys;

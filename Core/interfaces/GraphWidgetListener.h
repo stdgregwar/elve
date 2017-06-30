@@ -14,13 +14,15 @@ class GraphWidgetListener
 {
 public:
     GraphWidgetListener();
-    virtual void graphChanged(SharedEGraph oldGraph, SharedEGraph newGraph) = 0;
+    virtual void graphChanged(const SharedEGraph& oldGraph, const SharedEGraph& newGraph) = 0;
+    virtual void selectionChanged(const SharedEGraph& graph) = 0;
     virtual void runCommand(const QString& cmd) = 0;
 };
 
 class DummyListener : public GraphWidgetListener {
-    void graphChanged(SharedEGraph oldGraph, SharedEGraph newGraph) override {}
-    void runCommand(const QString& cmd) override {}
+    void graphChanged(const SharedEGraph&, const SharedEGraph&) override {}
+    virtual void selectionChanged(const SharedEGraph&) override {}
+    void runCommand(const QString&) override {}
 };
 
 }

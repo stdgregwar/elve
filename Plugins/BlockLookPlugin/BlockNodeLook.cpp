@@ -3,6 +3,8 @@
 #include <QPen>
 #include <QDebug>
 
+#include <NodeDescriptor.h>
+
 using namespace Elve;
 
 static QColor baseColor(34,34,34);
@@ -13,7 +15,7 @@ BlockNodeLook::BlockNodeLook(const Node& node) : NodeLook(node)
     p.setCosmetic(true);
     p.setColor(Qt::transparent);
     QBrush b(baseColor);
-    setToolTip(QString("%1").arg(QString::number(node.id())));
+    setToolTip(NodeDescriptor::nodeDescription(node));
     setZValue(1);
 
     size_t io_count = std::max(node.inputCount(),node.outputCount());

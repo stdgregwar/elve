@@ -3,6 +3,9 @@
 #include <QJsonArray>
 #include <QHash>
 #include <Graph.h>
+
+#include "utils.h"
+
 namespace Elve {
 Node::Node(const NodeData &data) : mData(data),mLevel(-1)
 {
@@ -42,13 +45,13 @@ const Index& Node::IOIndex() const
 
 void Node::_addChild(Node* child, Index from, Index to)
 {
-    mChildren.push_back(child);
+    lazy_add(mChildren,child);
     mFanOut.push_back({child,from,to});
 }
 
 void Node::_addAncestor(Node* anc,  Index from, Index to)
 {
-    mAncestors.push_back(anc);
+    lazy_add(mAncestors,anc);
     mFanIn.push_back({anc,from,to});
 }
 

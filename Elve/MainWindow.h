@@ -7,6 +7,7 @@
 #include "PluginManager.h"
 #include "QConsoleWidget.h"
 #include "StoreView.h"
+#include "NodeInspector.h"
 
 
 namespace Elve
@@ -25,8 +26,10 @@ public:
     void runCommandOnShownGraph(const QString& cmd);
     void closeAllTabs();
 
-    void graphChanged(SharedEGraph old, SharedEGraph newg) override;
+    void graphChanged(const SharedEGraph& old, const SharedEGraph& newg) override;
     void runCommand(const QString& cmd) override;
+
+    void selectionChanged(const SharedEGraph& graph) override;
 
     GraphWidget* viewport();
     ~MainWindow();
@@ -35,14 +38,15 @@ private:
     QMdiSubWindow* mCurrentTab;
     QConsoleWidget* mConsole;
     StoreView* mStoreView;
+    NodeInspector* mNodeInspector;
 public slots:
 
     void onFileOpen(const QString& file);
     void on_export_trigerred(FileExporterPlugin* exp);
     void on_layout_trigerred(LayoutPlugin *layout);
     void on_look_triggered(LookFactoryPlugin* factory);
-    void on_import_trigerred(GraphLoaderPlugin* ld);
-    void on_transform_triggered(GraphTransformPlugin* trans);
+    void on_import_trigerred(LoaderPlugin* ld);
+    void on_transform_triggered(TransformPlugin* trans);
     void on_tab_change(QMdiSubWindow* tab);
     void applyQSSTheme();
 private slots:

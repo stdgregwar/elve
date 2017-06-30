@@ -1,12 +1,12 @@
 #pragma once
 
-#include <interfaces/GraphTransformPlugin.h>
+#include <interfaces/TransformPlugin.h>
 
-class Extract : public Elve::GraphTransformPlugin
+class Extract : public Elve::TransformPlugin
 {
     Q_OBJECT
     Q_PLUGIN_METADATA(IID "ch.epfl.lap.Extract")
-    Q_INTERFACES(Elve::GraphTransformPlugin)
+    Q_INTERFACES(Elve::TransformPlugin)
 public:
     ELVE_TRANSFORM(Extract,"Extract selection","extract",Elve::OTHER)
     Extract();

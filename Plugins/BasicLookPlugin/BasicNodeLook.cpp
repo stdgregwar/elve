@@ -4,6 +4,8 @@
 #include <QDebug>
 #include <QGraphicsRectItem>
 
+#include <NodeDescriptor.h>
+
 using namespace Elve;
 
 static QColor baseColor(34,34,34);
@@ -18,58 +20,7 @@ static std::unordered_map<int,QString> pixmaps{
 
 BasicNodeLook::BasicNodeLook(BasicLookPlugin& look,const Node& node) : mLook(look),NodeLook(node)
 {
-    QString props;
-    if(node.properties().contains("toShow")) {
-        QJsonObject toShow = node.properties().value("toShow").toObject();
-        for(QJsonObject::iterator v = toShow.begin(); v != toShow.end(); v++) {
-            props += v.key() + " : ";
-            if(v.value().isArray()) {
-                props += "[";
-                bool first = true;
-                for(const QJsonValue& v2 : v.value().toArray()) {
-                    props += (first ? "" : ", ") + v2.toString();
-                    first = false;
-                }
-                props += "]";
-            } else {
-                props += v.value().toVariant().toString();
-            }
-            props += "\n";
-        }
-    }
-    if(node.type() == CLUSTER) {
-        setToolTip(QString("Name : %1\n"
-                           "ID   : %2\n"
-                           "nodeCount : %3\n"
-                           "others : \n"
-                           "%4")
-                   .arg(node.name().c_str())
-                   .arg(node.id())
-                   .arg(node.data().dependencies().size())
-                   .arg(props));
-    } else {
-        QJsonObject truthtable = node.properties()["truthtable"].toObject();
-        QString table;
-        for(QJsonObject::const_iterator it = truthtable.constBegin();
-                it != truthtable.constEnd();
-                it++) {
-            table += it.key() + " ";
-            table += it.value().toString() + "\n";
-        }
-        setToolTip(QString("Name : %1\n"
-                           "ID   : %2\n"
-                           "level: %3\n"
-                           "truthtable :\n %4\n"
-                           "ancestorsCount : %5\n"
-                           "%6")
-                   .arg(node.name().c_str())
-                   .arg(node.id())
-                   .arg(QString::number(node.level()))
-                   .arg(table)
-                   .arg(node.data().dependencies().size())
-                   .arg(props));
-
-    } //TODO move all of this to a information module or smth
+    setToolTip(NodeDescriptor::nodeDescription(node));
 
 
     if(node.properties().contains("color")) {

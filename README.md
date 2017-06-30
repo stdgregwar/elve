@@ -1,7 +1,7 @@
 [![Build Status](https://travis-ci.org/stdgregwar/elve.png)](https://travis-ci.org/stdgregwar/elve)
 
 # ELVE: ELVE Logic Visualisation Engine
-
+![Screen](https://github.com/stdgregwar/elve/raw/wiki-resources/images/main_screen.png)
 ELVE is a novel interactive open source desktop application for
 visualisation of logic circuits. The current state of the tool offers basic
 features for visualising circuits and provides a mechanism for easy
@@ -52,13 +52,23 @@ can build and run ELVE by selecting the *Run* option from the *Build* menu.
 Alternatively, you can build ELVE with your preferred tool
 using qmake ([qmake documentation](http://doc.qt.io/qt-4.8/qmake-tutorial.html)).
 
+```
+#from elve directory
+mkdir build
+cd build
+qmake CONFIG+=release ..
+make
+#optional
+sudo make install
+```
+
 ## Usage
 Usage of ELVE is best described in Elve wiki [First Steps](https://github.com/stdgregwar/elve/wiki/First-steps).
 
 ## Development
 
 Would you like to write your own plugin? Take a look at the
-[available documentation](https://stdgregwar.github.io/elve/html/).
+[wiki](https://github.com/stdgregwar/elve/wiki/Writing-Plug-ins).
 
 ## Contact
 

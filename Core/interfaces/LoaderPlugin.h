@@ -7,7 +7,7 @@
 #include "../Graph.h"
 #include "Plugin.h"
 
-#define GraphLoaderPlugin_iid "ch.epfl.lap.elfe.GraphLoaderPlugin"
+#define LoaderPlugin_iid "ch.epfl.lap.elfe.GraphLoaderPlugin"
 
 namespace Elve {
 
@@ -17,10 +17,10 @@ namespace Elve {
  * GraphLoaderPlugin is a QPlugin interface that allow to extend the range of file
  * format that elve can import.
  */
-class GraphLoaderPlugin : public Plugin
+class LoaderPlugin : public Plugin
 {
     public:
-        virtual ~GraphLoaderPlugin(){}
+        virtual ~LoaderPlugin(){}
 
         /**
          * @brief load the graph from the given file
@@ -63,7 +63,7 @@ class GraphLoaderPlugin : public Plugin
 
 }
 
-Q_DECLARE_INTERFACE(Elve::GraphLoaderPlugin,GraphLoaderPlugin_iid)
+Q_DECLARE_INTERFACE(Elve::LoaderPlugin,LoaderPlugin_iid)
 
 #define ELVE_LOADER(Loader,full_name,filter,cli_name)\
  public:\

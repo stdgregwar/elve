@@ -84,7 +84,8 @@ enum NodeType{
     OUTPUT,
     CLUSTER,
     INPUT_CLUSTER,
-    OUTPUT_CLUSTER
+    OUTPUT_CLUSTER,
+    LAST
 };
 
 class Node;

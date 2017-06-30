@@ -10,7 +10,7 @@ using namespace alice;
 class ClearAllCommand : public command
 {
 public:
-    ClearAllCommand(const environment::ptr& env) : command(env,"ClearAll") {
+    ClearAllCommand(const environment::ptr& env) : command(env,"Reset all ELVE, save your progress before!") {
 
     }
     bool execute() override {

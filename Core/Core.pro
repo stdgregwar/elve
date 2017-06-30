@@ -60,7 +60,8 @@ SOURCES +=\
     interfaces/GraphWidgetListener.cpp \
     LinearConstraint.cpp \
     CommandHistory.cpp \
-    ExtendedGraph.cpp
+    ExtendedGraph.cpp \
+    NodeDescriptor.cpp
 
 RESOURCES += \
     coreresources.qrc
@@ -84,7 +85,6 @@ HEADERS += \
     System.h \
     Force.h \
     interfaces/LayoutPlugin.h \
-    interfaces/GraphLoaderPlugin.h \
     Point.h \
     QuadTree.h \
     QuadTreeNode.h \
@@ -97,7 +97,6 @@ HEADERS += \
     interfaces/Plugin.h \
     interfaces/FileExporterPlugin.h \
     Selection.h \
-    interfaces/GraphTransformPlugin.h \
     interfaces/LookFactoryPlugin.h \
     interfaces/NodeLook.h \
     interfaces/EdgeLook.h \
@@ -105,4 +104,7 @@ HEADERS += \
     interfaces/GraphWidgetListener.h \
     LinearConstraint.h \
     CommandHistory.h \
-    ExtendedGraph.h
+    ExtendedGraph.h \
+    NodeDescriptor.h \
+    interfaces/LoaderPlugin.h \
+    interfaces/TransformPlugin.h

@@ -28,8 +28,3 @@ SharedGraph LoaderName::load(const QString &filepath) {
     SharedData sdata = b.build(filepath); //Build the graph data
     return make_shared<Graph>(sdata);
 }
-
-
-#if QT_VERSION < 0x050000
-Q_EXPORT_PLUGIN2(BlifLoaderPlugin, BlifLoader)
-#endif // QT_VERSION < 0x050000
