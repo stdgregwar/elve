@@ -6,13 +6,13 @@
 
 QT       += core gui widgets svg
 
-TARGET = ExporterName #your plugin name here
+TARGET = ExporterName # TODO : your plugin name here
 TEMPLATE = lib
 
 CONFIG += plugin c++11
 CONFIG += no_plugin_name_prefix
 
-# DESTDIR = ../../Elve/plugins/exporters #uncomment this when writting your plugin
+# DESTDIR = ../../Elve/plugins/exporters # TODO : uncomment this when writting your plugin
 
 INCLUDEPATH += ../../Core
 

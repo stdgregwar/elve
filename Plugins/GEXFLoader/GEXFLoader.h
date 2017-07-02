@@ -5,12 +5,10 @@
 #include <LoaderPlugin.h>
 
 
-class GEXFLoader : public QObject, public Elve::LoaderPlugin
+class GEXFLoader : public Elve::LoaderPlugin
 {
     Q_OBJECT
-#if QT_VERSION >= 0x050000
     Q_PLUGIN_METADATA(IID "ch.epfl.lap.GEXFLoader")
-#endif // QT_VERSION >= 0x050000
     Q_INTERFACES(Elve::LoaderPlugin)
 public:
     GEXFLoader(QObject *parent = 0){}

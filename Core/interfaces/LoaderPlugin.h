@@ -7,7 +7,7 @@
 #include "../Graph.h"
 #include "Plugin.h"
 
-#define LoaderPlugin_iid "ch.epfl.lap.elfe.GraphLoaderPlugin"
+#define LoaderPlugin_iid "ch.epfl.lap.LoaderPlugin"
 
 namespace Elve {
 
@@ -17,8 +17,9 @@ namespace Elve {
  * GraphLoaderPlugin is a QPlugin interface that allow to extend the range of file
  * format that elve can import.
  */
-class LoaderPlugin : public Plugin
+class LoaderPlugin : public QObject, public Plugin
 {
+    Q_OBJECT
     public:
         virtual ~LoaderPlugin(){}
 

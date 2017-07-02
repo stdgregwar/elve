@@ -168,7 +168,7 @@ SharedGraph DivisorLoader::readBlif(const QString &filepath) {
 }
 
 
-DivisorLoader::DivisorLoader(QObject *parent) : QObject(parent)
+DivisorLoader::DivisorLoader()
 {
 
 }

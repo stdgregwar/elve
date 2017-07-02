@@ -1,21 +1,9 @@
 #include "Loader.h"
-#include <fstream>
-#include <sstream>
-#include <cstdio>
-#include <QDebug>
-#include <QFile>
-#include <QXmlStreamReader>
-#include <QJsonObject>
-
-#include <algorithm>
-#include <functional>
-#include <cctype>
-#include <locale>
 
 using namespace Elve;
 using namespace std;
 
-LoaderName::LoaderName(QObject *parent) {
+LoaderName::LoaderName() {
 
 }
 

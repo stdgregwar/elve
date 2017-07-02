@@ -1,9 +1,4 @@
-#include "Look.h"
-#include <GraphWidget.h>
-#include <QDebug>
-#include <QDomDocument>
-#include <QRegularExpression>
-#include <QFile>
+#include "Look.h" // TODO : change this to your actual header file
 
 using namespace Elve;
 
@@ -12,13 +7,13 @@ LookPluginName::LookPluginName() {
 }
 
 NodeLook* LookPluginName::node(const Node &n) {
-    return nullptr;
+    return nullptr; // TODO return your NodeLook subclass instance
 }
 
 EdgeLook* LookPluginName::edge(const NodeLook &ancestor, Index outi, const NodeLook &children, Index ini) {
-    return nullptr;
+    return nullptr; // TODO return your EdgeLook subclass instance
 }
 
 OrientationHint LookPluginName::orientationHint() const {
-    return BOTTOMUP; //Here say how do you want the layout to orient the graph
+    return BOTTOMUP; // TODO Here say how do you want the layout to orient the graph
 }

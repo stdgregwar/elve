@@ -1,7 +1,4 @@
-#include "Exporter.h"
-#include <GraphWidget.h>
-#include <QtSvg/QSvgGenerator>
-#include <QDebug>
+#include "Exporter.h" // TODO : don't forget to rename this too
 
 using namespace Elve;
 
@@ -13,6 +10,7 @@ ExporterName::ExporterName()
 }
 
 void ExporterName::exportGraph(const QString& filename, const SharedEGraph& eg) {
+    // TODO
     //HERE you are free to write the graph to given filename in any way you want
     //Note that you could even pass arbitrary string as filename from CLI and do wathever you want, including sending graph to another software for example
 }

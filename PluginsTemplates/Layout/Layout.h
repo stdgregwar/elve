@@ -10,7 +10,9 @@
  * the built-in physic engine can be accesed with the Elve::LayoutPlugin::system() inherited method.
  *
  * If your layout does not need a physical system or the actual system does not suits your needs
- * you are free to override Elve::LayoutPlugin::tick to implement your own stuff.
+ * you are free to override Elve::LayoutPlugin::tick to implement your own stuff.$
+ *
+ * // TODO : rename the class to fit your plugin name
  */
 class LayoutName : public Elve::LayoutPlugin
 {
@@ -18,6 +20,7 @@ class LayoutName : public Elve::LayoutPlugin
     Q_PLUGIN_METADATA(IID "ch.epfl.lap.LayoutName")
     Q_INTERFACES(Elve::LayoutPlugin)
 
+    // TODO : change the GUI and cli name to fit your plugin name
     ELVE_LAYOUT(LayoutName,"Layout name in GUI","layout_name_for_cli")
     LayoutName();
     void setGraph(Elve::SharedGraph g) override;

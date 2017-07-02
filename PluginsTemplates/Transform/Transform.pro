@@ -6,13 +6,13 @@
 
 QT       += core gui widgets
 
-TARGET = TransformName
+TARGET = TransformName # TODO : your plugin name here
 TEMPLATE = lib
 
 CONFIG += plugin c++11
 CONFIG += no_plugin_name_prefix
 
-# DESTDIR = ../../Elve/plugins/transforms  #uncomment this when writting your plugin
+# DESTDIR = ../../Elve/plugins/transforms  # TODO : uncomment this when writting your plugin
 
 INCLUDEPATH += ../../Core
 

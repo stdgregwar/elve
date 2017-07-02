@@ -14,6 +14,8 @@
  * so of course when you subclass theses you want to also subclass Elve::EdgeLook
  * and Elve::NodeLook to be able to return them in the node and edge overriden methods
  * see BasicNodeLook for a concrete example
+ *
+ * // TODO : rename the class to fit your plugin name
  */
 class LookPluginName : public Elve::LookFactoryPlugin
 {
@@ -21,6 +23,7 @@ class LookPluginName : public Elve::LookFactoryPlugin
     Q_PLUGIN_METADATA(IID "ch.epfl.lap.LookPluginName")
     Q_INTERFACES(Elve::LookFactoryPlugin)
 public:
+    // TODO : replace GUI name and command line name
     ELVE_LOOK(LookPluginName,"Name in the GUI","name_in_the_cli")
     Elve::NodeLook* node(const Elve::Node& n) override;
     Elve::EdgeLook* edge(const Elve::NodeLook& ancestor,Elve::Index outi, const Elve::NodeLook& children, Elve::Index ini) override;

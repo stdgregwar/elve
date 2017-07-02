@@ -6,12 +6,12 @@
 
 QT       += core gui
 
-TARGET = LoaderName
+TARGET = LoaderName # TODO : your plugin name here
 TEMPLATE = lib
 CONFIG += plugin c++11
 CONFIG += no_plugin_name_prefix
 
-# DESTDIR = ../../Elve/plugins/loaders  #uncomment this when writting your plugin
+# DESTDIR = ../../Elve/plugins/loaders  # TODO : uncomment this when writting your plugin
 
 SOURCES += Loader.cpp
 

@@ -3,16 +3,15 @@
 #include <QGenericPlugin>
 #include <LoaderPlugin.h>
 
-
-class LoaderName : public QObject, public Elve::LoaderPlugin
+// TODO : rename the class to fit your plugin name
+class LoaderName : public Elve::LoaderPlugin
 {
     Q_OBJECT
-#if QT_VERSION >= 0x050000
-    Q_PLUGIN_METADATA(IID "ch.epfl.lap.LoaderName")
-#endif // QT_VERSION >= 0x050000
+    Q_PLUGIN_METADATA(IID "ch.epfl.lap.LoaderName") // TODO : rename as well
     Q_INTERFACES(Elve::LoaderPlugin)
 public:
-    LoaderName(QObject *parent = 0);
+    LoaderName();
     Elve::SharedGraph load(const QString &filepath) override;
+    // TODO : replace the strings to setup GUI name, file extensions target (see QT doc), and command name
     ELVE_LOADER(LoaderName,"Loader Name in GUI","File extension filter (*.ext)","loader_cli_name")
 };

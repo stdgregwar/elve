@@ -53,8 +53,7 @@ static inline bool getTrueLine(ifstream& file,string& toFill) {
 
 
 
-BlifLoader::BlifLoader(QObject *parent) :
-    QObject(parent)
+BlifLoader::BlifLoader()
 {
 }
 

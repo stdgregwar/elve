@@ -4,12 +4,13 @@ using namespace Elve;
 
 LayoutName::LayoutName() {
     int myOp;
-    opts().add_options() //Use boost options to setup plugin command options, see boost_program_option doc
+    opts().add_options() // Use boost options to setup plugin command options, see boost_program_option doc
             ("myoption",po::value(&myOp),"an integer option you can set while calling cmd");
 }
 
 void LayoutName::setGraph(SharedGraph graph)
 {
-    //Here make your calls to system()
-    //See LevelLayout for a concrete example
+    // TODO
+    // Here make your calls to system()
+    // See LevelLayout for a concrete example
 }
