@@ -21,11 +21,10 @@ more details.
 
 The following software is required in order to build and use ELVE.
 
-* Qt
-* git
-* boost
-* g++ (at least version 6.2.0)
-* libstdc++6
+* Qt (5.7 or later)
+* boost (1.60 or later)
+* g++ (6.2.0 or later)
+* libstdc++6 (for full c++11 support)
 
 To download Qt, follow the instructions on
 [Qt website](https://www.qt.io/download-open-source/).
