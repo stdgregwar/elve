@@ -53,13 +53,18 @@ Alternatively, you can build ELVE with your preferred tool
 using qmake ([qmake documentation](http://doc.qt.io/qt-4.8/qmake-tutorial.html)).
 
 ```
-#from elve directory
+# from elve directory
 mkdir build
 cd build
 qmake CONFIG+=release ..
 make
-#optional
+# add sudo only if you want ELVE to be installed system wide
 sudo make install
+# system wide usage :
+Elve
+# local
+cd Elve
+./RunElve
 ```
 
 ## Usage
